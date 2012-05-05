@@ -37,7 +37,10 @@ gem 'jquery-rails'
 # To use debugger
 # gem 'ruby-debug19', :require => 'ruby-debug'
 
-gem "rspec-rails", :group => "test"
+group :test do
+  gem "rspec-rails"
+  gem "ZenTest"
+end
 gem "authlogic"
 gem "nifty-generators", :group => "development"
 
