@@ -1,0 +1,6 @@
+- creating tenant creates project
+- creating tenant creates admin account
+- creating account sends confirmation mail
+- account landing page is create password
+
+- 
