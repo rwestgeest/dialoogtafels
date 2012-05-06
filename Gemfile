@@ -45,6 +45,7 @@ group :development do
   gem "factory_girl_rails"
   gem "vlad"
   gem "vlad-git"
+  gem "capybara"
 end
 gem "authlogic"
 gem "nifty-generators", :group => "development"

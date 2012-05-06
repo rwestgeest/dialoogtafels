@@ -6,7 +6,8 @@ FactoryGirl.define do
     sequence( :representative_email ) { |n| "mail@city_#{n}.com" }
     sequence( :representative_telephone ) { |n| "phone_#{n}.com" }
     sequence( :site_url ) { |n| "site_url_#{n}" }
-    sequence( :info_email_address ) { |n| "mail@city_#{n}.com" }
-    sequence( :from_email_address ) { |n| "mail@city_#{n}.com" }
+    sequence( :info_email ) { |n| "mail@city_#{n}.com" }
+    sequence( :from_email ) { |n| "mail@city_#{n}.com" }
+    invoice_address "invoice address"
   end
 end
