@@ -1,0 +1,13 @@
+- title "Aanmelden als organisator"
+
+= form_for [:registration, @organizer]  do |f|
+  -if @organizer.errors.any?
+    #error_explanation
+      %h2= "#{pluralize(@organizer.errors.count, "error")} prohibited this person from being saved:"
+      %ul
+        - @organizer.errors.full_messages.each do |msg|
+          %li= msg
+
+  .actions
+    = f.submit
+

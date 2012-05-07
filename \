@@ -1,0 +1,14 @@
+- title "Aanmelden als organisator
+
+= form_for @person, :url => registration_organizer_path  do |f|
+  -if @registration_organizer.errors.any?
+    #error_explanation
+      %h2= "#{pluralize(@registration_organizer.errors.count, "error")} prohibited this registration_organizer from being saved:"
+      %ul
+        - @registration_organizer.errors.full_messages.each do |msg|
+          %li= msg
+
+  .actions
+    = f.submit 'Save'
+
+= link_to 'Back', registration_organizers_path
