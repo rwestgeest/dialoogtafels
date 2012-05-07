@@ -2,15 +2,17 @@
 
 %table
   %tr
+    %th Naam
     %th
     %th
     %th
 
   - @projects.each do |project|
     %tr
-      %td= link_to 'Show', project
+      %td= project.name
+      %td= link_to 'Show', city_project_path(project)
       %td= link_to 'Edit', edit_city_project_path(project)
-      %td= link_to 'Destroy', project, :confirm => 'Are you sure?', :method => :delete
+      %td= link_to 'Destroy', city_project_path(project), :confirm => 'Are you sure?', :method => :delete
 
 %br
 

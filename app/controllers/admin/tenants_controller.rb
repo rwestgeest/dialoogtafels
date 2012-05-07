@@ -43,7 +43,9 @@ class Admin::TenantsController < ApplicationController
     @tenant = Tenant.new(params[:tenant])
 
     respond_to do |format|
-      if @tenant.save
+      if @tenant.save 
+        Tenant.current = @tenant
+        Project.create! name: Date.today.year.to_s, :tenant_id => @tenant.id
         format.html { redirect_to admin_tenant_url(@tenant), notice: 'Tenant was successfully created.' }
         format.json { render json: @tenant, status: :created, location: @tenant }
       else

@@ -46,8 +46,8 @@ group :development do
   gem "vlad"
   gem "vlad-git"
   gem "capybara"
+  gem "nifty-generators"
 end
 gem "authlogic"
-gem "nifty-generators", :group => "development"
-
+gem "rb-readline"
 gem "mocha", :group => :test

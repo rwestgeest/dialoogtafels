@@ -19,8 +19,8 @@ require 'spec_helper'
 # that an instance is receiving a specific message.
 
 describe City::ProjectsController do
-
-  before(:all) { Tenant.current= FactoryGirl.create(:tenant) }
+  render_views 
+  before(:all) { Tenant.current= FactoryGirl.create(:tenant, :url_code => 'test') }
   after(:all) { Tenant.current.destroy }
 
   # This should return the minimal set of attributes required to create a valid

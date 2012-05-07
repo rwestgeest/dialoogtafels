@@ -6,5 +6,8 @@
         - @project.errors.full_messages.each do |msg|
           %li= msg
 
+  %p
+    .label= f.label :name
+    .input= f.text_field :name
   .actions
-    = f.submit 'Save'
+    = f.submit 

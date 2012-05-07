@@ -19,5 +19,6 @@ class Tenant < ActiveRecord::Base
       Thread.current[:current] = tenant
     end
   end
+
 end
 
