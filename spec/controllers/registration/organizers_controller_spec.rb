@@ -24,14 +24,14 @@ describe Registration::OrganizersController do
   # Organizer. As you add validations to Organizer, be sure to
   # update the return value of this method accordingly.
   def valid_attributes
-    {}
+    FactoryGirl.attributes_for(:organizer).stringify_keys
   end
   
   # This should return the minimal set of values that should be in the session
   # in order to pass any filters (e.g. authentication) defined in
   # Registration::OrganizersController. Be sure to keep this updated too.
   def valid_session
-    FactoryGirl.attributes_for :organizer
+    {}
   end
 
   describe "GET show" do

@@ -11,7 +11,7 @@ class Registration::OrganizersController < ApplicationController
   end
 
   def create
-    @organizer = Organizer.new(params[:person])
+    @organizer = Organizer.new(params[:organizer])
 
     if @organizer.save
       redirect_to confirm_registration_organizers_url, notice: 'Organizer was successfully created.' 

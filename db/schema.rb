@@ -13,7 +13,7 @@
 
 ActiveRecord::Schema.define(:version => 20120507082629) do
 
-  create_table "account", :force => true do |t|
+  create_table "accounts", :force => true do |t|
     t.string   "email",              :limit => 150,                :null => false
     t.string   "role",               :limit => 50,                 :null => false
     t.string   "crypted_password",                                 :null => false

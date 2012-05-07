@@ -24,9 +24,20 @@ FactoryGirl.define do
 
   factory :organizer  do
     sequence( :name ) { |n| "organizer_#{n}" }
+    sequence( :telephone ) { |n| "telephone_#{n}" }
     sequence( :email ) { |n| "mail@organizer_#{n}.com" }
     association :person
     association :project 
     association :tenant
+  end
+
+  factory :new_account, :class => Account do
+    sequence( :email ) { |n| "account_#{n}@mail.com" }
+  end
+  factory :account, :class => Account do
+    sequence( :email ) { |n| "account_#{n}@mail.com" }
+    password          "secret" 
+    password          "confirmation"
+    perishable_token  "some_token"
   end
 end

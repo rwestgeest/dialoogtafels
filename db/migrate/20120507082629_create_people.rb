@@ -8,9 +8,9 @@ class CreatePeople < ActiveRecord::Migration
       t.timestamps
     end
 
-    create_table :account do |t| 
+    create_table :accounts do |t| 
       t.string :email, :limit => 150, :null => false
-      t.string :role, :limit => 50, :null => false
+      t.string :role, :limit => 50, :null => false, :default => 'admin'
       t.string :crypted_password, :null => false
       t.string :password_salt, :null => false
       t.string :persistence_token, :null => false
