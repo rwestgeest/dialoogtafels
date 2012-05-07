@@ -1,0 +1,18 @@
+nl:
+  activerecord:
+    errors:
+      models:
+        project:
+          attributes:
+            tenant:
+              blank: "er is geen stad geselecteerd"
+            name:
+              blank: "je hebt geen naam ingegeven"
+  helpers:
+    label:
+      project:
+        name: "Naam"
+    submit:
+      project:
+        create: "Maak project aan"
+        update: "Project opslaan"
