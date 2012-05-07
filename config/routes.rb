@@ -1,4 +1,10 @@
 Tafelmanager2::Application.routes.draw do
+  namespace :registration do 
+    resource :organizers, :only => [:new, :create]  do
+      collection { get 'confirm' }
+    end
+  end
+
   namespace :city do resources :projects end
 
   namespace :admin do 

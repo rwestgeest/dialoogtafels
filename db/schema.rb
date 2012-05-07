@@ -11,7 +11,46 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120507043844) do
+ActiveRecord::Schema.define(:version => 20120507082629) do
+
+  create_table "account", :force => true do |t|
+    t.string   "email",              :limit => 150,                :null => false
+    t.string   "role",               :limit => 50,                 :null => false
+    t.string   "crypted_password",                                 :null => false
+    t.string   "password_salt",                                    :null => false
+    t.string   "persistence_token",                                :null => false
+    t.string   "perishable_token",                                 :null => false
+    t.integer  "login_count",                       :default => 0, :null => false
+    t.integer  "failed_login_count",                :default => 0, :null => false
+    t.datetime "last_request_at"
+    t.datetime "current_login_at"
+    t.datetime "last_login_at"
+    t.string   "current_login_ip"
+    t.string   "last_login_ip"
+    t.integer  "project_id"
+    t.integer  "tenant_id"
+    t.integer  "person_id"
+    t.datetime "created_at",                                       :null => false
+    t.datetime "updated_at",                                       :null => false
+  end
+
+  create_table "contributors", :force => true do |t|
+    t.string   "type"
+    t.integer  "project_id"
+    t.integer  "tenant_id"
+    t.integer  "person_id"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
+  create_table "people", :force => true do |t|
+    t.string   "name",       :limit => 50, :null => false
+    t.string   "telephone",  :limit => 50, :null => false
+    t.integer  "project_id"
+    t.integer  "tenant_id"
+    t.datetime "created_at",               :null => false
+    t.datetime "updated_at",               :null => false
+  end
 
   create_table "projects", :force => true do |t|
     t.string   "name"

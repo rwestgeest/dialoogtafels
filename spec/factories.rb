@@ -10,8 +10,23 @@ FactoryGirl.define do
     sequence( :from_email ) { |n| "mail@city_#{n}.com" }
     invoice_address "invoice address"
   end
+
   factory :project, :class => 'Project' do
     name "project"
+    association :tenant
+  end
+
+  factory :person do
+    sequence( :name ) { |n| "person_#{n}" }
+    sequence( :telephone ) { |n| "telephone_#{n}" }
+    association :tenant
+  end
+
+  factory :organizer  do
+    sequence( :name ) { |n| "organizer_#{n}" }
+    sequence( :email ) { |n| "mail@organizer_#{n}.com" }
+    association :person
+    association :project 
     association :tenant
   end
 end
