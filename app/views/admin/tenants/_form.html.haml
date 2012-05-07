@@ -5,6 +5,33 @@
       %ul
         - @tenant.errors.full_messages.each do |msg|
           %li= msg
+  %p
+    .label= f.label :name
+    .input= f.text_field :name
+  %p
+    .label= f.label :representative_name
+    .input= f.text_field :representative_name
+  %p
+    .label= f.label :representative_email
+    .input= f.text_field :representative_email
+  %p
+    .label= f.label :representative_telephone
+    .input= f.text_field :representative_telephone
+  %p
+    .label= f.label :invoice_address
+    .input= f.text_area :invoice_address
+  %p
+    .label= f.label :site_url
+    .input= f.text_field :site_url
+  %p
+    .label= f.label :url_code
+    .input= f.text_field :url_code
+  %p
+    .label= f.label :info_email
+    .input= f.text_field :info_email
+  %p
+    .label= f.label :from_email
+    .input= f.text_field :from_email
 
   .actions
     = f.submit 'Save'
