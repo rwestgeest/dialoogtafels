@@ -1,4 +1,5 @@
 class Tenant < ActiveRecord::Base
+  has_many :projects
   attr_accessible :from_email, :info_email, :invoice_address, :name, :representative_email, :representative_name, 
                   :representative_telephone, :site_url, :url_code
 
@@ -9,5 +10,14 @@ class Tenant < ActiveRecord::Base
   validates :representative_telephone, :presence => true
   validates :representative_name, :presence => true
   validates :invoice_address, :presence => true
+
+  class << self 
+    def current 
+      Thread.current[:current] 
+    end
+    def current=(tenant)
+      Thread.current[:current] = tenant
+    end
+  end
 end
 

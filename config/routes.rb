@@ -1,4 +1,6 @@
 Tafelmanager2::Application.routes.draw do
+  namespace :city do resources :projects end
+
   namespace :admin do 
     resources :tenants 
   end

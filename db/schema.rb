@@ -11,7 +11,14 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120506141917) do
+ActiveRecord::Schema.define(:version => 20120507043844) do
+
+  create_table "projects", :force => true do |t|
+    t.string   "name"
+    t.integer  "tenant_id"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
 
   create_table "tenants", :force => true do |t|
     t.string   "name",                     :limit => 50,  :null => false
@@ -25,8 +32,10 @@ ActiveRecord::Schema.define(:version => 20120506141917) do
     t.string   "from_email",               :limit => 150, :null => false
     t.datetime "created_at",                              :null => false
     t.datetime "updated_at",                              :null => false
+    t.integer  "current_project_id"
   end
 
+  add_index "tenants", ["current_project_id"], :name => "index_tenants_on_current_project_id"
   add_index "tenants", ["url_code"], :name => "index_tenants_on_url_code"
 
 end
