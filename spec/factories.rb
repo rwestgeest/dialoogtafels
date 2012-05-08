@@ -34,10 +34,4 @@ FactoryGirl.define do
   factory :new_account, :class => Account do
     sequence( :email ) { |n| "account_#{n}@mail.com" }
   end
-  factory :account, :class => Account do
-    sequence( :email ) { |n| "account_#{n}@mail.com" }
-    password          "secret" 
-    password          "confirmation"
-    perishable_token  "some_token"
-  end
 end

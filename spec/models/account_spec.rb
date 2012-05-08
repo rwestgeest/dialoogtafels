@@ -5,10 +5,7 @@ describe Account, :focus => true  do
     it "can be created without password" do
       expect { 
         a = Account.new FactoryGirl.attributes_for(:new_account)
-        p a 
         a.save
-        p a.errors
-
       }.to change(Account, :count).by 1
     end
 

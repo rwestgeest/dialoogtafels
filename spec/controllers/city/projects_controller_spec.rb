@@ -20,8 +20,7 @@ require 'spec_helper'
 
 describe City::ProjectsController do
   render_views 
-  before(:all) { Tenant.current= FactoryGirl.create(:tenant, :url_code => 'test') }
-  after(:all) { Tenant.current.destroy }
+  prepare_scope :tenant
 
   # This should return the minimal set of attributes required to create a valid
   # City::Project. As you add validations to Project, be sure to

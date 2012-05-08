@@ -39,9 +39,7 @@
       end
       it "fails on creation when current tenant is not set" do
         Tenant.current = nil
-        expect { 
-          create_tenant_oject! model
-        }.to raise_exception(ActiveRecord::RecordInvalid)
+        expect { create_tenant_oject! model }.to raise_exception(ActiveRecord::RecordInvalid)
       end
     end
 

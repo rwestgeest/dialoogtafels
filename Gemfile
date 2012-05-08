@@ -1,7 +1,7 @@
 source 'https://rubygems.org'
 
 gem 'rails', '3.2.3'
-
+gem 'warden'
 # Bundle edge Rails instead:
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
 
@@ -48,6 +48,5 @@ group :development do
   gem "capybara"
   gem "nifty-generators"
 end
-gem "authlogic"
 gem "rb-readline"
 gem "mocha", :group => :test

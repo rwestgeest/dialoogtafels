@@ -1,14 +1,14 @@
 class Person < ActiveRecord::Base
-  belongs_to :tenant
   has_one :account
 
+  belongs_to :tenant
   default_scope lambda { where :tenant_id => Tenant.current }
+  validates:tenant, :presence => true
 
   attr_accessible :name, :email, :telephone, :tenant_id
 
   delegate :email, :to => :account, :allow_nil => true
 
-  validates:tenant, :presence => true
 
   def email=(email)
     self.account = Account.new

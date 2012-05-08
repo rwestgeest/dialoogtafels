@@ -5,12 +5,18 @@
 #
 #   cities = City.create([{ name: 'Chicago' }, { name: 'Copenhagen' }])
 #   Mayor.create(name: 'Emanuel', city: cities.first)
-Tenant.create name: 'test', 
-              url_code: 'test', 
-              representative_name: 'Rob Westgeest',
-              representative_email: 'rob@qwan.it',
-              representative_telephone: '0135421037',
-              invoice_address: 'unknown',
-              site_url: 'http://www.dialoogtafels.nl',
-              info_email: 'rob@qwan.it',
-              from_email: 'rob@qwan.it'
+#
+unless Tenant.find_by_url_code 'test'
+  Tenant.create name: 'test', 
+                url_code: 'test', 
+                representative_name: 'Rob Westgeest',
+                representative_email: 'rob@qwan.it',
+                representative_telephone: '0135421037',
+                invoice_address: 'unknown',
+                site_url: 'http://www.dialoogtafels.nl',
+                info_email: 'rob@qwan.it',
+                from_email: 'rob@qwan.it'
+end
+#unless Account.find_by_email 'admin@example.com'
+  #Person.new :email => 'admin@example.com'
+#end

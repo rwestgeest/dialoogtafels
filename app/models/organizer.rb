@@ -1,4 +1,7 @@
 class Organizer < Contributor
+  include ScopedModel
+  scope_to :tenant
+
   attr_accessible :email, :name, :telephone
 
   validates :email, :presence => true
