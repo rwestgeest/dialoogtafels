@@ -5,11 +5,12 @@ module TokenGenerator
     SecureRandom.hex(16)
   end
 end
+
 class Account < ActiveRecord::Base
   EMAIL_REGEXP = /\A([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})\Z/i
   Maintainer = 'maintainer'
   Coordinator = 'coordinator'
-  Organizer = 'organizer'
+  Contributor = 'contributor'
 
   belongs_to :tenant
   validates :tenant, :presence => true
@@ -20,7 +21,7 @@ class Account < ActiveRecord::Base
   before_save :encrypt_password
   before_create :generate_perishable_token
 
-  attr_accessible :email, :password, :password_confirmation, :role
+  attr_accessible :email, :password, :password_confirmation, :role, :name, :telephone
   attr_accessor :password
 
   # class PasswordValidator < ActiveModel::EachValidator 
@@ -36,6 +37,19 @@ class Account < ActiveRecord::Base
                     :format => {:with => EMAIL_REGEXP }
   validates_presence_of :role
   validates_confirmation_of :password
+
+  delegate :name, :to => :person
+  delegate :telephone, :to => :person
+
+  def name=(value) 
+    self.person = Person.new unless person
+    person.name = value
+  end
+
+  def telephone=(value) 
+    self.person = Person.new unless person
+    person.telephone = value
+  end
 
   class << self 
     def authenticate_by_email_and_password(email, password)
@@ -53,8 +67,8 @@ class Account < ActiveRecord::Base
     def coordinator(attributes = {})
       account_with_tenant attributes.merge(:role => Coordinator)
     end
-    def organizer(attributes = {})
-      account_with_tenant attributes.merge(:role => Organizer)
+    def contributor(attributes = {})
+      account_with_tenant attributes.merge(:role => Contributor)
     end
     private
     def account_with_tenant(attributes)

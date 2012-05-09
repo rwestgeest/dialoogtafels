@@ -1,5 +1,6 @@
 class Tenant < ActiveRecord::Base
   has_many :projects
+  has_many :accounts
   attr_accessible :from_email, :info_email, :invoice_address, :name, :representative_email, :representative_name, 
                   :representative_telephone, :site_url, :url_code
 
@@ -17,6 +18,20 @@ class Tenant < ActiveRecord::Base
     end
     def current=(tenant)
       Thread.current[:current] = tenant
+    end
+    def create_with_account(attributes)
+      tenant = new(attributes)
+      begin 
+      transaction do 
+        tenant.save!
+        account = Account.coordinator(:email => tenant.representative_email, :telephone => tenant.representative_telephone, :name => tenant.representative_name)
+        account.tenant = tenant
+        account.person.tenant = tenant
+        account.save!
+      end
+      rescue ActiveRecord::RecordInvalid 
+      end
+      return tenant
     end
   end
 

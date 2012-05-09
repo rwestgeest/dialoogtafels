@@ -5,7 +5,7 @@ module Factories
       sequence( :name ) { |n| "City_#{n}" }
       sequence( :url_code ) { |n| "city_#{n}" }
       sequence( :representative_name ) { |n| "name_#{n}.com" }
-      sequence( :representative_email ) { |n| "mail@city_#{n}.com" }
+      sequence( :representative_email ) { |n| "mail_#{n}@city.com" }
       sequence( :representative_telephone ) { |n| "phone_#{n}.com" }
       sequence( :site_url ) { |n| "site_url_#{n}" }
       sequence( :info_email ) { |n| "mail@city_#{n}.com" }
@@ -33,17 +33,22 @@ module Factories
     end
 
     factory :maintainer_account, :class => Account, :aliases => [:account] do
-      sequence( :email ) { |n| "account_#{n}@mail.com" }
+      sequence( :email ) { |n| "maintainer_account_#{n}@mail.com" }
       role Account::Maintainer
+      association :person
     end
 
     factory :coordinator_account, :class => Account do
-      sequence( :email ) { |n| "account_#{n}@mail.com" }
+      sequence( :email ) { |n| "coordinator_account_#{n}@mail.com" }
       role Account::Coordinator
+      sequence( :name ) { |n| "person_#{n}" }
+      sequence( :telephone ) { |n| "telephone_#{n}" }
     end
-    factory :organizer_account, :class => Account do
-      sequence( :email ) { |n| "account_#{n}@mail.com" }
-      role Account::Organizer
+
+    factory :contributor_account, :class => Account do
+      sequence( :email ) { |n| "contributor_account_#{n}@mail.com" }
+      role Account::Contributor
+      association :person
     end
   end
 end

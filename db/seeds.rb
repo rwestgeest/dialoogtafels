@@ -17,6 +17,6 @@ unless Tenant.find_by_url_code 'test'
                 info_email: 'rob@qwan.it',
                 from_email: 'rob@qwan.it'
 end
-#unless Account.find_by_email 'admin@example.com'
-  #Person.new :email => 'admin@example.com'
-#end
+unless Account.find_by_email 'admin@example.com'
+  Person.create :email => 'admin@example.com'
+end

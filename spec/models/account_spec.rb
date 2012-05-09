@@ -7,8 +7,8 @@ describe Account  do
     it "maintainer creates maintainer" do
       Account.maintainer.role == Account::Maintainer
     end
-    it "organizer creates organizer" do
-      Account.organizer.role == Account::Organizer
+    it "contributor creates contributor" do
+      Account.contributor.role == Account::Contributor
     end
   end
 
@@ -19,6 +19,7 @@ describe Account  do
       it { should validate_presence_of :email }
       it { should validate_uniqueness_of :email }
       it { should allow_value("some@mail.nl").for(:email) }
+      it { should allow_value("email@domaindiscount24.com").for(:email) }
       ["rob@", "@mo.nl", "123.nl", "123@nl", "aaa.123.nl", "aaa.123@nl"].each do |illegal_mail|
         it { should_not allow_value(illegal_mail).for(:email) }
       end
@@ -163,9 +164,9 @@ describe Account  do
 
         it_should_behave_like "a confirmable account"
       end
-      context "organizer" do
+      context "contributor" do
         let(:account) { 
-          FactoryGirl.create(:organizer_account, 
+          FactoryGirl.create(:contributor_account, 
                              :password => nil, 
                              :password_confirmation => nil)
         }
@@ -183,5 +184,10 @@ describe Account  do
       end
     end
 
+    describe 'creating coordinator' do
+      it "creates a person" do
+        expect {FactoryGirl.create :coordinator_account}.to change(Person, :count).by(1)
+      end
+    end
   end
 end
