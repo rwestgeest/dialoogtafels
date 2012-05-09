@@ -1,14 +1,24 @@
 require 'bcrypt'
-
+require 'securerandom'
+module TokenGenerator 
+  def self.generate_token
+    SecureRandom.hex(16)
+  end
+end
 class Account < ActiveRecord::Base
+  EMAIL_REGEXP = /\A([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})\Z/i
   Maintainer = 'maintainer'
   Coordinator = 'coordinator'
   Organizer = 'organizer'
 
   belongs_to :tenant
+  validates :tenant, :presence => true
+
+  default_scope lambda { where :tenant_id => Tenant.current }
   belongs_to :person
 
   before_save :encrypt_password
+  before_create :generate_perishable_token
 
   attr_accessible :email, :password, :password_confirmation, :role
   attr_accessor :password
@@ -21,12 +31,21 @@ class Account < ActiveRecord::Base
 
   # validates :encrypted_password, :password => true, :on => :update
   validates_presence_of :password, :if =>  lambda { !new_record? && !confirmed? }
-  validates_presence_of :email
+  validates :email, :presence => true,
+                    :uniqueness => true,
+                    :format => {:with => EMAIL_REGEXP }
+  validates_presence_of :role
   validates_confirmation_of :password
 
   class << self 
     def authenticate_by_email_and_password(email, password)
-      Account.first
+      account = Account.find_by_email(email)
+      return account if account && 
+                        account.confirmed? && 
+                        account.encrypted_password == BCrypt::Engine.hash_secret(password, account.password_salt)
+    end
+    def authenticate_by_token(token)
+      Account.find_by_perishable_token(token) unless token.nil? || token.empty?
     end
     def maintainer(attributes = {})
       account_with_tenant attributes.merge(:role => Maintainer)
@@ -58,7 +77,17 @@ class Account < ActiveRecord::Base
     confirmed_at != nil
   end
 
+  def generate_perishable_token
+    while (true) 
+      self.perishable_token = TokenGenerator.generate_token
+      return perishable_token if unique_token?(perishable_token)
+    end
+  end
+
   private 
+  def unique_token? token
+    return ! Account.find_by_perishable_token(token)
+  end
   def has_saved_password?
     encrypted_password.present?
   end

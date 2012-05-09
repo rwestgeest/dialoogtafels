@@ -15,7 +15,6 @@ module Factories
 
     factory :project, :class => 'Project' do
       name "project"
-      association :tenant
     end
 
     factory :person do
@@ -33,10 +32,11 @@ module Factories
       association :tenant
     end
 
-    factory :maintainer_account, :class => Account do
+    factory :maintainer_account, :class => Account, :aliases => [:account] do
       sequence( :email ) { |n| "account_#{n}@mail.com" }
       role Account::Maintainer
     end
+
     factory :coordinator_account, :class => Account do
       sequence( :email ) { |n| "account_#{n}@mail.com" }
       role Account::Coordinator
