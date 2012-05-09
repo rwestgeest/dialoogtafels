@@ -18,18 +18,15 @@ module Factories
     end
 
     factory :person do
+      sequence( :email ) { |n| "mail_#{n}@person.com" }
       sequence( :name ) { |n| "person_#{n}" }
       sequence( :telephone ) { |n| "telephone_#{n}" }
-      association :tenant
     end
 
     factory :organizer  do
+      sequence( :email ) { |n| "mail_#{n}@organizer.com" }
       sequence( :name ) { |n| "organizer_#{n}" }
-      sequence( :telephone ) { |n| "telephone_#{n}" }
-      sequence( :email ) { |n| "mail@organizer_#{n}.com" }
-      association :person
-      association :project 
-      association :tenant
+      sequence( :telephone ) { |n| "telephone#{n}" }
     end
 
     factory :maintainer_account, :class => Account, :aliases => [:account] do

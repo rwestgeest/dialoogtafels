@@ -6,5 +6,5 @@ describe Project do
     it { should validate_presence_of :tenant }
   end
 
-  it_should_behave_like 'a_scoped_object', :project, :tenant
+  it_should_behave_like 'a_scoped_object', :project
 end

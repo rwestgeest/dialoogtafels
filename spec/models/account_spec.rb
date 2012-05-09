@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 describe Account  do
-  it_should_behave_like "a_scoped_object", :account, :tenant
+  it_should_behave_like "a_scoped_object", :account
 
   describe "creation methods" do
     it "maintainer creates maintainer" do

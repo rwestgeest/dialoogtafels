@@ -1,6 +1,10 @@
 class Organizer < Contributor
   include ScopedModel
-  scope_to :tenant
+  scope_to_tenant
+
+  belongs_to :project
+
+  validates:project, :presence => true
 
   attr_accessible :email, :name, :telephone
 
@@ -11,6 +15,8 @@ class Organizer < Contributor
   delegate :email, :to => :person, :allow_nil => true
   delegate :name, :to => :person, :allow_nil => true
   delegate :telephone, :to => :person, :allow_nil => true
+
+  before_create :associate_to_active_project
 
   def email=(email) 
     self.person = Person.new unless person
@@ -27,4 +33,8 @@ class Organizer < Contributor
     person.telephone = name
   end
 
+  private 
+  def associate_to_active_project
+    self.project = Tenant.active_project
+  end
 end

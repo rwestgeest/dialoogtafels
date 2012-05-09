@@ -1,9 +1,8 @@
 class Person < ActiveRecord::Base
+  include ScopedModel
+  scope_to_tenant
   has_one :account
 
-  belongs_to :tenant
-  default_scope lambda { where :tenant_id => Tenant.current }
-  validates:tenant, :presence => true
 
   attr_accessible :name, :email, :telephone, :tenant_id
 

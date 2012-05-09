@@ -7,15 +7,14 @@ module TokenGenerator
 end
 
 class Account < ActiveRecord::Base
+  include ScopedModel
+  scope_to_tenant
+
   EMAIL_REGEXP = /\A([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})\Z/i
   Maintainer = 'maintainer'
   Coordinator = 'coordinator'
   Contributor = 'contributor'
 
-  belongs_to :tenant
-  validates :tenant, :presence => true
-
-  default_scope lambda { where :tenant_id => Tenant.current }
   belongs_to :person
 
   before_save :encrypt_password

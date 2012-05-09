@@ -1,10 +1,8 @@
 class Project < ActiveRecord::Base
-  belongs_to :tenant
+  include ScopedModel
+  scope_to_tenant
 
-  attr_accessible :name, :tenant_id
-
+  attr_accessible :name
   validates :name, :presence => true
-  validates :tenant, :presence => true
 
-  default_scope lambda { where :tenant_id => Tenant.current }
 end

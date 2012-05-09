@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120507082629) do
+ActiveRecord::Schema.define(:version => 20120509140002) do
 
   create_table "accounts", :force => true do |t|
     t.string   "email",              :limit => 150,                      :null => false
@@ -65,6 +65,7 @@ ActiveRecord::Schema.define(:version => 20120507082629) do
     t.datetime "created_at",                              :null => false
     t.datetime "updated_at",                              :null => false
     t.integer  "current_project_id"
+    t.integer  "active_project_id"
   end
 
   add_index "tenants", ["current_project_id"], :name => "index_tenants_on_current_project_id"
