@@ -16,11 +16,10 @@ ActiveRecord::Schema.define(:version => 20120507082629) do
   create_table "accounts", :force => true do |t|
     t.string   "email",              :limit => 150,                      :null => false
     t.string   "role",               :limit => 50,  :default => "admin", :null => false
-    t.string   "crypted_password"
+    t.string   "encrypted_password"
     t.string   "password_salt"
     t.string   "perishable_token"
-    t.integer  "login_count",                       :default => 0,       :null => false
-    t.integer  "failed_login_count",                :default => 0,       :null => false
+    t.datetime "confirmed_at"
     t.integer  "project_id"
     t.integer  "tenant_id"
     t.integer  "person_id"

@@ -11,11 +11,10 @@ class CreatePeople < ActiveRecord::Migration
     create_table :accounts do |t| 
       t.string :email, :limit => 150, :null => false
       t.string :role, :limit => 50, :null => false, :default => 'admin'
-      t.string :crypted_password
+      t.string :encrypted_password
       t.string :password_salt
       t.string :perishable_token
-      t.integer :login_count, :null => false, :default => 0
-      t.integer :failed_login_count, :null => false, :default => 0
+      t.datetime :confirmed_at, :null => true
 
       t.references :project
       t.references :tenant

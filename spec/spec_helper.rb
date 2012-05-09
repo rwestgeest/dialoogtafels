@@ -14,6 +14,7 @@ Dir[Rails.root.join("spec/support/**/*.rb")].each {|f| require f}
 RSpec.configure do |config|
   Dir[Rails.root.join("spec/shared/**/*.rb")].each {|f| require f}
   config.include ControllerExtensions
+  config.include Factories
   # ## Mock Framework
   #
   # If you prefer to use mocha, flexmock or RR, uncomment the appropriate line:
@@ -34,6 +35,11 @@ RSpec.configure do |config|
   # automatically. This will be the default behavior in future versions of
   # rspec-rails.
   config.infer_base_class_for_anonymous_controllers = false
+
+  config.filter_run_excluding :broken => true
+  config.filter_run :focus => true
+  config.run_all_when_everything_filtered = true
+
 end
 load_schema = lambda {  
   load "#{Rails.root.to_s}/db/schema.rb" # use db agnostic schema by default  

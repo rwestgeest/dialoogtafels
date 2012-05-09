@@ -3,7 +3,6 @@ source 'https://rubygems.org'
 gem 'rails', '3.2.3'
 # Bundle edge Rails instead:
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
-
 gem 'sqlite3'
 
 
@@ -20,9 +19,7 @@ group :assets do
 end
 
 gem 'jquery-rails'
-
-# To use ActiveModel has_secure_password
-# gem 'bcrypt-ruby', '~> 3.0.0'
+gem 'bcrypt-ruby'
 
 # To use Jbuilder templates for JSON
 # gem 'jbuilder'
@@ -37,11 +34,14 @@ gem 'jquery-rails'
 # gem 'ruby-debug19', :require => 'ruby-debug'
 gem "haml-rails"
 
-group :development do
+group :test do
   gem "rspec-rails", "~> 2.10.0"
   gem "ZenTest", "~> 4.8.0"
-  gem "shoulda-matchers", "~> 1.1.0"
   gem "factory_girl_rails"
+
+  gem "shoulda-matchers", "~> 1.1.0"
+end
+group :development do
   gem "vlad"
   gem "vlad-git"
   gem "capybara"
