@@ -40,6 +40,13 @@ class Account < ActiveRecord::Base
   delegate :name, :to => :person
   delegate :telephone, :to => :person
 
+  def for_tenant(tenant)
+    self.tenant = tenant
+    self.person = Person.new unless person
+    self.person.tenant = tenant
+    return self
+  end
+  
   def name=(value) 
     self.person = Person.new unless person
     person.name = value

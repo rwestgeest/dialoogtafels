@@ -16,7 +16,7 @@ class Organizer < Contributor
   delegate :name, :to => :person, :allow_nil => true
   delegate :telephone, :to => :person, :allow_nil => true
 
-  before_create :associate_to_active_project
+  before_validation :associate_to_active_project
 
   def email=(email) 
     self.person = Person.new unless person
@@ -35,6 +35,6 @@ class Organizer < Contributor
 
   private 
   def associate_to_active_project
-    self.project = Tenant.active_project
+    self.project = tenant.active_project if tenant.present?
   end
 end

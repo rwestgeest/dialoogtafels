@@ -1,5 +1,5 @@
 require 'spec_helper'
-describe Tenant, :focus => true do
+describe Tenant do
   describe 'validation' do
     it { should validate_presence_of :name }
     it { should validate_presence_of :url_code }
@@ -10,7 +10,7 @@ describe Tenant, :focus => true do
     it { should validate_presence_of :invoice_address }
   end
 
-  describe 'creating a tenant with account' do
+  shared_examples_for 'a_tenant_creator' do
     it "creates the tenant" do
       expect { Tenant.create(FactoryGirl.attributes_for :tenant) }.to change { Tenant.count }.by(1)
     end
@@ -25,10 +25,18 @@ describe Tenant, :focus => true do
     end
     it "creates a first and active project"  do
       expect { Tenant.create(FactoryGirl.attributes_for :tenant) }.to change { Project.unscoped.count }.by(1)
-      Project.unscoped.last.tenant.should == Tenant.last
-      Tenant.current = Tenant.last
-      Tenant.last.active_project.should == Project.unscoped.last
+      Project.unscoped {
+        Project.last.tenant.should == Tenant.last
+        Tenant.last.active_project_id.should == Project.last.id
+      }
     end
-    after { Tenant.current = nil }
+  end
+  describe 'creating a tenant with account' do
+    it_should_behave_like 'a_tenant_creator'
+    context "with a different current tenant" do
+      prepare_scope :tenant
+      it_should_behave_like 'a_tenant_creator'
+    end
+
   end
 end

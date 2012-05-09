@@ -10,9 +10,11 @@
       let!(:tenant_object_ab) { create_tenant_oject! model, :tenant => tenant_b }
       it "should find in scope of current tenant" do
         Tenant.current = tenant_a
-        model_class.all.should == [tenant_object_aa]
+        model_class.all.should include tenant_object_aa
+        model_class.all.should_not include tenant_object_ab
         Tenant.current = tenant_b
-        model_class.all.should == [tenant_object_ab]
+        model_class.all.should include tenant_object_ab
+        model_class.all.should_not include tenant_object_aa
       end
       it "should find no #{model}s if tenant = nil" do
         Tenant.current = nil
@@ -29,13 +31,13 @@
         model_class.create FactoryGirl.attributes_for(model)
         model_class.last.tenant.should == tenant_b
       end
-      it "should create a #{model} other tenant if requested" do
+      it "should create a #{model} for other tenant if requested" do
         Tenant.current = tenant_a
-        p = model_class.new FactoryGirl.attributes_for(model)
-        p.tenant_id = tenant_b.id
-        p.save!
-        p.should be_persisted 
-        p.tenant.should == tenant_b
+        object = model_class.new FactoryGirl.attributes_for(model)
+        object.tenant = tenant_b
+        object.save
+        object.should be_persisted 
+        object.tenant.should == tenant_b
       end
       it "fails on creation when current tenant is not set" do
         Tenant.current = nil

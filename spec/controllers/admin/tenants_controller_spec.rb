@@ -72,18 +72,6 @@ describe Admin::TenantsController do
           post :create, {:tenant => valid_attributes}, valid_session
         }.to change(Tenant, :count).by(1)
       end
-      it 'sets the current tenant to the newly created one' do
-        post :create, {:tenant => valid_attributes}, valid_session
-        Tenant.current.should == Tenant.last
-      end
-      it 'creates a first project' do
-        expect {
-          post :create, {:tenant => valid_attributes}, valid_session
-        }.to change { Project.unscoped.count }.by(1)
-
-        Project.unscoped.last.name.should include(Date.today.year.to_s)
-      end
-
 
       it "assigns a newly created tenant as @tenant" do
         post :create, {:tenant => valid_attributes}, valid_session

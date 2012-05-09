@@ -38,9 +38,8 @@ describe City::ProjectsController do
 
   describe "GET index" do
     it "assigns all projects as @projects" do
-      project = Project.create! valid_attributes
       get :index, {}, valid_session
-      assigns(:projects).should eq([project])
+      assigns(:projects).should eq([Tenant.current.active_project])
     end
   end
 
