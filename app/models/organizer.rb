@@ -8,7 +8,16 @@ class Organizer < Contributor
 
   attr_accessible :email, :name, :telephone
 
-  validates :email, :presence => true
+  class UniqueAccountValidator < ActiveModel::EachValidator
+    def validate_each(record, attribute, value) 
+      record.errors.add(attribute, I18n.t("activerecord.errors.models.#{record.class.to_s.underscore}.attributes.#{attribute}.existing")) if Account.find_by_email(value)
+    end
+  end
+  EMAIL_REGEXP = /\A([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})\Z/i
+  validates :email, :presence => true,
+                    :unique_account => true,
+                    :format => {:with => EMAIL_REGEXP }
+
   validates :name, :presence => true
   validates :telephone, :presence => true
 

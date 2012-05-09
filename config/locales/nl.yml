@@ -14,7 +14,13 @@ nl:
     label:
       project:
         name: "Naam"
+      organizer:
+        email: "Email"
+        name: "Naam"
+        telephone: "Telefoon"
     submit:
       project:
         create: "Maak project aan"
         update: "Project opslaan"
+      organizer:
+        create: "Registreer"

@@ -28,6 +28,7 @@ describe Tenant do
       Project.unscoped {
         Project.last.tenant.should == Tenant.last
         Tenant.last.active_project_id.should == Project.last.id
+        Project.last.name.should include Date.today.year.to_s
       }
     end
   end

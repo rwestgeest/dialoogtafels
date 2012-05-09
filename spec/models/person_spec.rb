@@ -7,7 +7,7 @@ describe Person do
     prepare_scope :tenant
 
     describe "creating a person" do 
-      it "creates an account if email addres is supplied" do
+      it "creates an account if email address is supplied" do
         expect{ FactoryGirl.create :person }.to change(Account, :count).by(1)
         Account.last.person.should === Person.last
       end

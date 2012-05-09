@@ -17,13 +17,6 @@ describe Registration::OrganizersController do
     {}
   end
 
-  describe "GET show" do
-    it "renders the show view" do
-      get :show
-      response.should render_template("show")
-    end
-  end
-
   describe "GET new" do
     it "assigns a new person as @person" do
       get :new, {}, valid_session

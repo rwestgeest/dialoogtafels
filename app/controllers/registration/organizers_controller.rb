@@ -1,10 +1,5 @@
 class Registration::OrganizersController < ApplicationController
 
-  def show
-    respond_to do |format|
-      format.html # show.html.erb
-    end
-  end
 
   def new
     @organizer = Organizer.new
@@ -18,6 +13,9 @@ class Registration::OrganizersController < ApplicationController
     else
       render action: "new" 
     end
+  end
+  def confirm
+
   end
 
 end
