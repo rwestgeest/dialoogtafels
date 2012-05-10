@@ -1,0 +1,9 @@
+%h2 Welkom bij dialoogtafels
+
+Er is een account voor je gemaakt.
+
+%p
+  Klik 
+  = link_to 'hier', account_response_session_url(@account.perishable_token, :host => Tenant.current.host)
+  om in te loggen en je wachtwoord te zetten.
+
