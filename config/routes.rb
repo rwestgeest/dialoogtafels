@@ -1,6 +1,8 @@
 Tafelmanager2::Application.routes.draw do
-  get "session/new"
 
+  namespace :account do
+    resource :session, :only => [:new, :create]
+  end
   namespace :registration do 
     resource :organizers, :only => [:new, :create]  do
       collection { get 'confirm' }
