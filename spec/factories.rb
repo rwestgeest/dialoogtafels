@@ -13,6 +13,14 @@ module Factories
       invoice_address "invoice address"
     end
 
+    factory :location do 
+      sequence( :name ) { |n| "location_#{n}" }
+      address "location_address"
+      postal_code "AAAA 12"
+      city "Location city"
+      association :organizer
+    end
+
     factory :project, :class => 'Project' do
       name "project"
     end

@@ -6,6 +6,7 @@ describe Organizer do
     let(:existing_organizer) { FactoryGirl.create :organizer } 
     it { should validate_presence_of :email }
     it { should validate_presence_of :name }
+    it { should validate_presence_of :person }
     it { should_not allow_value(existing_organizer.email).for(:email) }
     ["rob@", "@mo.nl", "123.nl", "123@nl", "aaa.123.nl", "aaa.123@nl"].each do |illegal_mail|
       it { should_not allow_value(illegal_mail).for(:email) }

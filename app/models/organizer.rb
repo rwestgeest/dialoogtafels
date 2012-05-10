@@ -1,19 +1,20 @@
 class Organizer < Contributor
-  include ScopedModel
-  scope_to_tenant
-
-  belongs_to :project
-
-  validates:project, :presence => true
-
-  attr_accessible :email, :name, :telephone
-
+  EMAIL_REGEXP = /\A([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})\Z/i
   class UniqueAccountValidator < ActiveModel::EachValidator
     def validate_each(record, attribute, value) 
       record.errors.add(attribute, I18n.t("activerecord.errors.models.#{record.class.to_s.underscore}.attributes.#{attribute}.existing")) if Account.find_by_email(value)
     end
   end
-  EMAIL_REGEXP = /\A([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})\Z/i
+  include ScopedModel
+  scope_to_tenant
+  belongs_to :project
+
+  attr_accessible :email, :name, :telephone
+
+  validates :project, :presence => true
+  validates :person, :presence => true
+
+
   validates :email, :presence => true,
                     :unique_account => true,
                     :format => {:with => EMAIL_REGEXP }

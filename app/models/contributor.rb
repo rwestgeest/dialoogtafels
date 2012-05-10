@@ -1,4 +1,4 @@
-class Contributor < ActiveRecord::Base
+class Contributor < ApplicationModel
   belongs_to :person 
 
 end

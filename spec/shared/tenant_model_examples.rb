@@ -6,15 +6,15 @@
     it { should belong_to :tenant }
 
     describe "finding" do
-      let!(:tenant_object_aa) { create_tenant_oject! model, :tenant => tenant_a }
-      let!(:tenant_object_ab) { create_tenant_oject! model, :tenant => tenant_b }
-      it "should find in scope of current tenant" do
+      let!(:object_in_tenant_a) { for_tenant(tenant_a) { FactoryGirl.create model } }
+      let!(:object_in_tenant_b) { for_tenant(tenant_b) { FactoryGirl.create model } }
+      it "should find in scope of current tenant"  do
         Tenant.current = tenant_a
-        model_class.all.should include tenant_object_aa
-        model_class.all.should_not include tenant_object_ab
+        model_class.all.should include object_in_tenant_a
+        model_class.all.should_not include object_in_tenant_b
         Tenant.current = tenant_b
-        model_class.all.should include tenant_object_ab
-        model_class.all.should_not include tenant_object_aa
+        model_class.all.should include object_in_tenant_b
+        model_class.all.should_not include object_in_tenant_a
       end
       it "should find no #{model}s if tenant = nil" do
         Tenant.current = nil
@@ -24,32 +24,17 @@
     describe "creating" do
       it "should create a #{model} for the current tenant" do
         Tenant.current = tenant_a
-        model_class.create FactoryGirl.attributes_for(model)
+        FactoryGirl.create model
         model_class.last.tenant.should == tenant_a
 
         Tenant.current = tenant_b
-        model_class.create FactoryGirl.attributes_for(model)
+        FactoryGirl.create model
         model_class.last.tenant.should == tenant_b
-      end
-      it "should create a #{model} for other tenant if requested" do
-        Tenant.current = tenant_a
-        object = model_class.new FactoryGirl.attributes_for(model)
-        object.tenant = tenant_b
-        object.save
-        object.should be_persisted 
-        object.tenant.should == tenant_b
       end
       it "fails on creation when current tenant is not set" do
         Tenant.current = nil
-        expect { create_tenant_oject! model }.to raise_exception(ActiveRecord::RecordInvalid)
+        expect { FactoryGirl.create model }.to raise_exception(ActiveRecord::RecordInvalid)
       end
-    end
-
-    def create_tenant_oject! model, attr_overrides = {}
-      object = model_class.new FactoryGirl.attributes_for(model)
-      attr_overrides.each {|k,v| object.send(:"#{k}=", v)}
-      object.save!
-      object
     end
 
   end
