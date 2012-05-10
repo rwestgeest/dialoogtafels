@@ -108,6 +108,38 @@ describe Account  do
       end
     end
 
+    describe 'reset!' do
+    
+      shared_examples_for "an_account_resetter" do
+      end
+      context "on a confirmed account" do
+        let(:account) { FactoryGirl.create :confirmed_account }
+        it "generates a new token" do
+          old_token = account.perishable_token
+          account.reset!
+          account.reload
+          account.perishable_token.should_not == old_token
+        end
+        it "sends an account reset mail" do
+          Postman.should_receive(:deliver).with(:account_reset, account)
+          account.reset!
+        end
+      end
+      context "on a new account" do
+        let(:account) { FactoryGirl.create :account }
+        it "keeps the old token" do
+          old_token = account.perishable_token
+          account.reset!
+          account.reload
+          account.perishable_token.should == old_token
+        end
+        it "sends an account reset mail" do
+          Postman.should_receive(:deliver).with(:account_reset, account)
+          account.reset!
+        end
+      end
+    end
+
     shared_examples_for "a confirmable account" do
       it "is initially not confirmed" do
         account.should_not be_confirmed

@@ -33,6 +33,14 @@ module Factories
       sequence( :email ) { |n| "maintainer_account_#{n}@mail.com" }
       role Account::Maintainer
       association :person
+      factory :confirmed_account do
+        password 'secret'
+        password_confirmation 'secret'
+        after_create do |account|
+          account.confirm!
+        end
+      end
+
     end
 
     factory :coordinator_account, :class => Account do

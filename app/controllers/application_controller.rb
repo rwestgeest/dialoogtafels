@@ -3,6 +3,15 @@ class ApplicationController < ActionController::Base
   prepend_before_filter :set_current_tenant
 
   protected
+  def sign_in(account)
+    session[:current_account_id] = account
+  end
+  def current_account
+    @current_account ||= Account.find(current_account_id)
+  end
+  def current_account_id
+    session[:current_account_id]
+  end
 
   def set_current_tenant
     Tenant.current = Tenant.find_by_url_code subdomain

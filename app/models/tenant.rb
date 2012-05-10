@@ -31,5 +31,12 @@ class Tenant < ActiveRecord::Base
     update_attribute :active_project_id, active_project.id
   end
 
+  def host
+    @host || 'test.host'
+  end
+  def on_host(host)
+    @host = host 
+    self
+  end
 end
 

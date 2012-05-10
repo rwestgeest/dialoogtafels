@@ -93,6 +93,14 @@ class Account < ActiveRecord::Base
     save
   end
 
+  def reset!
+    if (confirmed?)
+      generate_perishable_token
+      save!
+    end
+    Postman.deliver(:account_reset, self)
+  end
+
   def confirmed?
     confirmed_at != nil
   end
@@ -103,6 +111,11 @@ class Account < ActiveRecord::Base
       return perishable_token if unique_token?(perishable_token)
     end
   end
+
+  def landing_page
+    '/'
+  end
+
 
   private 
   def unique_token? token

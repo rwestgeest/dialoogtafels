@@ -24,3 +24,10 @@ nl:
         update: "Project opslaan"
       organizer:
         create: "Registreer"
+  account:
+    sessions:
+      new: 
+        create_session: 'Login'
+    password_resets:
+      new: 
+        send_password: 'Reset mijn wachtwoord'

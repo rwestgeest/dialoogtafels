@@ -1,8 +1,14 @@
 Tafelmanager2::Application.routes.draw do
 
+
   namespace :account do
     resource :session, :only => [:new, :create]
+    resources :response_sessions, :only => [:show]
+    resource :password_reset, :only => [:new, :create] do
+      get 'success'
+    end
   end
+
   namespace :registration do 
     resource :organizers, :only => [:new, :create]  do
       collection { get 'confirm' }
@@ -65,11 +71,12 @@ Tafelmanager2::Application.routes.draw do
 
   # You can have the root of your site routed with "root"
   # just remember to delete public/index.html.
-  # root :to => 'welcome#index'
+  root :to => 'account/sessions#new'
 
   # See how all your routes lay out with "rake routes"
 
   # This is a legacy wild controller route that's not recommended for RESTful applications.
   # Note: This route will make all actions in every controller accessible via GET requests.
   # match ':controller(/:action(/:id))(.:format)'
+  #
 end
