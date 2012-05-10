@@ -1,6 +1,16 @@
+- creating account sends confirmation mail
+- unconfirmed accounts first langing pagge is confirm
+- organizer registration redirects to create first location
+- creating the first location creates a first conversation round
+- addind a conversation round updates the first location
+- add photo to the first location
+- updating the photo to the first location updates the location
+- updating the location sends a mail to the organizer 
+
+
+===============DONE ================
+
 - creating tenant creates project
 - creating tenant creates admin account
-- creating account sends confirmation mail
-- account landing page is create password
 
 - 

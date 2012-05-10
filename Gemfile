@@ -35,13 +35,13 @@ gem 'bcrypt-ruby'
 gem "haml-rails"
 
 group :test do
-  gem "rspec-rails", "~> 2.10.0"
   gem "ZenTest", "~> 4.8.0"
   gem "factory_girl_rails"
 
   gem "shoulda-matchers", "~> 1.1.0"
 end
 group :development do
+  gem "rspec-rails", "~> 2.10.0"
   gem "vlad"
   gem "vlad-git"
   gem "capybara"
