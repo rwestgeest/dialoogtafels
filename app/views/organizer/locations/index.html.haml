@@ -1,0 +1,17 @@
+- title "Uw dialoog locaties"
+
+%table
+  %tr
+    %th
+    %th
+    %th
+
+  - @locations.each do |location|
+    %tr
+      %td= link_to 'Show', organizer_location_path(location)
+      %td= link_to 'Edit', edit_organizer_location_path(location)
+      %td= destroy_link organizer_location_path(location), "locatie" 
+
+%br
+
+= link_to 'New Location', new_organizer_location_path

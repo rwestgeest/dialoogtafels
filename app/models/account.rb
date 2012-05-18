@@ -119,6 +119,14 @@ class Account < ActiveRecord::Base
     Postman.deliver(:account_welcome, self)
   end
 
+  def active_contribution
+    contribution_to(tenant.active_project)
+  end
+
+  def contribution_to(project)
+    person.contributors.where(:project_id => project).first
+  end
+
   def landing_page
     return '/account/password/edit' unless confirmed?
     '/'

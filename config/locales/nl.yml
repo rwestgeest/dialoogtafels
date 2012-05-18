@@ -31,3 +31,6 @@ nl:
     password_resets:
       new: 
         send_password: 'Reset mijn wachtwoord'
+  registration:
+    organizers:
+      welcome: "Dank voor je registratie en Welkom bij dialoogtafels. Je kunt hieronder direct je locatie opgeven en publiceren."

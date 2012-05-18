@@ -28,6 +28,12 @@ class Organizer < Contributor
 
   before_validation :associate_to_active_project
 
+  def self.for_project_and_person(project, person)
+    organizer = new
+    organizer.project = project
+    organizer.person = person
+    organizer
+  end
   def email=(email) 
     self.person = Person.new unless person
     person.email = email

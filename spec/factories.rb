@@ -58,10 +58,5 @@ module Factories
       sequence( :telephone ) { |n| "telephone_#{n}" }
     end
 
-    factory :contributor_account, :class => Account do
-      sequence( :email ) { |n| "contributor_account_#{n}@mail.com" }
-      role Account::Contributor
-      association :person, :email => nil
-    end
   end
 end

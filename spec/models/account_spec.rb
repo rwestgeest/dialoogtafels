@@ -112,7 +112,7 @@ describe Account  do
     end
 
     describe "create" do 
-      [:maintainer_account, :coordinator_account, :contributor_account].each  do |account|
+      [:maintainer_account, :coordinator_account].each  do |account|
         context account do
           it "creates an account" do
             expect { FactoryGirl.create account }.to change(Account, :count).by(1)
@@ -218,12 +218,16 @@ describe Account  do
       end
       context "contributor" do
         let(:account) { 
-          FactoryGirl.create(:contributor_account, 
-                             :password => nil, 
-                             :password_confirmation => nil)
+          FactoryGirl.create(:organizer).account
         }
 
         it_should_behave_like "a confirmable account"
+
+        describe "current_contribution"  do
+          it "is the contribution to the current project" do
+            account.active_contribution.should == account.contribution_to(account.tenant.active_project)
+          end
+        end
       end
       context "coordinator" do
         let(:account) { 

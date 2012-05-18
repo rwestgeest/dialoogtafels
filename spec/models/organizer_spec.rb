@@ -23,13 +23,20 @@ describe Organizer do
         FactoryGirl.create :organizer 
         Organizer.last.project.should == Tenant.current.active_project
       end
+
       it "creates an person" do
         expect{ FactoryGirl.create :organizer }.to change(Person, :count).by(1)
         Organizer.last.person.should == Person.last
       end
+
       it "creates a worker account with role organizer" do
         expect{ FactoryGirl.create :organizer }.to change(Account, :count).by(1)
         Account.last.person.should == Person.last
+      end
+
+      it "sends a welcome message" do
+        Postman.should_receive(:deliver).with(:account_welcome, an_instance_of(Account))
+        FactoryGirl.create :organizer 
       end
     end
   end

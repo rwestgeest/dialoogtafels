@@ -20,6 +20,10 @@ Tafelmanager2::Application.routes.draw do
     resources :locations 
   end
 
+  namespace :organizer do
+    resources :locations
+  end
+
   namespace :admin do 
     resources :tenants 
   end

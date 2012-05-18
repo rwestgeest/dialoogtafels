@@ -28,4 +28,8 @@ module ApplicationHelper
     render :partial => 'shared/form_errors', locals: { record: record }
   end
 
+  def destroy_link(path, text_representation)
+    raw  link_to('verwijderen', path, :title => 'verwijderen', :confirm => 'Weet u zeker dat u deze #{text_representation} wilt verwijderen?', :method => :delete)
+  end
+
 end

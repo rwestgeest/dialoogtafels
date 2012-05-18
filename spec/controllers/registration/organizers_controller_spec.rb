@@ -38,9 +38,11 @@ describe Registration::OrganizersController do
         assigns(:organizer).should be_persisted
       end
 
-      it "redirects to the created person" do
+      it "signs in and redirects to a new location" do
         post :create, {:organizer => valid_attributes}, valid_session
-        response.should redirect_to confirm_registration_organizers_url
+        flash.notice.should == I18n.t('.registration.organizers.welcome')
+        current_account.should == Account.last
+        response.should redirect_to organizer_locations_url
       end
     end
 

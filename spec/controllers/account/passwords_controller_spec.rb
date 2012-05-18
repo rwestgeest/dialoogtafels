@@ -3,7 +3,7 @@ require 'spec_helper'
 describe Account::PasswordsController do
   render_views
   prepare_scope :tenant
-  login_as :contributor
+  login_as :organizer
 
   def valid_parameters
     {:password => 'secret', :password_confirmation => 'secret' }

@@ -9,6 +9,9 @@ class ApplicationController < ActionController::Base
   def current_account
     @current_account ||= Account.find(current_account_id)
   end
+  def current_organizer
+    current_account.active_contribution
+  end
   def current_account_id
     session[:current_account_id]
   end
