@@ -11,23 +11,23 @@
     %header#heading
       %nav#heading-navigation
         =login_information
-        %h1 Dialoogtafels.nl
+      %h1 Dialoogtafels.nl
+    %section#main-menu
+
     %section#content-frame
       %section#flash_messages
         = flash_tags
       %table.columns-layout
         %tr
-          %td.left
-            #left
-              .col
-                .page-header
-                  .main-sub-menu
-                  = yield :title
-                .page-content
-                  = yield
-          %td.right
-            #right
-              #help_text
-                = yield :page_info
-              = yield :page_side_bar
+          %td#main-bar
+            .col
+              #page-header
+                .main-sub-menu
+                = yield :title
+              #page-content
+                = yield
+          %td#side-bar
+            #help_text
+              = yield :page_info
+            = yield :page_side_bar
     %section#footer
