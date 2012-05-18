@@ -26,10 +26,15 @@ module ControllerExtensions
     @__accounts ||= {}
   end
   def __create_and_confirm_account_with_role(role)
+    begin
     if ( role == :organizer )
       account = FactoryGirl.create(role).account
     else
       account = FactoryGirl.create(:"#{role}_account")
+    end
+    rescue ActiveRecord::RecordInvalid => e
+      p e.record.errors 
+      raise e
     end
     account.confirm!
     return account

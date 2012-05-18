@@ -3,7 +3,7 @@ require 'spec_helper'
 describe Account::PasswordResetsController do
   render_views
   prepare_scope :tenant
-  let(:account) { FactoryGirl.create :account  }
+  let(:account) { FactoryGirl.create :maintainer_account  }
   def valid_attributes 
     { email: account.email }
   end
@@ -25,7 +25,7 @@ describe Account::PasswordResetsController do
         response.should redirect_to(success_account_password_reset_path)
       end
       it "resets the password" do
-        Account.any_instance.should_receive :reset!
+        MaintainerAccount.any_instance.should_receive :reset!
         post 'create', :account => valid_attributes
       end
     end

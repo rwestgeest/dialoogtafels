@@ -1,43 +1,8 @@
 require 'spec_helper'
 
 describe Account  do
-  it_should_behave_like "a_scoped_object", :account
-
-  describe "creation methods" do
-    it "maintainer creates maintainer" do
-      Account.maintainer.role == Account::Maintainer
-    end
-    it "contributor creates contributor" do
-      Account.contributor.role == Account::Contributor
-    end
-  end
-
   context "within tenant scope" do
     prepare_scope :tenant
-
-    describe 'validations' do
-      let!(:account) { FactoryGirl.create :maintainer_account, :password => nil, :password_confirmation => nil }
-      it { should validate_presence_of :email }
-      it { should validate_uniqueness_of :email }
-      it { should allow_value("some@mail.nl").for(:email) }
-      it { should allow_value("email@domaindiscount24.com").for(:email) }
-
-      ["rob@", "@mo.nl", "123.nl", "123@nl", "aaa.123.nl", "aaa.123@nl"].each do |illegal_mail|
-        it { should_not allow_value(illegal_mail).for(:email) }
-      end
-
-      it { should validate_presence_of :role } 
-
-      describe "on password" do 
-        it "accepts no password on create" do
-          account.should be_persisted
-        end
-        it "requires password on save" do
-          account.save.should be_false
-          account.errors_on(:password).should_not be_empty
-        end
-      end
-    end
 
     describe 'generate_perishable_token' do
       let!(:existing_account) { FactoryGirl.create :maintainer_account }
@@ -111,19 +76,6 @@ describe Account  do
       end
     end
 
-    describe "create" do 
-      [:maintainer_account, :coordinator_account].each  do |account|
-        context account do
-          it "creates an account" do
-            expect { FactoryGirl.create account }.to change(Account, :count).by(1)
-          end
-          it "sends a welcome message" do
-            Postman.should_receive(:deliver).with(:account_welcome, an_instance_of(Account))
-            account = FactoryGirl.create account
-          end
-        end
-      end
-    end
 
     describe 'reset!' do
       def reset_account

@@ -1,5 +1,5 @@
 class Account::SessionsController < ApplicationController
-
+  layout 'sessions'
   def new
     @account = Account.new
   end
@@ -16,6 +16,10 @@ class Account::SessionsController < ApplicationController
     end
   end
 
+  def destroy
+    sign_out
+    redirect_to new_account_session_path
+  end
   private 
 
   def account_params

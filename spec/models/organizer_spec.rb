@@ -35,7 +35,7 @@ describe Organizer do
       end
 
       it "sends a welcome message" do
-        Postman.should_receive(:deliver).with(:account_welcome, an_instance_of(Account))
+        Postman.should_receive(:deliver).with(:account_welcome, an_instance_of(TenantAccount))
         FactoryGirl.create :organizer 
       end
     end

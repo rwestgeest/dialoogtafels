@@ -1,5 +1,5 @@
 class Account::ResponseSessionsController < ApplicationController
-
+  layout 'sessions'
   def show
     @account = Account.find_by_perishable_token(params[:id])
     if @account

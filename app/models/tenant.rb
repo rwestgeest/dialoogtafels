@@ -15,12 +15,23 @@ class Tenant < ActiveRecord::Base
 
   after_create :create_accoun_and_project
 
+  class NullTenant
+    def host
+      'test.host'
+    end
+    def from_email
+      'noreply@dialoogtafels.nl'
+    end
+  end
   class << self 
     def current 
       Thread.current[:current_tenant] 
     end
     def current=(tenant)
       Thread.current[:current_tenant] = tenant
+    end
+    def null
+      NullTenant.new
     end
   end
 
@@ -29,7 +40,7 @@ class Tenant < ActiveRecord::Base
     begin 
       Tenant.current = self
       self.active_project = Project.new(:name => "Dag van de dialoog #{Date.today.year}").for_tenant(self)
-      self.accounts << Account.coordinator(:email => representative_email, :telephone => representative_telephone, :name => representative_name).for_tenant(self)
+      self.accounts << TenantAccount.coordinator(:email => representative_email, :telephone => representative_telephone, :name => representative_name).for_tenant(self)
       save
       update_attribute :active_project_id, active_project.id
     ensure
@@ -38,7 +49,7 @@ class Tenant < ActiveRecord::Base
   end
 
   def host
-    @host || 'test.host'
+    @host ||= 'test.host'
   end
   def on_host(host)
     @host = host 

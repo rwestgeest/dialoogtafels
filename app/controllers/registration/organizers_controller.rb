@@ -1,5 +1,5 @@
 class Registration::OrganizersController < ApplicationController
-
+  layout 'registration'
 
   def new
     @organizer = Organizer.new

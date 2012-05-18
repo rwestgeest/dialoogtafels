@@ -43,5 +43,15 @@ describe Account::SessionsController do
     end
   end
 
-
+  describe "DELETE 'destroy'" do
+    login_as :organizer
+    it "signs out the current account" do
+      delete 'destroy'
+      current_account.should == nil
+    end
+    it "redirects to sessions/new " do
+      delete 'destroy'
+      response.should redirect_to(new_account_session_path)
+    end
+  end
 end

@@ -1,4 +1,5 @@
-  shared_examples_for 'a_scoped_object' do |model|
+  shared_examples_for 'a_scoped_object' do |model, options|
+    let(:model_factor) { options && options.has_key?(:factory) && options[:factory] || model }
     let(:model_class) { model.to_s.classify.constantize }
     let(:tenant_a) { FactoryGirl.create :tenant } 
     let(:tenant_b) { FactoryGirl.create :tenant } 

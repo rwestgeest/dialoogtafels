@@ -1,4 +1,5 @@
 class Account::PasswordResetsController < ApplicationController
+  layout 'sessions'
   def new
     @account = Account.new
   end

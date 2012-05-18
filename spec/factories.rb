@@ -37,10 +37,9 @@ module Factories
       sequence( :telephone ) { |n| "telephone#{n}" }
     end
 
-    factory :maintainer_account, :class => Account, :aliases => [:account] do
+    factory :maintainer_account, :class => MaintainerAccount, :aliases => [:account] do
       sequence( :email ) { |n| "maintainer_account_#{n}@mail.com" }
       role Account::Maintainer
-      association :person , :email => nil
       factory :confirmed_account do
         password 'secret'
         password_confirmation 'secret'
@@ -51,7 +50,7 @@ module Factories
 
     end
 
-    factory :coordinator_account, :class => Account do
+    factory :coordinator_account, :class => TenantAccount, :aliases => [:tenant_account] do
       sequence( :email ) { |n| "coordinator_account_#{n}@mail.com" }
       role Account::Coordinator
       sequence( :name ) { |n| "person_#{n}" }

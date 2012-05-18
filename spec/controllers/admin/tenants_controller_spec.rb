@@ -19,6 +19,7 @@ require 'spec_helper'
 # that an instance is receiving a specific message.
 
 describe Admin::TenantsController do
+  login_as :maintainer
 
   # This should return the minimal set of attributes required to create a valid
   # Tenant. As you add validations to Tenant, be sure to
@@ -27,17 +28,10 @@ describe Admin::TenantsController do
     FactoryGirl.attributes_for :tenant
   end
   
-  # This should return the minimal set of values that should be in the session
-  # in order to pass any filters (e.g. authentication) defined in
-  # TenantsController. Be sure to keep this updated too.
-  def valid_session
-    {}
-  end
-
   describe "GET index" do
     it "assigns all tenants as @tenants" do
       tenant = Tenant.create! valid_attributes
-      get :index, {}, valid_session
+      get :index, {}
       assigns(:tenants).should eq([tenant])
     end
   end
@@ -45,14 +39,14 @@ describe Admin::TenantsController do
   describe "GET show" do
     it "assigns the requested tenant as @tenant" do
       tenant = Tenant.create! valid_attributes
-      get :show, {:id => tenant.to_param}, valid_session
+      get :show, {:id => tenant.to_param}
       assigns(:tenant).should eq(tenant)
     end
   end
 
   describe "GET new" do
     it "assigns a new tenant as @tenant" do
-      get :new, {}, valid_session
+      get :new, {}
       assigns(:tenant).should be_a_new(Tenant)
     end
   end
@@ -60,7 +54,7 @@ describe Admin::TenantsController do
   describe "GET edit" do
     it "assigns the requested tenant as @tenant" do
       tenant = Tenant.create! valid_attributes
-      get :edit, {:id => tenant.to_param}, valid_session
+      get :edit, {:id => tenant.to_param}
       assigns(:tenant).should eq(tenant)
     end
   end
@@ -69,18 +63,18 @@ describe Admin::TenantsController do
     describe "with valid params" do
       it "creates a new Tenant" do
         expect {
-          post :create, {:tenant => valid_attributes}, valid_session
+          post :create, {:tenant => valid_attributes}
         }.to change(Tenant, :count).by(1)
       end
 
       it "assigns a newly created tenant as @tenant" do
-        post :create, {:tenant => valid_attributes}, valid_session
+        post :create, {:tenant => valid_attributes}
         assigns(:tenant).should be_a(Tenant)
         assigns(:tenant).should be_persisted
       end
 
       it "redirects to the created tenant" do
-        post :create, {:tenant => valid_attributes}, valid_session
+        post :create, {:tenant => valid_attributes}
         response.should redirect_to(admin_tenant_url(Tenant.last))
       end
     end
@@ -89,14 +83,14 @@ describe Admin::TenantsController do
       it "assigns a newly created but unsaved tenant as @tenant" do
         # Trigger the behavior that occurs when invalid params are submitted
         Tenant.any_instance.stub(:save).and_return(false)
-        post :create, {:tenant => {}}, valid_session
+        post :create, {:tenant => {}}
         assigns(:tenant).should be_a_new(Tenant)
       end
 
       it "re-renders the 'new' template" do
         # Trigger the behavior that occurs when invalid params are submitted
         Tenant.any_instance.stub(:save).and_return(false)
-        post :create, {:tenant => {}}, valid_session
+        post :create, {:tenant => {}}
         response.should render_template("new")
       end
     end
@@ -111,18 +105,18 @@ describe Admin::TenantsController do
         # receives the :update_attributes message with whatever params are
         # submitted in the request.
         Tenant.any_instance.should_receive(:update_attributes).with({'these' => 'params'})
-        put :update, {:id => tenant.to_param, :tenant => {'these' => 'params'}}, valid_session
+        put :update, {:id => tenant.to_param, :tenant => {'these' => 'params'}}
       end
 
       it "assigns the requested tenant as @tenant" do
         tenant = Tenant.create! valid_attributes
-        put :update, {:id => tenant.to_param, :tenant => valid_attributes}, valid_session
+        put :update, {:id => tenant.to_param, :tenant => valid_attributes}
         assigns(:tenant).should eq(tenant)
       end
 
       it "redirects to the tenant" do
         tenant = Tenant.create! valid_attributes
-        put :update, {:id => tenant.to_param, :tenant => valid_attributes}, valid_session
+        put :update, {:id => tenant.to_param, :tenant => valid_attributes}
         response.should redirect_to(admin_tenant_url(tenant))
       end
     end
@@ -132,7 +126,7 @@ describe Admin::TenantsController do
         tenant = Tenant.create! valid_attributes
         # Trigger the behavior that occurs when invalid params are submitted
         Tenant.any_instance.stub(:save).and_return(false)
-        put :update, {:id => tenant.to_param, :tenant => {}}, valid_session
+        put :update, {:id => tenant.to_param, :tenant => {}}
         assigns(:tenant).should eq(tenant)
       end
 
@@ -140,7 +134,7 @@ describe Admin::TenantsController do
         tenant = Tenant.create! valid_attributes
         # Trigger the behavior that occurs when invalid params are submitted
         Tenant.any_instance.stub(:save).and_return(false)
-        put :update, {:id => tenant.to_param, :tenant => {}}, valid_session
+        put :update, {:id => tenant.to_param, :tenant => {}}
         response.should render_template("edit")
       end
     end
@@ -150,13 +144,13 @@ describe Admin::TenantsController do
     it "destroys the requested tenant" do
       tenant = Tenant.create! valid_attributes
       expect {
-        delete :destroy, {:id => tenant.to_param}, valid_session
+        delete :destroy, {:id => tenant.to_param}
       }.to change(Tenant, :count).by(-1)
     end
 
     it "redirects to the tenants list" do
       tenant = Tenant.create! valid_attributes
-      delete :destroy, {:id => tenant.to_param}, valid_session
+      delete :destroy, {:id => tenant.to_param}
       response.should redirect_to(admin_tenants_url)
     end
   end

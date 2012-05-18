@@ -1,5 +1,6 @@
 require 'bcrypt'
 require 'securerandom'
+
 module TokenGenerator 
   def self.generate_token
     SecureRandom.hex(16)
@@ -7,13 +8,10 @@ module TokenGenerator
 end
 
 class Account < ActiveRecord::Base
-  include ScopedModel
-  scope_to_tenant
-
-  EMAIL_REGEXP = /\A([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})\Z/i
   Maintainer = 'maintainer'
   Coordinator = 'coordinator'
   Contributor = 'contributor'
+  EMAIL_REGEXP = /\A([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})\Z/i
 
   belongs_to :person
 
@@ -41,6 +39,18 @@ class Account < ActiveRecord::Base
   delegate :name, :to => :person
   delegate :telephone, :to => :person
 
+  class << self 
+    def authenticate_by_email_and_password(email, password)
+      account = Account.find_by_email(email)
+      return account if account && 
+                        account.confirmed? && 
+                        account.authenticate(password)
+    end
+    def authenticate_by_token(token)
+      Account.find_by_perishable_token(token) unless token.nil? || token.empty?
+    end
+  end
+
   def for_tenant(tenant)
     self.tenant = tenant
     self.person = Person.new unless person
@@ -58,35 +68,10 @@ class Account < ActiveRecord::Base
     person.telephone = value
   end
 
-  class << self 
-    def authenticate_by_email_and_password(email, password)
-      account = Account.find_by_email(email)
-      return account if account && 
-                        account.confirmed? && 
-                        account.authenticate(password)
-    end
-    def authenticate_by_token(token)
-      Account.find_by_perishable_token(token) unless token.nil? || token.empty?
-    end
-    def maintainer(attributes = {})
-      account_with_tenant attributes.merge(:role => Maintainer)
-    end
-    def coordinator(attributes = {})
-      account_with_tenant attributes.merge(:role => Coordinator)
-    end
-    def contributor(attributes = {})
-      account_with_tenant attributes.merge(:role => Contributor)
-    end
-    private
-    def account_with_tenant(attributes)
-      a = Account.new(attributes)
-      a.tenant = Tenant.current
-      a
-    end
-  end
   def authenticate(password)
       encrypted_password == BCrypt::Engine.hash_secret(password, password_salt)
   end
+
   def confirm_with_password(attributes)
     update_attributes(attributes) && confirm!
   end

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120518100232) do
+ActiveRecord::Schema.define(:version => 20120518131841) do
 
   create_table "accounts", :force => true do |t|
     t.string   "email",              :limit => 150,                      :null => false
@@ -26,7 +26,10 @@ ActiveRecord::Schema.define(:version => 20120518100232) do
     t.datetime "created_at",                                             :null => false
     t.datetime "updated_at",                                             :null => false
     t.datetime "reset_at"
+    t.string   "type",               :limit => 20
   end
+
+  add_index "accounts", ["type"], :name => "index_accounts_on_type"
 
   create_table "contributors", :force => true do |t|
     t.string   "type"
