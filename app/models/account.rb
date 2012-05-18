@@ -93,12 +93,14 @@ class Account < ActiveRecord::Base
 
   def confirm!
     self.confirmed_at = Time.now if has_saved_password? 
+    self.reset_at = nil
     save
   end
 
   def reset!
     if (confirmed?)
       generate_perishable_token
+      self.reset_at = Time.now
       save!
     end
     Postman.deliver(:account_reset, self)
@@ -106,6 +108,10 @@ class Account < ActiveRecord::Base
 
   def confirmed?
     confirmed_at != nil
+  end
+
+  def reset?
+    reset_at != nil
   end
 
   def generate_perishable_token
@@ -128,7 +134,8 @@ class Account < ActiveRecord::Base
   end
 
   def landing_page
-    return '/account/password/edit' unless confirmed?
+    return '/account/password/edit' if !confirmed? || reset?
+    return '/organizer/locations' if role == Account::Contributor 
     '/'
   end
 

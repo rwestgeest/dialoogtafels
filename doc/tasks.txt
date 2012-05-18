@@ -1,14 +1,14 @@
-- organizer registration redirects to create first location
 - creating the first location creates a first conversation round
 - addind a conversation round updates the first location
 - add photo to the first location
 - updating the photo to the first location updates the location
 - updating the location sends a mail to the organizer 
 - add menu to the layout
-
+- nice picture for first dialoog locatie
 
 ===============DONE ================
 
+- organizer registration redirects to create first location
 - unconfirmed accounts first landing pagge is password/edit
 - creating account sends confirmation mail
 - creating tenant creates project

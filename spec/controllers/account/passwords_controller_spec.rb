@@ -20,15 +20,27 @@ describe Account::PasswordsController do
   end
   describe "PUT 'update'" do
     context "with valid params" do
-      before { put 'update', :account => valid_parameters }
+      def update 
+        put 'update', :account => valid_parameters
+      end
       it "redirects to the accounts langding page" do
+        update
         response.should redirect_to(current_account.landing_page)
       end
       it "updates the password" do
+        update
         current_account.authenticate('secret').should be_true
       end
       it "confirms the account" do
+        update
         current_account.should be_confirmed
+      end
+      it "removes the reset state if needed" do
+        current_account.confirm_with_password valid_parameters
+        current_account.reset!
+        update
+        current_account.reload
+        current_account.should_not be_reset
       end
     end
     context "with invalid params" do

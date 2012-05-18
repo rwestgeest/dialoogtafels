@@ -9,7 +9,7 @@ class Person < ActiveRecord::Base
   delegate :email, :to => :account, :allow_nil => true
 
   def email=(email)
-    self.account = Account.new unless account
+    self.account = Account.contributor unless account
     self.account.email = email
   end
 

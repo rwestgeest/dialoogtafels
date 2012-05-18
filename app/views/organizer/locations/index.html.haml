@@ -1,17 +1,20 @@
 - title "Uw dialoog locaties"
 
-%table
-  %tr
-    %th
-    %th
-    %th
-
-  - @locations.each do |location|
+- if (@locations.empty?)
+  = link_to "Maak jeeerste dialoog locatie aan", new_organizer_location_path
+- else
+  %table
     %tr
-      %td= link_to 'Show', organizer_location_path(location)
-      %td= link_to 'Edit', edit_organizer_location_path(location)
-      %td= destroy_link organizer_location_path(location), "locatie" 
+      %th
+      %th
+      %th
 
-%br
+    - @locations.each do |location|
+      %tr
+        %td= link_to 'Show', organizer_location_path(location)
+        %td= link_to 'Edit', edit_organizer_location_path(location)
+        %td= destroy_link organizer_location_path(location), "locatie" 
 
-= link_to 'New Location', new_organizer_location_path
+  %br
+
+  = link_to 'New Location', new_organizer_location_path

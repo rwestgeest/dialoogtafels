@@ -126,31 +126,46 @@ describe Account  do
     end
 
     describe 'reset!' do
+      def reset_account
+        account.reset!
+        account.reload
+      end
     
       context "on a confirmed account" do
         let!(:account) { FactoryGirl.create :confirmed_account }
         it "generates a new token" do
           old_token = account.perishable_token
-          account.reset!
-          account.reload
+          reset_account
           account.perishable_token.should_not == old_token
+        end
+        it "sets the account to reset" do
+          reset_account
+          account.should be_reset
         end
         it "sends an account reset mail" do
           Postman.should_receive(:deliver).with(:account_reset, account)
           account.reset!
         end
+        it "sets the landing page to change password" do
+          account.reset!
+          account.landing_page.should == '/account/password/edit'
+        end
       end
+
       context "on a new account" do
         let!(:account) { FactoryGirl.create :account }
         it "keeps the old token" do
           old_token = account.perishable_token
-          account.reset!
-          account.reload
+          reset_account
           account.perishable_token.should == old_token
         end
         it "sends an account reset mail" do
           Postman.should_receive(:deliver).with(:account_reset, account)
           account.reset!
+        end
+        it "leaves the reset state to false"  do
+          reset_account
+          account.should_not be_reset
         end
       end
     end
@@ -179,19 +194,22 @@ describe Account  do
       describe "with_password" do
 
         describe "with valid password" do 
-          attr_reader :confirmation_result
-
-          before do 
-            @confirmation_result = account.confirm_with_password :password => 'secret', :password_confirmation => 'secret'
-            account.reload
-          end
 
           it "returns true and confirms" do
+            confirmation_result = confirm_with_password!
             confirmation_result.should be_true
             account.should be_confirmed
           end
 
+          it "makes it not reset" do
+            confirm_with_password!
+            account.reset!
+            confirm_with_password!
+            account.should_not be_reset
+          end
+
           it "sets password" do
+            confirmation_result = confirm_with_password!
             account.encrypted_password.should_not be_empty
           end
 
@@ -207,6 +225,11 @@ describe Account  do
     end
 
     describe 'confirm' do 
+      def confirm_with_password!
+        account.confirm_with_password :password => 'secret', :password_confirmation => 'secret'
+        account.reload
+      end
+
       context "maintainer" do
         let(:account) { 
           FactoryGirl.create(:maintainer_account, 
@@ -222,6 +245,10 @@ describe Account  do
         }
 
         it_should_behave_like "a confirmable account"
+        it "should have organizer/locations as landing_page" do
+          confirm_with_password!
+          account.landing_page.should == '/organizer/locations'
+        end
 
         describe "current_contribution"  do
           it "is the contribution to the current project" do
