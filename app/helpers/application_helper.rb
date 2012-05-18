@@ -24,4 +24,8 @@ module ApplicationHelper
     raw flash.collect { |key, message| content_tag(:div, message, :id => key) }.join($/)
   end
 
+  def errors_for record
+    render :partial => 'shared/form_errors', locals: { record: record }
+  end
+
 end
