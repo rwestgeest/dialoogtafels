@@ -14,15 +14,18 @@ describe Account  do
 
   context "within tenant scope" do
     prepare_scope :tenant
+
     describe 'validations' do
       let!(:account) { FactoryGirl.create :maintainer_account, :password => nil, :password_confirmation => nil }
       it { should validate_presence_of :email }
       it { should validate_uniqueness_of :email }
       it { should allow_value("some@mail.nl").for(:email) }
       it { should allow_value("email@domaindiscount24.com").for(:email) }
+
       ["rob@", "@mo.nl", "123.nl", "123@nl", "aaa.123.nl", "aaa.123@nl"].each do |illegal_mail|
         it { should_not allow_value(illegal_mail).for(:email) }
       end
+
       it { should validate_presence_of :role } 
 
       describe "on password" do 
@@ -108,12 +111,24 @@ describe Account  do
       end
     end
 
+    describe "create" do 
+      [:maintainer_account, :coordinator_account, :contributor_account].each  do |account|
+        context account do
+          it "creates an account" do
+            expect { FactoryGirl.create account }.to change(Account, :count).by(1)
+          end
+          it "sends a welcome message" do
+            Postman.should_receive(:deliver).with(:account_welcome, an_instance_of(Account))
+            account = FactoryGirl.create account
+          end
+        end
+      end
+    end
+
     describe 'reset!' do
     
-      shared_examples_for "an_account_resetter" do
-      end
       context "on a confirmed account" do
-        let(:account) { FactoryGirl.create :confirmed_account }
+        let!(:account) { FactoryGirl.create :confirmed_account }
         it "generates a new token" do
           old_token = account.perishable_token
           account.reset!
@@ -126,7 +141,7 @@ describe Account  do
         end
       end
       context "on a new account" do
-        let(:account) { FactoryGirl.create :account }
+        let!(:account) { FactoryGirl.create :account }
         it "keeps the old token" do
           old_token = account.perishable_token
           account.reset!
@@ -143,6 +158,10 @@ describe Account  do
     shared_examples_for "a confirmable account" do
       it "is initially not confirmed" do
         account.should_not be_confirmed
+      end
+
+      it "has a change_password landing page" do
+        account.landing_page.should == '/account/password/edit'
       end
 
       it "should have a confirmation token" do
@@ -175,6 +194,7 @@ describe Account  do
           it "sets password" do
             account.encrypted_password.should_not be_empty
           end
+
         end
 
         describe "with invalid password" do 

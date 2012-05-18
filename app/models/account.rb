@@ -19,6 +19,7 @@ class Account < ActiveRecord::Base
 
   before_save :encrypt_password
   before_create :generate_perishable_token
+  after_create :send_confirmation_message
 
   attr_accessible :email, :password, :password_confirmation, :role, :name, :telephone
   attr_accessor :password
@@ -62,7 +63,7 @@ class Account < ActiveRecord::Base
       account = Account.find_by_email(email)
       return account if account && 
                         account.confirmed? && 
-                        account.encrypted_password == BCrypt::Engine.hash_secret(password, account.password_salt)
+                        account.authenticate(password)
     end
     def authenticate_by_token(token)
       Account.find_by_perishable_token(token) unless token.nil? || token.empty?
@@ -83,7 +84,9 @@ class Account < ActiveRecord::Base
       a
     end
   end
-
+  def authenticate(password)
+      encrypted_password == BCrypt::Engine.hash_secret(password, password_salt)
+  end
   def confirm_with_password(attributes)
     update_attributes(attributes) && confirm!
   end
@@ -112,10 +115,14 @@ class Account < ActiveRecord::Base
     end
   end
 
-  def landing_page
-    '/'
+  def send_confirmation_message
+    Postman.deliver(:account_welcome, self)
   end
 
+  def landing_page
+    return '/account/password/edit' unless confirmed?
+    '/'
+  end
 
   private 
   def unique_token? token

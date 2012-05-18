@@ -9,11 +9,11 @@ describe Notifications do
     it "renders the headers" do
       mail.subject.should eq("Account reset")
       mail.to.should eq([account.email])
-      mail.from.should eq([Tenant.current.from_email])
+      mail.from.should eq([account.tenant.from_email])
     end
 
     it "puts the response url in the body" do
-      mail.body.encoded.should include(account_response_session_url(account.perishable_token, :host => Tenant.current.host))
+      mail.body.encoded.should include(account_response_session_url(account.perishable_token, :host => account.tenant.host))
     end
   end
 
@@ -23,10 +23,10 @@ describe Notifications do
     it "renders the headers" do
       mail.subject.should eq("Account welcome")
       mail.to.should eq([account.email])
-      mail.from.should eq([Tenant.current.from_email])
+      mail.from.should eq([account.tenant.from_email])
     end
     it "puts the response url in the body" do
-      mail.body.encoded.should include(account_response_session_url(account.perishable_token, :host => Tenant.current.host))
+      mail.body.encoded.should include(account_response_session_url(account.perishable_token, :host => account.tenant.host))
     end
 
   end

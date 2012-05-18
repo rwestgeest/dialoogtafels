@@ -1,5 +1,3 @@
-- creating account sends confirmation mail
-- unconfirmed accounts first langing pagge is confirm
 - organizer registration redirects to create first location
 - creating the first location creates a first conversation round
 - addind a conversation round updates the first location
@@ -10,6 +8,8 @@
 
 ===============DONE ================
 
+- unconfirmed accounts first landing pagge is password/edit
+- creating account sends confirmation mail
 - creating tenant creates project
 - creating tenant creates admin account
 

@@ -40,7 +40,7 @@ module Factories
     factory :maintainer_account, :class => Account, :aliases => [:account] do
       sequence( :email ) { |n| "maintainer_account_#{n}@mail.com" }
       role Account::Maintainer
-      association :person
+      association :person , :email => nil
       factory :confirmed_account do
         password 'secret'
         password_confirmation 'secret'
@@ -61,7 +61,7 @@ module Factories
     factory :contributor_account, :class => Account do
       sequence( :email ) { |n| "contributor_account_#{n}@mail.com" }
       role Account::Contributor
-      association :person
+      association :person, :email => nil
     end
   end
 end

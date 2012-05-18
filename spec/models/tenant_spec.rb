@@ -31,6 +31,10 @@ describe Tenant do
         Project.last.name.should include Date.today.year.to_s
       }
     end
+    it "leaves the tenant to the old value" do
+      Tenant.current = nil
+      expect { Tenant.create(FactoryGirl.attributes_for :tenant) }.not_to change(Tenant, :current)
+    end
   end
   describe 'creating a tenant with account' do
     it_should_behave_like 'a_tenant_creator'
@@ -38,6 +42,5 @@ describe Tenant do
       prepare_scope :tenant
       it_should_behave_like 'a_tenant_creator'
     end
-
   end
 end

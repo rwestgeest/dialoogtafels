@@ -1,9 +1,9 @@
 Tafelmanager2::Application.routes.draw do
 
-
   namespace :account do
     resource :session, :only => [:new, :create]
     resources :response_sessions, :only => [:show]
+    resource :password, :only => [:edit, :update]
     resource :password_reset, :only => [:new, :create] do
       get 'success'
     end

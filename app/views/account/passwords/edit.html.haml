@@ -1,0 +1,19 @@
+- title "Wachtwoord wijzigen"
+
+= form_for @account, :url  => account_password_path  do |f|
+  -if @account.errors.any?
+    #error_explanation
+      %h2= "#{pluralize(@account.errors.count, "error")} prohibited this account from being saved:"
+      %ul
+        - @account.errors.full_messages.each do |msg|
+          %li= msg
+  %p
+    .label= f.label :password
+    .input= f.password_field :password
+  %p
+    .label= f.label :password_confirmation
+    .input= f.password_field :password_confirmation
+
+  .actions
+    = f.submit
+
