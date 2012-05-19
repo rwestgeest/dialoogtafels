@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120518131841) do
+ActiveRecord::Schema.define(:version => 20120519074733) do
 
   create_table "accounts", :force => true do |t|
     t.string   "email",              :limit => 150,                      :null => false
@@ -40,16 +40,30 @@ ActiveRecord::Schema.define(:version => 20120518131841) do
     t.datetime "updated_at", :null => false
   end
 
+  create_table "conversation_rounds", :force => true do |t|
+    t.datetime "start"
+    t.datetime "end"
+    t.integer  "tenant_id",   :null => false
+    t.integer  "location_id", :null => false
+  end
+
   create_table "locations", :force => true do |t|
-    t.string   "name",         :limit => 100
-    t.string   "postal_code",  :limit => 10,  :null => false
-    t.string   "address",      :limit => 100, :null => false
-    t.string   "city",         :limit => 100, :null => false
-    t.integer  "project_id",                  :null => false
-    t.integer  "tenant_id",                   :null => false
-    t.integer  "organizer_id",                :null => false
-    t.datetime "created_at",                  :null => false
-    t.datetime "updated_at",                  :null => false
+    t.string   "name",               :limit => 100
+    t.string   "postal_code",        :limit => 10,                     :null => false
+    t.string   "address",            :limit => 100,                    :null => false
+    t.string   "city",               :limit => 100,                    :null => false
+    t.float    "lattitude"
+    t.float    "longitude"
+    t.integer  "project_id",                                           :null => false
+    t.integer  "tenant_id",                                            :null => false
+    t.integer  "organizer_id",                                         :null => false
+    t.datetime "created_at",                                           :null => false
+    t.datetime "updated_at",                                           :null => false
+    t.string   "photo_file_name"
+    t.string   "photo_content_type"
+    t.integer  "photo_file_size"
+    t.datetime "photo_updated_at"
+    t.boolean  "published",                         :default => false
   end
 
   create_table "people", :force => true do |t|

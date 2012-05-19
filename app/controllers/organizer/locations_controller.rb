@@ -13,12 +13,12 @@ class Organizer::LocationsController < ApplicationController
 
   def edit
     @location = Location.find(params[:id])
+    render_edit 
   end
 
   def create
     @location = Location.new(params[:location])
     @location.organizer = current_organizer
-
       if @location.save
         redirect_to organizer_location_url(@location), notice: 'Location was successfully created.' 
       else
@@ -32,7 +32,7 @@ class Organizer::LocationsController < ApplicationController
       if @location.update_attributes(params[:location])
         redirect_to organizer_location_url(@location), notice: 'Location was successfully updated.' 
       else
-        render action: "edit" 
+        render_edit
       end
   end
 
@@ -41,5 +41,10 @@ class Organizer::LocationsController < ApplicationController
     @location.destroy
 
     redirect_to organizer_locations_url 
+  end
+  private 
+  def render_edit
+    return render(action: "step_#{params[:step]}") if %w(conversations publication).include?(params[:step])
+    render(action: 'edit')
   end
 end

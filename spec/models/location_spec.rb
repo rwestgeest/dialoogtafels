@@ -17,12 +17,21 @@ describe Location do
   context "with current tenant" do
     prepare_scope :tenant
 
+    describe "a new location" do
+      it "should have the tenants name as city by default " do  
+        Location.new.city.should == Tenant.current.name 
+      end
+      it "'s city can be overridden" do  
+        Location.new(:city => "rotterdam").city.should == "rotterdam"
+      end
+    end
     describe "creating an location" do
       it "associates it for the tenants active project" do
         FactoryGirl.create :location 
         Location.last.project.should == Tenant.current.active_project
       end
     end
+
   end
 
 end

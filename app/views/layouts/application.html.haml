@@ -4,6 +4,7 @@
     %title DialoogTafels.nl
     = stylesheet_link_tag "application", :media => "all"
     = javascript_include_tag "application"
+    = javascript_include_tag params[:controller]
     = csrf_meta_tags
     /[if lt IE 9]
       = javascript_include_tag "html5"

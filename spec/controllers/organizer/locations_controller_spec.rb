@@ -41,12 +41,39 @@ describe Organizer::LocationsController do
     end
   end
 
+  shared_examples_for "an_edit_renderer" do
+
+    it "renders the edit template" do
+      do_action
+      response.should render_template 'edit'
+    end
+    it "renders 'step_conversations' when step is conversation rounds" do
+      do_action :step => 'conversations'
+      response.should render_template 'step_conversations'
+      response.body.should have_selector "input[name='step'][value='conversations'][type='hidden']"
+    end
+    it "renders 'step_conversations' when step is publication" do
+      do_action :step => 'publication'
+      response.should render_template 'step_publication'
+      response.body.should have_selector "input[name='step'][value='publication'][type='hidden']"
+    end
+
+    it "renders 'edit' on an illegal step" do
+      do_action :step => 'bogus' 
+      response.should render_template 'edit'
+    end
+  end
+
   describe "GET edit" do
+    let(:location) { create_location }
+    def do_action(extra_params = {})
+      get :edit, {:id => location.to_param}.merge(extra_params)
+    end
     it "assigns the requested location as @location" do
-      location = create_location
-      get :edit, {:id => location.to_param}
+      do_action
       assigns(:location).should eq(location)
     end
+    it_should_behave_like "an_edit_renderer"
   end
 
   describe "POST create" do
@@ -87,9 +114,14 @@ describe Organizer::LocationsController do
   end
 
   describe "PUT update" do
+    let!(:location) { create_location }
+
+    def do_action(extra_params = {}) 
+      put :update, {:id => location.to_param, :location => valid_attributes}.merge(extra_params)
+    end
+
     describe "with valid params" do
       it "updates the requested location" do
-        location = create_location
         # Assuming there are no other organizer_locations in the database, this
         # specifies that the Location created on the previous line
         # receives the :update_attributes message with whatever params are
@@ -99,34 +131,25 @@ describe Organizer::LocationsController do
       end
 
       it "assigns the requested location as @location" do
-        location = create_location
-        put :update, {:id => location.to_param, :location => valid_attributes}
+        do_action
         assigns(:location).should eq(location)
       end
 
       it "redirects to the location" do
-        location = create_location
-        put :update, {:id => location.to_param, :location => valid_attributes}
+        do_action
         response.should redirect_to(organizer_location_url(location))
       end
     end
 
     describe "with invalid params" do
+      # Trigger the behavior that occurs when invalid params are submitted
+      before {  Location.any_instance.stub(:save).and_return(false) }
       it "assigns the location as @location" do
-        location = create_location
-        # Trigger the behavior that occurs when invalid params are submitted
-        Location.any_instance.stub(:save).and_return(false)
-        put :update, {:id => location.to_param, :location => {}}
+        do_action
         assigns(:location).should eq(location)
       end
 
-      it "re-renders the 'edit' template" do
-        location = create_location
-        # Trigger the behavior that occurs when invalid params are submitted
-        Location.any_instance.stub(:save).and_return(false)
-        put :update, {:id => location.to_param, :location => {}}
-        response.should render_template("edit")
-      end
+      it_should_behave_like "an_edit_renderer"
     end
   end
 

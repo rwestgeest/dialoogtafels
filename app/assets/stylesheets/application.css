@@ -372,15 +372,14 @@ table.table_form_participants td {padding:3px;}
 td.bucket {width:20px; vertical-align:top;padding-right:1em;} 
 table.leader_form_trainings {padding-left: 0px; margin:0px; font-size:12px;} 
 
-div.submit_container {margin:10px;padding-left:0px; clear:both;}
-div.submit_container_control {padding:20px; font-size:12px; text-align:right;}
-div.submit_container_control input.button {padding:0 10px; margin: 0 10px;font-size:12px;}
+div.actions {margin:10px; padding:10px 0px; clear:both; font-size:12px; text-align:right;}
+div.actions input.button {padding:0 10px; margin: 0 10px;font-size:12px;}
 
 td.input_column_left { width:70%; }
 td.input_column_right { width:30%; overflow:hidden; border-left:1px solid #dddddd}
 td.input_column_small_left { width:30%; overflow:hidden; border-right:1px solid #dddddd }
 td.input_column_eq_right { width:50%; }
-td.input_column_eq_left { width:50%; overflow:hidden; border-right:1px solid #dddddd }
+td.input_column_eq_left { width:50%; overflow:hidden;  }
 td.input_column_big_right { width:70%; }
 .input_column_right div.input_container div.input_container { padding:0px; margin:0px}
 .input_column_small_left div.input_container div.input_container { padding:0px; margin:0px}
