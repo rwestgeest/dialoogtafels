@@ -40,9 +40,9 @@ ActiveRecord::Schema.define(:version => 20120519074733) do
     t.datetime "updated_at", :null => false
   end
 
-  create_table "conversation_rounds", :force => true do |t|
-    t.datetime "start"
-    t.datetime "end"
+  create_table "conversations", :force => true do |t|
+    t.datetime "start_at"
+    t.datetime "end_at"
     t.integer  "tenant_id",   :null => false
     t.integer  "location_id", :null => false
   end

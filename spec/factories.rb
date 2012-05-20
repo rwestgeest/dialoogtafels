@@ -21,6 +21,12 @@ module Factories
       association :organizer
     end
 
+    factory :conversation do
+      start_at { Time.now }
+      end_at { Time.now }
+      association :location
+    end
+
     factory :project, :class => 'Project' do
       name "project"
     end

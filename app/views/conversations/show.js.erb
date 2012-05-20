@@ -1,0 +1,1 @@
+$('#conversation_<%= @conversation.to_param %>').html('<%= escape_javascript(render(partial:"show", conversation: @conversation)) %>');

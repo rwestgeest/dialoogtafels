@@ -43,6 +43,10 @@ module ApplicationHelper
     raw  link_to('verwijderen', path, :title => 'verwijderen', :confirm => 'Weet u zeker dat u deze #{text_representation} wilt verwijderen?', :method => :delete)
   end
 
+  def full_address(thing)
+    raw "#{thing.address} #{thing.city}"
+  end
+
   private
   def alert_flash_tag(message)
     flash_tag(:alert, message)

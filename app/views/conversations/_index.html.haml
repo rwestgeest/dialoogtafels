@@ -1,0 +1,13 @@
+.dialog-container
+  - if conversations.empty? 
+    %p
+      Er zijn nog geen dialoog gesprekken gepland.
+    %button(id="new_table_todo_button") toevoegen 
+  - else
+    - conversations.each do |conversation|
+      .dialog-container{:id => "conversation_#{conversation.to_param}"}
+        = conversation.start_at
+        = conversation.end_at
+    .actions
+      #conversation_new
+        %button#new_conversation_button toevoegen 

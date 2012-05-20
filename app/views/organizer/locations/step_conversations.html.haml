@@ -1,0 +1,12 @@
+- title 'Voeg dialoog ronden toe'
+= form_for [:organizer, @location] do |f|
+  = errors_for @location
+  %input{ :name => 'step', :value => 'conversations', :type=>:hidden }
+  .dialog-container
+    %p
+      .label= f.label :name
+      .input= f.text_field :name
+  #conversations
+    = render partial: 'conversations/index', locals: { conversations: @location.conversations }
+  .actions
+    = f.submit "Voeg publicatie details toe"

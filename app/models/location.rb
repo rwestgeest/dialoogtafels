@@ -10,6 +10,7 @@ class Location < ApplicationModel
 
   belongs_to :project
   belongs_to :organizer
+  has_many :conversations
 
   attr_accessible :name, :address, :postal_code, :city, :organizer_id, :lattitude, :longitude, :published, :photo
 
