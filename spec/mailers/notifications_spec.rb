@@ -13,7 +13,7 @@ describe Notifications do
     end
 
     it "puts the response url in the body" do
-      mail.body.encoded.should include(account_response_session_url(account.perishable_token, :host => account.tenant.host))
+      mail.body.encoded.should include(account_response_session_url(account.authentication_token, :host => account.tenant.host))
     end
   end
 
@@ -26,7 +26,7 @@ describe Notifications do
       mail.from.should eq([account.tenant.from_email])
     end
     it "puts the response url in the body" do
-      mail.body.encoded.should include(account_response_session_url(account.perishable_token, :host => account.tenant.host))
+      mail.body.encoded.should include(account_response_session_url(account.authentication_token, :host => account.tenant.host))
     end
 
   end

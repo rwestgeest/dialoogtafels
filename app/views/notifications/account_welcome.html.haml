@@ -4,6 +4,6 @@ Er is een account voor je gemaakt.
 
 %p
   Klik 
-  = link_to 'hier', account_response_session_url(@account.perishable_token, :host => @account.tenant.host)
+  = link_to 'hier', account_response_session_url(@account.authentication_token, :host => @account.tenant.host)
   om in te loggen en je wachtwoord te zetten.
 

@@ -13,7 +13,7 @@ class CreatePeople < ActiveRecord::Migration
       t.string :role, :limit => 50, :null => false, :default => 'admin'
       t.string :encrypted_password
       t.string :password_salt
-      t.string :perishable_token
+      t.string :authentication_token
       t.datetime :confirmed_at, :null => true
 
       t.references :project

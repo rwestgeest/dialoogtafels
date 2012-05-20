@@ -14,19 +14,19 @@
 ActiveRecord::Schema.define(:version => 20120519074733) do
 
   create_table "accounts", :force => true do |t|
-    t.string   "email",              :limit => 150,                      :null => false
-    t.string   "role",               :limit => 50,  :default => "admin", :null => false
+    t.string   "email",                :limit => 150,                      :null => false
+    t.string   "role",                 :limit => 50,  :default => "admin", :null => false
     t.string   "encrypted_password"
     t.string   "password_salt"
-    t.string   "perishable_token"
+    t.string   "authentication_token"
     t.datetime "confirmed_at"
     t.integer  "project_id"
     t.integer  "tenant_id"
     t.integer  "person_id"
-    t.datetime "created_at",                                             :null => false
-    t.datetime "updated_at",                                             :null => false
+    t.datetime "created_at",                                               :null => false
+    t.datetime "updated_at",                                               :null => false
     t.datetime "reset_at"
-    t.string   "type",               :limit => 20
+    t.string   "type",                 :limit => 20
   end
 
   add_index "accounts", ["type"], :name => "index_accounts_on_type"

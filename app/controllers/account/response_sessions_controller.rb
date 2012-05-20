@@ -1,7 +1,7 @@
 class Account::ResponseSessionsController < ApplicationController
   layout 'sessions'
   def show
-    @account = Account.find_by_perishable_token(params[:id])
+    @account = Account.find_by_authentication_token(params[:id])
     if @account
       sign_in @account
       redirect_to @account.landing_page

@@ -1,35 +1,22 @@
-require 'bcrypt'
-require 'securerandom'
-
-module TokenGenerator 
-  def self.generate_token
-    SecureRandom.hex(16)
-  end
-end
+require 'authenticable'
 
 class Account < ActiveRecord::Base
+  include Authenticable
+  on_account_creation :send_confirmation_message
+  on_account_reset :send_reset_message
+
   Maintainer = 'maintainer'
   Coordinator = 'coordinator'
   Contributor = 'contributor'
   EMAIL_REGEXP = /\A([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})\Z/i
 
-  belongs_to :person
 
-  before_save :encrypt_password
-  before_create :generate_perishable_token
-  after_create :send_confirmation_message
+  belongs_to :person
+  before_create :generate_authentication_token
 
   attr_accessible :email, :password, :password_confirmation, :role, :name, :telephone
   attr_accessor :password
 
-  # class PasswordValidator < ActiveModel::EachValidator 
-  #   def validate_each(record, attribute, value) 
-  #     record.errors.add :password, "is not present" unless  value != nil
-  #   end
-  # end
-
-  # validates :encrypted_password, :password => true, :on => :update
-  validates_presence_of :password, :if =>  lambda { !new_record? && !confirmed? }
   validates :email, :presence => true,
                     :uniqueness => true,
                     :format => {:with => EMAIL_REGEXP }
@@ -38,18 +25,6 @@ class Account < ActiveRecord::Base
 
   delegate :name, :to => :person
   delegate :telephone, :to => :person
-
-  class << self 
-    def authenticate_by_email_and_password(email, password)
-      account = Account.find_by_email(email)
-      return account if account && 
-                        account.confirmed? && 
-                        account.authenticate(password)
-    end
-    def authenticate_by_token(token)
-      Account.find_by_perishable_token(token) unless token.nil? || token.empty?
-    end
-  end
 
   def for_tenant(tenant)
     self.tenant = tenant
@@ -68,46 +43,12 @@ class Account < ActiveRecord::Base
     person.telephone = value
   end
 
-  def authenticate(password)
-      encrypted_password == BCrypt::Engine.hash_secret(password, password_salt)
-  end
-
-  def confirm_with_password(attributes)
-    update_attributes(attributes) && confirm!
-  end
-
-  def confirm!
-    self.confirmed_at = Time.now if has_saved_password? 
-    self.reset_at = nil
-    save
-  end
-
-  def reset!
-    if (confirmed?)
-      generate_perishable_token
-      self.reset_at = Time.now
-      save!
-    end
-    Postman.deliver(:account_reset, self)
-  end
-
-  def confirmed?
-    confirmed_at != nil
-  end
-
-  def reset?
-    reset_at != nil
-  end
-
-  def generate_perishable_token
-    while (true) 
-      self.perishable_token = TokenGenerator.generate_token
-      return perishable_token if unique_token?(perishable_token)
-    end
-  end
-
   def send_confirmation_message
     Postman.deliver(:account_welcome, self)
+  end
+
+  def send_reset_message
+    Postman.deliver(:account_reset, self)
   end
 
   def active_contribution
@@ -122,20 +63,6 @@ class Account < ActiveRecord::Base
     return '/account/password/edit' if !confirmed? || reset?
     return '/organizer/locations' if role == Account::Contributor 
     '/'
-  end
-
-  private 
-  def unique_token? token
-    return ! Account.find_by_perishable_token(token)
-  end
-  def has_saved_password?
-    encrypted_password.present?
-  end
-  def encrypt_password
-    if password.present? 
-      self.password_salt = ::BCrypt::Engine.generate_salt
-      self.encrypted_password = ::BCrypt::Engine.hash_secret(password, password_salt)
-    end
   end
 
 end

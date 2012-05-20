@@ -9,11 +9,11 @@ describe Account::ResponseSessionsController do
   describe "GET 'show'" do
     context 'with valid token' do
       it "returns http success" do
-        get 'show', :id => account.perishable_token
+        get 'show', :id => account.authentication_token
         response.should redirect_to account.landing_page
       end
       it "logs in" do
-        get 'show', :id => account.perishable_token
+        get 'show', :id => account.authentication_token
         current_account.should == account
         @controller.send(:current_account).should == account
       end

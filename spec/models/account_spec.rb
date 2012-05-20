@@ -1,21 +1,21 @@
 require 'spec_helper'
 
-describe Account  do
+describe Account do
   context "within tenant scope" do
     prepare_scope :tenant
 
-    describe 'generate_perishable_token' do
+    describe 'generate_authentication_token' do
       let!(:existing_account) { FactoryGirl.create :maintainer_account }
       let(:account) { Account.new }
       it "generates some random token" do
         TokenGenerator.stub(:generate_token => "first_generated_token")
-        account.generate_perishable_token
-        account.perishable_token.should == "first_generated_token"
+        account.generate_authentication_token
+        account.authentication_token.should == "first_generated_token"
       end
       it "makes sure it is unique" do
-        TokenGenerator.stub(:generate_token).and_return(existing_account.perishable_token, existing_account.perishable_token, "first_free_generated_token")
-        account.generate_perishable_token
-        account.perishable_token.should == "first_free_generated_token"
+        TokenGenerator.stub(:generate_token).and_return(existing_account.authentication_token, existing_account.authentication_token, "first_free_generated_token")
+        account.generate_authentication_token
+        account.authentication_token.should == "first_free_generated_token"
       end
     end
 
@@ -23,15 +23,15 @@ describe Account  do
       let!(:account) { FactoryGirl.create :maintainer_account } 
       describe 'on token' do
         it "fails when token is nil" do
-          account.update_attribute :perishable_token, nil
+          account.update_attribute :authentication_token, nil
           Account.authenticate_by_token(nil).should be_nil 
         end
         it "fails when token is empty" do
-          account.update_attribute :perishable_token, ''
+          account.update_attribute :authentication_token, ''
           Account.authenticate_by_token('').should be_nil 
         end
         it "passes when token is present" do
-          Account.authenticate_by_token(account.perishable_token).should == account
+          Account.authenticate_by_token(account.authentication_token).should == account
         end
       end
       describe 'on password' do
@@ -86,9 +86,9 @@ describe Account  do
       context "on a confirmed account" do
         let!(:account) { FactoryGirl.create :confirmed_account }
         it "generates a new token" do
-          old_token = account.perishable_token
+          old_token = account.authentication_token
           reset_account
-          account.perishable_token.should_not == old_token
+          account.authentication_token.should_not == old_token
         end
         it "sets the account to reset" do
           reset_account
@@ -107,9 +107,9 @@ describe Account  do
       context "on a new account" do
         let!(:account) { FactoryGirl.create :account }
         it "keeps the old token" do
-          old_token = account.perishable_token
+          old_token = account.authentication_token
           reset_account
-          account.perishable_token.should == old_token
+          account.authentication_token.should == old_token
         end
         it "sends an account reset mail" do
           Postman.should_receive(:deliver).with(:account_reset, account)
@@ -132,7 +132,7 @@ describe Account  do
       end
 
       it "should have a confirmation token" do
-        account.perishable_token.should_not be_empty
+        account.authentication_token.should_not be_empty
       end
 
       context "without_password" do
