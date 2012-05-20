@@ -16,13 +16,13 @@ module Authenticable
 
   module ClassMethods
     def authenticate_by_email_and_password(email, password)
-      account = Account.find_by_email(email)
+      account = self.find_by_email(email)
       return account if account && 
                         account.confirmed? && 
                         account.authenticate(password)
     end
     def authenticate_by_token(token)
-      Account.find_by_authentication_token(token) unless token.nil? || token.empty?
+      self.find_by_authentication_token(token) unless token.nil? || token.empty?
     end
     def on_account_creation method
       after_create method
@@ -75,7 +75,7 @@ module Authenticable
 
   private 
   def unique_token? token
-    return ! Account.find_by_authentication_token(token)
+    return ! self.find_by_authentication_token(token)
   end
 
   def has_saved_password?
