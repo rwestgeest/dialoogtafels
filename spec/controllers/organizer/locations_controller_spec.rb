@@ -50,7 +50,6 @@ describe Organizer::LocationsController do
     it "renders 'step_conversations' when step is conversation rounds" do
       do_action :step => 'conversations'
       response.should render_template 'step_conversations'
-      response.body.should have_selector "input[name='step'][value='conversations'][type='hidden']"
     end
     it "renders 'step_conversations' when step is publication" do
       do_action :step => 'publication'

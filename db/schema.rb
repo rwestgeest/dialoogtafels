@@ -41,10 +41,13 @@ ActiveRecord::Schema.define(:version => 20120519074733) do
   end
 
   create_table "conversations", :force => true do |t|
-    t.datetime "start_at"
-    t.datetime "end_at"
-    t.integer  "tenant_id",   :null => false
-    t.integer  "location_id", :null => false
+    t.date    "start_date"
+    t.time    "start_time"
+    t.date    "end_date"
+    t.time    "end_time"
+    t.integer "number_of_tables", :default => 1
+    t.integer "tenant_id",                       :null => false
+    t.integer "location_id",                     :null => false
   end
 
   create_table "locations", :force => true do |t|

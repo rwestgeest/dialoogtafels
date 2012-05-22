@@ -11,18 +11,19 @@ module Authenticable
   def self.included(base)
     base.validates_presence_of :password, :if =>  lambda { !new_record? && !confirmed? }
     base.extend ClassMethods
+
     base.before_save :encrypt_password
   end
 
   module ClassMethods
     def authenticate_by_email_and_password(email, password)
-      account = self.find_by_email(email)
+      account = find_by_email(email)
       return account if account && 
                         account.confirmed? && 
                         account.authenticate(password)
     end
     def authenticate_by_token(token)
-      self.find_by_authentication_token(token) unless token.nil? || token.empty?
+      find_by_authentication_token(token) unless token.nil? || token.empty?
     end
     def on_account_creation method
       after_create method
@@ -75,7 +76,7 @@ module Authenticable
 
   private 
   def unique_token? token
-    return ! self.find_by_authentication_token(token)
+    return ! self.class.find_by_authentication_token(token)
   end
 
   def has_saved_password?

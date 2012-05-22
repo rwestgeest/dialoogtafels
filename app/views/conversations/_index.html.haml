@@ -1,13 +1,14 @@
 .dialog-container
   - if conversations.empty? 
-    %p
-      Er zijn nog geen dialoog gesprekken gepland.
-    %button(id="new_table_todo_button") toevoegen 
+    #conversation_new
+      %p
+        Er zijn nog geen dialoog gesprekken gepland.
+      = link_to "plan je eerste dialoogronde", new_conversation_path(:location_id => @location.to_param), :'data-remote' => true
   - else
     - conversations.each do |conversation|
       .dialog-container{:id => "conversation_#{conversation.to_param}"}
-        = conversation.start_at
-        = conversation.end_at
-    .actions
-      #conversation_new
-        %button#new_conversation_button toevoegen 
+        = conversation.start_date
+        = conversation.end_date
+    #conversation_new
+      .actions
+        = link_to "toevoegen", new_conversation_path(:location_id => @location.to_param), :'data-remote' => true

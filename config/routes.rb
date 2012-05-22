@@ -21,7 +21,7 @@ Tafelmanager2::Application.routes.draw do
   end
 
   namespace :organizer do
-    resources :locations
+    resources :locations 
   end
 
   namespace :admin do 

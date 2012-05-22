@@ -22,8 +22,10 @@ module Factories
     end
 
     factory :conversation do
-      start_at { Time.now }
-      end_at { Time.now }
+      start_date { Date.today }
+      start_time { Time.now }
+      end_date { Date.today }
+      end_time { Time.now }
       association :location
     end
 

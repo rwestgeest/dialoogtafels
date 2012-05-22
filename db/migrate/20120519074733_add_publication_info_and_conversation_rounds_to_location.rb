@@ -1,8 +1,11 @@
 class AddPublicationInfoAndConversationRoundsToLocation < ActiveRecord::Migration
   def self.up
     create_table :conversations do |t| 
-      t.datetime :start_at
-      t.datetime :end_at
+      t.date :start_date
+      t.time :start_time
+      t.date :end_date
+      t.time :end_time
+      t.integer :number_of_tables, :default => 1
       t.references :tenant, :null => false
       t.references :location, :null => false
     end

@@ -2,7 +2,7 @@ function enable_conversation_button() {
     $("#new_conversation_button").click(function() {
       $.ajax({
           url: '/conversations/new',
-          data: { location: location_id },
+          data: { location: this.getAttribute("data-location-id") },
           type: 'get'
       });
       return false;
