@@ -12,6 +12,10 @@
       .input
         = f.text_field(:end_date)
         = f.time_select(:end_time)
+    %p 
+      .label= f.label :number_of_tables
+      .input
+        = f.text_field(:number_of_tables)
     .actions
       = f.submit
 

@@ -8,4 +8,20 @@ describe Conversation do
   it { should validate_presence_of :end_date }
   it { should validate_presence_of :end_time }
 
+
+  context "with tenant scope" do
+    prepare_scope :tenant
+    describe "defaults" do
+      let!(:conversation) { Conversation.new :location => FactoryGirl.create(:location) } 
+      let!(:project)  { conversation.location.project }
+      subject { conversation } 
+      its(:default_length) { should == project.conversation_length }
+      its(:start_date) { should == project.start_date }
+      its(:start_time) { should be_within(1).of(project.start_time) }
+      its(:end_date) { should == conversation.start_date } 
+      its(:end_time) { should be_within(1).of(conversation.start_time + project.conversation_length.minutes) } 
+
+    end
+  end
+
 end

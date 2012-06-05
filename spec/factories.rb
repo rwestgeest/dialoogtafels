@@ -26,6 +26,7 @@ module Factories
       start_time { Time.now }
       end_date { Date.today }
       end_time { Time.now }
+      number_of_tables 2
       association :location
     end
 

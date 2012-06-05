@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120519074733) do
+ActiveRecord::Schema.define(:version => 20120605131623) do
 
   create_table "accounts", :force => true do |t|
     t.string   "email",                :limit => 150,                      :null => false
@@ -81,8 +81,12 @@ ActiveRecord::Schema.define(:version => 20120519074733) do
   create_table "projects", :force => true do |t|
     t.string   "name"
     t.integer  "tenant_id"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
+    t.datetime "created_at",                                  :null => false
+    t.datetime "updated_at",                                  :null => false
+    t.integer  "conversation_length",        :default => 180
+    t.date     "start_date"
+    t.time     "start_time"
+    t.integer  "max_participants_per_table", :default => 8
   end
 
   create_table "tenants", :force => true do |t|

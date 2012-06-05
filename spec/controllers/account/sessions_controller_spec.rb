@@ -38,7 +38,7 @@ describe Account::SessionsController do
         response.should render_template(:new)
       end
       it "sets the flash alert" do
-        flash[:alert].should_not be_empty
+        response.body.should have_selector "#alert"
       end
     end
   end

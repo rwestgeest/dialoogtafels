@@ -22,6 +22,10 @@ class Location < ApplicationModel
 
   before_validation :associate_to_active_project
 
+  delegate :conversation_length, :to => :project
+  delegate :start_date, :to => :project
+  delegate :start_time, :to => :project
+
   def initialize(attributes = nil, options = {})
     super(attributes, options) 
     self.city ||= Tenant.current && Tenant.current.name 

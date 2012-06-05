@@ -7,8 +7,11 @@
   - else
     - conversations.each do |conversation|
       .dialog-container{:id => "conversation_#{conversation.to_param}"}
-        = conversation.start_date
-        = conversation.end_date
+        = l conversation.start_date
+        = l conversation.start_time
+        = l conversation.end_date
+        = l conversation.end_time
+        = conversation.number_of_tables
     #conversation_new
       .actions
         = link_to "toevoegen", new_conversation_path(:location_id => @location.to_param), :'data-remote' => true
