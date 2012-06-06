@@ -41,13 +41,11 @@ ActiveRecord::Schema.define(:version => 20120605131623) do
   end
 
   create_table "conversations", :force => true do |t|
-    t.date    "start_date"
-    t.time    "start_time"
-    t.date    "end_date"
-    t.time    "end_time"
-    t.integer "number_of_tables", :default => 1
-    t.integer "tenant_id",                       :null => false
-    t.integer "location_id",                     :null => false
+    t.datetime "start_time"
+    t.datetime "end_time"
+    t.integer  "number_of_tables", :default => 1
+    t.integer  "tenant_id",                       :null => false
+    t.integer  "location_id",                     :null => false
   end
 
   create_table "locations", :force => true do |t|
@@ -84,8 +82,7 @@ ActiveRecord::Schema.define(:version => 20120605131623) do
     t.datetime "created_at",                                  :null => false
     t.datetime "updated_at",                                  :null => false
     t.integer  "conversation_length",        :default => 180
-    t.date     "start_date"
-    t.time     "start_time"
+    t.datetime "start_time"
     t.integer  "max_participants_per_table", :default => 8
   end
 

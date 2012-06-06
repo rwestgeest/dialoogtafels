@@ -1,0 +1,9 @@
+.dialog-container{:id => "conversation_#{conversation.to_param}"}
+  .left
+    = time_period(conversation)
+  .right
+    maximaal aantal tafels: 
+    = conversation.number_of_tables
+    = link_to image_tag('edit.gif'), edit_conversation_path(conversation.to_param), :class => 'edit', :title => 'wijzig deze dialoogronde', :'data-remote' => true
+  .clear
+

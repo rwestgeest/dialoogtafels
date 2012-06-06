@@ -1,2 +1,7 @@
-$('#conversation_<%= @conversation.to_param %>').html('<%= escape_javascript(render(partial:"edit", conversation: @conversation)) %>');
+var old_html = $('#conversation_<%= @conversation.to_param %>').html();
+$('#conversation_<%= @conversation.to_param %>').html('<%= escape_javascript(render(partial:"edit", locals: {conversation: @conversation})) %>');
+enable_start_and_end_date(<%= @conversation.default_length %>);
+$("#close_form").click(function(){
+  $('#conversation_<%= @conversation.to_param %>').html(old_html);
+});
 

@@ -1,5 +1,5 @@
 class ConversationsController < ApplicationController
-  append_before_filter :check_location
+  append_before_filter :check_location, :only => :new
   def show
     @conversation = Conversation.find(params[:id])
   end
@@ -14,7 +14,6 @@ class ConversationsController < ApplicationController
 
   def create
     @conversation = Conversation.new(params[:conversation])
-    @conversation.location = @location
 
     if @conversation.save
       @conversations = Conversation.where(:location_id => @conversation.location.to_param)
@@ -40,11 +39,10 @@ class ConversationsController < ApplicationController
     @conversation.destroy
     render :action => 'index'
   end
+
   def check_location
      unless params[:location_id] && Location.exists?(params[:location_id])
-      render :status => :not_found, :action => :show
-      return
+      head :not_found
      end
-     @location = Location.find(params[:location_id])
   end
 end

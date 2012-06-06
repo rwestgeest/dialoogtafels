@@ -18,8 +18,4 @@ class Project < ActiveRecord::Base
     super || Time.now
   end
 
-  def start_date 
-    super || Date.today
-  end
-
 end

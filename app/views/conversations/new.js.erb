@@ -1,2 +1,7 @@
+var old_html = $('#conversation_new').html();
 $('#conversation_new').html('<%= escape_javascript(render(partial:"new", locals: {conversation: @conversation})) %>');
 enable_start_and_end_date(<%= @conversation.default_length %>);
+$("#close_form").click(function(){
+  $('#conversation_new').html(old_html);
+});
+

@@ -1,0 +1,21 @@
+=form_for conversation, :remote => true do |f| 
+  = errors_for conversation
+  .dialog-container
+    = f.hidden_field :location_id
+    %p 
+      .label= f.label :start_date
+      .input
+        = f.text_field(:start_date, :value => conversation.start_date && l(conversation.start_date))
+        = f.time_select(:start_time)
+    %p 
+      .label= f.label :end_date
+      .input
+        = f.text_field(:end_date, :value => conversation.end_date && l(conversation.end_date))
+        = f.time_select(:end_time)
+    %p 
+      .label= f.label :number_of_tables
+      .input
+        = f.text_field(:number_of_tables)
+    .actions
+      = link_to "sluiten", '#', :id => "close_form"
+      = f.submit

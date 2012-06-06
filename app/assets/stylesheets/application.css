@@ -37,6 +37,19 @@ div {
     background-color:transparent;
 }
 
+div.left {
+  float:left;
+}
+div.right {
+  float:right;
+}
+div.clear {
+  clear:both;
+}
+a.edit {
+  padding: 0 10px;
+}
+
 
 #blad {
 	text-align:left;

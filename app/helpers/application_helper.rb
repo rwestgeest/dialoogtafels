@@ -47,6 +47,12 @@ module ApplicationHelper
     raw "#{thing.address} #{thing.city}"
   end
 
+  def time_period(object)
+    string  = "Van #{ I18n.l(object.start_date) } om #{ I18n.l(object.start_time) } tot "
+    string << "#{ I18n.l(object.end_date) } om " if object.start_date != object.end_date
+    string + "#{ I18n.l(object.end_time) }"
+  end
+
   private
   def alert_flash_tag(message)
     flash_tag(:alert, message)

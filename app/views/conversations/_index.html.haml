@@ -1,4 +1,5 @@
 .dialog-container
+  %h3 Dialooggesprekken
   - if conversations.empty? 
     #conversation_new
       %p
@@ -6,12 +7,7 @@
       = link_to "plan je eerste dialoogronde", new_conversation_path(:location_id => @location.to_param), :'data-remote' => true
   - else
     - conversations.each do |conversation|
-      .dialog-container{:id => "conversation_#{conversation.to_param}"}
-        = l conversation.start_date
-        = l conversation.start_time
-        = l conversation.end_date
-        = l conversation.end_time
-        = conversation.number_of_tables
+      = render partial: 'conversations/show', locals: {conversation: conversation}
     #conversation_new
       .actions
         = link_to "toevoegen", new_conversation_path(:location_id => @location.to_param), :'data-remote' => true

@@ -1,1 +1,1 @@
-$('#conversation_<%= @conversation.to_param %>').html('<%= escape_javascript(render(partial:"show", conversation: @conversation)) %>');
+$('#conversation_<%= @conversation.to_param %>').replaceWith('<%= escape_javascript(render(partial:"show", locals: {conversation: @conversation})) %>');

@@ -12,7 +12,6 @@ describe Project do
     describe "defaults" do 
       subject { Project.new }
       its(:start_time) { should be_within(1).of(Time.now) }
-      its(:start_date) { should == Date.today }
     end
   end
 
