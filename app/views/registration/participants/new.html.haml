@@ -1,2 +1,34 @@
-%h1 Registration::Participants#new
-%p Find me in app/views/registration/participants/new.html.haml
+- title "Aanmelden als deelnemer bij #{@location.project.name}"
+
+.city_banner{:style=>"float:right;"}
+  .city_banner_photo{:style=>"background: url(#{@location.photo.url(:thumb)}) no-repeat;"}
+    .city_banner_text
+      %h3= @location.name
+      %p= full_address(@location)
+
+%h3 
+  Locatie:
+  = @conversation.location.name
+
+%p 
+  Dialoog georganiseerd
+  = time_period @conversation
+
+= form_for [:registration, @participant]  do |f|
+  = errors_for @participant
+  = f.hidden_field :conversation_id
+  %p
+    .label= f.label :email
+    .input= f.text_field :email
+
+  %p
+    .label= f.label :name
+    .input= f.text_field :name
+
+  %p
+    .label= f.label :telephone
+    .input= f.text_field :telephone
+
+  .actions
+    = link_to "terug", location_path(@location)
+    = f.submit

@@ -47,12 +47,39 @@ nl:
               blank: "er is geen stad geselecteerd"
             name:
               blank: "je hebt geen naam ingegeven"
-
+        organizer:
+          attributes:
+            email:
+              blank: "je hebt geen email adres opgegeven"
+              invalid: "het opgegeven email adres is ongeldig"
+            name:
+              blank: "je hebt geen naam ingegeven"
+            telephone:
+              blank: "je hebt geen telefoon opgegeven"
+            person: 
+              blank: "er zijn geen persoongegevens gekoppeld"
+        participant:
+          attributes:
+            email:
+              blank: "je hebt geen email adres opgegeven"
+              invalid: "het opgegeven email adres is ongeldig"
+            name:
+              blank: "je hebt geen naam ingegeven"
+            telephone:
+              blank: "je hebt geen telefoon opgegeven"
+            person: 
+              blank: "er zijn geen persoongegevens gekoppeld"
+            conversation:
+              blank: "er is geen geldige dialoog gekoppeld"
   helpers:
     label:
       project:
         name: "Naam"
       organizer:
+        email: "Email"
+        name: "Naam"
+        telephone: "Telefoon"
+      participant:
         email: "Email"
         name: "Naam"
         telephone: "Telefoon"
@@ -67,6 +94,8 @@ nl:
         create: "Maak project aan"
         update: "Project opslaan"
       organizer:
+        create: "Registreer"
+      participant:
         create: "Registreer"
       locatie:
         create: "Maak locatie aan"

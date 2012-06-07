@@ -15,8 +15,5 @@ class Registration::OrganizersController < ApplicationController
       render action: "new" 
     end
   end
-  def confirm
-
-  end
 
 end

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120605131623) do
+ActiveRecord::Schema.define(:version => 20120607125315) do
 
   create_table "accounts", :force => true do |t|
     t.string   "email",                :limit => 150,                      :null => false
@@ -36,9 +36,13 @@ ActiveRecord::Schema.define(:version => 20120605131623) do
     t.integer  "project_id"
     t.integer  "tenant_id"
     t.integer  "person_id"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
+    t.datetime "created_at",      :null => false
+    t.datetime "updated_at",      :null => false
+    t.integer  "conversation_id"
   end
+
+  add_index "contributors", ["conversation_id"], :name => "index_contributors_on_conversation_id"
+  add_index "contributors", ["project_id"], :name => "index_contributors_on_project_id"
 
   create_table "conversations", :force => true do |t|
     t.datetime "start_time"
@@ -47,6 +51,8 @@ ActiveRecord::Schema.define(:version => 20120605131623) do
     t.integer  "tenant_id",                       :null => false
     t.integer  "location_id",                     :null => false
   end
+
+  add_index "conversations", ["location_id"], :name => "index_conversations_on_location_id"
 
   create_table "locations", :force => true do |t|
     t.string   "name",               :limit => 100
