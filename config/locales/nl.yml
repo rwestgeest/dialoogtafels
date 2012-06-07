@@ -47,6 +47,7 @@ nl:
               blank: "er is geen stad geselecteerd"
             name:
               blank: "je hebt geen naam ingegeven"
+
   helpers:
     label:
       project:
@@ -55,12 +56,24 @@ nl:
         email: "Email"
         name: "Naam"
         telephone: "Telefoon"
+      location:
+        name: "Locatienaam"
+      conversation:
+        start_date: "Aanvang"
+        end_date: "Einde"
+        number_of_tables: "Aantal tafels"
     submit:
       project:
         create: "Maak project aan"
         update: "Project opslaan"
       organizer:
         create: "Registreer"
+      locatie:
+        create: "Maak locatie aan"
+        update: "Locatie bijwereken"
+      conversation:
+        create: "Maak dialooggesprek aan"
+        update: "Bijwerken"
   account:
     sessions:
       new: 

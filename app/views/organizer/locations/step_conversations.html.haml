@@ -1,8 +1,6 @@
 - title 'Voeg dialoog ronden toe'
 .dialog-container
-  %p
-    .label= label_tag @location, :name
-    .input= text_field_tag @location, :name, :disabled => true
+  %h3= @location.name
 #conversations
   = render partial: 'conversations/index', locals: { conversations: @location.conversations }
 .actions

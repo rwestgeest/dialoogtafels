@@ -66,8 +66,18 @@ module ApplicationHelper
     })
   end
 
+  def created_at(object)
+    return '' unless object.created_at
+    "Aangemaakt: " + l(object.created_at, :format => :short)
+  end
+
+  def updated_at(object)
+    return '' unless object.updated_at
+    "Bijgewerkt: " + l(object.updated_at, :format => :short)
+  end
+ 
   def flash_tag(name, message)
-    content_tag :div, image_tag("#{name}.png") + message, :id => "#{name}", :class => "flash"
+    content_tag :div, image_tag("#{name}.png") + content_tag(:span, message), :id => "#{name}", :class => "flash"
   end
 
 

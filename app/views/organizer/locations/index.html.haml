@@ -3,18 +3,7 @@
 - if (@locations.empty?)
   = link_to "Maak jeeerste dialoog locatie aan", new_organizer_location_path
 - else
-  %table
-    %tr
-      %th
-      %th
-      %th
+  = render :partial => 'location', :collection => @locations
+.clear
 
-    - @locations.each do |location|
-      %tr
-        %td= link_to 'Show', organizer_location_path(location)
-        %td= link_to 'Edit', edit_organizer_location_path(location)
-        %td= destroy_link organizer_location_path(location), "locatie" 
-
-  %br
-
-  = link_to 'New Location', new_organizer_location_path
+  = link_to 'Nieuwe locatie aanmaken', new_organizer_location_path
