@@ -1,0 +1,10 @@
+%h3= @location.name
+
+- @location.conversations.each do |conversation| 
+  .dialog-container{:id => "conversation_#{conversation.to_param}"}
+    .left
+      = time_period(conversation)
+    .right
+      = link_to 'schrijf je in als deelnemer', new_registration_participants_path(:conversation_id => conversation)
+    .clear
+

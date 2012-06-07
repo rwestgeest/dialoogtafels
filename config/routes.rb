@@ -1,5 +1,7 @@
 Tafelmanager2::Application.routes.draw do
 
+  resources :locations, :only => [:index, :show] 
+
   namespace :account do
     resource :session, :only => [:new, :create, :destroy]
     resources :response_sessions, :only => [:show]
@@ -11,6 +13,9 @@ Tafelmanager2::Application.routes.draw do
 
   namespace :registration do 
     resource :organizers, :only => [:new, :create]  do
+      collection { get 'confirm' }
+    end
+    resource :participants, :only => [:new, :create]  do
       collection { get 'confirm' }
     end
   end

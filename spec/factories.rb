@@ -46,6 +46,12 @@ module Factories
       sequence( :telephone ) { |n| "telephone#{n}" }
     end
 
+    factory :participant  do
+      sequence( :email ) { |n| "mail_#{n}@participant.com" }
+      sequence( :name ) { |n| "organizer_#{n}" }
+      sequence( :telephone ) { |n| "telephone#{n}" }
+    end
+
     factory :maintainer_account, :class => MaintainerAccount, :aliases => [:account] do
       sequence( :email ) { |n| "maintainer_account_#{n}@mail.com" }
       role Account::Maintainer

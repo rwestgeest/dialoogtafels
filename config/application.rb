@@ -64,7 +64,7 @@ module Tafelmanager2
     config.generators do |g|
       g.orm :active_record
       g.template_engine :haml
-      g.test_framework :rspec, :fixture => false
+      g.test_framework :rspec, :fixture => false, :'view-specs' => false
       g.stylesheets false
       g.helper false
       g.integration_tool false

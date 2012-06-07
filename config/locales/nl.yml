@@ -84,3 +84,5 @@ nl:
   registration:
     organizers:
       welcome: "Dank voor je registratie en Welkom bij dialoogtafels. Je kunt hieronder direct je locatie opgeven en publiceren."
+    participants:
+      welcome: "Dank voor je registratie en Welkom bij dialoogtafels."
