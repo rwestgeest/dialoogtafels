@@ -20,6 +20,7 @@ Tafelmanager2::Application.routes.draw do
 
   namespace :contributor do
     resource :profile, :only => [:edit, :update]
+    resource :registration, :only => [:show]
   end
 
   namespace :city do 
