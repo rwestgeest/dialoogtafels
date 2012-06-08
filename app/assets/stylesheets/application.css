@@ -43,6 +43,17 @@ div.left {
 div.right {
   float:right;
 }
+div.conversation-leaders {
+  float:left;
+  margin:10px;
+  width:300px;
+}
+div.participants {
+  float:left;
+  margin:10px;
+  width:300px;
+}
+
 div.clear {
   clear:both;
 }
@@ -369,44 +380,11 @@ div.dialog-container {
   text-align: right;
 }
 div.dialog-container h3 {margin: 0.5em 0;}
-div.input_container { 
-  padding:0px 0px; 
-  margin:0px 10px; 
-  min-height:28px; 
-  clear:both;
-  font-size:12px; }
-div#help_text {margin-left: 1em; color: #777777;font-size:12px;}
-div.help_text {margin-left: 1em;font-size:12px;}
-div.input_container_label {padding:6px 0px; width:100%; font-size:12px;}
-div.input_container_label span.help_text {margin-left: 1em; color: #777777;}
-div.input_container_control {padding-left:10px; width:100%; text-align: left;}
-div.input_container_checkbox {float: left; width: 2em; padding-top: 6px; }
-div.input_container_checkbox_label {padding:6px 0px; width:90%; font-size:12px;}
-div.input_container_checkbox_label span.help_text {margin-left: 0.5em; color: #777777;}
-div.input_container_control input {margin:0; padding:0; font-size:12px;}
-div.input_container_control input.max {width:100%;}
-div.input_container_control input.button {padding: 0 10px; font-size:12px;}
-div.input_container_control textarea {height:80px; width:350px;}
-div.input_container_control textarea.large {height:160px; width:500px;}
-div.input_container_control textarea.wide {height:80px; width:500px;}
-div.input_container_control select {margin:0px; padding:0px; font-size:12px;}
-div.input_container_control select.wide {width:100%;}
-div.input_container_control select.max {width:100%;}
-div.input_container_control_for_select {width:100%;}
-div.input_container_control_for_select select {width:100%;}
-div.input_container_control 
+div.input textarea {
+  width:530px;
+}
 
 div.actions {margin:10px; padding:10px 0px; clear:both; font-size:12px; text-align:right;}
-div.actions input.button {padding:0 10px; margin: 0 10px;font-size:12px;}
-
-td.input_column_left { width:70%; }
-td.input_column_right { width:30%; overflow:hidden; border-left:1px solid #dddddd}
-td.input_column_small_left { width:30%; overflow:hidden; border-right:1px solid #dddddd }
-td.input_column_eq_right { width:50%; }
-td.input_column_eq_left { width:50%; overflow:hidden;  }
-td.input_column_big_right { width:70%; }
-.input_column_right div.input_container div.input_container { padding:0px; margin:0px}
-.input_column_small_left div.input_container div.input_container { padding:0px; margin:0px}
 
 
 input.large { width: 250px; height: 18px; padding: 0px; }

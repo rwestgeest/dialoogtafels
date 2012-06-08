@@ -113,6 +113,9 @@ nl:
         telephone: "Telefoon"
       location:
         name: "Locatienaam"
+        photo: "Foto"
+        published: "Gepubliceerd"
+        description: "Wervende beschrijving voor de locatie"
       conversation:
         start_date: "Aanvang"
         end_date: "Einde"

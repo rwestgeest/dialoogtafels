@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120607125315) do
+ActiveRecord::Schema.define(:version => 20120608144452) do
 
   create_table "accounts", :force => true do |t|
     t.string   "email",                :limit => 150,                      :null => false
@@ -71,6 +71,7 @@ ActiveRecord::Schema.define(:version => 20120607125315) do
     t.integer  "photo_file_size"
     t.datetime "photo_updated_at"
     t.boolean  "published",                         :default => false
+    t.text     "description"
   end
 
   create_table "people", :force => true do |t|

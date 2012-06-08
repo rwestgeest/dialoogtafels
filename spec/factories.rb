@@ -18,6 +18,7 @@ module Factories
       address "location_address"
       postal_code "AAAA 12"
       city "Location city"
+      description "coole plek"
       association :organizer
     end
 

@@ -1,30 +1,5 @@
 - title 'Publiceer je locatie'
 = form_for [:organizer, @location] do |f|
-  = errors_for @location
-  %input{ :name => 'step', :value => 'publication', :type=>:hidden }
-  .dialog-container
-    %p
-      .label= f.label :name
-      .input= f.text_field :name
-  .dialog-container
-    .city_banner{:style=>"float:right;"}
-      .city_banner_photo{:style=>"background: url(#{@location.photo.url(:thumb)}) no-repeat;"}
-        .city_banner_text
-          %h3= @location.name
-          %p= full_address(@location)
-
-    %p
-      De foto van je locatie mag maximaal 500kb zijn. 
-      Voor de publicatie op de site wordt hij geschaald naar maximaal 200 pixels breed bij 170 pixels hoog. 
-      Wijzig hieronder de foto door een bestand te kiezen.
-      .label= f.label(:photo)
-      .input= f.file_field(:photo)
-    %p
-      .label
-        Publiceren
-      .input 
-        = f.check_box(:published) 
-        = f.label(:published)
-    <div style="clear:both"></div>
+  = render :partial => 'shared/location_publicaction_form_content', locals: {f: f}
   .actions
     = f.submit 'Voltooien'

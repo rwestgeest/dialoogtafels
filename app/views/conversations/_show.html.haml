@@ -6,13 +6,13 @@
     = conversation.number_of_tables
     = link_to image_tag('edit.gif'), edit_conversation_path(conversation.to_param), :class => 'edit', :title => 'wijzig deze dialoogronde', :'data-remote' => true
   .clear
-  .left
+  .conversation-leaders
     - unless conversation.conversation_leaders.empty?
       %p Gespreksleiders
       %ul
         - conversation.conversation_leaders.each do |conversation_leader|
           %li=  conversation_leader.name
-  .left
+  .participants
     - unless conversation.participants.empty?
       %p Deelnemers
       %ul

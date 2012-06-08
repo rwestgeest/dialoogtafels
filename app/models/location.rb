@@ -12,7 +12,7 @@ class Location < ApplicationModel
   belongs_to :organizer
   has_many :conversations
 
-  attr_accessible :name, :address, :postal_code, :city, :organizer_id, :lattitude, :longitude, :published, :photo
+  attr_accessible :name, :address, :postal_code, :city, :organizer_id, :lattitude, :longitude, :published, :photo, :description
 
   validates_presence_of :name
   validates_presence_of :address
