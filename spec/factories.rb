@@ -53,6 +53,13 @@ module Factories
       association :conversation
     end
 
+    factory :conversation_leader  do
+      sequence( :email ) { |n| "mail_#{n}@conversationleader.com" }
+      sequence( :name ) { |n| "organizer_#{n}" }
+      sequence( :telephone ) { |n| "telephone#{n}" }
+      association :conversation
+    end
+
     factory :maintainer_account, :class => MaintainerAccount, :aliases => [:account] do
       sequence( :email ) { |n| "maintainer_account_#{n}@mail.com" }
       role Account::Maintainer

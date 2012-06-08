@@ -47,7 +47,26 @@ nl:
               blank: "er is geen stad geselecteerd"
             name:
               blank: "je hebt geen naam ingegeven"
+        location:
+          attributes:
+            name:
+              blank: "je hebt geen naam ingegeven"
+            address:
+              blank: "je hebt geen adres ingegeven"
+            postal_code:
+              blank: "je hebt geen postcode ingegeven"
         organizer:
+          attributes:
+            email:
+              blank: "je hebt geen email adres opgegeven"
+              invalid: "het opgegeven email adres is ongeldig"
+            name:
+              blank: "je hebt geen naam ingegeven"
+            telephone:
+              blank: "je hebt geen telefoon opgegeven"
+            person: 
+              blank: "er zijn geen persoongegevens gekoppeld"
+        conversation_leader:
           attributes:
             email:
               blank: "je hebt geen email adres opgegeven"
@@ -73,6 +92,9 @@ nl:
               blank: "er is geen geldige dialoog gekoppeld"
   helpers:
     label:
+      accoutn:
+        password: "Wachtwoord"
+        password_confirmation: "Wachtwoord bevestiging"
       project:
         name: "Naam"
       person:
@@ -85,6 +107,10 @@ nl:
         email: "Email"
         name: "Naam"
         telephone: "Telefoon"
+      conversation_leader:
+        email: "Email"
+        name: "Naam"
+        telephone: "Telefoon"
       location:
         name: "Locatienaam"
       conversation:
@@ -92,12 +118,16 @@ nl:
         end_date: "Einde"
         number_of_tables: "Aantal tafels"
     submit:
+      account:
+        update: "Wachtwoord wijzigen"
       project:
         create: "Maak project aan"
         update: "Project opslaan"
       person:
         update: "Profiel bijwerken"
       organizer:
+        create: "Registreer"
+      conversation_leader:
         create: "Registreer"
       participant:
         create: "Registreer"
@@ -116,6 +146,8 @@ nl:
         send_password: 'Reset mijn wachtwoord'
   registration:
     organizers:
-      welcome: "Dank voor je registratie en Welkom bij dialoogtafels. Je kunt hieronder direct je locatie opgeven en publiceren."
+      welcome: "Dank voor je registratie en welkom bij dialoogtafels. Je kunt hieronder direct je locatie opgeven en publiceren."
     participants:
-      welcome: "Dank voor je registratie en Welkom bij dialoogtafels."
+      welcome: "Dank voor je registratie en welkom bij dialoogtafels."
+    conversation_leader:
+      welcome: "Dank voor je registratie en welkom bij dialoogtafels."

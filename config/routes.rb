@@ -16,6 +16,9 @@ Tafelmanager2::Application.routes.draw do
     resource :participants, :only => [:new, :create]  do
       collection { get 'confirm' }
     end
+    resource :conversation_leaders, :only => [:new, :create]  do
+      collection { get 'confirm' }
+    end
   end
 
   namespace :contributor do

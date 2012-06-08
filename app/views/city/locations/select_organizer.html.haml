@@ -1,0 +1,9 @@
+- title 'Selecteer een organisator voor de nieuwe locatie'
+= form_tag new_city_location_path, :method => 'get' do
+  .dialog_container
+    .label= "Kies tafelorganisator"
+    .input= select_tag 'organizer_id', options_from_collection_for_select(@organizers, "id", "name")
+  .actions
+    =submit_tag "Maak een niewue locatie"
+
+

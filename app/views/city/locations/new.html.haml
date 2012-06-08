@@ -1,5 +1,32 @@
-%h1 New location
+- title "Nieuwe locatie voor #{@location.organizer.name}"
+= javascript_include_tag "http://maps.google.com/maps/api/js?sensor=false"
 
-= render 'form'
+= form_for [:city, @location] do |f|
+  = errors_for @location
+  .dialog-container
+    %p
+      .label= f.label :name
+      .input= f.text_field :name
+  %table.columns-layout
+    %tr
+      %td.input_column_eq_left
+        .dialog-container
+          = f.hidden_field :organizer_id
+          = f.hidden_field :longitude
+          = f.hidden_field :lattitude
+          %p
+            .label= f.label :address
+            .input= f.text_field :address
+          %p
+            .label= f.label :postal_code
+            .input= f.text_field :postal_code
+          %p
+            .label= f.label :city
+            .input= f.text_field :city
+      %td.input_column_eq_right
+        .dialog-container
+          %div(id='location_map_canvas' style='width200px; height:180px;')
+  
+  .actions
+    = f.submit "Voeg gespreksronden toe"
 
-= link_to 'Back', city_locations_path

@@ -1,17 +1,8 @@
-%h1 Listing city_locations
+- title "Dialoog locaties in #{current_tenant.name} voor #{active_project.name}"
+- if (@locations.empty?)
+  = link_to "Maak je eerste dialoog locatie aan", new_city_location_path
+- else
+  = render :partial => 'shared/location', :collection => @locations
+.clear
 
-%table
-  %tr
-    %th
-    %th
-    %th
-
-  - @city_locations.each do |location|
-    %tr
-      %td= link_to 'Show', city_location_path(location)
-      %td= link_to 'Edit', edit_city_location_path(location)
-      %td= link_to 'Destroy', city_location_path(location), :confirm => 'Are you sure?', :method => :delete
-
-%br
-
-= link_to 'New Location', new_city_location_path
+  = link_to 'Nieuwe locatie aanmaken', new_city_location_path

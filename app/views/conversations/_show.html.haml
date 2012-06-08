@@ -7,11 +7,11 @@
     = link_to image_tag('edit.gif'), edit_conversation_path(conversation.to_param), :class => 'edit', :title => 'wijzig deze dialoogronde', :'data-remote' => true
   .clear
   .left
-    - unless conversation.participants.empty?
-      %p Deelnemers
+    - unless conversation.conversation_leaders.empty?
+      %p Gespreksleiders
       %ul
-        - conversation.participants.each do |participant|
-          %li=  participant.name
+        - conversation.conversation_leaders.each do |conversation_leader|
+          %li=  conversation_leader.name
   .left
     - unless conversation.participants.empty?
       %p Deelnemers

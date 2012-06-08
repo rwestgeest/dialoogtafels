@@ -13,6 +13,7 @@
       = time_period(conversation)
     .right
       = link_to 'schrijf je in als deelnemer', new_registration_participants_path(:conversation_id => conversation)
+      = link_to 'schrijf je in als gespreksleider', new_registration_conversation_leaders_path(:conversation_id => conversation)
     .clear
 
 = link_to "terug naar de lijst van locaties", locations_path

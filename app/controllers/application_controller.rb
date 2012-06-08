@@ -1,7 +1,7 @@
 class ApplicationController < ActionController::Base
   protect_from_forgery
   prepend_before_filter :set_current_tenant
-  helper_method :current_account
+  helper_method :current_account, :current_tenant, :active_project
 
   protected
   def sign_in(account)
@@ -18,6 +18,14 @@ class ApplicationController < ActionController::Base
   end
   def current_account_id
     session[:current_account_id]
+  end
+
+  def current_tenant
+    Tenant.current
+  end
+
+  def active_project
+    current_tenant.active_project
   end
 
   def set_current_tenant

@@ -6,6 +6,7 @@ class Conversation < ActiveRecord::Base
   
   belongs_to :location
   has_many :participants
+  has_many :conversation_leaders
 
   validates_presence_of :start_date
   validates_presence_of :start_time

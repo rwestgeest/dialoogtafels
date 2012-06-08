@@ -1,6 +1,6 @@
-%p#notice= notice
+- title @location.name
+#conversations
+  = render partial: 'conversations/index', locals: { conversations: @location.conversations }
+.actions
+  = link_to 'Terug', :back
 
-
-= link_to 'Edit', edit_city_location_path(@location)
-\|
-= link_to 'Back', city_locations_path

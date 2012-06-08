@@ -1,9 +1,9 @@
 - title "Uw dialoog locaties"
 
 - if (@locations.empty?)
-  = link_to "Maak jeeerste dialoog locatie aan", new_organizer_location_path
+  = link_to "Maak je eerste dialoog locatie aan", new_organizer_location_path
 - else
-  = render :partial => 'location', :collection => @locations
+  = render :partial => 'shared/location', :collection => @locations
 .clear
 
   = link_to 'Nieuwe locatie aanmaken', new_organizer_location_path
