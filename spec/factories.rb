@@ -65,7 +65,6 @@ module Factories
       end
 
     end
-
     factory :coordinator_account, :class => TenantAccount, :aliases => [:tenant_account] do
       sequence( :email ) { |n| "coordinator_account_#{n}@mail.com" }
       role Account::Coordinator

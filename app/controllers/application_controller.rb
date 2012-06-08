@@ -5,7 +5,7 @@ class ApplicationController < ActionController::Base
 
   protected
   def sign_in(account)
-    session[:current_account_id] = account
+    session[:current_account_id] = account.to_param
   end
   def sign_out
     session[:current_account_id] = nil

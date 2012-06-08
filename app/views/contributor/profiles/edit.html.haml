@@ -1,0 +1,11 @@
+- title "Mijn profiel"
+= form_for @person, :url => contributor_profile_path  do |f|
+  = errors_for @person
+
+  %p
+    .label= f.label :name
+    .input= f.text_field :name
+
+  .actions
+    = f.submit
+

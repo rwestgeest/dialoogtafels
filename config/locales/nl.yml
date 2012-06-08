@@ -75,6 +75,8 @@ nl:
     label:
       project:
         name: "Naam"
+      person:
+        name: "Naam"
       organizer:
         email: "Email"
         name: "Naam"
@@ -93,6 +95,8 @@ nl:
       project:
         create: "Maak project aan"
         update: "Project opslaan"
+      person:
+        update: "Profiel bijwerken"
       organizer:
         create: "Registreer"
       participant:

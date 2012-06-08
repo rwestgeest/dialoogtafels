@@ -177,10 +177,6 @@ describe Account do
     end
 
     describe 'confirm' do 
-      def confirm_with_password!
-        account.confirm_with_password :password => 'secret', :password_confirmation => 'secret'
-        account.reload
-      end
 
       context "maintainer" do
         let(:account) { 
@@ -191,12 +187,14 @@ describe Account do
 
         it_should_behave_like "a confirmable account"
       end
+
       context "contributor" do
         let(:account) { 
           FactoryGirl.create(:organizer).account
         }
 
         it_should_behave_like "a confirmable account"
+
         it "should have organizer/locations as landing_page" do
           confirm_with_password!
           account.landing_page.should == '/organizer/locations'
@@ -219,10 +217,32 @@ describe Account do
       end
     end
 
+    describe 'landing page' do
+      before { confirm_with_password! }
+      subject {account.landing_page} 
+      context "for organizer" do
+        let(:account) { FactoryGirl.create(:organizer).account }
+        it {should == '/organizer/locations' } 
+      end
+      context "for participant" do
+        let(:account) { FactoryGirl.create(:participant).account }
+        it {should == '/contributor/profile/edit' } 
+      end
+      context "for maintainer" do
+        let(:account) { FactoryGirl.create(:maintainer_account) }
+        it {should == '/admin/tenants' } 
+      end
+    end
+
     describe 'creating coordinator' do
       it "creates a person" do
         expect {FactoryGirl.create :coordinator_account}.to change(Person, :count).by(1)
       end
+    end
+
+    def confirm_with_password!
+      account.confirm_with_password :password => 'secret', :password_confirmation => 'secret'
+      account.reload
     end
   end
 end
