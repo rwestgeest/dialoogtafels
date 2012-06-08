@@ -57,14 +57,14 @@
         it "assigns a newly created but unsaved location as @location" do
           # Trigger the behavior that occurs when invalid params are submitted
           Location.any_instance.stub(:save).and_return(false)
-          post :create, {:location => {}}
+          post :create, {:location => valid_attributes}
           assigns(:location).should be_a_new(Location)
         end
 
         it "re-renders the 'new' template" do
           # Trigger the behavior that occurs when invalid params are submitted
           Location.any_instance.stub(:save).and_return(false)
-          post :create, {:location => {}}
+          post :create, {:location => valid_attributes}
           response.should render_template("new")
         end
       end

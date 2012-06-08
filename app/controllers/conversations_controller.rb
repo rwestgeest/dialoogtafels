@@ -17,6 +17,7 @@ class ConversationsController < ApplicationController
 
     if @conversation.save
       @conversations = Conversation.where(:location_id => @conversation.location.to_param)
+      @location = @conversation.location
       render :action => 'index'
     else
       render :action => 'new'
@@ -37,6 +38,7 @@ class ConversationsController < ApplicationController
     @conversation = Conversation.find(params[:id])
     @conversations = Conversation.where(:location_id => @conversation.location.to_param)
     @conversation.destroy
+    @location = @conversation.location
     render :action => 'index'
   end
 
