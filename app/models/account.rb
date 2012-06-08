@@ -63,7 +63,7 @@ class Account < ActiveRecord::Base
     return '/account/password/edit' if !confirmed? || reset?
     if role == Account::Contributor 
       return '/organizer/locations' if active_contribution.is_a? Organizer
-      return '/contributor/profile/edit' 
+      return '/contributor/registration' 
     end
     return '/admin/tenants' if role == Account::Maintainer
     '/'

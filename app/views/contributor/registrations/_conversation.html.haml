@@ -1,0 +1,21 @@
+.dialog-container{:id => "conversation_#{conversation.to_param}"}
+  .left
+    = time_period(conversation)
+  .right
+    maximaal aantal tafels: 
+    = conversation.number_of_tables
+  .clear
+  .left
+    - unless conversation.participants.empty?
+      %p Deelnemers
+      %ul
+        - conversation.participants.each do |participant|
+          %li=  participant.name
+  .left
+    - unless conversation.participants.empty?
+      %p Deelnemers
+      %ul
+        - conversation.participants.each do |participant|
+          %li=  participant.name
+  .clear
+

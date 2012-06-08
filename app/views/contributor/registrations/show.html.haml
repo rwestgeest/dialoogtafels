@@ -1,0 +1,6 @@
+- title "Mijn inschrijving"
+
+%h3
+  = @location.name
+
+= render :partial => 'conversation', locals: { conversation: @conversation }

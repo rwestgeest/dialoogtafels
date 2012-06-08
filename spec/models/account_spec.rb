@@ -226,7 +226,7 @@ describe Account do
       end
       context "for participant" do
         let(:account) { FactoryGirl.create(:participant).account }
-        it {should == '/contributor/profile/edit' } 
+        it {should == '/contributor/registration'} 
       end
       context "for maintainer" do
         let(:account) { FactoryGirl.create(:maintainer_account) }

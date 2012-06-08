@@ -27,7 +27,7 @@ module ControllerExtensions
   end
   def __create_and_confirm_account_with_role(role)
     begin
-    if ( role == :organizer )
+    if ( [:organizer, :participant].include? role )
       account = FactoryGirl.create(role).account
     else
       account = FactoryGirl.create(:"#{role}_account")
