@@ -12,6 +12,8 @@
 //
 //= require jquery
 //= require jquery_ujs
+//= require table_map
+//= require conversations
 
 /* Dutch (UTF-8) initialisation for the jQuery UI date picker plugin. */
 /* Written by Mathias Bynens <http://mathiasbynens.be/> */

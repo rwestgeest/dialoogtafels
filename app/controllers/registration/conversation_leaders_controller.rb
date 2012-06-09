@@ -1,5 +1,4 @@
-class Registration::ConversationLeadersController < ApplicationController
-  layout 'registration'
+class Registration::ConversationLeadersController < PublicController
   append_before_filter :check_conversation, :only => :new
 
   def new

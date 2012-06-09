@@ -2,11 +2,17 @@
 %html
   %head
     %title DialoogTafels.nl
-    = stylesheet_link_tag "application", :media => "all"
+    = stylesheet_link_tag "session", :media => "all"
     = javascript_include_tag "application"
     = csrf_meta_tags
     /[if lt IE 9]
       = javascript_include_tag "html5"
   %body
-    = flash_tags
-    = yield
+    %h1 
+      Dialoogtafels in 
+      = current_tenant.name
+
+    %section#login-box
+      %h2= yield :title
+      = flash_tags
+      = yield

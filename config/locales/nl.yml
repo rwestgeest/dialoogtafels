@@ -41,6 +41,11 @@ nl:
       messages:
         record_invalid: "De invoer is niet geldig"
       models:
+        tenant_account:
+          attributes:
+            password:
+              blank: "je hebt geen wachtwoord opgegeven"
+              confirmation: "de opgegeven wachtwoorden zijn niet hetzelfde"
         project:
           attributes:
             tenant:
@@ -92,7 +97,8 @@ nl:
               blank: "er is geen geldige dialoog gekoppeld"
   helpers:
     label:
-      accoutn:
+      account:
+        email: "Email"
         password: "Wachtwoord"
         password_confirmation: "Wachtwoord bevestiging"
       project:

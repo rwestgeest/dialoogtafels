@@ -6,7 +6,7 @@ class Account::ResponseSessionsController < ApplicationController
       sign_in @account
       redirect_to @account.landing_page
     else
-      render status: :not_found
+      head :not_found
     end
   end
 
