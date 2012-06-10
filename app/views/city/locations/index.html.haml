@@ -2,7 +2,7 @@
 - if (@locations.empty?)
   = link_to "Maak je eerste dialoog locatie aan", new_city_location_path
 - else
-  = render :partial => 'shared/location', :collection => @locations
+  = render :partial => 'location', :collection => @locations
 .clear
 
   = link_to 'Nieuwe locatie aanmaken', new_city_location_path

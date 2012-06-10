@@ -2,14 +2,43 @@
 %html
   %head
     %title= yield :title
-    = stylesheet_link_tag "application", :media => "all"
     = stylesheet_link_tag "public", :media => "all"
     = javascript_include_tag "application"
     = csrf_meta_tags
     /[if lt IE 9]
       = javascript_include_tag "html5"
   %body
-    %h2= yield :title
-    = flash_tags
-    = yield
+    %table#body_container{ cellpadding: 0, cellspacing: 0, align:'center' }
+      %tr
+        %td{ colspan:3, height:148 }
+          #top_container
+            #dialoog_stad_top
+              = current_tenant.name.upcase
+            #title_container
+              &nbsp;
+            #topmenu
+      %tr
+        %td#submenu_container
+          .submenu
+            terug naar de site
+        %td#content_container
+          = yield
+        %td#right_container
+
+      %tr
+        %td#lijn{ colspan: 3 }
+      %tr
+        %td{ colspan:3, height: 80 }
+          %table.copyright{ width:'100%', border:'0'}
+            %tr
+              %td
+                #footer
+                  %span.dialoog_txt
+                    Dag van de Dialoog 
+                  &nbsp; &nbsp;
+                  = current_tenant.name
+              %td{ align:'right' }
+                %a{ href: "http://www.nederlandindialoog.nl", target: 'blank' }
+                  %div{ align: 'right', style:"width:100px; height:80px"}
+
 

@@ -3,15 +3,15 @@
 = form_for [:registration, @organizer]  do |f|
   = errors_for @organizer
 
-  %p
+  .input-container
     .label= f.label :email
     .input= f.text_field :email
 
-  %p
+  .input-container
     .label= f.label :name
     .input= f.text_field :name
 
-  %p
+  .input-container
     .label= f.label :telephone
     .input= f.text_field :telephone
 

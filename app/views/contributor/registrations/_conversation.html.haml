@@ -5,17 +5,4 @@
     maximaal aantal tafels: 
     = conversation.number_of_tables
   .clear
-  .left
-    - unless conversation.conversation_leaders.empty?
-      %p Gespreksleiders
-      %ul
-        - conversation.conversation_leaders.each do |conversation_leader|
-          %li=  conversation_leader.name
-  .left
-    - unless conversation.participants.empty?
-      %p Deelnemers
-      %ul
-        - conversation.participants.each do |participant|
-          %li=  participant.name
-  .clear
-
+  = render :partial => 'conversations/contributors', locals: { conversation: conversation }

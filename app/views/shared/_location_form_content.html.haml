@@ -2,7 +2,7 @@
 = javascript_tag "editableMap('location');"
 = errors_for @location
 .dialog-container
-  %p
+  .input-container
     .label= f.label :name
     .input= f.text_field :name
 %table.columns-layout
@@ -11,13 +11,13 @@
       .dialog-container
         = f.hidden_field :longitude
         = f.hidden_field :lattitude
-        %p
+        .input-container
           .label= f.label :address
           .input= f.text_field :address
-        %p
+        .input-container
           .label= f.label :postal_code
           .input= f.text_field :postal_code
-        %p
+        .input-container
           .label= f.label :city
           .input= f.text_field :city
     %td.input_column_eq_right

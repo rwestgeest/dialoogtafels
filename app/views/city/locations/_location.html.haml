@@ -1,0 +1,8 @@
+%table{ id: "list-location-#{location.id}", class: 'list-location' }
+  %tr
+    %td.location-data
+      = link_to location.name, city_location_path(location)
+
+    %td.location-modified-state
+      = created_at(location)
+      = updated_at(location)

@@ -1,0 +1,46 @@
+.dialog-container {
+  display:block;
+}
+.dialog-container .input-container {
+	display: block;
+  padding: 3px 0px;
+	position:relative;
+	clear: both;
+  min-height: 10px;
+	width: 100%;
+}
+.field_with_errors input { border: solid red 1px; }
+div.inputLabel {
+	clear: both;
+	float: left;
+	margin: 2px 5px 0px 0px;
+	font-weight: bold;
+	width: 145px;
+}
+div.label {
+	clear: both;
+	position:relative;
+	float: left;
+	margin: 2px 5px 0px 0px;
+	font-weight: bold;
+	width: 175px;
+}
+div.input {
+	position: relative;
+	width: 300px;
+	float: left;
+	margin: 0px 2px 0px 0px;
+}
+div.input input, div.input_container_control textarea {
+	height: 20px;
+	margin: 0px;
+	padding: 0px;
+	font-size: 12px;
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+}
+div.actions {margin:10px; padding:10px 0px; clear:both; font-size:12px; text-align:right;}
+
+div.input textarea {
+	overflow:auto;
+}
+
