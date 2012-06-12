@@ -220,6 +220,10 @@ describe Account do
     describe 'landing page' do
       before { confirm_with_password! }
       subject {account.landing_page} 
+      context "for coordinator" do
+        let(:account) { FactoryGirl.create(:coordinator_account) }
+        it {should == '/city/locations' } 
+      end
       context "for organizer" do
         let(:account) { FactoryGirl.create(:organizer).account }
         it {should == '/organizer/locations' } 

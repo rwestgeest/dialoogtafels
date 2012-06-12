@@ -1,7 +1,0 @@
-- title 'Voeg dialoog ronden toe'
-.dialog-container
-  %h3= @location.name
-#conversations
-  = render partial: 'conversations/index', locals: { conversations: @location.conversations }
-.actions
-  = link_to "Voeg publicatie details toe", edit_organizer_location_path(:step => :publication)

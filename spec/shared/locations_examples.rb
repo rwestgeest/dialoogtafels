@@ -20,19 +20,7 @@
     end
   end
 
-  shared_examples_for "a_locations_editor" do
-    describe "GET edit" do
-      let(:location) { create_location }
-      def do_action(extra_params = {})
-        get :edit, {:id => location.to_param}.merge(extra_params)
-      end
-      it "assigns the requested location as @location" do
-        do_action
-        assigns(:location).should eq(location)
-      end
-      it_should_behave_like "an_edit_renderer"
-    end
-
+  shared_examples_for "a_locations_creator" do
     describe "POST create" do
       describe "with valid params" do
         it "creates a new Location" do
@@ -49,7 +37,7 @@
 
         it "redirects to the created location" do
           post :create, {:location => valid_attributes}
-          response.should redirect_to(edit_url(Location.last, :step=>'conversations'))
+          response.should redirect_to(edit_city_location_url(Location.last, :step=>'conversations'))
         end
       end
 
@@ -69,6 +57,21 @@
         end
       end
     end
+
+  end
+  shared_examples_for "a_locations_editor" do
+    describe "GET edit" do
+      let(:location) { create_location }
+      def do_action(extra_params = {})
+        get :edit, {:id => location.to_param}.merge(extra_params)
+      end
+      it "assigns the requested location as @location" do
+        do_action
+        assigns(:location).should eq(location)
+      end
+      it_should_behave_like "an_edit_renderer"
+    end
+
 
     describe "PUT update" do
       let!(:location) { create_location }
@@ -94,7 +97,7 @@
 
         it "redirects to the location" do
           do_action
-          response.should redirect_to(show_url(location))
+          response.should redirect_to(city_location_url(location))
         end
       end
 

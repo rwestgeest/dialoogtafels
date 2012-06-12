@@ -61,6 +61,7 @@ class Account < ActiveRecord::Base
 
   def landing_page
     return '/account/password/edit' if !confirmed? || reset?
+    return '/city/locations' if role == Account::Coordinator
     if role == Account::Contributor 
       return '/organizer/locations' if active_contribution.is_a? Organizer
       return '/contributor/registration' 

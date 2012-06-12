@@ -16,14 +16,6 @@ describe City::LocationsController do
     FactoryGirl.create :location, attributes
   end
 
-  def edit_url(*args)
-    edit_city_location_url(*args)
-  end
-
-  def show_url(*args)
-    city_location_url(*args)
-  end
-
   def index_url(*args)
     city_locations_url(*args)
   end
@@ -65,4 +57,5 @@ describe City::LocationsController do
   end
 
   it_should_behave_like "a_locations_editor"
+  it_should_behave_like "a_locations_creator"
 end

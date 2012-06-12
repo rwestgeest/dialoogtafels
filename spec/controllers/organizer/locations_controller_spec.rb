@@ -17,17 +17,10 @@ describe Organizer::LocationsController do
     FactoryGirl.create :location, { :organizer => current_organizer }.merge(attributes)
   end
 
-  def edit_url(*args)
-    edit_organizer_location_url(*args)
-  end
-
-  def show_url(*args)
-    organizer_location_url(*args)
-  end
-
   def index_url(*args)
     organizer_locations_url(*args)
   end
+
 
   describe "GET index" do
     it "assigns all organizer_locations as @organizer_locations" do
@@ -41,10 +34,11 @@ describe Organizer::LocationsController do
   describe "GET show" do
     it "assigns the requested location as @location" do
       location = create_location
-      get :show, {:id => location.id}
+      get :show, {:id => location.to_param}
       assigns(:location).should eq(location)
     end
   end
+
 
   describe "GET new" do
     it "assigns a new location as @location" do
@@ -52,8 +46,6 @@ describe Organizer::LocationsController do
       assigns(:location).should be_a_new(Location)
     end
   end
-
-  it_should_behave_like "a_locations_editor"
-
+  it_should_behave_like "a_locations_creator"
 
 end

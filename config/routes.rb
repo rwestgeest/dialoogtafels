@@ -32,7 +32,7 @@ Tafelmanager2::Application.routes.draw do
   end
 
   namespace :organizer do
-    resources :locations 
+    resources :locations, only: [:index, :new, :create, :show]
   end
 
   namespace :admin do 
