@@ -46,6 +46,7 @@ group :development do
   gem "vlad-git"
   gem "capybara"
   gem "nifty-generators"
+  gem "ammeter", "0.2.5"
 end
 gem "rb-readline"
 gem "mocha", :group => :test
