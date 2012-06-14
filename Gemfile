@@ -39,6 +39,7 @@ group :test do
   gem "factory_girl_rails"
 
   gem "shoulda-matchers", "~> 1.1.0"
+  gem "ammeter", "0.2.5"
 end
 group :development do
   gem "rspec-rails", "~> 2.10.0"
@@ -46,7 +47,6 @@ group :development do
   gem "vlad-git"
   gem "capybara"
   gem "nifty-generators"
-  gem "ammeter", "0.2.5"
 end
 gem "rb-readline"
 gem "mocha", :group => :test

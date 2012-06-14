@@ -1,8 +1,11 @@
 Description:
-    Explain the generator
+    Generats a controller with javascript views
 
 Example:
-    rails generate ajax_controller Thing
+    rails generate ajax_controller name
 
     This will create:
-        what/will/it/create
+      app/controllers/names_controller.rb
+      app/views/names/index.js.erb
+      app/views/names/_index.haml.erb
+      app/views/names/_name.haml.erb
