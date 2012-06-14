@@ -5,6 +5,7 @@ gem 'rails', '3.2.3'
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
 gem 'sqlite3'
 gem "paperclip", "~> 3.0"
+gem "action-guard"
 
 # Gems used only for assets and not required
 # in production environments by default.
@@ -41,6 +42,7 @@ group :test do
   gem "shoulda-matchers", "~> 1.1.0"
   gem "ammeter", "0.2.5"
 end
+
 group :development do
   gem "rspec-rails", "~> 2.10.0"
   gem "vlad"
@@ -48,5 +50,6 @@ group :development do
   gem "capybara"
   gem "nifty-generators"
 end
+
 gem "rb-readline"
 gem "mocha", :group => :test

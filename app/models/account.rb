@@ -8,6 +8,10 @@ class Account < ActiveRecord::Base
   Maintainer = 'maintainer'
   Coordinator = 'coordinator'
   Contributor = 'contributor'
+  ConversationLeader = ::ConversationLeader.to_s.underscore
+  Participant = ::Participant.to_s.underscore
+  Organizer = ::Organizer.to_s.underscore
+
   EMAIL_REGEXP = /\A([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})\Z/i
 
 
@@ -59,13 +63,19 @@ class Account < ActiveRecord::Base
     person.contributors.where(:project_id => project).first
   end
 
+  def role
+    unless @role_value 
+      @role_value = super
+      @role_value = active_contribution.class.to_s.underscore if @role_value == Contributor && active_contribution
+    end
+    @role_value
+  end
+
   def landing_page
     return '/account/password/edit' if !confirmed? || reset?
     return '/city/locations' if role == Account::Coordinator
-    if role == Account::Contributor 
-      return '/organizer/locations' if active_contribution.is_a? Organizer
-      return '/contributor/registration' 
-    end
+    return '/organizer/locations' if role == Account::Organizer
+    return '/contributor/registration'if role == Account::ConversationLeader || role == Account::Participant 
     return '/admin/tenants' if role == Account::Maintainer
     '/'
   end

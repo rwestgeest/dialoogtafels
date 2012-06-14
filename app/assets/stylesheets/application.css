@@ -174,8 +174,8 @@ span.selected-text { background-color: #c8c8c8; padding:2px; margin:2px; font-bo
     font-weight:bolder;
     font-style: italic;
     border:1px solid #0f0;
-    background-color: #feb0b0;
-    color:red;
+    background-color: #b0feb0;
+    color:green;
 }
 #notice span {
    padding:5px;

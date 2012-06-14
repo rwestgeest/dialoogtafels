@@ -15,6 +15,12 @@
         =login_information
       %h1 Dialoogtafels.nl
     %section#main-menu
+      #main-left-menu
+        %ul
+          = menu(request) do |m|
+            - m.tab("Locaties", 'city/locations')
+            - m.tab("Locaties", 'organizer/locations')
+            - m.tab("Mijn Profiel", 'contributor/profiles#edit')
 
     %section#content-frame
       %section#flash_messages

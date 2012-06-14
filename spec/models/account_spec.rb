@@ -232,9 +232,37 @@ describe Account do
         let(:account) { FactoryGirl.create(:participant).account }
         it {should == '/contributor/registration'} 
       end
+      context "for conversation_leader" do
+        let(:account) { FactoryGirl.create(:conversation_leader).account }
+        it {should == '/contributor/registration'} 
+      end
       context "for maintainer" do
         let(:account) { FactoryGirl.create(:maintainer_account) }
         it {should == '/admin/tenants' } 
+      end
+    end
+
+    describe 'role' do
+      subject {account.role}
+      context "for coordinator" do
+        let(:account) { FactoryGirl.create(:coordinator_account) }
+        it {should == 'coordinator' } 
+      end
+      context "for organizer" do
+        let(:account) { FactoryGirl.create(:organizer).account }
+        it {should == 'organizer' } 
+      end
+      context "for participant" do
+        let(:account) { FactoryGirl.create(:participant).account }
+        it {should == 'participant'} 
+      end
+      context "for conversation_leader" do
+        let(:account) { FactoryGirl.create(:conversation_leader).account }
+        it {should == 'conversation_leader'} 
+      end
+      context "for maintainer" do
+        let(:account) { FactoryGirl.create(:maintainer_account) }
+        it {should == 'maintainer' } 
       end
     end
 

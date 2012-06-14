@@ -160,3 +160,4 @@ nl:
       welcome: "Dank voor je registratie en welkom bij dialoogtafels."
     conversation_leader:
       welcome: "Dank voor je registratie en welkom bij dialoogtafels."
+  not_authorized: "Je bent niet geautoriseerd voor deze actie"

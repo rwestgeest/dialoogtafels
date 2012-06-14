@@ -4,8 +4,9 @@ describe TenantAccount do
   it_should_behave_like "a_scoped_object", :tenant_account
 
   describe "creation methods" do
+    prepare_scope :tenant
     it "contributor creates contributor" do
-      TenantAccount.contributor.role == Account::Contributor
+      TenantAccount.contributor(Person.new).role == Account::Contributor
     end
   end
   context "within tenant scope" do

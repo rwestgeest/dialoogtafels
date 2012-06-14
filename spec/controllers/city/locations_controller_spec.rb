@@ -1,5 +1,6 @@
 require 'spec_helper'
 
+
 describe City::LocationsController do
   render_views 
   prepare_scope :tenant

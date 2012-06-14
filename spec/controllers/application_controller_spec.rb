@@ -19,5 +19,22 @@ describe 'application_controller' do
         Tenant.current.should == current
       end
     end
+    context "with tenant scope" do
+      prepare_scope :tenant
+      describe 'not allowed for action' do
+        login_as :organizer
+        before do
+          ActionGuard.stub(:authorized?).and_return false
+          get :index
+        end
+        it "redirects to root" do
+          response.should be_redirect
+          response.should redirect_to '/'
+        end
+        it "signs out" do
+          controller.should_not be_signed_in
+        end
+      end
+    end
   end
 end

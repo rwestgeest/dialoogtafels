@@ -1,3 +1,4 @@
+require 'menu'
 module ApplicationHelper
   def title(title)
     content_for(:title) { title }
@@ -10,6 +11,11 @@ module ApplicationHelper
     "| #{link_to('wachtwoord wijzigen', edit_account_password_path)}"
   end
 
+  def menu(request, &block)
+    m = Menu.create(self)
+    yield(m) 
+    raw m.render(request.parameters, current_account)
+  end
 
   def page_info(page_info)
     content_for(:page_info, page_info)
