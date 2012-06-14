@@ -14,7 +14,12 @@ class AjaxControllerGenerator < Rails::Generators::NamedBase
     template 'controller.rb', aa
   end
 
-  hook_for :template_engine, :test_framework, :as => :ajax_scaffold
+  def create_view_files
+    template 'views/_index.html.haml', File.join('app/views', class_path, controller_file_name, '_index.html.haml')
+    template 'views/_list_entry.html.haml', File.join('app/views', class_path, controller_file_name, "_#{name}.html.haml")
+    template 'views/index.js.erb', File.join('app/views', class_path, controller_file_name, 'index.js.erb')
+  end
+  hook_for :test_framework, :as => :ajax_scaffold
 
   # Invoke the helper using the controller name (pluralized)
   hook_for :helper, :as => :scaffold do |invoked|

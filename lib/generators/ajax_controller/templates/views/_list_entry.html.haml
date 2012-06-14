@@ -1,0 +1,2 @@
+.dialog-container{:id => "<%= singular_table_name %>_#{<%= singular_table_name %>.to_param}"}
+  = link_to image_tag('edit.gif'), edit_<%= singular_table_name %>_path(<%= singular_table_name %>.to_param), :class => 'edit', :title => I18n.t('.edit_title'), :'data-remote' => true

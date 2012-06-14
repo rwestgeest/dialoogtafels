@@ -1,0 +1,11 @@
+.dialog-container
+  - if <%= plural_table_name %>.empty? 
+    #<%= singular_table_name %>_new
+      %p
+        = I18n.t('.empty')
+      = link_to I18n.t('.create_first'), new_<%= singular_table_name %>_path, :'data-remote' => true
+  - else
+    = render partial: '<%= plural_table_name %>/_<%= singular_table_name %>', collection: <%= plural_table_name %> 
+    #<%= singular_table_name %>_new
+      .actions
+        = link_to I18n.t('.new'), new_<%= singular_table_name %>_path, :'data-remote' => true
