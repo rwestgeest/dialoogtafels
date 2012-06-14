@@ -26,7 +26,7 @@ class City::LocationsController < ApplicationController
     @location = Location.new(params[:location])
 
     if @location.save
-      redirect_to edit_city_location_path(@location, :step => 'conversations'), notice: 'Location was successfully created.' 
+      redirect_to edit_city_location_path(@location, :step => 'conversations'), notice: 'Locatie is succesvol aangemaakt.' 
     else
       render action: "new" 
     end
@@ -36,7 +36,7 @@ class City::LocationsController < ApplicationController
     @location = Location.find(params[:id])
 
     if @location.update_attributes(params[:location])
-      redirect_to city_location_path(@location), notice: 'Location was successfully updated.' 
+      redirect_to city_location_path(@location), notice: 'Location is sucesvol bijgewerkt.' 
     else
       render_edit
     end

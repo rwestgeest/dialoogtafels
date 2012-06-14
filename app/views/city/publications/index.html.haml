@@ -1,0 +1,17 @@
+%h1 Listing city_locations_publications
+
+%table
+  %tr
+    %th
+    %th
+    %th
+
+  - @city_locations_publications.each do |city_locations_publication|
+    %tr
+      %td= link_to 'Show', city_locations_publication
+      %td= link_to 'Edit', edit_city_locations_publication_path(city_locations_publication)
+      %td= link_to 'Destroy', city_locations_publication, :confirm => 'Are you sure?', :method => :delete
+
+%br
+
+= link_to 'New Publication', new_city_locations_publication_path

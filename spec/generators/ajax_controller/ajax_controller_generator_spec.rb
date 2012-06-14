@@ -2,7 +2,7 @@ require 'spec_helper'
 require 'tmpdir'
 require 'generators/ajax_controller/ajax_controller_generator'
 
-describe AjaxControllerGenerator, :focus => true do 
+describe AjaxControllerGenerator do 
   destination File.expand_path("ajax_controller_gernerator", Dir.tmpdir)
   subject { file('app/controllers/posts_controller.rb') }
   before do 

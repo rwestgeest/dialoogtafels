@@ -1,0 +1,5 @@
+- title 'Publiceer de locatie'
+= form_for @location, :url => city_location_publication_path(:location_id => @location )  do |f|
+  = render :partial => 'shared/location_publicaction_form_content', locals: {f: f}
+  .actions
+    = f.submit 'Voltooien'

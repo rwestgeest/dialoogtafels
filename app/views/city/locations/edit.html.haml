@@ -1,7 +1,6 @@
-%h1 Editing organizer_location
+- title "Wijzig locatie"
 
-= render 'form'
-
-= link_to 'Show', @organizer_location
-\|
-= link_to 'Back', organizer_locations_path
+= form_for [:city, @location] do |f|
+  = render :partial => 'shared/location_form_content', locals: {f: f}
+  .actions
+    = f.submit "Bijwerken"

@@ -57,8 +57,8 @@
         end
       end
     end
-
   end
+
   shared_examples_for "a_locations_editor" do
     describe "GET edit" do
       let(:location) { create_location }

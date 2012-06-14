@@ -28,7 +28,9 @@ Tafelmanager2::Application.routes.draw do
 
   namespace :city do 
     resources :projects 
-    resources :locations 
+    resources :locations do
+      resource :publication, :on => :meber, :only => [:show, :new, :create, :edit, :update ]
+    end
   end
 
   namespace :organizer do
