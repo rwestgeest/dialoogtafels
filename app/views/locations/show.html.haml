@@ -1,19 +1,5 @@
-.city_banner{:style=>"float:right;"}
-  .city_banner_photo{:style=>"background: url(#{@location.photo.url(:thumb)}) no-repeat;"}
-    .city_banner_text
-      %h3= @location.name
-      %p= full_address(@location)
-
-%h3= @location.name
-
-.clear
-- @location.conversations.each do |conversation| 
-  .dialog-container{:id => "conversation_#{conversation.to_param}"}
-    .left
-      = time_period(conversation)
-    .right
-      = link_to 'schrijf je in als deelnemer', new_registration_participants_path(:conversation_id => conversation)
-      = link_to 'schrijf je in als gespreksleider', new_registration_conversation_leaders_path(:conversation_id => conversation)
-    .clear
+.city-details-container
+  = render :partial => 'location_publication_details'
+  %h3 Schrijf je in op een van de volgende dialooggesprekken
 
 = link_to "terug naar de lijst van locaties", locations_path

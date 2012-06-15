@@ -1,22 +1,7 @@
 - title "Publicatievoorbeeld '#{@location.name}'"
-.city_banner{:style=>"float:right;"}
-  .city_banner_photo{:style=>"background: url(#{@location.photo.url(:thumb)}) no-repeat;"}
-    .city_banner_text
-      %h3= @location.name
-      %p= full_address(@location)
-
-%h3= @location.name
-
-%p
-  =@location.description
-.clear
-- @location.conversations.each do |conversation| 
-  .dialog-container{:id => "conversation_#{conversation.to_param}"}
-    .left
-      = time_period(conversation)
-    .right
-      = link_to 'schrijf je in als deelnemer', "#"
-      = link_to 'schrijf je in als gespreksleider', "#"
-    .clear
-
-= link_to "wijzigen", edit_city_location_publication_path(:location_id => @location.to_param)
+- context_action".location", city_location_path(@location.to_param)
+- context_action".edit", edit_city_location_publication_path(:location_id => @location.to_param)
+.publication-example
+  .example-content
+    .city-details-container
+      = render :partial => 'locations/location_publication_details'

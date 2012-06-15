@@ -31,6 +31,7 @@
             .col
               #page-header
                 .main-sub-menu
+                .right= yield :context_actions
                 = yield :title
               #page-content
                 = yield

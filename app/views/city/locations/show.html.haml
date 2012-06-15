@@ -1,4 +1,6 @@
 - title @location.name
+- context_action".edit", edit_city_location_path(@location.to_param)
+- context_action".publication", city_location_publication_path(:location_id => @location.to_param)
 #conversations
   = render partial: 'conversations/index', locals: { conversations: @location.conversations }
 .actions

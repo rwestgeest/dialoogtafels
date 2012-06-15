@@ -4,6 +4,13 @@ module ApplicationHelper
     content_for(:title) { title }
   end
 
+  def context_action(to, path, html_options = {})
+    new_link = link_to(t(to), path, html_options)
+    return if new_link.empty?
+    content_for(:context_actions, " | ") unless content_for(:context_actions).empty?
+    content_for(:context_actions, new_link) 
+  end
+
   def login_information
     return '' unless current_account
     raw "logged in: #{h(current_account.email)}(#{h(current_account.role)}) " +  
@@ -55,6 +62,10 @@ module ApplicationHelper
 
   def person_entry(person)
     person.name
+  end
+
+  def markup(text)
+    raw BlueCloth.new(text).to_html
   end
 
   def time_period(object)

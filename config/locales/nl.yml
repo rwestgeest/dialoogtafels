@@ -160,4 +160,13 @@ nl:
       welcome: "Dank voor je registratie en welkom bij dialoogtafels."
     conversation_leader:
       welcome: "Dank voor je registratie en welkom bij dialoogtafels."
+  city:
+    locations:
+      show:
+        publication: "toon publicatie details" 
+        edit: "wijzig locatie" 
+    publications:
+      show:
+        edit: "wijzig publicatie" 
+        location: "toon dialooggesprekken" 
   not_authorized: "Je bent niet geautoriseerd voor deze actie"

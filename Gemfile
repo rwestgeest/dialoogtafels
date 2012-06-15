@@ -6,6 +6,11 @@ gem 'rails', '3.2.3'
 gem 'sqlite3'
 gem "paperclip", "~> 3.0"
 gem "action-guard"
+gem "haml-rails"
+gem "rb-readline"
+gem 'jquery-rails'
+gem 'bcrypt-ruby'
+gem "bluecloth", "~> 2.2.0"
 
 # Gems used only for assets and not required
 # in production environments by default.
@@ -19,8 +24,6 @@ group :assets do
   gem 'uglifier', '>= 1.0.3'
 end
 
-gem 'jquery-rails'
-gem 'bcrypt-ruby'
 
 # To use Jbuilder templates for JSON
 # gem 'jbuilder'
@@ -33,7 +36,6 @@ gem 'bcrypt-ruby'
 
 # To use debugger
 # gem 'ruby-debug19', :require => 'ruby-debug'
-gem "haml-rails"
 
 group :test do
   gem "ZenTest", "~> 4.8.0"
@@ -51,5 +53,3 @@ group :development do
   gem "nifty-generators"
 end
 
-gem "rb-readline"
-gem "mocha", :group => :test

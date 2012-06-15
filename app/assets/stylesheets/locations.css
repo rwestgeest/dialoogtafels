@@ -17,9 +17,60 @@
   width:194px; 
   color: darkblue; 
 }
+.city-details-container {
+  margin:4px 10px;
+  padding:10px 10px; 
+}
+.city-details-container .city_banner {
+  margin-left: 1em;
+  margin-bottom: 1em;
+}
+.conversation-container {
+  padding:5px 5px; 
+  margin:5px 0px; 
+  border: solid 1px #F4EBD5; 
+  border-radius: 6px;
+.}
+.conversation-container .conversation {
+  float: left;
+  font-size: larger;
+}
 
-.dialog-container .city_banner_text h3,
+.city-details-container .city_banner_text h3,
 .city_banner_text h3,
 .city_banner_text p {
   margin:0px
+}
+
+.publication-example {
+	background:white url(/assets/page_bg.gif) repeat;
+  padding: 10px 0px;
+}
+.publication-example a {
+	cursor: pointer;
+	color: #c388c2;
+	font-weight: bold;
+	text-decoration: none;
+}
+.publication-example a:hover {
+	text-decoration: underline;
+}
+.publication-example div {
+  font-family: Verdana, Arial, Helvetica, sans-serif;
+}
+.publication-example h4 {
+  font-weight: bold;
+}
+.publication-example h2 {
+  font-size: 1.5em;
+  font-weight: bold;
+}
+.publication-example h3 {
+  font-size: 120%;
+  font-weight: bold;
+}
+.publication-example .example-content {
+  width:660px;
+  margin: 0px auto;
+  background:white;
 }

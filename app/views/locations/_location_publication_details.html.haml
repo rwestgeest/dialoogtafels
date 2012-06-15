@@ -1,0 +1,21 @@
+.city_banner{:style=>"float:right;"}
+  .city_banner_photo{:style=>"background: url(#{@location.photo.url(:thumb)}) no-repeat;"}
+    .city_banner_text
+      %h3= @location.name
+      %p= full_address(@location)
+
+%h2= @location.name
+= markup(@location.description)
+.clear
+%h3 Schrijf je in op een van de volgende dialooggesprekken
+- @location.conversations.each do |conversation| 
+  .conversation-container{:id => "conversation_#{conversation.to_param}"}
+    .conversation 
+      = time_period(conversation).capitalize
+    .right
+      = link_to '> schrijf je in als deelnemer', new_registration_participants_path(:conversation_id => conversation), :target => :blank
+      %br
+      = link_to '> schrijf je in als gespreksleider', new_registration_conversation_leaders_path(:conversation_id => conversation), :target => :blank
+    .clear
+
+
