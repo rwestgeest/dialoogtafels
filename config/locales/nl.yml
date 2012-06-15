@@ -95,6 +95,21 @@ nl:
               blank: "er zijn geen persoongegevens gekoppeld"
             conversation:
               blank: "er is geen geldige dialoog gekoppeld"
+        training:
+          attributes:
+            name:
+              blank: "je hebt geen naam ingegeven"
+            location:
+              blank: "je hebt geen locatie ingegeven"
+            start_time:
+              blank: "je hebt geen aanvangstijd ingegeven"
+            start_date:
+              blank: "je hebt geen aanvangsdatum ingegeven"
+            end_time:
+              blank: "je hebt geen eindtijd ingegeven"
+            end_datum:
+              blank: "je hebt geen einddatum ingegeven"
+
   helpers:
     label:
       account:
@@ -126,6 +141,14 @@ nl:
         start_date: "Aanvang"
         end_date: "Einde"
         number_of_tables: "Aantal tafels"
+      training:
+        start_date: "Aanvang"
+        end_date: "Einde"
+        name: "Naam" 
+        max_participants: "Maximaal aantal deelnemers"
+        location: "Locatie" 
+        description: "Omschijving"
+      
     submit:
       account:
         update: "Wachtwoord wijzigen"

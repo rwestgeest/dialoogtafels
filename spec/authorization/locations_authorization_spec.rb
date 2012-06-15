@@ -33,6 +33,9 @@ describe ActionGuard do
   it { should authorize(maintainer).to_perform("admin") }
   it { should_not authorize(coordinator).to_perform("admin") }
 
+  it { should authorize(coordinator).to_perform("city/trainings")  }
+  it { should_not authorize(organizer).to_perform("city/trainings")  }
+
   it { should authorize(coordinator).to_perform("city/locations#index")  }
   it { should authorize(coordinator).to_perform("city/locations#new")  }
   it { should authorize(coordinator).to_perform("city/locations#create")  }

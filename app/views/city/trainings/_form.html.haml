@@ -1,0 +1,28 @@
+= javascript_include_tag :trainings
+= form_for [:city, @training] do |f|
+  = errors_for @training
+  .dialog-container
+    .input-container
+      .label= f.label :name
+      .input= f.text_field :name
+    .input-container 
+      .label= f.label :start_date
+      .input
+        = f.text_field(:start_date, :value => @training.start_date && l(@training.start_date), :class => :date_input)
+        = f.time_select(:start_time)
+    .input-container 
+      .label= f.label :end_date
+      .input
+        = f.text_field(:end_date, :value => @training.end_date && l(@training.end_date), :class => :date_input)
+        = f.time_select(:end_time)
+    .input-container
+      .label= f.label :max_participants
+      .input= f.text_field :max_participants
+    .input-container
+      .label= f.label :location
+      .input= f.text_field :location
+    .input-container
+      .label= f.label :description
+      .input= f.text_area :description
+  .actions
+    = f.submit 'Save'

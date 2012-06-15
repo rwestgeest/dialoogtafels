@@ -23,12 +23,11 @@ describe Conversation do
     end
 
     shared_examples_for "setting_date_and_time" do |date_attr, time_attr|
-      let(:location) {FactoryGirl.create :location} 
       let(:time) { Time.now }
       let(:date) { Date.tomorrow }
 
       it "should let start_date override the date_component in start_time when start_time is set first" do
-        conversation = Conversation.create(time_attr => time, date_attr => date, :location => location)
+        conversation = Conversation.location(time_attr => time, date_attr => date, :location => location)
         conversation.reload
         conversation.send(time_attr).should be_within(1.minute).of(time + 1.days)
         conversation.send(date_attr).should == date
@@ -51,11 +50,21 @@ describe Conversation do
     end
 
     describe "setting start date and start time" do
-      it_should_behave_like "setting_date_and_time", :start_date, :start_time
+      let(:location) {FactoryGirl.create :location} 
+      it_should_behave_like "schedulable", :start_date, :start_time do
+        def create_schedulable(attrs)
+          Conversation.create(attrs.merge, :location => location)
+        end
+      end
     end
 
     describe "setting end date and end time" do
-      it_should_behave_like "setting_date_and_time", :end_date, :end_time
+      let(:location) {FactoryGirl.create :location} 
+      it_should_behave_like "schedulable", :end_date, :end_time do
+        def create_schedulable(attrs)
+          Conversation.create(attrs.merge, :location => location)
+        end
+      end
     end
   end
 

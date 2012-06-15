@@ -15,7 +15,7 @@ describe LocationsController do
     end
   end
 
-  describe "GET show", :focus => true do
+  describe "GET show" do
     it "assigns the requested location as @location" do
       FactoryGirl.create :conversation, :location => location
       get :show, {:id => location.id}

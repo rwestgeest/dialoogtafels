@@ -1,0 +1,9 @@
+%table{ id: "list-training-#{training.id}", class: 'list-training' }
+  %tr
+    %td.training-data
+      = link_to training.name, city_training_path(training)
+
+    %td.training-modified-state
+      = created_at(training)
+      = updated_at(training)
+

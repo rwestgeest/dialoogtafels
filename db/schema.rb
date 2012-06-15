@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120608144452) do
+ActiveRecord::Schema.define(:version => 20120615113223) do
 
   create_table "accounts", :force => true do |t|
     t.string   "email",                :limit => 150,                      :null => false
@@ -111,5 +111,35 @@ ActiveRecord::Schema.define(:version => 20120608144452) do
 
   add_index "tenants", ["current_project_id"], :name => "index_tenants_on_current_project_id"
   add_index "tenants", ["url_code"], :name => "index_tenants_on_url_code"
+
+  create_table "training_registrations", :force => true do |t|
+    t.integer  "attendee_id"
+    t.integer  "training_id"
+    t.boolean  "invited",     :default => false
+    t.integer  "tenant_id"
+    t.datetime "created_at",                     :null => false
+    t.datetime "updated_at",                     :null => false
+  end
+
+  add_index "training_registrations", ["tenant_id"], :name => "index_training_registrations_on_tenant_id"
+  add_index "training_registrations", ["training_id", "attendee_id"], :name => "index_training_registrations_on_training_id_and_attendee_id"
+
+  create_table "trainings", :force => true do |t|
+    t.datetime "start_time",                        :null => false
+    t.datetime "end_time",                          :null => false
+    t.integer  "max_participants",  :default => 20
+    t.string   "name",              :default => "", :null => false
+    t.text     "description",       :default => ""
+    t.string   "location",          :default => "", :null => false
+    t.integer  "participant_count", :default => 0
+    t.integer  "tenant_id"
+    t.integer  "project_id"
+    t.datetime "created_at",                        :null => false
+    t.datetime "updated_at",                        :null => false
+  end
+
+  add_index "trainings", ["location", "start_time"], :name => "index_trainings_on_location_and_start_time"
+  add_index "trainings", ["tenant_id", "project_id"], :name => "index_trainings_on_tenant_id_and_project_id"
+  add_index "trainings", ["tenant_id"], :name => "index_trainings_on_tenant_id"
 
 end

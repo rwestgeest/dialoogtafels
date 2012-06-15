@@ -80,5 +80,15 @@ module Factories
       sequence( :telephone ) { |n| "telephone_#{n}" }
     end
 
+    factory :training do
+      start_date { Date.today }
+      start_time { Time.now }
+      end_date { Date.today }
+      end_time { Time.now }
+      sequence( :name ) { |n| "training_#{n}" }
+      sequence( :location ) { |n| "location_#{n}" }
+      max_participants 10
+    end
+
   end
 end

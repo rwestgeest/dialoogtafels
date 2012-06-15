@@ -1,5 +1,6 @@
 Tafelmanager2::Application.routes.draw do
 
+
   resources :locations, :only => [:index, :show] 
 
   namespace :account do
@@ -27,6 +28,7 @@ Tafelmanager2::Application.routes.draw do
   end
 
   namespace :city do 
+    resources :trainings
     resources :projects 
     resources :locations do
       resource :publication, :on => :meber, :only => [:show, :new, :create, :edit, :update ]

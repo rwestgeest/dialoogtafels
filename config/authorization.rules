@@ -5,6 +5,7 @@ role :conversation_leader, 3
 role :participant, 4
 role :contributor, 5
 allow 'admin', :at_least => :maintainer
+allow 'city/trainings', :at_least => :coordinator
 allow 'city/locations#index', :at_least => :coordinator
 allow 'city/locations#new', :at_least => :coordinator
 allow 'city/locations#create', :at_least => :coordinator

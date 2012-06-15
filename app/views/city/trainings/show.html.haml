@@ -1,0 +1,9 @@
+= title "Training #{@training.name} #{time_period(@training)}"
+- if @training.attendees.empty?
+  %p Geen gespreksleiders ingeschreven aan deze training
+- else
+  %p Gespreksleiders
+  %ul
+    - @training.attendees.each do |attendee|
+      %li=  person_entry attendee
+
