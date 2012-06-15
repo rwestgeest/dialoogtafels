@@ -3,7 +3,7 @@ Autotest.add_hook(:initialize) { |at|
   at.add_exception %r{^\./log}
   at.add_exception %r{^\./data}
   at.add_mapping(%r%^config/authorization.rules$%) do |_, m|
-    files_matching %r%^spec/authorisation/.*_spec\.rb$%
+    at.files_matching %r%^spec/authorisation/.*_spec\.rb$%
   end
   nil
 }
