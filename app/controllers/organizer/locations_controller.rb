@@ -7,10 +7,6 @@ class Organizer::LocationsController < ApplicationController
     @location = Location.new
   end
 
-  def show
-    @location = Location.find(params[:id])
-  end
-
   def create
     @location = Location.new(params[:location])
     @location.organizer = current_organizer

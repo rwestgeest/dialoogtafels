@@ -4,6 +4,10 @@ class LocationsController < PublicController
   end
 
   def show
-    @location = Location.find(params[:id])
+    begin
+      @location = Location.publisheds.find(params[:id])
+    rescue ActiveRecord::RecordNotFound
+      head :not_found
+    end
   end
 end

@@ -31,15 +31,6 @@ describe Organizer::LocationsController do
     end
   end
 
-  describe "GET show" do
-    it "assigns the requested location as @location" do
-      location = create_location
-      get :show, {:id => location.to_param}
-      assigns(:location).should eq(location)
-    end
-  end
-
-
   describe "GET new" do
     it "assigns a new location as @location" do
       get :new, {}
