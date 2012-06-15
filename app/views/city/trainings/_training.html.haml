@@ -2,7 +2,8 @@
   %tr
     %td.training-data
       = link_to training.name, city_training_path(training)
-
+      %br
+      %span.schedule= time_period(training) 
     %td.training-modified-state
       = created_at(training)
       = updated_at(training)

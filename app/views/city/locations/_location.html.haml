@@ -2,6 +2,8 @@
   %tr
     %td.location-data
       = link_to location.name, city_location_path(location)
+      %br
+      %span.schedule= "Georganiseerd door #{person_entry location.organizer}"
 
     %td.location-modified-state
       = created_at(location)

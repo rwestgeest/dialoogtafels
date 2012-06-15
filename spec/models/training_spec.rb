@@ -17,7 +17,7 @@ describe Training  do
 
     describe "setting start date and start time_" do
       it_should_behave_like "schedulable", :start_date, :start_time do
-        def create_schedulable(attrs) 
+        def create_schedulable(attrs = {}) 
           Training.new(attrs)
         end
       end
@@ -25,7 +25,7 @@ describe Training  do
 
     describe "setting end date and end time_" do
       it_should_behave_like "schedulable", :end_date, :end_time do
-        def create_schedulable(attrs) 
+        def create_schedulable(attrs = {}) 
           Training.new(attrs)
         end
       end

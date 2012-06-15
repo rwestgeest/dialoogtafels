@@ -20,16 +20,14 @@
       object.send(date_attr).should == date
     end
 
-    it "ignores a nil value for date and time" do
+    it "ignores a nil value for date and time - takes default" do
       object = create_schedulable date_attr => nil, time_attr => nil
-      object.send(date_attr).should == nil
-      object.send(time_attr).should == nil
+      object.send(date_attr).should == create_schedulable.send(date_attr)
     end
 
     it "ignores an empty string value for date" do
       object = create_schedulable date_attr => "", time_attr => nil
-      object.send(date_attr).should == nil
-      object.send(time_attr).should == nil
+      object.send(date_attr).should == create_schedulable.send(date_attr)
     end
 
   end

@@ -144,7 +144,7 @@ nl:
       training:
         start_date: "Aanvang"
         end_date: "Einde"
-        name: "Naam" 
+        name: "Training" 
         max_participants: "Maximaal aantal deelnemers"
         location: "Locatie" 
         description: "Omschijving"
@@ -168,6 +168,9 @@ nl:
         update: "Locatie bijwereken"
       conversation:
         create: "Maak dialooggesprek aan"
+        update: "Bijwerken"
+      training:
+        create: "Maak training aan"
         update: "Bijwerken"
   account:
     sessions:
@@ -196,5 +199,8 @@ nl:
       index:
         new: "plan een nieuwe training"
       show:
+        index: "terug naar de lijst"
         edit: "wijzig deze training"
+        delete: "verwijder deze training"
+        sure: "Weet je zeker dat je deze training wilt verwijderen?"
   not_authorized: "Je bent niet geautoriseerd voor deze actie"
