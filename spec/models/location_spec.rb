@@ -33,6 +33,13 @@ describe Location do
       end
     end
 
+    describe "publisheds" do
+      let!(:published) { FactoryGirl.create :location, :published => true }
+      let!(:concept) { FactoryGirl.create :location, :published => false }
+      subject { Location.publisheds }
+      it { should include published }
+      it { should_not include concept }
+    end
   end
 
 end

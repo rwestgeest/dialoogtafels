@@ -11,7 +11,7 @@
     %table#body_container{ cellpadding: 0, cellspacing: 0, align:'center' }
       %tr
         %td{ colspan:3, height:148 }
-          #top_container
+          #top_container{:style=>"background: url('/assets/sassenheim_header_background.png');"}
             #dialoog_stad_top
               = current_tenant.name.upcase
             #title_container
@@ -24,7 +24,7 @@
         %td#content_container
           %h2= yield :title
           = yield
-        %td#right_container
+        %td#right_container{ :style=> "background: url('/assets/sassenheim_city_name_right.png') no-repeat" }
 
       %tr
         %td#lijn{ colspan: 3 }

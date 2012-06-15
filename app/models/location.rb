@@ -3,8 +3,9 @@ class Location < ApplicationModel
   scope_to_tenant
   has_attached_file :photo, 
                     :styles => {:medium => "300x300", :thumb => "200x200" },
-                    :path => ':rails_root/public/system/:tenant_id/:class/:attachment/:id/:style/:filename',
-                    :url => '/system/:tenant_id/:class/:attachment/:id/:style/:filename'
+                    :path => ':rails_root/public/system/tenant/:tenant_id/:class/:attachment/:id/:style/:filename',
+                    :url => '/system/tenant/:tenant_id/:class/:attachment/:id/:style/:filename',
+                    :default_url => '/assets/locations/thumb_missing.png'
 
   Paperclip.interpolates(:tenant_id) { |attachment, style|  attachment.instance.tenant_id } 
 
@@ -25,6 +26,8 @@ class Location < ApplicationModel
   delegate :conversation_length, :to => :project
   delegate :start_date, :to => :project
   delegate :start_time, :to => :project
+
+  scope :publisheds, where(:published => true)
 
   def initialize(attributes = nil, options = {})
     super(attributes, options) 

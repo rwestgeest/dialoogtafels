@@ -1,6 +1,6 @@
 class LocationsController < PublicController
   def index
-    @locations = Location.all
+    @locations = Location.publisheds
   end
 
   def show

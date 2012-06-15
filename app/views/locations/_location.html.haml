@@ -1,1 +1,5 @@
-%h3= link_to location.name, location
+.city_banner{:id => "location_#{location.to_param}", 'data-location-url' => location_path(location.to_param) }
+  .city_banner_photo{:style=>"background: url(#{location.photo.url(:thumb)}) no-repeat;"}
+    .city_banner_text
+      %h3= location.name
+      %p= full_address(location)

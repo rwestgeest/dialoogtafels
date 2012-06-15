@@ -17,9 +17,17 @@
   width:194px; 
   color: darkblue; 
 }
+.banner-list .city_banner {
+  margin:10px;
+  float:left;
+  cursor:pointer;
+}
+.banner-list .city_banner:hover {
+  border: solid 4px lightblue;
+  margin: 6px;
+}
 .city-details-container {
-  margin:4px 10px;
-  padding:10px 10px; 
+  margin: 4px 10px 0 0;
 }
 .city-details-container .city_banner {
   margin-left: 1em;
@@ -72,5 +80,6 @@
 .publication-example .example-content {
   width:660px;
   margin: 0px auto;
+  padding: 5px 10px;
   background:white;
 }

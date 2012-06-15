@@ -119,7 +119,7 @@ nl:
         telephone: "Telefoon"
       location:
         name: "Locatienaam"
-        photo: "Foto"
+        photo: "Wijzig foto"
         published: "Gepubliceerd"
         description: "Wervende beschrijving voor de locatie"
       conversation:

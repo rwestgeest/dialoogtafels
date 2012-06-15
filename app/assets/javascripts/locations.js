@@ -1,5 +1,5 @@
 $(function() {
-  $('#location_photo').change(function() {
-    alert("changed to" + $(this).val());
+  $('.banner-list .city_banner').click(function() {
+    window.location.href = $(this).attr("data-location-url");
   });
 });
