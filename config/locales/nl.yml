@@ -192,4 +192,9 @@ nl:
       show:
         edit: "wijzig publicatie" 
         location: "toon dialooggesprekken" 
+    trainings:
+      index:
+        new: "plan een nieuwe training"
+      show:
+        edit: "wijzig deze training"
   not_authorized: "Je bent niet geautoriseerd voor deze actie"

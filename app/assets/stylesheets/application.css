@@ -443,6 +443,24 @@ div.field_with_errors input { border: solid red 1px; }
 .list-location .location-modified-state { width:150px; text-align:right; color: #acacac; }
 .list-location .location-status  { width:150px; }
 .list-location .location-status .progress { color: #acacac; text-align:right; height:1.4em; padding:0 2px; }
+
+.list-training { width:100%; padding: 10px 0pt; border-bottom: 1px solid #e9e7e7; }
+.list-training td { padding:5px; }
+.list-training .training-data a {
+    color: #8b5a1e;
+    font-size: 14px;
+    line-height: 1.4em;
+}
+
+.list-training .training-data a:link {text-decoration:none; }
+.list-training .training-data a:visited {text-decoration:none;}
+.list-training .training-data a:hover {text-decoration:none; background-color: #8b5a1e; color:white;}
+.list-training .training-data a:active {text-decoration:none;}
+
+.list-training .training-data span { color: #acacac;}
+.list-training .training-modified-state { width:150px; text-align:right; color: #acacac; }
+.list-training .training-status  { width:150px; }
+.list-training .training-status .progress { color: #acacac; text-align:right; height:1.4em; padding:0 2px; }
 span.progress_indicator { color:gray; font-weight:bold;text-align:center; display:inline-block; width:50px;}
 
 ul.location_todo_list { border-top; 1px solid lightgrey;list-style-type:none;padding:0; }

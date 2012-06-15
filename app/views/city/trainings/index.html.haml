@@ -1,5 +1,5 @@
 - title "Trainingen beheren voor #{active_project.name}"
-- context_action 'Nieuwe training', new_city_training_path
+- context_action '.new', new_city_training_path
 - if (@trainings.empty?)
   = link_to "Maak je eerste training aan", new_city_training_path
 - else
