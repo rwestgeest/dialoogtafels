@@ -42,6 +42,12 @@ namespace :vlad do
     run in_current_path + "RAILS_ENV=#{rails_env} bundle exec rake db:migrate"
   end
 
+  desc "seed database" 
+  remote_task "seed", :role => :app  do
+    in_current_path = "cd #{current_path} && "
+    run in_current_path + "RAILS_ENV=#{rails_env} bundle exec rake db:seed"
+  end
+
   desc "start stand alone passenger server" 
   remote_task "start" do
     in_current_path = "cd #{current_path} && "
