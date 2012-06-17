@@ -47,9 +47,11 @@ end
 
 group :development do
   gem "rspec-rails", "~> 2.10.0"
-  gem "vlad"
-  gem "vlad-git"
   gem "capybara"
   gem "nifty-generators"
 end
 
+group :rake do
+  gem "vlad"
+  gem "vlad-git"
+end
