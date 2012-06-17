@@ -1,5 +1,5 @@
-set :application, "propile"
-set :repository,  "ssh://git@git.qwan.it/home/git/wc/tafelmanager-2.git"
+set :application, "dialoogtafels"
+set :repository,  "ssh://git.qwan.it/home/git/wc/tafelmanager-2.git"
 set :user, "deployer"
 shared_paths['data'] = 'data'
 shared_paths['assets'] = 'public/assets'

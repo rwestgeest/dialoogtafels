@@ -1,4 +1,4 @@
-set :deploy_to, "/var/www/#{application}-gator-test"
+set :deploy_to, "/var/www/rails/#{application}-gator-test"
 set :domain, "#{user}@test.gator.#{application}.nl"
 set :rails_env, "development"
 set :passenger_port, 3032

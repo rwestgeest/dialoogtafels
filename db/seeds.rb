@@ -6,8 +6,41 @@
 #   cities = City.create([{ name: 'Chicago' }, { name: 'Copenhagen' }])
 #   Mayor.create(name: 'Emanuel', city: cities.first)
 #
+unless Tenant.find_by_url_code 'preview'
+  Tenant.create name: 'Sassenheim', 
+                url_code: 'preview', 
+                representative_name: 'Rob Westgeest',
+                representative_email: 'rob@qwan.it',
+                representative_telephone: '0135421037',
+                invoice_address: 'unknown',
+                site_url: 'http://www.dialoogtafels.nl',
+                info_email: 'rob@qwan.it',
+                from_email: 'rob@qwan.it'
+end
+unless Tenant.find_by_url_code 'gator-test'
+  Tenant.create name: 'Sassenheim', 
+                url_code: 'gator-test', 
+                representative_name: 'Rob Westgeest',
+                representative_email: 'rob@qwan.it',
+                representative_telephone: '0135421037',
+                invoice_address: 'unknown',
+                site_url: 'http://www.dialoogtafels.nl',
+                info_email: 'rob@qwan.it',
+                from_email: 'rob@qwan.it'
+end
+unless Tenant.find_by_url_code 'gator-prod'
+  Tenant.create name: 'Sassenheim', 
+                url_code: 'gator-prod', 
+                representative_name: 'Rob Westgeest',
+                representative_email: 'rob@qwan.it',
+                representative_telephone: '0135421037',
+                invoice_address: 'unknown',
+                site_url: 'http://www.dialoogtafels.nl',
+                info_email: 'rob@qwan.it',
+                from_email: 'rob@qwan.it'
+end
 unless Tenant.find_by_url_code 'test'
-  Tenant.create name: 'test', 
+  Tenant.create name: 'Sassenheim', 
                 url_code: 'test', 
                 representative_name: 'Rob Westgeest',
                 representative_email: 'rob@qwan.it',
