@@ -12,10 +12,9 @@ describe Account::SessionsController do
     it "returns http success" do
       get 'new'
       response.should be_success
-      response.body.should have_selector("form[action='#{account_session_path(assigns(:account))}']") do |form|
-        form.should_have_selector('input#account_email')
-        form.should_have_selector('input#account_password')
-      end
+      response.body.should have_selector("form[action='#{account_session_path(assigns(:account))}']") 
+      response.body.should have_selector('form input#account_email')
+      response.body.should have_selector('form input#account_password')
     end
   end
 
@@ -70,7 +69,7 @@ describe Account::SessionsController do
     end
     it "redirects to sessions/new " do
       delete 'destroy'
-      response.should redirect_to(new_account_session_path)
+      response.should redirect_to(root_path)
     end
   end
 end

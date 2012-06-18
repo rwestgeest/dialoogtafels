@@ -17,4 +17,5 @@ allow 'organizer', :only_by => :organizer
 allow 'contributor/registration', :at_least => :participant, :at_most => :conversation_leader
 allow 'contributor/profile', :at_least => :participant, :at_most => :coordinator
 allow 'accounts/password', :at_least => :participant
+allow 'accounts/sessions#destroy', :at_least => :participant
 allow ''

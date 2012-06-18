@@ -12,9 +12,8 @@ describe Account::PasswordResetsController do
     it "returns http success" do
       get 'new'
       response.should be_success
-      response.body.should have_selector("form[action='#{account_password_reset_path(assigns(:account))}']") do |form|
-        form.should_have_selector('input#account_email')
-      end
+      response.body.should have_selector("form[action='#{account_password_reset_path}']") 
+      response.body.should have_selector("form input#account_email")
     end
   end
 

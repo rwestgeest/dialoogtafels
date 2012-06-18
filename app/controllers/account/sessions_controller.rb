@@ -1,7 +1,7 @@
 class Account::SessionsController < ApplicationController
   layout 'sessions'
   def new
-    @account = TenantAccount.new
+    @account = Account.new
   end
 
   def create
@@ -11,14 +11,14 @@ class Account::SessionsController < ApplicationController
       redirect_to @account.landing_page
     else
       flash.alert = 'e-mail of wachtwoord incorrect' 
-      @account = TenantAccount.new
+      @account = Account.new
       render :action => 'new'
     end
   end
 
   def destroy
     sign_out
-    redirect_to new_account_session_path
+    redirect_to root_path
   end
   private 
 

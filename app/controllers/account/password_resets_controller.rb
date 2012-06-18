@@ -1,7 +1,7 @@
 class Account::PasswordResetsController < ApplicationController
   layout 'sessions'
   def new
-    @account = TenantAccount.new
+    @account = Account.new
   end
   def create
     @account = TenantAccount.find_by_email( params[:account][:email] )
@@ -10,7 +10,7 @@ class Account::PasswordResetsController < ApplicationController
       redirect_to success_account_password_reset_path
     else
       flash.alert = 'Dit email adres is niet bekend' 
-      @account = TenantAccount.new
+      @account = Account.new
       render :action => :new
     end
   end
