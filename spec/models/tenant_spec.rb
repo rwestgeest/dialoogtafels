@@ -31,9 +31,10 @@ describe Tenant do
         Project.last.name.should include Date.today.year.to_s
       }
     end
-    it "leaves the tenant to the old value" do
-      Tenant.current = nil
-      expect { Tenant.create(FactoryGirl.attributes_for :tenant) }.not_to change(Tenant, :current)
+    it "the current tenant is left unchanged" do
+      for_tenant (nil) do # suppose it is nil
+        expect { Tenant.create(FactoryGirl.attributes_for :tenant) }.not_to change(Tenant, :current)
+      end
     end
   end
   describe 'creating a tenant with account' do
