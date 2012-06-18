@@ -20,9 +20,14 @@
       %tr
         %td#submenu_container
           .submenu
-            terug naar de site
+            =link_to "waar kan ik meedoen", locations_url
+          .submenu
+            =link_to "terug naar de site", tenant_site_url
+          .submenu
+            =link_to "aanmelden als tafelorganisator", new_registration_organizers_url
         %td#content_container
-          %h2= yield :title
+          = flash_tags
+          %h1= yield :title
           = yield
         %td#right_container{ :style=> "background: url('/assets/sassenheim_city_name_right.png') no-repeat" }
 

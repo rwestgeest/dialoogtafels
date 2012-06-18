@@ -32,7 +32,7 @@ describe Registration::OrganizersController do
         post :create, {:organizer => valid_attributes}
         flash.notice.should == I18n.t('.registration.organizers.welcome')
         current_account.should == Account.last
-        response.should redirect_to organizer_locations_url
+        response.should redirect_to new_organizer_location_url
       end
     end
 

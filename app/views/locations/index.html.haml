@@ -1,5 +1,9 @@
-- title "Schrijf je in op een van onze dialooglocaties"
+- title "Dialooglocaties"
 
 .banner-list
-  = render :partial => 'location', :collection => @locations
+  - if @locations.empty?
+    %h2 Er zijn nog geen locaties aangemeld
+    = link_to "Doe mee en meld jouw locatie als eerste aan", new_registration_organizers_url
+  - else
+    = render :partial => 'location', :collection => @locations
 

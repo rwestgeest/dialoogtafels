@@ -64,6 +64,7 @@ nl:
           attributes:
             email:
               blank: "je hebt geen email adres opgegeven"
+              existing: "dit emailadres is al in gebruik"
               invalid: "het opgegeven email adres is ongeldig"
             name:
               blank: "je hebt geen naam ingegeven"
@@ -75,6 +76,7 @@ nl:
           attributes:
             email:
               blank: "je hebt geen email adres opgegeven"
+              existing: "dit emailadres is al in gebruik"
               invalid: "het opgegeven email adres is ongeldig"
             name:
               blank: "je hebt geen naam ingegeven"
@@ -86,6 +88,7 @@ nl:
           attributes:
             email:
               blank: "je hebt geen email adres opgegeven"
+              existing: "dit emailadres is al in gebruik"
               invalid: "het opgegeven email adres is ongeldig"
             name:
               blank: "je hebt geen naam ingegeven"
@@ -137,6 +140,9 @@ nl:
         photo: "Wijzig foto"
         published: "Gepubliceerd"
         description: "Wervende beschrijving voor de locatie"
+        address: "Adres"
+        postal_code: "Postcode"
+        city: "Plaats"
       conversation:
         start_date: "Aanvang"
         end_date: "Einde"

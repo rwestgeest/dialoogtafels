@@ -74,6 +74,10 @@ module ApplicationHelper
     string + "#{ I18n.l(object.end_time) }"
   end
 
+  def tenant_site_url
+    Tenant.current.site_url
+  end
+
   private
   def alert_flash_tag(message)
     flash_tag(:alert, message)

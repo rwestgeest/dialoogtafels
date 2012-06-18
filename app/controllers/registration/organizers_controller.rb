@@ -9,7 +9,7 @@ class Registration::OrganizersController < PublicController
 
     if @organizer.save
       sign_in @organizer.account
-      redirect_to organizer_locations_url, notice: I18n.t('registration.organizers.welcome')
+      redirect_to new_organizer_location_url, notice: I18n.t('registration.organizers.welcome')
     else
       render action: "new" 
     end
