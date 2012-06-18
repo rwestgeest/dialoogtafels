@@ -51,11 +51,11 @@ class ApplicationController < ActionController::Base
   end
 
   def set_current_tenant
-    Tenant.current = Tenant.find_by_url_code subdomain
+    Tenant.current = Tenant.find_by_host full_host
   end
 
-  def subdomain
-    return 'test' unless request.host.include?('.')
-    request.host.split('.').first
+  def full_host
+    return 'test.host' unless request.host.include?('.')
+    request.host
   end
 end

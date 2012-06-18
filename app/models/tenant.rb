@@ -3,7 +3,7 @@ class Tenant < ActiveRecord::Base
   has_many :accounts
   has_one  :active_project, :class_name => "Project"
   attr_accessible :from_email, :info_email, :invoice_address, :name, :representative_email, :representative_name, 
-                  :representative_telephone, :site_url, :url_code
+                  :representative_telephone, :site_url, :url_code, :host
 
   validates :name, :presence => true
   validates :url_code, :presence => true
@@ -51,12 +51,5 @@ class Tenant < ActiveRecord::Base
     end
   end
 
-  def host
-    @host ||= 'test.host'
-  end
-  def on_host(host)
-    @host = host 
-    self
-  end
 end
 

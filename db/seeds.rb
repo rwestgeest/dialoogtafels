@@ -9,6 +9,7 @@
 unless Tenant.find_by_url_code 'preview'
   Tenant.create name: 'Sassenheim', 
                 url_code: 'preview', 
+                host: 'preview.dialoogtafels.nl', 
                 representative_name: 'Rob Westgeest',
                 representative_email: 'rob@qwan.it',
                 representative_telephone: '0135421037',
@@ -19,7 +20,8 @@ unless Tenant.find_by_url_code 'preview'
 end
 unless Tenant.find_by_url_code 'gator-test'
   Tenant.create name: 'Sassenheim', 
-                url_code: 'gator-test', 
+                url_code: 'gator-test',
+                host: 'gator-test.dialoogtafels.nl', 
                 representative_name: 'Rob Westgeest',
                 representative_email: 'rob@qwan.it',
                 representative_telephone: '0135421037',
@@ -31,6 +33,7 @@ end
 unless Tenant.find_by_url_code 'gator-prod'
   Tenant.create name: 'Sassenheim', 
                 url_code: 'gator-prod', 
+                host: 'gator-prod.dialoogtafels.nl', 
                 representative_name: 'Rob Westgeest',
                 representative_email: 'rob@qwan.it',
                 representative_telephone: '0135421037',
@@ -42,6 +45,7 @@ end
 unless Tenant.find_by_url_code 'test'
   Tenant.create name: 'Sassenheim', 
                 url_code: 'test', 
+                url_code: 'test.dialoogtafels.nl', 
                 representative_name: 'Rob Westgeest',
                 representative_email: 'rob@qwan.it',
                 representative_telephone: '0135421037',

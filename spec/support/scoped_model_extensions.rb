@@ -13,7 +13,14 @@ module ScopedModelExtensions
   end
   module ClassMethods
     def prepare_scope(scoped_model)
-      before(:all) { Tenant.current= FactoryGirl.create(scoped_model, :url_code => 'test') }
+      before(:all) { 
+        begin
+        Tenant.current= FactoryGirl.create(scoped_model, :url_code => 'test', :host => 'test.host') 
+        rescue Exception => e
+          p "could not create current scope"
+        end
+
+      }
       after(:all) { Tenant.current.destroy if Tenant.current }
     end
   end
