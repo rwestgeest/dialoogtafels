@@ -10,4 +10,4 @@
       = render partial: 'conversations/show', locals: {conversation: conversation}
     #conversation_new
       .actions
-        = link_to "toevoegen", new_conversation_path(:location_id => @location.to_param), :'data-remote' => true
+        = link_to "dialooggesprek toevoegen", new_conversation_path(:location_id => @location.to_param), :'data-remote' => true

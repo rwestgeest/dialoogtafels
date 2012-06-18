@@ -78,6 +78,10 @@ module ApplicationHelper
     Tenant.current.site_url
   end
 
+  def published(location)
+    location.published && '' || '(concept)'
+  end
+
   private
   def alert_flash_tag(message)
     flash_tag(:alert, message)

@@ -16,7 +16,7 @@ class ConversationsController < ApplicationController
     @conversation = Conversation.new(params[:conversation])
 
     if @conversation.save
-      @conversations = Conversation.where(:location_id => @conversation.location.to_param)
+      @conversations = @conversation.location.conversations
       @location = @conversation.location
       render :action => 'index'
     else
@@ -36,7 +36,7 @@ class ConversationsController < ApplicationController
 
   def destroy
     @conversation = Conversation.find(params[:id])
-    @conversations = Conversation.where(:location_id => @conversation.location.to_param)
+    @conversations = @conversation.location.conversations
     @conversation.destroy
     @location = @conversation.location
     render :action => 'index'

@@ -1,4 +1,4 @@
-- title "Publicatievoorbeeld '#{@location.name}'"
+- title "Publicatievoorbeeld '#{@location.name}' #{published(@location)}"
 - context_action".location", city_location_path(@location.to_param)
 - context_action".edit", edit_city_location_publication_path(:location_id => @location.to_param)
 .publication-example

@@ -4,6 +4,12 @@
   .right
     maximaal aantal tafels: 
     = conversation.number_of_tables
-    = link_to image_tag('edit.gif'), edit_conversation_path(conversation.to_param), :class => 'edit', :title => 'wijzig deze dialoogronde', :'data-remote' => true
+    = link_to image_tag('edit.gif'), edit_conversation_path(conversation.to_param), :class => 'edit', :title => 'wijzig dit dialooggesprek', :'data-remote' => true
+    = link_to image_tag('delete.gif'), conversation_path(conversation.to_param), 
+                                                      :method => :delete, 
+                                                      :class => 'delete', 
+                                                      :title => 'verwijder deze dialooggesprek', 
+                                                      :'data-remote' => true, 
+                                                      :confirm => 'weet je zeker dat je dit dialooggesprek wilt verwijderen?'
   .clear
     = render :partial => 'conversations/contributors', locals: { conversation: conversation }
