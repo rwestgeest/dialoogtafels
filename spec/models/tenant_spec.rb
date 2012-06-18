@@ -12,19 +12,44 @@ describe Tenant do
 
   shared_examples_for 'a_tenant_creator' do
     it "creates the tenant" do
-      expect { Tenant.create(FactoryGirl.attributes_for :tenant) }.to change { Tenant.count }.by(1)
+      expect { Tenant.create(FactoryGirl.attributes_for :tenant, name: "new_tenant 1") }.to change { Tenant.count }.by(1)
     end
     it "creates an admin account" do
-      expect { Tenant.create(FactoryGirl.attributes_for :tenant) }.to change { Account.unscoped.count }.by(1)
+      expect { Tenant.create(FactoryGirl.attributes_for :tenant, name: "new_tenant 2") }.to change { Account.unscoped.count }.by(1)
+      for_tenant(Tenant.last) do
+        Account.last.tenant.should == Tenant.last
+      end
     end
     it "creates an person for the account" do
-      expect { Tenant.create(FactoryGirl.attributes_for :tenant) }.to change { Person.unscoped.count }.by(1)
+      expect { Tenant.create(FactoryGirl.attributes_for :tenant, name: "new_tenant 3") }.to change { Person.unscoped.count }.by(1)
+      for_tenant(Tenant.last) do
+        Account.last.person.should == Person.last
+        Person.last.tenant.should == Tenant.last
+      end
     end
-    it "creates an noting when either not valid" do
+    it "can create more tenants with same representative email" do
+      expect { 
+        Tenant.create(FactoryGirl.attributes_for :tenant, :representative_email => "repre@sentative.nl")
+        Tenant.create(FactoryGirl.attributes_for :tenant, :representative_email => "repre@sentative.nl")
+      }.to change { Tenant.count }.by(2)
+    end
+    it "creates an account for each tenant with same representative email" do
+      expect { 
+        Tenant.create(FactoryGirl.attributes_for :tenant, :representative_email => "repre@sentative.nl")
+        Tenant.create(FactoryGirl.attributes_for :tenant, :representative_email => "repre@sentative.nl")
+      }.to change { Account.unscoped.count }.by(2)
+    end
+    it "creates a person for each tenant with same representative email" do
+      expect { 
+        Tenant.create(FactoryGirl.attributes_for :tenant, :representative_email => "repre@sentative.nl")
+        Tenant.create(FactoryGirl.attributes_for :tenant, :representative_email => "repre@sentative.nl")
+      }.to change { Person.unscoped.count }.by(2)
+    end
+    it "creates noting when either not valid" do
       expect { Tenant.create(FactoryGirl.attributes_for(:tenant, :name => nil)) }.not_to change { Account.unscoped.count }.by(1)
     end
     it "creates a first and active project"  do
-      expect { Tenant.create(FactoryGirl.attributes_for :tenant) }.to change { Project.unscoped.count }.by(1)
+      expect { Tenant.create(FactoryGirl.attributes_for :tenant, name: "new_tenant 4") }.to change { Project.unscoped.count }.by(1)
       Project.unscoped {
         Project.last.tenant.should == Tenant.last
         Tenant.last.active_project_id.should == Project.last.id

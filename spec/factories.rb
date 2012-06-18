@@ -65,6 +65,19 @@ module Factories
     factory :maintainer_account, :class => MaintainerAccount, :aliases => [:account] do
       sequence( :email ) { |n| "maintainer_account_#{n}@mail.com" }
       role Account::Maintainer
+      factory :confirmed_maintainer_account do
+        password 'secret'
+        password_confirmation 'secret'
+        after_create do |account|
+          account.confirm!
+        end
+      end
+    end
+    factory :coordinator_account, :class => TenantAccount, :aliases => [:tenant_account] do
+      sequence( :email ) { |n| "coordinator_account_#{n}@mail.com" }
+      role Account::Coordinator
+      sequence( :name ) { |n| "person_#{n}" }
+      sequence( :telephone ) { |n| "telephone_#{n}" }
       factory :confirmed_account do
         password 'secret'
         password_confirmation 'secret'
@@ -72,13 +85,6 @@ module Factories
           account.confirm!
         end
       end
-
-    end
-    factory :coordinator_account, :class => TenantAccount, :aliases => [:tenant_account] do
-      sequence( :email ) { |n| "coordinator_account_#{n}@mail.com" }
-      role Account::Coordinator
-      sequence( :name ) { |n| "person_#{n}" }
-      sequence( :telephone ) { |n| "telephone_#{n}" }
     end
 
     factory :training do

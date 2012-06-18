@@ -45,7 +45,7 @@ end
 unless Tenant.find_by_url_code 'test'
   Tenant.create name: 'Sassenheim', 
                 url_code: 'test', 
-                url_code: 'test.dialoogtafels.nl', 
+                host: 'test.host', 
                 representative_name: 'Rob Westgeest',
                 representative_email: 'rob@qwan.it',
                 representative_telephone: '0135421037',
@@ -54,6 +54,6 @@ unless Tenant.find_by_url_code 'test'
                 info_email: 'rob@qwan.it',
                 from_email: 'rob@qwan.it'
 end
-unless Account.find_by_email 'admin@example.com'
-  Person.create :email => 'admin@example.com'
+unless MaintainerAccount.find_by_email 'admin@example.com'
+  MaintainerAccount.maintainer(:email => 'admin@example.com').save!
 end

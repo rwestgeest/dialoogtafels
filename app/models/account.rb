@@ -22,7 +22,7 @@ class Account < ActiveRecord::Base
   attr_accessor :password
 
   validates :email, :presence => true,
-                    :uniqueness => true,
+                    :uniqueness => {:scope => :tenant_id },
                     :format => {:with => EMAIL_REGEXP }
   validates_presence_of :role
   validates_confirmation_of :password

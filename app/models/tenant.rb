@@ -31,7 +31,10 @@ class Tenant < ActiveRecord::Base
       Thread.current[:current_tenant] = tenant
     end
     def test
-      self.current= Tenant.find_by_url_code!('test')
+      use_host 'test.host'
+    end
+    def use_host host
+      self.current = Tenant.find_by_host host
     end
     def null
       NullTenant.new

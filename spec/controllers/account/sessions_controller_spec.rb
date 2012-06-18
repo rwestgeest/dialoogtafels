@@ -31,8 +31,7 @@ describe Account::SessionsController do
         @controller.send(:current_account).should == account
       end
     end
-    context "with invalid parameters" do
-      before {   post 'create', :account => valid_attributes.merge(password: 'false') }
+    shared_examples_for "a_failed_login" do
       it "renders the form again" do
         response.should be_success
         response.should render_template(:new)
@@ -40,6 +39,26 @@ describe Account::SessionsController do
       it "sets the flash alert" do
         response.body.should have_selector "#alert"
       end
+    end
+    context "with invalid parameters" do
+      before {   post 'create', :account => valid_attributes.merge(password: 'false') }
+      it_should_behave_like "a_failed_login"
+    end
+    context "for another tenant" do
+      before do
+        for_tenant(FactoryGirl.create :tenant) do
+          @other_account = FactoryGirl.create :confirmed_account
+        end
+        post 'create', :account => { email: @other_account.email, password: @other_account.password }
+      end
+      it_should_behave_like "a_failed_login"
+    end
+    context "for a maintainer account" do
+      before do
+        @other_account = FactoryGirl.create :confirmed_maintainer_account
+        post 'create', :account => { email: @other_account.email, password: @other_account.password }
+      end
+      it_should_behave_like "a_failed_login"
     end
   end
 

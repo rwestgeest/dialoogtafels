@@ -1,17 +1,17 @@
 class Account::SessionsController < ApplicationController
   layout 'sessions'
   def new
-    @account = Account.new
+    @account = TenantAccount.new
   end
 
   def create
-    @account = Account.authenticate_by_email_and_password(account_params[:email], account_params[:password])
+    @account = TenantAccount.authenticate_by_email_and_password(account_params[:email], account_params[:password])
     if @account 
       sign_in @account
       redirect_to @account.landing_page
     else
       flash.alert = 'e-mail of wachtwoord incorrect' 
-      @account = Account.new
+      @account = TenantAccount.new
       render :action => 'new'
     end
   end
