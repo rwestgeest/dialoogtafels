@@ -1,4 +1,3 @@
 #!/bin/sh
 DIR="$( cd "$( dirname "$0" )/.." && pwd )"
-cd $DIR && $1
-
+sudo -u deployer /bin/bash -i -l -c "cd $DIR; $1"
