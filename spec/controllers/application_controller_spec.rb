@@ -13,8 +13,8 @@ describe 'application_controller' do
         get :index
         Tenant.current.should == nil
       end
-      it "is found if subdomain is found as url code" do
-        current = FactoryGirl.create :tenant, :url_code => 'test'
+      it "is found if host is found as host" do
+        current = FactoryGirl.create :tenant, :host => 'test.host'
         get :index
         Tenant.current.should == current
       end
