@@ -10,12 +10,23 @@ describe Contributor::ProfilesController do
   end
 
   describe "GET 'edit'" do
-    it "returns http success" do
+    it "renders a form" do
       get 'edit'
       response.should be_success
-      response.body.should have_selector("form[action='#{contributor_profile_path}']") do |form|
-        form.should have_selector['input@contributor_name']
-      end
+      response.body.should have_selector("form[action='#{contributor_profile_path}']") 
+    end
+    it "puts all standard field in the form" do
+      get 'edit'
+      response.body.should have_selector( "form input#person_name[name='person[name]']" )
+      response.body.should have_selector( "form input#person_telephone[name='person[telephone]']" )
+      response.body.should have_selector( "form input#person_email[name='person[email]']" )
+    end
+    it "puts all possible profile fields in the form" do
+      FactoryGirl.create :profile_string_field, :label => 'age'
+      FactoryGirl.create :profile_string_field, :label => 'diet'
+      get 'edit'
+      response.body.should have_selector( "form input#person_profile_age[name='person[profile_age]']")
+      response.body.should have_selector( "form input#person_profile_diet[name='person[profile_diet]']")
     end
   end
 

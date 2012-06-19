@@ -25,5 +25,47 @@ describe Person do
         expect{ FactoryGirl.create :person, :email => nil }.not_to change(Account, :count).by(1)
       end
     end
+
+    describe "profile value" do
+      let!(:age_field) { FactoryGirl.create :profile_string_field, :label => 'age' }
+      let(:person) { FactoryGirl.create :person }
+     
+      describe "setting through mass assignment" do 
+        it "adds a profile value instance for the profile field" do
+          expect { person.update_attributes :profile_age => "66" }.to change(ProfileFieldValue, :count).by(1)
+        end
+        context "when field is not available" do
+          it "raisses a rails compatible error" do
+            expect { person.update_attributes :profile_country => "Kuwait" }.to raise_exception ActiveRecord::UnknownAttributeError
+          end
+        end 
+      end
+
+      describe "getting" do
+        it "returns the value when set" do
+          person.update_attributes :profile_age => "66"
+          person.profile_age.should == "66"
+        end
+        it "returns nil when not set" do
+          person.profile_age.should be_nil
+        end
+        context "when field is not available" do
+          it "raisses a rails compatible error" do
+            expect { person.profile_country }.to raise_exception NoMethodError
+          end
+        end 
+        context "before type case" do
+          it "returns the value when set" do
+            person.update_attributes :profile_age => "66"
+            person.profile_age_before_type_cast.should == "66"
+          end
+          it "returns nil when not set" do
+            person.profile_age_before_type_cast.should be_nil
+          end
+        end
+      end
+    end
   end
+
+
 end
