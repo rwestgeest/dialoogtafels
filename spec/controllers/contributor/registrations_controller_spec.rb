@@ -17,6 +17,10 @@ describe Contributor::RegistrationsController do
       get 'show'
       response.should be_success
     end
+    it "assigns the conversations" do
+      get 'show'
+      assigns(:conversation).should == conversation
+    end
     it "renders the location" do
       get 'show' 
       response.body.should include(location.name)

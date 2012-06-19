@@ -1,8 +1,10 @@
-- title "Training #{@training.name} #{time_period(@training)}"
+- title "#{@training.name}"
 - context_action ".index", city_trainings_path
 - context_action ".edit", edit_city_training_path(@training)
 - context_action ".delete", city_training_path(@training), :method => :delete, :confirm => t('.sure')
 .dialog-container
+  = render :partial => 'training', locals: {training: @training}
+  = markup @training.description
   - if @training.attendees.empty?
     %p Geen gespreksleiders ingeschreven aan deze training
   - else
