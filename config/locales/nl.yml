@@ -114,7 +114,24 @@ nl:
               blank: "je hebt geen eindtijd ingegeven"
             end_datum:
               blank: "je hebt geen einddatum ingegeven"
-
+        profile_string_field:
+          attributes:
+            label:
+              blank: "je hebt geen label voor dit veld gegeven"
+        profile_selection_field:
+          attributes:
+            label:
+              blank: "je hebt geen label voor dit veld gegeven"
+            values:
+              blank: "je hebt geen mogelijke waarden voor dit veld gegeven"
+        profile_field_value:
+          attributes:
+            value: 
+              blank: "je heb geen waarde opgegeven" 
+            person: 
+              blank: "deze waarde is niet geassocieerd met een persoon"
+            profile_field: 
+              blank: "deze waarde is niet geassocieerd met een veld"
   helpers:
     label:
       account:

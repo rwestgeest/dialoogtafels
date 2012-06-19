@@ -97,5 +97,18 @@ module Factories
       max_participants 10
     end
 
+    factory :profile_string_field do
+      sequence(:label) {|n| "string_field_#{n}"} 
+    end
+    factory :profile_selection_field do
+      sequence(:label) {|n| "selection_field_#{n}"} 
+      values "val1\nval2"
+    end
+
+    factory :profile_field_value do
+      value "some value"
+      association :profile_field, factory: :profile_string_field
+      association :person
+    end
   end
 end

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120618073429) do
+ActiveRecord::Schema.define(:version => 20120619123822) do
 
   create_table "accounts", :force => true do |t|
     t.string   "email",                :limit => 150,                      :null => false
@@ -82,6 +82,28 @@ ActiveRecord::Schema.define(:version => 20120618073429) do
     t.datetime "created_at",               :null => false
     t.datetime "updated_at",               :null => false
   end
+
+  create_table "profile_field_values", :force => true do |t|
+    t.integer "person_id"
+    t.integer "profile_field_id"
+    t.string  "value"
+    t.integer "tenant_id"
+  end
+
+  add_index "profile_field_values", ["tenant_id", "person_id"], :name => "index_profile_field_values_on_tenant_id_and_person_id"
+  add_index "profile_field_values", ["tenant_id", "profile_field_id"], :name => "index_profile_field_values_on_tenant_id_and_profile_field_id"
+
+  create_table "profile_fields", :force => true do |t|
+    t.string   "label",      :limit => 50,   :default => ""
+    t.string   "type",       :limit => 1000
+    t.text     "values",                     :default => ""
+    t.integer  "order",                      :default => 0
+    t.integer  "tenant_id"
+    t.datetime "created_at",                                 :null => false
+    t.datetime "updated_at",                                 :null => false
+  end
+
+  add_index "profile_fields", ["tenant_id", "order"], :name => "index_profile_fields_on_tenant_id_and_order"
 
   create_table "projects", :force => true do |t|
     t.string   "name"
