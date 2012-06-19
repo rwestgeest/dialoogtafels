@@ -15,6 +15,7 @@ Dir[Rails.root.join("spec/support/**/*.rb")].each {|f| require f}
 RSpec.configure do |config|
   Dir[Rails.root.join("spec/shared/**/*.rb")].each {|f| require f}
   config.include ControllerExtensions, :type => :controller
+  config.include AuthorisationExtensions, :type => :authorisation
   config.include ScopedModelExtensions
   config.include Factories
   # ## Mock Framework

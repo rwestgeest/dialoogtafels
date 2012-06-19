@@ -38,6 +38,10 @@ class ApplicationController < ActionController::Base
     current_account.active_contribution
   end
 
+  def current_conversation_leader
+    current_account.active_contribution
+  end
+
   def current_account_id
     session[:current_account_id]
   end

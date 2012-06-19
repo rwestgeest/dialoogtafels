@@ -6,6 +6,7 @@ role :participant, 4
 role :contributor, 5
 allow 'admin', :at_least => :maintainer
 allow 'city/trainings', :at_least => :coordinator
+allow 'city/training_registrations', :at_least => :coordinator
 allow 'city/locations#index', :at_least => :coordinator
 allow 'city/locations#new', :at_least => :coordinator
 allow 'city/locations#create', :at_least => :coordinator
@@ -16,6 +17,7 @@ allow 'city/publications', :at_least => :organizer
 allow 'organizer', :only_by => :organizer
 allow 'contributor/registration', :at_least => :participant, :at_most => :conversation_leader
 allow 'contributor/profile', :at_least => :participant, :at_most => :coordinator
+allow 'contributor/training_registrations', :only_by => :conversation_leader
 allow 'accounts/password', :at_least => :participant
 allow 'accounts/sessions#destroy', :at_least => :participant
 allow ''
