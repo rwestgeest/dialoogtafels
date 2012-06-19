@@ -488,6 +488,8 @@ div.field_with_errors input { border: solid red 1px; }
 .list-element .element-status .progress { color: #acacac; text-align:right; height:1.4em; padding:0 2px; }
 
 .list-element .training-register-link { color:#8b5a1e; width:200px; text-align:right; vertical-align:bottom; }
+.list-element .training-description { display:none; }
+.expandable-training-element { cursor:pointer; }
 
 span.progress_indicator { color:gray; font-weight:bold;text-align:center; display:inline-block; width:50px;}
 

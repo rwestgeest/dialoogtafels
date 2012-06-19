@@ -13,3 +13,12 @@ $(function() {
   });
 
 });
+
+function enable_training_expansion() {
+  $('.expandable-training-element').click( function() {
+    $($(this).attr('data-element')).toggle(500) ;
+  });
+}
+$(function(){
+  enable_training_expansion();
+});

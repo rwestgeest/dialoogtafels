@@ -8,12 +8,15 @@
         - available_trainings.each do |training|
           %table{ id: "training_#{training.id}", class: 'list-element' }
             %tr
-              %td.element-data
+              %td.element-data.expandable-training-element{:'data-element' => "#training_description_#{training.id}", :title => t('.click_to_expand')}
                 %span.title= training.name
                 %br
                 %span.schedule= time_period(training) 
               %td.training-register-link
                 = link_to "> registreer", contributor_training_registrations_path(training_id: training.to_param) , :method => :post, :remote => true
+            %tr.training-description{id: "training_description_#{training.id}"}
+              %td
+                = markup training.description
   %td.input_column_eq_right
     .dialog-container
       - if (attendee.training_registrations.empty?) 
@@ -21,9 +24,9 @@
       - else
         %h3 Ingeschreven bij
         - attendee.training_registrations.each do |training_registration|
-          %table{ id: "training_registration_#{training_registration.training_id}", class: 'list-element' }
+          %table{ id: "training_registration_#{training_registration.training_id}", class: 'list-element'}
             %tr
-              %td.element-data
+              %td.element-data.expandable-training-element{:'data-element' => "#training_description_#{training_registration.training_id}", :title => t('.click_to_expand')}
                 %span.title= training_registration.training.name
                 %br
                 %span.schedule= time_period(training_registration.training) 
@@ -31,4 +34,7 @@
                 = registered_at(training_registration)
                 %br
                 = link_to "> afmelden", contributor_training_registration_path(id: training_registration.training_id) , :method => :delete, :remote => true
+            %tr.training-description{id: "training_description_#{training_registration.training_id}"}
+              %td
+                = markup training_registration.training.description
 

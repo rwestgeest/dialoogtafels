@@ -218,5 +218,9 @@ nl:
       index:
         trainings: "trainingen beheren"
         select_attendee: "Selecteer een gespreksleider uit de rechter kantlijn om zijn inschrijvingen te beheren"
+  contributor:
+    training_registrations:
+      index:
+        click_to_expand: "Klick om de beschrijving te lezen"
   not_authorized: "Je bent niet geautoriseerd voor deze actie"
   registered_at: "Ingeschreven op %{time}"
