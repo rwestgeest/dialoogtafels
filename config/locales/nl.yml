@@ -32,6 +32,8 @@ nl:
       short: "%H:%M"
       long: "%d %B %Y %H:%M"
       time: "%H:%M"
+      human: "%d-%m-%Y om %H:%M"
+      date: "%d-%m-%Y"
       only_second: "%S"
     am: "'s ochtends"
     pm: "'s middags"
@@ -204,9 +206,17 @@ nl:
     trainings:
       index:
         new: "plan een nieuwe training"
+        registrations: "registraties beheren"
       show:
         index: "terug naar de lijst"
         edit: "wijzig deze training"
         delete: "verwijder deze training"
         sure: "Weet je zeker dat je deze training wilt verwijderen?"
+    training_registrations:
+      select_attendee:
+        trainings: "trainingen beheren"
+      index:
+        trainings: "trainingen beheren"
+        select_attendee: "Selecteer een gespreksleider uit de rechter kantlijn om zijn inschrijvingen te beheren"
   not_authorized: "Je bent niet geautoriseerd voor deze actie"
+  registered_at: "Ingeschreven op %{time}"

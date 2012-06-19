@@ -46,6 +46,75 @@ describe ConversationLeader do
         create_conversation_leader
       end
     end
+
+    describe "register_for training" do
+      let(:training) { FactoryGirl.create :training } 
+      let(:training_id) { training.id }
+      let(:conversation_leader) { FactoryGirl.create :conversation_leader }
+
+      describe "adding one" do
+
+        it "adds the conversation_leader it to the attendee list" do
+          conversation_leader.register_for(training_id)
+          training.attendees == [conversation_leader]
+        end 
+        it "creates a registration instance " do
+          expect { 
+            conversation_leader.register_for(training_id)
+          }.to change(TrainingRegistration, :count).by(1)
+          TrainingRegistration.last.attendee.should == conversation_leader
+          TrainingRegistration.last.training.should == training
+        end 
+        it "adds the training to the attendees training list" do
+          conversation_leader.register_for(training_id)
+          conversation_leader.should have(1).trainings
+        end
+
+        it "returns the added training" do
+          conversation_leader.register_for(training_id).should == training
+        end
+
+        context  "when training not found" do
+          it "returns nil" do
+            conversation_leader.register_for("bogus").should be_nil
+          end
+        end
+
+      end
+
+      describe "removing one" do
+        before { conversation_leader.register_for(training_id) }
+        it "destroys the traiing registration instance" do
+          expect { conversation_leader.cancel_registration_for(training_id) }.to change(TrainingRegistration, :count).by(-1)
+        end
+
+        it "returns the added training" do
+          conversation_leader.cancel_registration_for(training_id).should == training
+        end
+
+        context  "when training not found" do
+          it "does not change the registration count" do
+            expect { conversation_leader.cancel_registration_for("bogus") }.not_to change(TrainingRegistration, :count)
+          end
+          it "returns nil" do
+            conversation_leader.cancel_registration_for("bogus").should be_nil
+          end
+        end
+
+        context  "when training exists but not registered for" do
+          let!(:other_training) { FactoryGirl.create :training }
+
+          it "does not change the registration count" do
+            expect { conversation_leader.cancel_registration_for(other_training.id) }.not_to change(TrainingRegistration, :count)
+          end
+
+          it "returns nil" do
+            conversation_leader.cancel_registration_for(other_training.id).should be_nil
+          end
+        end
+
+      end
+    end
   end
 end
 

@@ -1,5 +1,6 @@
 class City::TrainingsController < ApplicationController
   def index
+    @conversation_leaders = ConversationLeader.all
     @trainings = Training.all
   end
 

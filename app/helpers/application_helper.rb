@@ -29,7 +29,7 @@ module ApplicationHelper
   end
 
   def page_side_bar(side_bar)
-    content_for(:page_side_bar, side_bar)
+    content_for(:page_side_bar, render(:partial => side_bar))
   end
 
   def selected_text(text)
@@ -80,6 +80,10 @@ module ApplicationHelper
 
   def published(location)
     location.published && '' || '(concept)'
+  end
+
+  def registered_at(object)
+    t('registered_at', time: l(object.created_at, format: :date))
   end
 
   private

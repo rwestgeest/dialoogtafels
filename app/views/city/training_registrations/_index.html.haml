@@ -1,0 +1,33 @@
+%tr
+  %td.input_column_eq_left
+    .dialog-container
+      - if (available_trainings.empty?)
+        %h3 Geen trainingen beschikbaar
+      - else
+        %h3 Beshikbare trainingen
+        - available_trainings.each do |training|
+          %table{ id: "training_#{training.id}", class: 'list-element' }
+            %tr
+              %td.element-data
+                %span.title= training.name
+                %br
+                %span.schedule= time_period(training) 
+              %td.training-register-link
+                = link_to "> registreer", city_training_registrations_path(training_id: training.to_param, attendee_id:attendee.to_param) , :method => :post, :remote => true
+  %td.input_column_eq_right
+    .dialog-container
+      - if (attendee.training_registrations.empty?) 
+        %h3 Geen inschrijvingen
+      - else
+        %h3 Ingeschreven bij
+        - attendee.training_registrations.each do |training_registration|
+          %table{ id: "training_registration_#{training_registration.training_id}", class: 'list-element' }
+            %tr
+              %td.element-data
+                %span.title= training_registration.training.name
+                %br
+                %span.schedule= time_period(training_registration.training) 
+              %td.training-register-link
+                = registered_at(training_registration)
+                %br
+                = link_to "> afmelden", city_training_registration_path(id: training_registration.training_id, attendee_id:attendee.to_param) , :method => :delete, :remote => true

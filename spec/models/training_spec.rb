@@ -38,32 +38,6 @@ describe Training  do
       end
     end
 
-    describe "attendees" do
-      attr_reader :training
-      before(:all) { @training = FactoryGirl.create :training } 
-      let(:conversation_leader) { FactoryGirl.create :conversation_leader }
-      describe "adding one" do
-        it "adds it to the attendee list" do
-          training.attendees << conversation_leader 
-          training.attendees == [conversation_leader]
-        end 
-        it "creates a registration instance " do
-          expect { training.attendees << conversation_leader }.to change(TrainingRegistration, :count).by(1)
-          TrainingRegistration.last.attendee.should == conversation_leader
-          TrainingRegistration.last.training.should == training
-        end 
-        it "adds the training to the attendees training list" do
-          training.attendees << conversation_leader
-          conversation_leader.should have(1).trainings
-        end
-      end
-      describe "removing one" do
-        before { training.attendees << conversation_leader }
-        it "destroys the traiing registration instance" do
-          expect { training.attendees.delete(conversation_leader) }.to change(TrainingRegistration, :count).by(-1)
-        end
-      end
-    end
   end
 
 end

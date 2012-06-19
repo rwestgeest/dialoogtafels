@@ -1,0 +1,5 @@
+.right_heading Inschrijvingen voor
+%ul
+  - @conversation_leaders.each do |attendee|
+    %li= link_to attendee.name, city_training_registrations_path(:attendee_id => attendee.to_param)
+

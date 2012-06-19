@@ -11,12 +11,18 @@ describe City::TrainingsController do
 
   let(:training) { FactoryGirl.create :training }
   alias_method :create_training, :training
+  let(:conversation_leader) { FactoryGirl.create :conversation_leader }
+  alias_method :create_conversation_leader, :conversation_leader
   
   describe "GET index" do
+    before {  create_training; create_conversation_leader }
     it "assigns all trainings as @trainings" do
-      create_training
       get :index, {}
       assigns(:trainings).should eq([training])
+    end
+    it "assigns all conversation_leaders as @conversation_leaders" do
+      get :index, {}
+      assigns(:conversation_leaders).should eq([conversation_leader])
     end
   end
 
