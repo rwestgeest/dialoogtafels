@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120619123822) do
+ActiveRecord::Schema.define(:version => 20120620054802) do
 
   create_table "accounts", :force => true do |t|
     t.string   "email",                :limit => 150,                      :null => false
@@ -101,8 +101,10 @@ ActiveRecord::Schema.define(:version => 20120619123822) do
     t.integer  "tenant_id"
     t.datetime "created_at",                                 :null => false
     t.datetime "updated_at",                                 :null => false
+    t.string   "field_name", :limit => 50,   :default => ""
   end
 
+  add_index "profile_fields", ["field_name"], :name => "index_profile_fields_on_field_name"
   add_index "profile_fields", ["tenant_id", "order"], :name => "index_profile_fields_on_tenant_id_and_order"
 
   create_table "projects", :force => true do |t|

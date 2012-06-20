@@ -21,9 +21,9 @@ class Person < ActiveRecord::Base
 
   def set_profile_attribute(attribute, value)
     return profile_field_value_for(attribute).destroy if value.nil? || value.empty?
-    return profile_field_value_for(attribute).update_attribute :value, value if profile_field_values.where('profile_fields.label' => attribute).exists?
+    return profile_field_value_for(attribute).update_attribute :value, value if profile_field_values.where('profile_fields.field_name' => attribute).exists?
     profile_field_values << ProfileFieldValue.create(:value => value,
-                             :profile_field => ProfileField.find_by_label(attribute))
+                             :profile_field => ProfileField.find_by_field_name(attribute))
   end
 
   def get_profile_attribute(attribute)
@@ -53,10 +53,10 @@ class Person < ActiveRecord::Base
   end
 
   def profile_field_exists?(field)
-    ProfileField.find_by_label(field)
+    ProfileField.find_by_field_name(field)
   end
 
   def profile_field_value_for(attribute)
-    profile_field_values.where('profile_fields.label' => attribute).first || ProfileFieldValue.null
+    profile_field_values.where('profile_fields.field_name' => attribute).first || ProfileFieldValue.null
   end
 end

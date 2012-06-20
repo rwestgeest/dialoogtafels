@@ -27,7 +27,7 @@ describe Person do
     end
 
     describe "profile value" do
-      let!(:age_field) { FactoryGirl.create :profile_string_field, :label => 'age' }
+      let!(:age_field) { FactoryGirl.create :profile_string_field, :field_name => 'age' }
       let(:person) { FactoryGirl.create :person }
      
       describe "setting through mass assignment" do 
