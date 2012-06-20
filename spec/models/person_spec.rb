@@ -34,11 +34,30 @@ describe Person do
         it "adds a profile value instance for the profile field" do
           expect { person.update_attributes :profile_age => "66" }.to change(ProfileFieldValue, :count).by(1)
         end
+        it "ignores value of nil" do
+          expect { person.update_attributes :profile_age => nil }.not_to change(ProfileFieldValue, :count)
+        end
+        it "ignores value of empty" do
+          expect { person.update_attributes :profile_age => "" }.not_to change(ProfileFieldValue, :count)
+        end
         context "when field is not available" do
-          it "raisses a rails compatible error" do
+          it "raises a rails compatible error" do
             expect { person.update_attributes :profile_country => "Kuwait" }.to raise_exception ActiveRecord::UnknownAttributeError
           end
         end 
+        context "when value exists" do
+          before {person.update_attributes :profile_age => "55"} 
+          it "removes the field value when set to empty" do
+            expect { person.update_attributes :profile_age => "" }.to change(ProfileFieldValue, :count).by(-1)
+          end
+          it "removes the field value when set to nil" do
+            expect { person.update_attributes :profile_age => nil }.to change(ProfileFieldValue, :count).by(-1)
+          end
+          it "does not change the number of values when changed" do
+            expect { person.update_attributes :profile_age => "66" }.not_to change(ProfileFieldValue, :count)
+            person.profile_age.should == "66"
+          end
+        end
       end
 
       describe "getting" do

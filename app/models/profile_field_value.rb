@@ -12,4 +12,5 @@ class ProfileFieldValue < ActiveRecord::Base
   def self.null
     ProfileFieldValue.new :value => nil
   end
+
 end

@@ -20,6 +20,8 @@ class Person < ActiveRecord::Base
   end
 
   def set_profile_attribute(attribute, value)
+    return profile_field_value_for(attribute).destroy if value.nil? || value.empty?
+    return profile_field_value_for(attribute).update_attribute :value, value if profile_field_values.where('profile_fields.label' => attribute).exists?
     profile_field_values << ProfileFieldValue.create(:value => value,
                              :profile_field => ProfileField.find_by_label(attribute))
   end
