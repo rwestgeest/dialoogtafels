@@ -13,4 +13,7 @@ class ProfileField < ActiveRecord::Base
   def field_name_with_prefix
     'profile_' + field_name
   end
+  def render_field_on(form)
+    form.text_field field_name_with_prefix
+  end
 end
