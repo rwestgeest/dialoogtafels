@@ -4,7 +4,7 @@ class Settings::ProfileFieldsController < ApplicationController
   end
 
   def new
-    @profile_field = ProfileField.new
+    @profile_field = ProfileStringField.new
   end
 
   def edit
@@ -29,6 +29,13 @@ class Settings::ProfileFieldsController < ApplicationController
     else
       render action: "edit" 
     end
+  end
+
+  def sort
+    params[:profile_field].each_with_index do |field_index, order|
+      ProfileField.find(field_index).update_attribute :order, order
+    end
+    render :nothing
   end
 
   def destroy

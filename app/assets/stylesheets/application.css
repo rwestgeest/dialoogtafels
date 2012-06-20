@@ -513,3 +513,12 @@ span.hidden { display:none }
 .input-container input {
   width:215px;
 }
+
+#sortable .handle {
+  background-image: url('/assets/handle.png');
+  width: 32px;
+  height: 32px;
+  float: left;
+  margin: 4px 8px 4px 0px;
+  cursor: pointer;
+}

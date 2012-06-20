@@ -23,7 +23,7 @@ describe Settings::ProfileFieldsController do
   describe "GET new" do
     before { xhr :get, :new }
     it "assigns a new profile_field as @profile_field" do
-      assigns(:profile_field).should be_a_new(ProfileField)
+      assigns(:profile_field).should be_a_new(ProfileStringField)
     end
     it "renders the 'new' template" do
       response.should render_template("new")

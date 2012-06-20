@@ -1,5 +1,9 @@
 - title 'Profiel velden'
+= javascript_include_tag :sortable
 %p
-  De onderstaande velden komen als invulvelden onder 'Mijn Profiel'
+  Het standaard persoonsprofiel van alle coordinatoren, tafelorganisatoren, gespreksleiders en deelnemers bestaat uit email, naam en telefoon.
+%p
+  Hier kun je meer velden definieren. Je kunt de velden definieren en de volgorde vastleggen door ze te verslepen.
+
 #profile_fields
   =render :partial => 'index', locals: { profile_fields: @profile_fields }

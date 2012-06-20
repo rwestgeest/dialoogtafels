@@ -8,7 +8,7 @@
     .input-container
       .label= f.label :type
       .input
-        = f.select :type, [['string', 'ProfileStringField'], ['selectie', 'ProfileSelectionField']],{}, :id => "profile_field_type_#{profile_field.to_param}"
+        = f.select :type, ProfileField.selection_options,{}, :id => "profile_field_type_#{profile_field.to_param}"
     .input-container{ id: "profile_selection_field_container_#{profile_field.to_param}", :style => profile_field.is_a?(ProfileStringField) ? "display:none;" : "display:block;"}
       .label= f.label :values
       .input

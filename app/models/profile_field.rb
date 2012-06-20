@@ -9,6 +9,10 @@ class ProfileField < ActiveRecord::Base
   def initialize(*args)
     super
   end
+  def self.selection_options
+    [['tekst regel', 'ProfileStringField'], ['selectielijst', 'ProfileSelectionField']]
+  end
+
   def label=(new_label)
     super
     return if !label || field_name && !field_name.empty?
