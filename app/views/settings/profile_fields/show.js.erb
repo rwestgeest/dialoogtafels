@@ -1,0 +1,2 @@
+$('#profile_field_<%= @profile_field.to_param %>').replaceWith('<%= escape_javascript(render(partial:"profile_field", locals: {profile_field: @profile_field})) %>');
+

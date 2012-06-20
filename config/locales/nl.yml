@@ -118,7 +118,7 @@ nl:
           attributes:
             field_name:
               blank: "je hebt geen veldnaam voor dit veld gegeven"
-              taken: "dit veldnaam is al in gebruik"
+              taken: "deze veldnaam is al in gebruik"
             label:
               blank: "je hebt geen label voor dit veld gegeven"
               taken: "dit label is al in gebruik"
@@ -181,7 +181,8 @@ nl:
         max_participants: "Maximaal aantal deelnemers"
         location: "Locatie" 
         description: "Omschijving"
-      
+      profile_field:
+        label: "Label"
     submit:
       account:
         update: "Wachtwoord wijzigen"
@@ -205,6 +206,15 @@ nl:
       training:
         create: "Maak training aan"
         update: "Bijwerken"
+      profile_field:
+        create: "Maak profielveld aan" 
+        update: "Bijwerken profielveld" 
+      profile_string_field:
+        create: "Maak profielveld aan" 
+        update: "Bijwerken profielveld" 
+      profile_select_field:
+        create: "Maak profielveld aan" 
+        update: "Bijwerken profielveld" 
   account:
     sessions:
       new: 

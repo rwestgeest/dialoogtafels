@@ -1,0 +1,18 @@
+= errors_for profile_field
+.dialog-container
+  .input-container.left 
+    .label= f.label :label
+    .input
+      = f.text_field(:label)
+  .input-container.field-type
+    .input-container
+      .label= f.label :type
+      .input
+        = f.select :type, [['string', 'ProfileStringField'], ['selectie', 'ProfileSelectionField']],{}, :id => "profile_field_type_#{profile_field.to_param}"
+    .input-container{ id: "profile_selection_field_container_#{profile_field.to_param}", :style => profile_field.is_a?(ProfileStringField) ? "display:none;" : "display:block;"}
+      .label= f.label :values
+      .input
+        = f.text_area :values
+  .actions
+    = link_to "sluiten", '#', :id => "close_form"
+    = f.submit

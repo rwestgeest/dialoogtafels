@@ -8,12 +8,16 @@ class ProfileField < ActiveRecord::Base
 
   def initialize(*args)
     super
-    self.field_name = label.gsub(' ', '_').gsub(/[!?<>\.,\/\*\-@%;:#\^&\(\)\{\}\[\]\\"']/, '').underscore  unless field_name && !field_name.empty?
+  end
+  def label=(new_label)
+    super
+    return if !label || field_name && !field_name.empty?
+    self.field_name = label.gsub(' ', '_').gsub(/[!?<>\.,\/\*\-@%;:#\^&\(\)\{\}\[\]\\"']/, '').underscore 
   end
   def field_name_with_prefix
     'profile_' + field_name
   end
-  def render_field_on(form)
-    form.text_field field_name_with_prefix
+  def render_field_on(form, options = {})
+    form.text_field field_name_with_prefix, options
   end
 end

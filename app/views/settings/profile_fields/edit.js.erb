@@ -1,0 +1,14 @@
+var old_html_<%= @profile_field.to_param %> = $('#profile_field_<%= @profile_field.to_param %>').html();
+$('#profile_field_<%= @profile_field.to_param %>').html('<%= escape_javascript(render(partial:"edit", locals: {profile_field: @profile_field})) %>');
+$("#close_form").click(function(){
+  $('#profile_field_<%= @profile_field.to_param %>').html(old_html_<%= @profile_field.to_param %>);
+});
+$("#profile_field_type_<%= @profile_field.to_param %>").click(function() {
+  if ($(this).val() == 'ProfileStringField') {
+    $("#profile_selection_field_container_<%= @profile_field.to_param %>").hide();
+  } else {
+    $("#profile_selection_field_container_<%= @profile_field.to_param %>").show();
+  }
+
+});
+

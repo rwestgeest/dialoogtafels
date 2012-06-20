@@ -499,3 +499,17 @@ ul.location_todo_list li { margin:0; }
 
 span.hidden { display:none }
 
+.input-container.field-type {
+  float:right;
+  width:300px;
+}
+.input-container.field-type textarea {
+  width:25em;
+  height:5em;
+}
+.input-container select {
+  width:219px;
+}
+.input-container input {
+  width:215px;
+}

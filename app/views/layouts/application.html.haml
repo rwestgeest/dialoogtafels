@@ -24,6 +24,10 @@
             - m.tab("Mijn Registratie", 'contributor/registrations#show')
             - m.tab("Mijn Profiel", 'contributor/profiles#edit')
             - m.tab("Mijn Trainingen", 'contributor/training_registrations')
+      #main-right-menu
+        %ul
+          = menu(request) do |m|
+            - m.tab("Instellingen", 'settings/profile_fields', highlight_on: 'settings')
 
     %section#content-frame
       %section#flash_messages

@@ -35,6 +35,9 @@ Tafelmanager2::Application.routes.draw do
     end
     resources :training_registrations, :only => [:index, :create, :destroy]
   end
+  namespace :settings do
+    resources :profile_fields, :except => :show
+  end
 
   namespace :organizer do
     resources :locations, only: [:index, :new, :create]

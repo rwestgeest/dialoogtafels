@@ -1,0 +1,15 @@
+var old_html = $('#profile_field_new').html();
+$('#profile_field_new').html('<%= escape_javascript(render(partial:"new", locals: {profile_field: @profile_field})) %>');
+$("#close_form").click(function(){
+  $('#profile_field_new').html(old_html);
+});
+$("#profile_field_type_").click(function() {
+  if ($(this).val() == 'ProfileStringField') {
+    $("#profile_selection_field_container_").hide();
+  } else {
+    $("#profile_selection_field_container_").show();
+  }
+
+});
+
+

@@ -1,0 +1,15 @@
+.dialog-container{:id => "profile_field_#{profile_field.to_param}"}
+  .left
+    = form_for Person.new, :url => '#' do |f|
+      .input-container
+        #label= profile_field.label
+        #input= profile_field.render_field_on(f, :disabled => true)
+  .right
+    = link_to image_tag('edit.gif'), edit_settings_profile_field_path(profile_field.to_param), :class => 'edit', :title => 'wijzig dit veld', :'data-remote' => true
+    = link_to image_tag('delete.gif'), settings_profile_field_path(profile_field.to_param), 
+                                                      :method => :delete, 
+                                                      :class => 'delete', 
+                                                      :title => 'verwijder dit veld', 
+                                                      :'data-remote' => true, 
+                                                      :confirm => 'weet je zeker dat je dit veld wilt verwijderen?'
+  .clear

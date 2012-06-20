@@ -12,28 +12,37 @@ describe ProfileField do
     it { should validate_uniqueness_of :label }  
   end
 
-  describe "field_name on new object" do
-    def a_field_with_label(label, attributes = {}) 
-      ProfileField.new({:label => label}.merge(attributes))
-    end
-    def and_field_name(field_name)
-      {:field_name => field_name}
-    end
-    it "is undescored label if lowercase without spaces" do
-      a_field_with_label('age').field_name.should == 'age'
-      a_field_with_label('my age').field_name.should == 'my_age'
-      a_field_with_label('My Age').field_name.should == 'my_age'
-    end
-    it "strips question_marks and other signs" do
-      a_field_with_label('My! Age?<>.,/').field_name.should == 'my_age'
-      a_field_with_label('My* Age?<>.,/').field_name.should == 'my_age'
-      a_field_with_label('My#%@;: Age?<>.,/').field_name.should == 'my_age'
-      a_field_with_label('My^&*(){}[]\ Age?<>.,/').field_name.should == 'my_age'
-      a_field_with_label("My\"' Age").field_name.should == 'my_age'
-      a_field_with_label('My Age?<>.,/').field_name.should == 'my_age'
-    end
-    it "ignores label wheb field name is given" do
-      a_field_with_label('age', and_field_name('bla')).field_name.should == 'bla'
+  describe "field_name" do 
+    describe "when changing label" do
+      def a_field_with_label(label, attributes = {}) 
+        field = ProfileField.new(attributes)
+        field.label = label
+        field
+      end
+      def and_field_name(field_name)
+        {:field_name => field_name}
+      end
+      it "is undescored label if lowercase without spaces" do
+        a_field_with_label('age').field_name.should == 'age'
+        a_field_with_label('my age').field_name.should == 'my_age'
+        a_field_with_label('My Age').field_name.should == 'my_age'
+      end
+      it "strips question_marks and other signs" do
+        a_field_with_label('My! Age?<>.,/').field_name.should == 'my_age'
+        a_field_with_label('My* Age?<>.,/').field_name.should == 'my_age'
+        a_field_with_label('My#%@;: Age?<>.,/').field_name.should == 'my_age'
+        a_field_with_label('My^&*(){}[]\ Age?<>.,/').field_name.should == 'my_age'
+        a_field_with_label("My\"' Age").field_name.should == 'my_age'
+        a_field_with_label('My Age?<>.,/').field_name.should == 'my_age'
+      end
+      it "ignores label wheb field name is given" do
+        a_field_with_label('age', and_field_name('bla')).field_name.should == 'bla'
+      end
+      it "updates the field_name on update_attributes", :focus => true  do
+        field = ProfileStringField.new
+        field.update_attributes :label => 'Age'
+        field.field_name.should == 'age'
+      end
     end
   end
 end
