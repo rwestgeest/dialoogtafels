@@ -10,4 +10,7 @@ class ProfileField < ActiveRecord::Base
     super
     self.field_name = label.gsub(' ', '_').gsub(/[!?<>\.,\/\*\-@%;:#\^&\(\)\{\}\[\]\\"']/, '').underscore  unless field_name && !field_name.empty?
   end
+  def field_name_with_prefix
+    'profile_' + field_name
+  end
 end

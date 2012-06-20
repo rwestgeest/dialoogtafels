@@ -22,8 +22,8 @@ describe Contributor::ProfilesController do
       response.body.should have_selector( "form input#person_email[name='person[email]']" )
     end
     it "puts all possible profile fields in the form" do
-      FactoryGirl.create :profile_string_field, :label => 'age'
-      FactoryGirl.create :profile_string_field, :label => 'diet'
+      FactoryGirl.create :profile_string_field, :field_name => 'age', :label => 'Age'
+      FactoryGirl.create :profile_string_field, :field_name => 'diet', :label => 'Diet'
       get 'edit'
       response.body.should have_selector( "form input#person_profile_age[name='person[profile_age]']")
       response.body.should have_selector( "form input#person_profile_diet[name='person[profile_diet]']")
