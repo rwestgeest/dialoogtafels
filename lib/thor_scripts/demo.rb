@@ -27,6 +27,7 @@ module ThorScripts
       cp data_path('development'), db_path
       rm_r db_data_path if File.exists? db_data_path
       cp_r system_path, db_data_path
+      Tenant.find_by_host('preview.dialoogtafels.nl').update_attribute :host, 'test.host'
     end
     private 
     def db_path
