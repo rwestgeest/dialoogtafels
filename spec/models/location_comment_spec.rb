@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe LocationComment, :focus => true do
+describe LocationComment do
   it_should_behave_like 'a_scoped_object', :location_comment
   it { should validate_presence_of :body }
   it { should validate_presence_of :location }
