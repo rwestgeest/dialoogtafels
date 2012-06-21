@@ -11,6 +11,7 @@ gem "rb-readline"
 gem 'jquery-rails'
 gem 'bcrypt-ruby'
 gem "bluecloth", "~> 2.2.0"
+gem "ancestry", "~> 1.3.0"
 
 # Gems used only for assets and not required
 # in production environments by default.

@@ -36,6 +36,8 @@ GEM
       railties (>= 3.0)
       rspec (>= 2.2)
       rspec-rails (>= 2.2)
+    ancestry (1.3.0)
+      activerecord (>= 2.3.14)
     arel (3.0.2)
     bcrypt-ruby (3.0.1)
     bluecloth (2.2.0)
@@ -183,6 +185,7 @@ DEPENDENCIES
   ZenTest (~> 4.8.0)
   action-guard
   ammeter (= 0.2.5)
+  ancestry (~> 1.3.0)
   bcrypt-ruby
   bluecloth (~> 2.2.0)
   capybara

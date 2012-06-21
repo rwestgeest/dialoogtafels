@@ -117,5 +117,11 @@ module Factories
       association :profile_field, factory: :profile_string_field
       association :person
     end
+
+    factory :location_comment do
+      body "some comment"
+      association :author, factory: :person
+      association :location
+    end
   end
 end

@@ -62,6 +62,14 @@ nl:
               blank: "je hebt geen adres ingegeven"
             postal_code:
               blank: "je hebt geen postcode ingegeven"
+        location_comment:
+          attributes:
+            body:
+              blank: "deze boodschap is leeg"
+            person:
+              blank: "geen persoon gekoppeld - maak contact met de beheerder"
+            location:
+              blank: "geen locatie gekoppeld - maak contact met de beheerder"
         organizer:
           attributes:
             email:
@@ -170,6 +178,8 @@ nl:
         address: "Adres"
         postal_code: "Postcode"
         city: "Plaats"
+      location_comment:
+        body: "boodschap"
       conversation:
         start_date: "Aanvang"
         end_date: "Einde"
