@@ -1,6 +1,6 @@
 set :deploy_to, "/var/www/rails/#{application}-gator-test"
 set :domain, "#{user}@test.gator.#{application}.nl"
-set :rails_env, "development"
+set :rails_env, "production"
 set :passenger_port, 3032
 
 namespace :vlad do
@@ -8,7 +8,6 @@ namespace :vlad do
   task "deploy:test" => %w{
     update
     update-bundle
-    assets
     migrate
     tests
     start
