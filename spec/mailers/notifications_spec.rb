@@ -7,7 +7,7 @@ describe Notifications do
     let(:mail) { Notifications.account_reset account }
 
     it "renders the headers" do
-      mail.subject.should eq("Account reset")
+      mail.subject.should eq(I18n.t("notifications.account_reset.subject."))
       mail.to.should eq([account.email])
       mail.from.should eq([account.tenant.from_email])
     end
@@ -21,7 +21,7 @@ describe Notifications do
     let(:mail) { Notifications.account_welcome account }
 
     it "renders the headers" do
-      mail.subject.should eq("Account welcome")
+      mail.subject.should eq(I18n.t("notifications.account_welcome.subject"))
       mail.to.should eq([account.email])
       mail.from.should eq([account.tenant.from_email])
     end

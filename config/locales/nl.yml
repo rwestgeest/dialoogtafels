@@ -227,6 +227,11 @@ nl:
       profile_select_field:
         create: "Maak profielveld aan" 
         update: "Bijwerken profielveld" 
+  notifications:
+    account_reset:
+      subject: "Je dialoogtafels account is gereset"
+    account_welcome:
+      subject: "Welkom bij dialoogtafels - er is een account voor je aangemakt"
   account:
     sessions:
       new: 
