@@ -6,8 +6,7 @@ module ThorScripts
     include FileUtils
     desc "rewind", "recreates the demo database in development"
     def rewind
-      raise "never do this in production" if Rails.env == 'production'
-      cp db_path, data_path('development')
+      cp db_path, data_path('production')
       rm_r system_path if File.exists? system_path
       cp_r db_data_path, system_path
     end
