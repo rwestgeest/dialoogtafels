@@ -12,6 +12,7 @@ namespace :vlad do
   task "deploy" => %w{
     update
     update-bundle
+    assets
     start
   }
   desc "deploy and migrate"
@@ -19,6 +20,7 @@ namespace :vlad do
     update
     update-bundle
     migrate
+    assets
     start
   }
 
@@ -31,7 +33,6 @@ namespace :vlad do
   desc "generate assets"
   remote_task "assets" do
     in_current_path = "cd #{current_path} && "
-    run in_current_path + "rm -r public/assets/*"
     run in_current_path + "RAILS_ENV=#{rails_env} bundle exec rake assets:precompile"
   end
 
