@@ -30,6 +30,10 @@ class ApplicationController < ActionController::Base
     @current_account ||= Account.find(current_account_id) rescue nil
   end
 
+  def current_person
+    current_account.person
+  end
+
   def signed_in?
     current_account != nil
   end

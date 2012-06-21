@@ -1,5 +1,5 @@
 class LocationComment < ActiveRecord::Base
-  attr_accessible :body, :author
+  attr_accessible :body, :author, :location_id
   include ScopedModel
   scope_to_tenant
   belongs_to :location

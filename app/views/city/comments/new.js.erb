@@ -1,0 +1,6 @@
+var old_html = $('#location_comment_new').html();
+$('#location_comment_new').html('<%= escape_javascript(render(partial:"new", locals: {location_comment: @location_comment})) %>');
+$("#close_form").click(function(){
+  $('#location_comment_new').html(old_html);
+});
+
