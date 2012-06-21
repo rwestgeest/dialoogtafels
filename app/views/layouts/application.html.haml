@@ -18,7 +18,7 @@
       #main-left-menu
         %ul
           = menu(request) do |m|
-            - m.tab("Locaties", 'city/locations', highlight_on: '(city|organizer)/(locations|publications)')
+            - m.tab("Locaties", 'city/locations', highlight_on: 'city/(locations|publications)')
             - m.tab("Locaties", 'organizer/locations', highlight_on: '(city|organizer)/(locations|publications)')
             - m.tab("Trainingen", 'city/trainings', highlight_on: 'city/training' )
             - m.tab("Mijn Registratie", 'contributor/registrations#show')

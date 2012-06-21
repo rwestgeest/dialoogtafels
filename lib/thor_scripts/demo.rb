@@ -15,8 +15,8 @@ module ThorScripts
       cp db_path, data_path('development')
       rm_r system_path if File.exists? system_path
       cp_r db_data_path, system_path
-      Tenant.test
       Tenant.find_by_host('preview.dialoogtafels.nl').update_attribute :host, 'test.host'
+      Tenant.test
       TenantAccount.all.each {|a| a.update_attribute :password, '123123'}
     end
     desc "create", "creates a demo environment from developement" 
