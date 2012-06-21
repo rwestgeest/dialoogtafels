@@ -10,6 +10,7 @@ class Registration::ParticipantsController < PublicController
     @participant = Participant.new(params[:participant])
 
     if @participant.save
+      sign_in @participant.account
       redirect_to confirm_registration_participants_url, notice: I18n.t('registration.participants.welcome')
     else
       render_new
@@ -17,6 +18,8 @@ class Registration::ParticipantsController < PublicController
   end
 
   def confirm
+    @conversation = current_account.active_contribution.conversation
+    @location = @conversation.location
   end
 
   private 

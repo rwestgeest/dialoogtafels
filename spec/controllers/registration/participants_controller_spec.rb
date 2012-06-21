@@ -25,6 +25,26 @@ describe Registration::ParticipantsController do
       should respond_with(404)
     end
   end
+ 
+  describe "GET conirm" do
+    login_as :participant
+    let(:contributor) { current_account.active_contribution }
+    let(:conversation) { contributor.conversation }
+    let(:location) { conversation.location }
+
+    it "returns http success" do
+      get 'confirm'
+      response.should be_success
+    end
+    it "assigns the conversations" do
+      get 'confirm'
+      assigns(:conversation).should == conversation
+    end
+    it "renders the location" do
+      get 'confirm' 
+      response.body.should include(location.name)
+    end
+  end
 
   describe "POST create" do
     describe "with valid params" do
@@ -40,9 +60,10 @@ describe Registration::ParticipantsController do
         assigns(:participant).should be_persisted
       end
 
-      it "redirects to confirm" do
+      it "signs in and redirects to confirm" do
         post :create, {:participant => valid_attributes}
         flash.notice.should == I18n.t('.registration.participants.welcome')
+        current_account.should == Account.last
         response.should redirect_to confirm_registration_participants_url
       end
     end

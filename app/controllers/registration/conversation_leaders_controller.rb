@@ -10,6 +10,7 @@ class Registration::ConversationLeadersController < PublicController
     @conversation_leader = ConversationLeader.new(params[:conversation_leader])
 
     if @conversation_leader.save
+      sign_in @conversation_leader.account
       redirect_to confirm_registration_conversation_leaders_url, notice: I18n.t('registration.conversation_leaders.welcome')
     else
       render_new
@@ -17,6 +18,8 @@ class Registration::ConversationLeadersController < PublicController
   end
 
   def confirm
+    @conversation = current_account.active_contribution.conversation
+    @location = @conversation.location
   end
 
   private 

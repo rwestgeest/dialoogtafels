@@ -1,0 +1,9 @@
+- title "Bedankt voor je inschrijving"
+
+%h2 Je bent in geschreven bij
+%h3
+  = @location.name
+
+= render :partial => 'contributor/registrations/conversation', locals: { conversation: @conversation }
+
+

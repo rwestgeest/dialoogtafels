@@ -26,6 +26,26 @@ describe Registration::ConversationLeadersController do
     end
   end
 
+  describe "GET conirm" do
+    login_as :conversation_leader
+    let(:contributor) { current_account.active_contribution }
+    let(:conversation) { contributor.conversation }
+    let(:location) { conversation.location }
+
+    it "returns http success" do
+      get 'confirm'
+      response.should be_success
+    end
+    it "assigns the conversations" do
+      get 'confirm'
+      assigns(:conversation).should == conversation
+    end
+    it "renders the location" do
+      get 'confirm' 
+      response.body.should include(location.name)
+    end
+  end
+
   describe "POST create" do
     describe "with valid params" do
       it "creates a new conversation_leader" do
@@ -45,9 +65,10 @@ describe Registration::ConversationLeadersController do
         conversation.conversation_leaders.should include ConversationLeader.last
       end
 
-      it "redirects to confirm" do
+      it "signs in an redirects to confirm" do
         post :create, {:conversation_leader => valid_attributes}
         flash.notice.should == I18n.t('.registration.conversation_leaders.welcome')
+        current_account.should == Account.last
         response.should redirect_to confirm_registration_conversation_leaders_url
       end
     end
