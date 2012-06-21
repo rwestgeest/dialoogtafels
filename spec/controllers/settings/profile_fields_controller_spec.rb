@@ -28,6 +28,7 @@ describe Settings::ProfileFieldsController do
     it "renders the 'new' template" do
       response.should render_template("new")
       response.should render_template("_new")
+      p response.body
     end
   end
 

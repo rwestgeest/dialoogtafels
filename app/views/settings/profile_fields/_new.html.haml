@@ -1,2 +1,2 @@
-=form_for profile_field, :url => settings_profile_fields_path, :remote => true do |f| 
+=form_for profile_field, :as => :profile_field, :url => settings_profile_fields_path, :remote => true do |f| 
   = render :partial => 'form', locals: {profile_field: profile_field, f: f}

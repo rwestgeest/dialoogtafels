@@ -38,7 +38,7 @@ describe ProfileField do
       it "ignores label wheb field name is given" do
         a_field_with_label('age', and_field_name('bla')).field_name.should == 'bla'
       end
-      it "updates the field_name on update_attributes", :focus => true  do
+      it "updates the field_name on update_attributes" do
         field = ProfileStringField.new
         field.update_attributes :label => 'Age'
         field.field_name.should == 'age'
