@@ -10,6 +10,7 @@
  *
  *= require_self
  *= require locations
+ *= require forms
 */
 body { 
   height: 100%;
@@ -499,20 +500,6 @@ ul.location_todo_list li { margin:0; }
 
 span.hidden { display:none }
 
-.input-container.field-type {
-  float:right;
-  width:300px;
-}
-.input-container.field-type textarea {
-  width:25em;
-  height:5em;
-}
-.input-container select {
-  width:219px;
-}
-.input-container input {
-  width:215px;
-}
 
 #sortable .handle {
   background-image: url('/assets/handle.png');
@@ -521,4 +508,11 @@ span.hidden { display:none }
   float: left;
   margin: 4px 8px 4px 0px;
   cursor: pointer;
+}
+.profile_field_name { 
+  float: left;
+  width: 150px;
+}
+.profile_field_example {
+  float: left;
 }

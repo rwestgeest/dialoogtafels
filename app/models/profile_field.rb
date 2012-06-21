@@ -24,4 +24,7 @@ class ProfileField < ActiveRecord::Base
   def render_field_on(form, options = {})
     form.text_field field_name_with_prefix, options
   end
+  def type_name
+    @type_name ||= 'profile_field.type.' + self.class.to_s.underscore
+  end
 end

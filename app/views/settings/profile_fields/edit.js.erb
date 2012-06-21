@@ -3,7 +3,7 @@ $('#profile_field_<%= @profile_field.to_param %>').html('<%= escape_javascript(r
 $("#close_form").click(function(){
   $('#profile_field_<%= @profile_field.to_param %>').html(old_html_<%= @profile_field.to_param %>);
 });
-$("#profile_field_type_<%= @profile_field.to_param %>").click(function() {
+$("#profile_field_type_<%= @profile_field.to_param %>").change(function() {
   if ($(this).val() == 'ProfileStringField') {
     $("#profile_selection_field_container_<%= @profile_field.to_param %>").hide();
   } else {

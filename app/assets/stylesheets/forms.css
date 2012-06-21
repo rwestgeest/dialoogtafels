@@ -6,9 +6,30 @@
   padding: 3px 0px;
 	position:relative;
 	clear: both;
-  min-height: 10px;
+  min-height: 24px;
 	width: 100%;
 }
+.dialog-container .input-container.field-type {
+  float:right;
+  width:300px;
+}
+.dialog-container .input-container.field-type textarea {
+  width:25em;
+  height:5em;
+}
+.dialog-container .input-container select.normal{
+  width:219px;
+}
+.dialog-container .input-container input {
+  width:215px;
+}
+.dialog-container .input-container input[type='checkbox'] {
+  width:16px;
+  padding:2px;
+}
+.dialog-container .input-container label.checkbox {
+}
+
 .field_with_errors input { border: solid red 1px; }
 div.inputLabel {
 	clear: both;
@@ -30,6 +51,9 @@ div.input {
 	width: 300px;
 	float: left;
 	margin: 0px 2px 0px 0px;
+}
+.input.wide {
+  width:400px;
 }
 div.input input, div.input_container_control textarea {
 	height: 20px;

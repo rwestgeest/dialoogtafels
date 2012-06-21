@@ -15,7 +15,7 @@ class Settings::ProfileFieldsController < ApplicationController
     @profile_field = ProfileField.new(params[:profile_field])
 
     if @profile_field.save
-    @profile_fields = ProfileField.all
+      @profile_fields = ProfileField.all
       render action: "index" 
     else
       render action: "new" 

@@ -45,4 +45,9 @@ describe ProfileField do
       end
     end
   end
+  describe "type_name" do
+    it { ProfileField.new.type_name.should == 'profile_field.type.profile_field' }
+    it { ProfileSelectionField.new.type_name.should == 'profile_field.type.profile_selection_field' }
+    it { ProfileStringField.new.type_name.should == 'profile_field.type.profile_string_field' }
+  end
 end

@@ -4,6 +4,7 @@
   .input-container
     .label= f.label :name
     .input= f.text_field :name
+  .clear
 .dialog-container
   .city_banner{:style=>"float:right;"}
     .city_banner_photo{:style=>"background: url(#{@location.photo.url(:thumb)}) no-repeat;"}
@@ -15,6 +16,7 @@
     De foto van je locatie mag maximaal 500kb zijn. 
     Voor de publicatie op de site wordt hij geschaald naar maximaal 200 pixels breed bij 170 pixels hoog. 
     Wijzig hieronder de foto door een bestand te kiezen.
+  .input-container 
     .label= f.label(:photo)
     .input= f.file_field(:photo)
   .input-container 
@@ -25,5 +27,5 @@
       Publiceren
     .input 
       = f.check_box(:published) 
-      = f.label(:published)
-  <div style="clear:both"></div>
+      = f.label(:published, class: 'checkbox')
+  .clear

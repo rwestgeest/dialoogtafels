@@ -5,6 +5,7 @@
   .input-container
     .label= f.label :name
     .input= f.text_field :name
+  .clear
 %table.columns-layout
   %tr
     %td.input_column_eq_left
@@ -20,6 +21,7 @@
         .input-container
           .label= f.label :city
           .input= f.text_field :city
+        .clear
     %td.input_column_eq_right
       .dialog-container
         %div(id='location_map_canvas' style='width200px; height:180px;')

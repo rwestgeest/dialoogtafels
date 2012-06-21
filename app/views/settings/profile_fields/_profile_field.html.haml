@@ -1,10 +1,11 @@
 .dialog-container{:id => "profile_field_#{profile_field.to_param}"}
   .handle{:title => "Sleep om te verplaatsen"}
-  .left
+  .profile_field_example
     = form_for Person.new, :url => '#' do |f|
       .input-container
         #label= profile_field.label
         #input= profile_field.render_field_on(f, :disabled => true)
+      .clear
   .right
     = link_to image_tag('edit.gif'), edit_settings_profile_field_path(profile_field.to_param), :class => 'edit', :title => 'wijzig dit veld', :'data-remote' => true
     = link_to image_tag('delete.gif'), settings_profile_field_path(profile_field.to_param), 

@@ -3,6 +3,7 @@
   .dialog_container
     .label= "Kies tafelorganisator"
     .input= select_tag 'organizer_id', options_from_collection_for_select(@organizers, "id", "name")
+    .clear
   .actions
     =submit_tag "Maak een nieuwe locatie"
 

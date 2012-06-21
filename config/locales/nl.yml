@@ -183,7 +183,7 @@ nl:
         description: "Omschijving"
       profile_field:
         label: "Label"
-        Type: "Soort veld"
+        type: "Soort veld"
         values: "Mogelijke waarden"
     submit:
       account:

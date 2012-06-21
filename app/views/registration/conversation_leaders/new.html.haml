@@ -17,18 +17,19 @@
 = form_for [:registration, @conversation_leader]  do |f|
   = errors_for @conversation_leader
   = f.hidden_field :conversation_id
-  .input-container
-    .label= f.label :email
-    .input= f.text_field :email
+  .dialog-container
+    .input-container
+      .label= f.label :email
+      .input= f.text_field :email
 
-  .input-container
-    .label= f.label :name
-    .input= f.text_field :name
+    .input-container
+      .label= f.label :name
+      .input= f.text_field :name
 
-  .input-container
-    .label= f.label :telephone
-    .input= f.text_field :telephone
-
+    .input-container
+      .label= f.label :telephone
+      .input= f.text_field :telephone
+    .clear
   .actions
     = link_to "terug", location_path(@location)
     = f.submit

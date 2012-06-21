@@ -2,14 +2,16 @@
 
 = form_for @account, :url => account_session_path do |f|
   = errors_for @account
-  .input-container
-    .label= f.label :email
-    .input= f.text_field :email
+  .dialog-container
+    .input-container
+      .label= f.label :email
+      .input= f.text_field :email
 
-  .input-container
-    .label= f.label :password
-    .input= f.password_field :password
-
+    .input-container
+      .label= f.label :password
+      .input= f.password_field :password
+    .clear
   .actions
     = f.submit t('.create_session')
     = link_to 'wachtwoord vergeten', new_account_password_reset_path
+.clear
