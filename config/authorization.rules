@@ -20,4 +20,5 @@ allow 'contributor/profile', :at_least => :participant, :at_most => :coordinator
 allow 'contributor/training_registrations', :only_by => :conversation_leader
 allow 'accounts/password', :at_least => :participant
 allow 'accounts/sessions#destroy', :at_least => :participant
+allow 'settings', :at_least => :coordinator
 allow ''
