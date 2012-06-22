@@ -40,6 +40,27 @@ describe Location do
       it { should include published }
       it { should_not include concept }
     end
+
+    describe 'involveds' do
+      attr_reader :location, :conversation1, :conversation2
+      before(:all) do
+        @location = FactoryGirl.create :location
+        @conversation1 = FactoryGirl.create :conversation, location: location
+        @conversation2 = FactoryGirl.create :conversation, location: location
+      end
+      describe 'conversation leaders' do
+        it "contains conversation leaders of all conversations" do
+          leader1 = FactoryGirl.create(:conversation_leader, conversation: conversation1)
+          leader2 = FactoryGirl.create(:conversation_leader, conversation: conversation2)
+          @location.conversation_leaders.should == [leader1, leader2]
+        end
+        it "contains participants of all conversations" do
+          participant1 = FactoryGirl.create(:participant, conversation: conversation1)
+          participant2 = FactoryGirl.create(:participant, conversation: conversation2)
+          @location.participants.should == [participant1, participant2]
+        end
+      end
+    end
   end
 
 end

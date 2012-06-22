@@ -11,8 +11,11 @@ class Location < ApplicationModel
 
   belongs_to :project
   belongs_to :organizer
-  has_many :conversations, :order => "conversations.start_time"
+  has_many :conversations, order: "conversations.start_time"
+  has_many :conversation_leaders, through: :conversations
+  has_many :participants, through: :conversations
   has_many :location_comments
+
 
   attr_accessible :name, :address, :postal_code, :city, :organizer_id, :lattitude, :longitude, :published, :photo, :description
 
