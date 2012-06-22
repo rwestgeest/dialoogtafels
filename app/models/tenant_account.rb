@@ -4,7 +4,11 @@ class TenantAccount < Account
   scope_to_tenant
   validates_presence_of :person
 
+
   class << self 
+    def coordinators 
+      where(:role => Account::Coordinator)
+    end
     def coordinator(attributes = {})
       account_with_tenant attributes.merge(:role => Account::Coordinator)
     end

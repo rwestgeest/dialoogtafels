@@ -28,6 +28,14 @@ describe TenantAccount do
         account = FactoryGirl.create :coordinator_account
       end
     end
+    describe 'coordinators' do
+      it "contains all coordinators" do
+        coordinator = FactoryGirl.create :coordinator_account
+        organizer = FactoryGirl.create(:organizer).account
+        TenantAccount.coordinators.should include(coordinator)
+        TenantAccount.coordinators.should_not include(organizer)
+      end
+    end
   end
 end
 

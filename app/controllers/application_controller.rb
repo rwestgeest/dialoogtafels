@@ -2,7 +2,7 @@ class ApplicationController < ActionController::Base
   protect_from_forgery
   prepend_before_filter :authorize_action
   prepend_before_filter :set_current_tenant
-  helper_method :current_account, :current_tenant, :active_project, :signed_in?
+  helper_method :current_account, :current_person, :current_tenant, :active_project, :signed_in?
 
   protected
   def authorized?(account, request)

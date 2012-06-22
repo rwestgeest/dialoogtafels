@@ -1,2 +1,4 @@
 $('#location-comments').append('<%= escape_javascript(render_comment(@location_comment)) %>');
 $('#new-location-comment').replaceWith('<%= escape_javascript(new_comment_form(@location, @location_comment.parent)) %>');
+enableGroupCheck('#all_coordinators', '.notify-coordinators');
+enableGroupCheck('#all_organizers', '.notify-organizers');

@@ -75,7 +75,13 @@ describe City::CommentsController do
         response.should render_template 'create'
         response.should render_template '_location_comment'
       end
+
+      it "sends an email to the selected people" do
+        pending "should send notifications"
+        Postman.should_receive(:deliver).with(:message_message)
+      end
     end
+   
     context "with invalid params" do
       before do
         # Trigger the behavior that occurs when invalid params are submitted

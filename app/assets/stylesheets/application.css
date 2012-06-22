@@ -497,3 +497,15 @@ span.hidden { display:none }
 .profile_field_example {
   float: left;
 }
+
+ul.person-list {
+  list-style-type: none;
+  padding:0;
+  margin:0;
+}
+ul.person-list li {
+    display: inline;
+    float:left;
+    width:180px;
+    margin: 0;
+}

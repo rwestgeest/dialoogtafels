@@ -11,5 +11,24 @@
     .message-body-container
       .input= f.text_area :body
     .clear
+    %h3 Notificaties
+    %p
+      Selecteer hieronder de mensen die je per email wilt notificeren over dit bericht.
+
+    .message-notifications-container
+        
+      %h4 
+        = check_box_tag "all_coordinators"
+        = label_tag t(".all_coordinators")
+
+      %ul.person-list
+        - TenantAccount.coordinators.each do |account|
+          %li= notification_check_box account.person, 'notify-coordinators'
+      .clear
+      %h4 
+        = check_box_tag "all_organizers"
+        = label_tag t(".all_organizers")
+      = notification_check_box location.organizer.person, 'notify-organizers'
+
     .actions
       = f.submit :disable_with => "... versturen"

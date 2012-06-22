@@ -11,6 +11,7 @@
   text-align: right;
 }
 .dialog-container h3 {margin: 0.5em 0;}
+.dialog-container h4 {margin: 0.25em 0;}
 
 input.large { width: 250px; height: 18px; padding: 0px; }
 
@@ -77,13 +78,13 @@ input.large { width: 250px; height: 18px; padding: 0px; }
 div.actions {margin:10px; padding:10px 0px; clear:both; font-size:12px; text-align:right;}
 
 .input textarea {
-  width:530px;
+  width:534px;
   height:150px;
 	overflow:auto;
 }
 .message-container {
   @extend .dialog-container;
-  width:536px;
+  width:540px;
   margin:4px 0px;
 }
 .message-subject-container {
@@ -96,14 +97,17 @@ div.actions {margin:10px; padding:10px 0px; clear:both; font-size:12px; text-ali
   width: 80px;
 }
 .message-container .message-subject-container input {
-  width: 443px;
+  width: 447px;
 }
 .message-subject-container .input {
-  width: 443px;
+  width: 447px;
 }
 .message-container .actions {
   width: 524px;
   margin: 0 10px;
   padding-bottom: 0px;
+}
+.message-notifications-container h4 {
+  background-color: #f4ebd5;
 }
 

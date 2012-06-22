@@ -19,4 +19,8 @@ module City::CommentsHelper
   def new_comment_form(location, parent_comment = nil)
     render :partial => 'new_comment_form', locals: {location: location, parent_comment: parent_comment}
   end
+  def notification_check_box person, clazz
+    [check_box_tag("notify_person_#{person.id}", person.id, false, :name => "notify_people[]", :class => clazz),
+     label_tag(person.name)].join.html_safe
+  end
 end

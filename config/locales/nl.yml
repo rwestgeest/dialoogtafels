@@ -257,6 +257,9 @@ nl:
         edit: "wijzig locatie" 
         comments: "berichten"
     comments:
+      new_comment_form:
+        all_coordinators: "Coordinatoren"
+        all_organizers: "Organisator"
       index: 
         new_comment: "nieuw bericht"
       show:
