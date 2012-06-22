@@ -1,2 +1,13 @@
-%h1 Comments#index
-%p Find me in app/views/comments/index.html.haml
+- title "Communicatie rond #{@location.name}"
+
+= render partial: 'location_comment', collection: @location_comments
+
+#new-location-comment
+  = form_for LocationComment.new, :url => city_location_comments_path(location_id: @location.to_param) do |f|
+    .dialog-container
+      .input_container
+        .label= f.label :body
+        .input= f.text_field :body
+      .clear
+    .actions
+      = f.submit

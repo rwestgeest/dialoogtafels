@@ -11,6 +11,7 @@
  *= require_self
  *= require locations
  *= require forms
+ *= require location_comments
 */
 body { 
   height: 100%;

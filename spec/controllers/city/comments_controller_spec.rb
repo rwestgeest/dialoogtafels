@@ -17,15 +17,20 @@ describe City::CommentsController do
   def with_location_scope(request_parameters = {})
     {:location_id => location.to_param }.merge(request_parameters)
   end
+  context "without supplying a location" do
+    it { xhr(:get, :new); should respond_with(404) }
+    it { xhr(:post, :create, :location_comment => valid_attributes); should respond_with(404) }
+  end
 
   describe "GET 'index'" do
     before do 
       create_location_comment
       get 'index', with_location_scope 
     end
-    it "assigns the comments for that location" do
+    it "assigns the location and its comments" do
       other_comment = FactoryGirl.create :location_comment
       assigns(:location_comments).should  == [location_comment]
+      assigns(:location).should == location
     end
     it "renders the index template" do
       response.should be_success
@@ -54,10 +59,11 @@ describe City::CommentsController do
       before do
         # Trigger the behavior that occurs when invalid params are submitted
         LocationComment.any_instance.stub(:save).and_return(false)
-        xhr :post, :create, with_location_scope(:location_comments => {})
+        xhr :post, :create, with_location_scope(:location_comment => {})
       end
-      it "assigns a newly created but unsaved location_comments as @location_comments" do
+      it "assigns a newly created but unsaved location_comments as @location_comment" do
         assigns(:location_comment).should be_a_new(LocationComment)
+        assigns(:location).should == location
       end
 
       it "re-renders the 'new' template" do

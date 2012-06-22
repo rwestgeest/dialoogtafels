@@ -42,6 +42,7 @@ class ConversationsController < ApplicationController
     render :action => 'index'
   end
 
+  private 
   def check_location
      unless params[:location_id] && Location.exists?(params[:location_id])
       head :not_found
