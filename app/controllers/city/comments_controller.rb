@@ -4,9 +4,15 @@ class City::CommentsController < ApplicationController
   def index
     @location_comments = @location.location_comments
   end
+
+  def show
+    @location_comment = LocationComment.find(params[:id])
+  end
+
   def create
     @location_comment = LocationComment.new(params[:location_comment])
     @location_comment.author = current_person
+    @location_comment.location = location
     if @location_comment.save
       render 'create'
     else

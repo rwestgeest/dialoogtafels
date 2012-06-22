@@ -1,13 +1,9 @@
 - title "Communicatie rond #{@location.name}"
+- location_submenu
+- context_action '.new_comment', city_location_comments_path(location_id: @location.to_param, anchor: "new_comment")
+#location-comments
+  = render_nested @location_comments.arrange
 
-= render partial: 'location_comment', collection: @location_comments
-
+%h3 Nieuw bericht:
 #new-location-comment
-  = form_for LocationComment.new, :url => city_location_comments_path(location_id: @location.to_param) do |f|
-    .dialog-container
-      .input_container
-        .label= f.label :body
-        .input= f.text_field :body
-      .clear
-    .actions
-      = f.submit
+  = new_comment_form @location, nil 

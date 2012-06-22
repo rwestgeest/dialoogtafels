@@ -1,0 +1,13 @@
+- title "Boodschap: #{@location_comment.parent_subject}"
+- context_action ".back", city_location_comments_path(:location_id => @location_comment.location_id)
+
+#location-comment
+  = render_comment @location_comment
+.nested-comment
+  #location-comments
+    = render_nested @location_comment.children.arrange
+
+%h3 Antwoord:
+#new-location-comment
+  = new_comment_form @location, @location_comment 
+

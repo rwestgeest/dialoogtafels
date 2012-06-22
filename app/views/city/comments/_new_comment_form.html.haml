@@ -1,0 +1,15 @@
+%a{ id: 'new_comment'}
+
+= form_for LocationComment.new(:parent => parent_comment), :url => city_location_comments_path(location_id: location.to_param), :remote => true  do |f|
+  = parent_reference(parent_comment, f)
+  .message-container
+    - unless parent_comment
+      .message-subject-container
+        .label= f.label :subject
+        .input= f.text_field :subject
+      .clear
+    .message-body-container
+      .input= f.text_area :body
+    .clear
+    .actions
+      = f.submit :disable_with => "... versturen"

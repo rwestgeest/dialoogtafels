@@ -1,0 +1,41 @@
+.location-comment {
+ border: solid 1px #F4EBD5; 
+ margin: 0.5em 0;
+}
+.location-comment:hover .comment-actions {
+  display: block;
+}
+.location-body {
+  padding:0 3px;
+}
+.location-body h1 {
+  font-size: 1.5em;
+}
+.nested-comment {
+  margin-left: 30px;
+}
+.comment-actions-line {
+  height:1.2em;
+}
+.comment-actions {
+  font-weight: normal;
+  text-align: right;
+  float: right;
+  margin-left: 1em;
+  display: none;
+}
+.comment-info {
+  font-weight: normal;
+  color: grey;
+  text-align: right;
+  float: right;
+}
+.location-comment h3 {
+  font-weight: bolder;
+  font-size: inherit;
+  background-color: #F4EBD5;
+  padding: 0.25em; 
+  margin: 0px;
+  height: 1em;
+}
+

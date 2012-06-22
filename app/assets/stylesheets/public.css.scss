@@ -171,9 +171,6 @@ img {
 }
 
 /* form adjustments */
-form .actions {
-  width: 370px;
-}
 div.clear {
   clear:both;
 }
@@ -188,7 +185,10 @@ form {
   float:left;
 }
 .dialog-container { 
-  width: 440px;
+  width: 382px;
+}
+.actions {
+  width: 390px;
 }
 .input-container {
   width:100%;

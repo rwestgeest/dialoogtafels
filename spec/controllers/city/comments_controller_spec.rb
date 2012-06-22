@@ -11,7 +11,7 @@ describe City::CommentsController do
   alias_method :create_location_comment, :location_comment
 
   def valid_attributes
-    FactoryGirl.attributes_for(:location_comment).merge :location_id => location.to_param
+    FactoryGirl.attributes_for(:location_comment)
   end
 
   def with_location_scope(request_parameters = {})
@@ -19,6 +19,7 @@ describe City::CommentsController do
   end
   context "without supplying a location" do
     it { xhr(:get, :new); should respond_with(404) }
+    it { xhr(:get, :show); should respond_with(404) }
     it { xhr(:post, :create, :location_comment => valid_attributes); should respond_with(404) }
   end
 
@@ -35,6 +36,26 @@ describe City::CommentsController do
     it "renders the index template" do
       response.should be_success
       response.should render_template 'index'
+    end
+    it "has a no parent_id hidden in the form" do
+      response.body.should_not have_selector("form input[name='location_comment[parent_id]'][value='#{location_comment.id}'][type='hidden']")
+    end
+  end
+  describe "GET 'show'" do
+    before do 
+      create_location_comment
+      get 'show', with_location_scope(:id => location_comment.to_param)
+    end
+    it "assigns the location and its comments" do
+      assigns(:location_comment).should  == location_comment
+      assigns(:location).should == location
+    end
+    it "renders the show template" do
+      response.should be_success
+      response.should render_template 'show'
+    end
+    it "has a parent_id hidden in the form" do
+      response.body.should have_selector("form input[name='location_comment[parent_id]'][value='#{location_comment.id}'][type='hidden']")
     end
   end
   describe "POST 'create'" do

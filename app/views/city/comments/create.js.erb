@@ -1,1 +1,2 @@
-$('#location_comment_<%= @location_comment.to_param %>').replaceWith('<%= escape_javascript(render(partial:"location_comment", locals: {location_comment: @location_comment})) %>');
+$('#location-comments').append('<%= escape_javascript(render_comment(@location_comment)) %>');
+$('#new-location-comment').replaceWith('<%= escape_javascript(new_comment_form(@location, @location_comment.parent)) %>');

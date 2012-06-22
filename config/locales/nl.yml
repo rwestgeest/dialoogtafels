@@ -179,7 +179,8 @@ nl:
         postal_code: "Postcode"
         city: "Plaats"
       location_comment:
-        body: "boodschap"
+        subject: "Onderwerp"
+        body: "Boodschap"
       conversation:
         start_date: "Aanvang"
         end_date: "Einde"
@@ -209,9 +210,11 @@ nl:
         create: "Registreer"
       participant:
         create: "Registreer"
-      locatie:
+      location:
         create: "Maak locatie aan"
         update: "Locatie bijwereken"
+      location_comment:
+        create: "Bericht toevoegen"
       conversation:
         create: "Maak dialooggesprek aan"
         update: "Bijwerken"
@@ -248,13 +251,19 @@ nl:
       welcome: "Dank voor je registratie en welkom bij dialoogtafels."
   city:
     locations:
-      show:
+      location_side_bar:
         publication: "toon publicatie details" 
+        conversations: "toon dialooggesprekken" 
         edit: "wijzig locatie" 
+        comments: "berichten"
+    comments:
+      index: 
+        new_comment: "nieuw bericht"
+      show:
+        back: "terug naar alle berichten"
     publications:
       show:
         edit: "wijzig publicatie" 
-        location: "toon dialooggesprekken" 
     trainings:
       index:
         new: "plan een nieuwe training"
@@ -274,5 +283,7 @@ nl:
     training_registrations:
       index:
         click_to_expand: "Klick om de beschrijving te lezen"
+  location_comment:
+    reaction_to: "Reactie op '%{subject}'"
   not_authorized: "Je bent niet geautoriseerd voor deze actie"
   registered_at: "Ingeschreven op %{time}"

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120621075234) do
+ActiveRecord::Schema.define(:version => 20120622075921) do
 
   create_table "accounts", :force => true do |t|
     t.string   "email",                :limit => 150,                      :null => false
@@ -62,6 +62,7 @@ ActiveRecord::Schema.define(:version => 20120621075234) do
     t.integer  "tenant_id"
     t.datetime "created_at",  :null => false
     t.datetime "updated_at",  :null => false
+    t.string   "subject"
   end
 
   add_index "location_comments", ["ancestry"], :name => "index_location_comments_on_ancestry"

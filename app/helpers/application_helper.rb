@@ -86,6 +86,10 @@ module ApplicationHelper
     t('registered_at', time: l(object.created_at, format: :date))
   end
 
+  def location_submenu
+    page_side_bar 'city/locations/location_side_bar'
+  end
+
   private
   def alert_flash_tag(message)
     flash_tag(:alert, message)

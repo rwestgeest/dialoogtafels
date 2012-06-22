@@ -1,7 +1,11 @@
 .location-comment
   %h3 
-    = location_comment.author.name
-    = l location_comment.created_at
+    = comment_subject(location_comment)
+    = comment_info(location_comment)
   .location-body
     = markup location_comment.body
+    .comment-actions
+      = link_to "antwoorden", city_location_comment_path(location_comment.to_param, :location_id => location_comment.location_id)
+    .comment-actions-line
+    .clear
 

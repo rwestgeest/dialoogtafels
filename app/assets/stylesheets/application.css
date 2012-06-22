@@ -374,26 +374,6 @@ ul.errorTypeIe li { margin: 0; padding: 0 0 5px 0; font-size: 1.2em; color: red;
 
 div.list-filter {width: 100%; padding-left:10px;}
 div.list-info {width: 100%; text-align:right;}
-div.dialog-container {
-  margin:4px 10px;
-  padding:10px 10px; 
-  border: solid 1px #F4EBD5; 
-  border-radius: 6px;
-}
-.dialog-container .actions {
-  text-align: right;
-}
-div.dialog-container h3 {margin: 0.5em 0;}
-div.input textarea {
-  width:530px;
-  height:150px;
-}
-
-div.actions {margin:10px; padding:10px 0px; clear:both; font-size:12px; text-align:right;}
-
-
-input.large { width: 250px; height: 18px; padding: 0px; }
-
 div.error {color:red;}
 
 textarea.large { width: 350px; height: 100px; }
