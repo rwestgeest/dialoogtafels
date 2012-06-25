@@ -1,10 +1,12 @@
+  
+
 %h4 
   Gespreksleiders
 - if conversation.conversation_leaders.empty?
   %p Geen gespreksleiders
 - else
   %ul.person-list
-    = render partial: 'shared/person', collection: conversation.conversation_leaders
+    = render partial: 'shared/person', collection: conversation.conversation_leaders, locals: {contributor_type: 'conversation_leader'}
 .clear
 %h4 
   Deelnemers
@@ -12,5 +14,5 @@
   %p Geen deelnemers
 - else
   %ul.person-list
-    = render partial: 'shared/person', collection: conversation.participants
+    = render partial: 'shared/person', collection: conversation.participants, locals: {contributor_type: 'participant' }
 .clear

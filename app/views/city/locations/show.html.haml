@@ -1,4 +1,5 @@
-- title "Planning gesprekken van #{ @location.name}"
+%div#dialog-form
+- title "Indeling gesprekken van #{ @location.name}"
 - location_submenu
 #conversations
   = render partial: 'conversations/index', locals: { conversations: @location.conversations }

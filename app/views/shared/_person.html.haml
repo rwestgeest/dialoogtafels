@@ -1,8 +1,8 @@
 %li{:title => "tel: #{person.telephone}"}
   %span.operations
-    = link_to image_tag('handle-small.png'), "#", :class => 'move'
+    = link_to image_tag('handle-small.png'), "#", :class => "move move_#{contributor_type}", :'data-contributor' => person.id
     = mail_to person.email, image_tag('mail.gif'), :class => 'email', :title => "Stuur een email"
-    = link_to image_tag('edit.gif'), "#", :class => 'edit'
+    = link_to image_tag('edit.gif'), 'edit_city_person(person.person)', :class => 'edit', :remote => true
   %span.no-operations
     &nbsp;
   =  person.name
