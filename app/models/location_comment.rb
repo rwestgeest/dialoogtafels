@@ -32,9 +32,17 @@ class LocationComment < ActiveRecord::Base
     self.addressees = addressee_ids.collect { |addressee_id| Person.find(addressee_id) }
   end
 
+  def people_to_notify
+    if (parent and addressees.empty?) 
+      parent.people_to_notify + [author]
+    else
+      addressees + [author]
+    end
+  end
+
   private 
   def notify
-    (addressees + [ author ]).uniq.each do |addressee|
+    people_to_notify.uniq.each do |addressee|
       Postman.schedule_message_notification(self, addressee)
     end
   end
