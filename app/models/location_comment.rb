@@ -1,9 +1,13 @@
 class LocationComment < ActiveRecord::Base
   attr_accessible :subject, :body, :author, :location_id, :parent_id, :parent
+  after_create :notify
+
   include ScopedModel
   scope_to_tenant
   belongs_to :location
   belongs_to :author, class_name: "Person"
+  has_many :comment_addressees
+  has_many :addressees, :through => :comment_addressees, :source => :person
   has_ancestry
 
   validates_presence_of :body
@@ -22,5 +26,16 @@ class LocationComment < ActiveRecord::Base
     comment.parent = self
     comment.save
     comment
+  end
+ 
+  def add_addressees(*addressee_ids)
+    self.addressees = addressee_ids.collect { |addressee_id| Person.find(addressee_id) }
+  end
+
+  private 
+  def notify
+    (addressees + [ author ]).uniq.each do |addressee|
+      Postman.schedule_message_notification(self, addressee)
+    end
   end
 end

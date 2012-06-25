@@ -58,6 +58,48 @@ describe LocationComment do
         end
       end
     end
+
+    describe "notifications" do
+      let(:author) { FactoryGirl.create :person }
+      let(:location) { FactoryGirl.create :location }
+
+      it "sends a notification to the author" do
+        Postman.should_receive(:schedule_message_notification) do |comment, addressee| 
+          comment.should be_an_instance_of(LocationComment)
+          comment.should be_persisted
+          addressee.should == author
+        end
+        a_location_comment_from(author).save!
+      end
+
+      context "with addressees" do
+        let(:addressee1) { FactoryGirl.create :person }
+        let(:addressee2) { FactoryGirl.create :person }
+
+        it "sends a notification to the addressees" do
+          Postman.should_receive(:schedule_message_notification).with(an_instance_of(LocationComment), author)
+          Postman.should_receive(:schedule_message_notification).with(an_instance_of(LocationComment), addressee1)
+          Postman.should_receive(:schedule_message_notification).with(an_instance_of(LocationComment), addressee2)
+          a_location_comment_from(author, for_addressees(addressee1, addressee2)).save!
+        end
+
+        it "when author in addressee list, sends notification to sender once" do
+          Postman.should_receive(:schedule_message_notification).with(an_instance_of(LocationComment), author).once
+          a_location_comment_from(author, for_addressees(author)).save!
+        end
+
+      end
+
+      def a_location_comment_from(author, addressee_id_list = [])
+        comment = FactoryGirl.build(:location_comment, :subject => "subject", :location_id => location.id, :author => author)
+        comment.add_addressees(*addressee_id_list)
+        comment
+      end
+
+      def for_addressees(*addressee_list)
+        addressee_list.map {|addressee| addressee.id}
+      end
+    end
   end
 
 end

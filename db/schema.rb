@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120622075921) do
+ActiveRecord::Schema.define(:version => 20120625091103) do
 
   create_table "accounts", :force => true do |t|
     t.string   "email",                :limit => 150,                      :null => false
@@ -30,6 +30,16 @@ ActiveRecord::Schema.define(:version => 20120622075921) do
   end
 
   add_index "accounts", ["type"], :name => "index_accounts_on_type"
+
+  create_table "comment_addressees", :force => true do |t|
+    t.integer  "location_comment_id"
+    t.integer  "person_id"
+    t.datetime "created_at",          :null => false
+    t.datetime "updated_at",          :null => false
+  end
+
+  add_index "comment_addressees", ["location_comment_id"], :name => "index_comment_addressees_on_location_comment_id"
+  add_index "comment_addressees", ["person_id"], :name => "index_comment_addressees_on_person_id"
 
   create_table "contributors", :force => true do |t|
     t.string   "type"
