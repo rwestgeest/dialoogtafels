@@ -30,7 +30,7 @@ class LocationComment < ActiveRecord::Base
  
   def set_addressees(addressee_ids = nil)
     return unless addressee_ids
-    self.addressees = addressee_ids.collect { |addressee_id| Person.find(addressee_id) }
+    self.addressees = Person.where(:id => addressee_ids)
   end
 
   def people_to_notify

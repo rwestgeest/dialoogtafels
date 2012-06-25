@@ -1,15 +1,17 @@
-.dialog-container{:id => "conversation_#{conversation.to_param}"}
-  .left
-    = time_period(conversation)
-  .right
-    maximaal aantal tafels: 
-    = conversation.number_of_tables
-    = link_to image_tag('edit.gif'), edit_conversation_path(conversation.to_param), :class => 'edit', :title => 'wijzig dit dialooggesprek', :'data-remote' => true
-    = link_to image_tag('delete.gif'), conversation_path(conversation.to_param), 
-                                                      :method => :delete, 
-                                                      :class => 'delete', 
-                                                      :title => 'verwijder dit dialooggesprek', 
-                                                      :'data-remote' => true, 
-                                                      :confirm => 'weet je zeker dat je dit dialooggesprek wilt verwijderen?'
-  .clear
-    = render :partial => 'conversations/contributors', locals: { conversation: conversation }
+.conversation
+  %h3
+    = time_period(conversation).capitalize
+    %span.operations 
+      = link_to image_tag('edit.gif'), edit_conversation_path(conversation.to_param), :class => 'edit', :title => 'wijzig dit dialooggesprek', :'data-remote' => true
+      = link_to image_tag('delete.gif'), conversation_path(conversation.to_param), 
+                                                        :method => :delete, 
+                                                        :class => 'delete', 
+                                                        :title => 'verwijder dit dialooggesprek', 
+                                                        :'data-remote' => true, 
+                                                        :confirm => 'weet je zeker dat je dit dialooggesprek wilt verwijderen?'
+    %span.table-info
+      maximaal aantal tafels: 
+      = conversation.number_of_tables
+  .conversation-container{:id => "conversation_#{conversation.to_param}"}
+    .clear
+      = render :partial => 'conversations/contributors', locals: { conversation: conversation }

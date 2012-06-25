@@ -32,15 +32,70 @@
   margin-left: 1em;
   margin-bottom: 1em;
 }
-.conversation-container {
-  padding:5px 5px; 
+.conversation {
   margin:5px 0px; 
   border: solid 1px #F4EBD5; 
   border-radius: 6px;
 }
-.conversation-container .conversation {
-  float: left;
-  font-size: larger;
+
+.conversation h3 {
+  font-weight: bolder;
+  font-size: inherit;
+  background-color: #F4EBD5;
+  padding: 0.25em;
+  margin: 0px;
+  height: 1.25em;
+}
+.conversation-container {
+  padding:5px 5px; 
+}
+.conversation-container h4 {
+  margin: 0.5em 0;
+  background-color:#EDEBEB;
+}
+.conversation span.table-info {
+  float:right;
+  width:14em;
+  margin-right: 50px;
+}
+.conversation span.operations {
+  float:right;
+  width: 50px;
+  display:none;
+}
+.conversation:hover span.table-info {
+  display:block;
+  margin-right: 0px;
+}
+.conversation:hover span.operations {
+  display:block;
+}
+.conversation-container .person-list li {
+  padding:0.25em;
+  height:19px;
+}
+
+.conversation-container .person-list li span {
+  width:50px;
+  float:left;
+}
+.conversation-container .person-list li span.no-operations {
+  display:block;
+}
+
+.conversation-container .person-list li span.operations {
+  display:none;
+}
+.conversation-container .person-list li:hover {
+  margin-left:0px;
+}
+
+.conversation-container .person-list li:hover span.no-operations {
+  display:none;
+}
+
+.conversation-container .person-list li:hover span.operations {
+  display:block;
 }
 
 .city-details-container .city_banner_text h3,

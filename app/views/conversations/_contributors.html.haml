@@ -1,17 +1,16 @@
-.conversation-leaders
-  - if conversation.conversation_leaders.empty?
-    %p Geen gespreksleiders
-  - else
-    %p Gespreksleiders
-    %ul
-      - conversation.conversation_leaders.each do |conversation_leader|
-        %li=  person_entry conversation_leader
-.participants
-  - if conversation.participants.empty?
-    %p Geen deelnemers
-  - else
-    %p Deelnemers
-    %ul
-      - conversation.participants.each do |participant|
-        %li=  person_entry participant
+%h4 
+  Gespreksleiders
+- if conversation.conversation_leaders.empty?
+  %p Geen gespreksleiders
+- else
+  %ul.person-list
+    = render partial: 'shared/person', collection: conversation.conversation_leaders
+.clear
+%h4 
+  Deelnemers
+- if conversation.participants.empty?
+  %p Geen deelnemers
+- else
+  %ul.person-list
+    = render partial: 'shared/person', collection: conversation.participants
 .clear

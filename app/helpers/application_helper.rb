@@ -61,7 +61,7 @@ module ApplicationHelper
   end
 
   def person_entry(person)
-    person.name
+     person.name
   end
 
   def markup(text)
