@@ -59,7 +59,7 @@ describe LocationComment do
       end
     end
 
-    describe "notifications", :focus => true do
+    describe "notifications" do
       let(:author) { FactoryGirl.create :person }
       let(:location) { FactoryGirl.create :location }
 
@@ -107,7 +107,7 @@ describe LocationComment do
 
       def create_location_comment_from(author, addressee_id_list = [], parent_comment = nil)
         comment = FactoryGirl.build(:location_comment, :subject => "subject", :location_id => location.id, :author => author, :parent => parent_comment)
-        comment.add_addressees(*addressee_id_list)
+        comment.set_addressees(addressee_id_list)
         comment.save!
         comment
       end

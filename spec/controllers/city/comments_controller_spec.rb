@@ -60,8 +60,8 @@ describe City::CommentsController do
   end
   describe "POST 'create'" do
     context "with valid parameters" do
-      def do_post
-        xhr :post, :create, with_location_scope(:location_comment => valid_attributes)
+      def do_post(extra_params = {})
+        xhr :post, :create, with_location_scope(:location_comment => valid_attributes).merge(extra_params)
       end
       it "creates a comment for that location" do
         expect { do_post }.to change(LocationComment, :count).by(1)
@@ -76,9 +76,10 @@ describe City::CommentsController do
         response.should render_template '_location_comment'
       end
 
-      it "sends an email to the selected people" do
-        pending "should send notifications"
-        Postman.should_receive(:deliver).with(:message_message)
+      it "sets the addressees if supplied" do
+        notifies = [ FactoryGirl.create(:person), FactoryGirl.create(:person) ]
+        do_post :notify_people => notifies.map {|p| p.id.to_s}
+        LocationComment.last.addressees.should == notifies
       end
     end
    

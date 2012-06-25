@@ -1,0 +1,7 @@
+= markup @comment.body
+
+%p
+  Om te reageren:
+%p  
+  = link_to city_location_comment_url(@comment.to_param, :location_id => @comment.location_id, :host => Tenant.current.host),
+            city_location_comment_url(@comment.to_param, :location_id => @comment.location_id, :host => Tenant.current.host)

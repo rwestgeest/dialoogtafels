@@ -19,4 +19,9 @@ class Notifications < ActionMailer::Base
     @account = account
     mail from:account.tenant.from_email, to: account.email
   end
+
+  def new_comment(comment, addressee)
+    @comment = comment 
+    mail from: addressee.tenant.from_email, to: addressee.email, subject: @comment.subject
+  end
 end

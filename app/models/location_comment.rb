@@ -28,7 +28,8 @@ class LocationComment < ActiveRecord::Base
     comment
   end
  
-  def add_addressees(*addressee_ids)
+  def set_addressees(addressee_ids = nil)
+    return unless addressee_ids
     self.addressees = addressee_ids.collect { |addressee_id| Person.find(addressee_id) }
   end
 
