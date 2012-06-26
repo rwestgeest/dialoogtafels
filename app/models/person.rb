@@ -5,6 +5,7 @@ class Person < ActiveRecord::Base
   has_one :account
   has_many :contributors
   has_many :profile_field_values, :include => :profile_field
+  has_many :conversations_participating_in, through: :contributors, source: :conversation
 
   validates :email, :format => EMAIL_REGEXP, :if => :email_present?
   validates :name, :presence => true

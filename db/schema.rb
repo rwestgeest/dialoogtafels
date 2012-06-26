@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120625091103) do
+ActiveRecord::Schema.define(:version => 20120626161915) do
 
   create_table "accounts", :force => true do |t|
     t.string   "email",                :limit => 150,                      :null => false
@@ -57,9 +57,11 @@ ActiveRecord::Schema.define(:version => 20120625091103) do
   create_table "conversations", :force => true do |t|
     t.datetime "start_time"
     t.datetime "end_time"
-    t.integer  "number_of_tables", :default => 1
-    t.integer  "tenant_id",                       :null => false
-    t.integer  "location_id",                     :null => false
+    t.integer  "number_of_tables",          :default => 1
+    t.integer  "tenant_id",                                :null => false
+    t.integer  "location_id",                              :null => false
+    t.integer  "participant_count",         :default => 0
+    t.integer  "conversation_leader_count", :default => 0
   end
 
   add_index "conversations", ["location_id"], :name => "index_conversations_on_location_id"

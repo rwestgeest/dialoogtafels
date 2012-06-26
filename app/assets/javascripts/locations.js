@@ -3,3 +3,4 @@ $(function() {
     window.location.href = $(this).attr("data-location-url");
   });
 });
+

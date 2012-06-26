@@ -1,0 +1,6 @@
+$('#registered_conversations').html('<%= escape_javascript(render(partial:"registered_conversations")) %>');
+$('.conversation#location_<%= @location.id %>').replaceWith('<%= escape_javascript(render(partial:"location", locals:{location:@location})) %>');
+$('span.register-link').click(function() {
+  $($(this).attr('data-toggle')).toggle();
+});
+

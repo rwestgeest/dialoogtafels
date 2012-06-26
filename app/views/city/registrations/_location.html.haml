@@ -1,0 +1,14 @@
+.conversation{ id: "location_#{location.id}" }
+  %h3
+    = location.name
+    %span.schedule= "door #{person_entry location.organizer}"
+  .conversation-container
+    - location.available_conversations_for(@person).each do |conversation|
+      %h4{id: "available_conversation_#{conversation.id}"}
+        = time_period(conversation)
+        %span.register-link{:'data-toggle' => "#register_links_for_conversation_#{conversation.id}"}
+          = "> aanmelden"
+      %p.register-links{id: "register_links_for_conversation_#{conversation.id}"}
+        = link_to "als deelnemer", city_registrations_path(person_id: @person.to_param, conversation_id: conversation.to_param, contribution: 'participant'), :method => :post, :remote => true
+        | 
+        = link_to "als gespreksleider", city_registrations_path(person_id: @person.to_param, conversation_id: conversation.to_param, contribution: 'conversation_leader'), :method => :post, :remote => true

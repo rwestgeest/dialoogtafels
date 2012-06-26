@@ -1,39 +1,12 @@
 %tr
   %td.input_column_eq_left
-    .dialog-container
-      - if (available_locations.empty?)
-        %h3 Geen locaties beschikbaar
-      - else
-        %h3 Beschikbare locaties
-        - available_locations.each do |location|
-          %table{ id: "location_#{location.id}", class: 'list-element' }
-            %tr
-              %td.element-data
-                %span.title= location.name
-                %br
-                %span.schedule= "Georganiseerd door #{person_entry location.organizer}"
-            %tr
-              %td.element-data
-                %ul
-                  - location.conversations.each do |conversation|
-                    %li{id: "available_conversation_#{conversation.id}"}
-                      = time_period(conversation)
+    - if (available_locations.empty?)
+      %h3 Geen locaties beschikbaar
+    - else
+      %h3 Beschikbare locaties
+      #available-locations
+        = render partial: 'location', collection: available_locations
   %td.input_column_eq_right
-    .dialog-container
-      - if (@active_contributions.empty?) 
-        %h3 Geen inschrijvingen
-      - else
-        %h3 Ingeschreven bij
-        - @active_contributions.each do |contribution|
-          %table{ id: "conversation_registration_#{contribution.conversation_id}", class: 'list-element' }
-            %tr
-              %td.element-data
-                %span.title= contribution.conversation.location.name
-                %br
-                %span.schedule= time_period(contribution.conversation) 
-              %td.conversation-register-link
-                = registered_at(contribution)
-                = registered_as(contribution)
-                %br
-                = link_to "> afmelden", city_registration_path(id: contribution.conversation_id, person_id:person.to_param) , :method => :delete, :remote => true
+    #registered_conversations
+      = render :partial => 'registered_conversations'
 

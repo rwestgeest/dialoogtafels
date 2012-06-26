@@ -1,6 +1,5 @@
 class ConversationLeader < Contributor
-  attr_accessible :conversation_id
-  belongs_to :conversation
+  attr_accessible :conversation_id, :conversation, :person
   has_many :training_registrations, :foreign_key => :attendee_id, :include => :training
   has_many :trainings, :through => :training_registrations
 

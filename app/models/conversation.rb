@@ -3,6 +3,7 @@ class Conversation < ActiveRecord::Base
 
   attr_accessible :start_date, :start_time, :end_date, :end_time, :location_id, :location, :number_of_tables
   
+
   include ScopedModel
   scope_to_tenant
   
@@ -15,6 +16,10 @@ class Conversation < ActiveRecord::Base
   validates_presence_of :end_date
   validates_presence_of :end_time
 
+  scope :availables, 
+                includes(:location => :project).where("conversations.conversation_leader_count < conversations.number_of_tables")
+                 .where("conversations.participant_count < (number_of_tables * projects.max_participants_per_table)")
+
   def initialize(*args)
     super(*args)
     write_attribute(:start_time, location && location.start_time) unless start_time
@@ -23,6 +28,14 @@ class Conversation < ActiveRecord::Base
 
   def default_length
     location && location.conversation_length || 0
+  end
+
+  def max_conversation_leaders
+    number_of_tables
+  end
+
+  def max_participants
+    number_of_tables * location.max_participants_per_table
   end
 
 end

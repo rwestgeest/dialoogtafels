@@ -73,6 +73,22 @@
 .conversation:hover span.operations {
   display:block;
 }
+.conversation-container p {
+  margin:0;
+}
+.conversation-container p.registration-info {
+  text-align: right;
+}
+.conversation-container .register-links {
+  display:none;
+  text-align: right;
+}
+.conversation-container span.register-link {
+  float:right;
+  color: blue;
+  text-decoration: underline;
+  cursor:pointer;
+}
 .conversation-container .person-list li {
   padding:0.25em;
   height:19px;
@@ -99,6 +115,12 @@
 
 .conversation-container .person-list li:hover span.operations {
   display:block;
+}
+#available-locations {
+  height: 440px;
+  overflow-y: scroll;
+  margin-right: 10px;
+  padding: 0 10px;
 }
 
 .city-details-container .city_banner_text h3,

@@ -30,12 +30,17 @@ class Location < ApplicationModel
   delegate :conversation_length, :to => :project
   delegate :start_date, :to => :project
   delegate :start_time, :to => :project
+  delegate :max_participants_per_table, :to => :project
 
   scope :publisheds, where(:published => true)
 
   def initialize(attributes = nil, options = {})
     super(attributes, options) 
     self.city ||= Tenant.current && Tenant.current.name 
+  end
+
+  def available_conversations_for(person)
+    conversations.availables - person.conversations_participating_in
   end
 
   private 

@@ -21,7 +21,7 @@ describe Account::ResponseSessionsController do
     context "with invalid parameters" do
       it "renders the form again" do
         get 'show', :id => "wrong_token"
-        response.response_code.should == 404
+        should respond_with(404)
       end
     end
   end

@@ -1,10 +1,12 @@
 class Contributor < ApplicationModel
-  attr_accessible :email, :name, :telephone
+  attr_accessible :email, :name, :telephone, :conversation, :person
   belongs_to :person 
   belongs_to :project
+  belongs_to :conversation
   has_one :account, :through => :person
 
   scope :for_project, lambda { |project_id| where('project_id' => project_id) }
+
   before_validation :associate_to_active_project
   EMAIL_REGEXP = /\A([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})\Z/i
   class UniqueAccountValidator < ActiveModel::EachValidator
