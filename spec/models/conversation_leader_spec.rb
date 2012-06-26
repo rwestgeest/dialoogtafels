@@ -22,13 +22,19 @@ describe ConversationLeader do
     describe "creating a conversation_leader" do
       let!(:conversation) { FactoryGirl.create :conversation }
 
-      def create_conversation_leader
-        FactoryGirl.create :conversation_leader, :conversation => conversation
+      def create_conversation_leader(extra_attributes = {})
+        FactoryGirl.create :conversation_leader, { :conversation => conversation }.merge(extra_attributes)
       end
 
       it "associates it for the tenants active project" do
         create_conversation_leader
         ConversationLeader.last.project.should == Tenant.current.active_project
+      end
+
+      it "associates it for the project given if provided" do
+        project = FactoryGirl.create :project
+        create_conversation_leader :project => project
+        ConversationLeader.last.project.should == project
       end
 
       it "creates an person" do

@@ -4,11 +4,14 @@ class Contributor < ApplicationModel
   belongs_to :project
   has_one :account, :through => :person
 
+  scope :for_project, lambda { |project_id| where('project_id' => project_id) }
   before_validation :associate_to_active_project
   EMAIL_REGEXP = /\A([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})\Z/i
   class UniqueAccountValidator < ActiveModel::EachValidator
     def validate_each(record, attribute, value) 
-      record.errors.add(attribute, I18n.t("activerecord.errors.models.#{record.class.to_s.underscore}.attributes.#{attribute}.existing")) if Account.find_by_email(value)
+      if a=Account.find_by_email(value) and a.person != record.person
+        record.errors.add(attribute, I18n.t("activerecord.errors.models.#{record.class.to_s.underscore}.attributes.#{attribute}.existing")) 
+      end
     end
   end
   validates :project, :presence => true
@@ -36,8 +39,12 @@ class Contributor < ApplicationModel
     person.telephone = name
   end
 
+  def type_name
+    @type_name ||= 'contributor.type.' + self.class.to_s.underscore
+  end
+
   private 
   def associate_to_active_project
-    self.project = tenant.active_project if tenant.present?
+    self.project = tenant.active_project if tenant.present? && !project.present?
   end
 end

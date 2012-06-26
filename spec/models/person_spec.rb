@@ -84,7 +84,52 @@ describe Person do
         end
       end
     end
+
+    describe "contributions for project" do
+      let(:person) { FactoryGirl.create(:person) }
+      let(:project) { Tenant.current.active_project }
+      let(:conversation) { FactoryGirl.create :conversation }
+      let(:location) { conversation.location }
+
+      it "contains the contributor for the project provided" do
+        conversation_leader = create_conversation_leader(person, project, conversation)
+        person.active_contributions_for(project).should == [conversation_leader]
+      end
+
+      it "contains more contributors if available" do
+        conversation_leader = create_conversation_leader(person, project, conversation)
+        participant = create_participant(person, project, conversation)
+        person.active_contributions_for(project).should == [conversation_leader, participant]
+      end
+
+      it "contains contributors for more conversation if available" do
+        conversation_leader = create_conversation_leader(person, project, FactoryGirl.create(:conversation))
+        participant = create_participant(person, project, conversation)
+        person.active_contributions_for(project).should == [conversation_leader, participant]
+      end
+
+      it "does not contain contributions for another project" do
+        other_project = FactoryGirl.create(:project)
+        conversation_leader = create_conversation_leader(person, other_project, conversation)
+        person.active_contributions_for(project).should == []
+      end
+
+      def create_participant(person, project, conversation)
+        create_contributor(Participant, person, project, conversation)
+      end
+
+      def create_conversation_leader(person, project, conversation)
+        create_contributor(ConversationLeader, person, project, conversation)
+      end
+
+      def create_contributor(contributor_class, person, project, conversation)
+        contributor = contributor_class.new
+        contributor.person = person
+        contributor.project = project
+        contributor.conversation = conversation
+        contributor.save!
+        contributor
+      end
+    end
   end
-
-
 end

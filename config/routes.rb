@@ -35,6 +35,7 @@ Tafelmanager2::Application.routes.draw do
       resources :comments, :on => :member, :only => [:index, :show, :create]
     end
     resources :training_registrations, :only => [:index, :create, :destroy]
+    resources :registrations, :only => [:index, :create, :destroy]
     resources :people, :only => [:edit, :update]
   end
   namespace :settings do

@@ -1,0 +1,6 @@
+.right_heading Inschrijvingen voor
+%ul
+  - @people.each do |person|
+    %li= link_to person.name, city_registrations_path(:person_id => person.to_param)
+
+

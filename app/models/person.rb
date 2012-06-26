@@ -29,6 +29,11 @@ class Person < ActiveRecord::Base
   def get_profile_attribute(attribute)
     profile_field_value_for(attribute).value
   end
+  
+  def active_contributions_for(project)
+    # contributors.where('contributors.project_id' => project.id)
+     contributors.for_project(project.id) 
+  end
 
   def attribute_method?(attr_name)
     super || (attr_name.to_s =~ /^profile_(.*)$/ && profile_field_exists?($1))

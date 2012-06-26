@@ -18,6 +18,7 @@ class City::TrainingRegistrationsController < ApplicationController
     @attendee.cancel_registration_for(params[:id])
     render_index
   end
+  private
   def render_index
     @available_trainings = Training.all - @attendee.trainings
     render :index

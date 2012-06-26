@@ -276,6 +276,10 @@ nl:
         edit: "wijzig deze training"
         delete: "verwijder deze training"
         sure: "Weet je zeker dat je deze training wilt verwijderen?"
+    registrations:
+      index:
+        trainings: "registraties beheren"
+        select_attendee: "Selecteer een deelnemer uit de rechter kantlijn om zijn inschrijvingen te beheren"
     training_registrations:
       select_attendee:
         trainings: "trainingen beheren"
@@ -283,6 +287,10 @@ nl:
         trainings: "trainingen beheren"
         select_attendee: "Selecteer een gespreksleider uit de rechter kantlijn om zijn inschrijvingen te beheren"
   contributor:
+    type:
+      organizer: "tafelorganisator"
+      conversation_leader: "gespreksleider"
+      participant: "deelnemer"
     training_registrations:
       index:
         click_to_expand: "Klick om de beschrijving te lezen"
@@ -290,3 +298,5 @@ nl:
     reaction_to: "Reactie op '%{subject}'"
   not_authorized: "Je bent niet geautoriseerd voor deze actie"
   registered_at: "Ingeschreven op %{time}"
+  as: 'als'
+  back: 'terug'

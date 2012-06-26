@@ -4,7 +4,7 @@
       - if (available_trainings.empty?)
         %h3 Geen trainingen beschikbaar
       - else
-        %h3 Beshikbare trainingen
+        %h3 Beschikbare trainingen
         - available_trainings.each do |training|
           %table{ id: "training_#{training.id}", class: 'list-element' }
             %tr
