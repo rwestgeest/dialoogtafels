@@ -33,7 +33,7 @@ class Person < ActiveRecord::Base
   
   def active_contributions_for(project)
     # contributors.where('contributors.project_id' => project.id)
-     contributors.for_project(project.id) 
+     contributors.for_project(project.id).where("contributors.type <> 'Organizer'") 
   end
 
   def attribute_method?(attr_name)

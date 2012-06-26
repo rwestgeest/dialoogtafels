@@ -114,6 +114,14 @@ describe Person do
         person.active_contributions_for(project).should == []
       end
 
+      it "does not contain contributions where i am organizer" do
+        create_organizer(person, project)
+        person.active_contributions_for(project).should == []
+      end 
+
+      def create_organizer(person, project)
+        create_contributor(Organizer, person, project, nil)
+      end
       def create_participant(person, project, conversation)
         create_contributor(Participant, person, project, conversation)
       end
