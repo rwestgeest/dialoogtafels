@@ -8,45 +8,35 @@
     /[if lt IE 9]
       = javascript_include_tag "html5"
   %body
-    %table#body_container{ cellpadding: 0, cellspacing: 0, align:'center' }
-      %tr
-        %td{ colspan:3, height:148 }
-          #top_container{:style=>"background: url('/assets/sassenheim_header_background.png');"}
-            #dialoog_stad_top
-              = current_tenant.name.upcase
-            #title_container
-              &nbsp;
-            #topmenu
-      %tr
-        %td#submenu_container
-          .submenu
-            =link_to "waar kan ik meedoen", locations_url
-          .submenu
-            =link_to "aanmelden als tafelorganisator", new_registration_organizers_url
-          .submenu
-            =link_to "mijn tafels", login_url
-          .submenu
-            =link_to "terug naar de site", tenant_site_url
-        %td#content_container
-          = flash_tags
-          %h1= yield :title
-          = yield
-        %td#right_container{ :style=> "background: url('/assets/sassenheim_city_name_right.png') no-repeat" }
-
-      %tr
-        %td#lijn{ colspan: 3 }
-      %tr
-        %td{ colspan:3, height: 80 }
-          %table.copyright{ width:'100%', border:'0'}
-            %tr
-              %td
-                #footer
-                  %span.dialoog_txt
-                    Dag van de Dialoog 
-                  &nbsp; &nbsp;
-                  = current_tenant.name
-              %td{ align:'right' }
-                %a{ href: "http://www.nederlandindialoog.nl", target: 'blank' }
-                  %div{ align: 'right', style:"width:100px; height:80px"}
+    #body_container
+      %section#top_container{:style=>"background: url('/assets/sassenheim_header_background.png');"}
+        #dialoog_stad_top
+          = current_tenant.name.upcase
+        #title_container
+          &nbsp;
+        #topmenu
+      %section#submenu_container
+        .submenu
+          =link_to "waar kan ik meedoen", locations_url
+        .submenu
+          =link_to "aanmelden als tafelorganisator", new_registration_organizers_url
+        .submenu
+          =link_to "mijn tafels", login_url
+        .submenu
+          =link_to "terug naar de site", tenant_site_url
+      %section#content_container
+        = flash_tags
+        %h1= yield :title
+        = yield
+      %section#right_container{ :style=> "background: url('/assets/sassenheim_city_name_right.png') no-repeat" }
+      .clear
+      #footer
+        %span.dialoog_txt
+          Dag van de Dialoog 
+        &nbsp; &nbsp;
+        = current_tenant.name
+        .right
+          %a{ href: "http://www.nederlandindialoog.nl", target: 'blank' }
+            %div{ align: 'right', style:"width:100px; height:80px"}
 
 

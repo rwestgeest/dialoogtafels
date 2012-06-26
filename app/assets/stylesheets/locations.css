@@ -58,6 +58,9 @@
   width:14em;
   margin-right: 50px;
 }
+.readonly.conversation span.table-info{
+  margin-right: 0;
+}
 .conversation span.operations {
   float:right;
   width: 50px;

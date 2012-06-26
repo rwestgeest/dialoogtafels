@@ -4,7 +4,7 @@
   %p Geen gespreksleiders
 - else
   %ul.person-list
-    = render partial: 'shared/person', collection: conversation.conversation_leaders.map{|c| c.person}
+    = render partial: 'shared/read_only_person', collection: conversation.conversation_leaders.map{|c| c.person}
 .clear
 %h4 
   Deelnemers
@@ -12,5 +12,6 @@
   %p Geen deelnemers
 - else
   %ul.person-list
-    = render partial: 'shared/person', collection: conversation.participants.map{|p| p.person}
+    = render partial: 'shared/read_only_person', collection: conversation.participants.map{|p| p.person}
 .clear
+

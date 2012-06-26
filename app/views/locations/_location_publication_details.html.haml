@@ -8,13 +8,14 @@
 .clear
 %h3 Schrijf je in op een van de volgende dialooggesprekken
 - @location.conversations.each do |conversation| 
-  .conversation-container{:id => "conversation_#{conversation.to_param}"}
-    .conversation 
+  .conversation{:id => "conversation_#{conversation.to_param}"}
+    %h3
       = time_period(conversation).capitalize
-    .right
-      = link_to '> schrijf je in als deelnemer', new_registration_participants_path(:conversation_id => conversation)
-      %br
-      = link_to '> schrijf je in als gespreksleider', new_registration_conversation_leaders_path(:conversation_id => conversation)
-    .clear
+    .conversation-container
+      .right
+        = link_to '> schrijf je in als deelnemer', new_registration_participants_path(:conversation_id => conversation)
+        %br
+        = link_to '> schrijf je in als gespreksleider', new_registration_conversation_leaders_path(:conversation_id => conversation)
+      .clear
 
 

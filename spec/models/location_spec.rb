@@ -10,7 +10,6 @@ describe Location do
     it { should validate_presence_of :city }
     it { should validate_presence_of :organizer }
     it { should have_many :conversations }
-
   end
 
   it_should_behave_like 'a_scoped_object', :location

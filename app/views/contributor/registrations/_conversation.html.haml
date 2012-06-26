@@ -1,8 +1,8 @@
-.dialog-container{:id => "conversation_#{conversation.to_param}"}
-  .left
+.conversation.readonly{:id => "conversation_#{conversation.to_param}"}
+  %h3
     = time_period(conversation)
-  .right
-    maximaal aantal tafels: 
-    = conversation.number_of_tables
-  .clear
-  = render :partial => 'conversations/contributors', locals: { conversation: conversation }
+    %span.table-info
+      maximaal aantal tafels: 
+      = conversation.number_of_tables
+  .conversation-container
+    = render :partial => 'contributors', locals: { conversation: conversation }
