@@ -1,4 +1,4 @@
-.conversation
+.conversation{:id => "conversation_#{conversation.to_param}"}
   %h3
     = time_period(conversation).capitalize
     %span.operations 
@@ -12,6 +12,6 @@
     %span.table-info
       maximaal aantal tafels: 
       = conversation.number_of_tables
-  .conversation-container{:id => "conversation_#{conversation.to_param}"}
+  .conversation-container
     .clear
       = render :partial => 'conversations/contributors', locals: { conversation: conversation }

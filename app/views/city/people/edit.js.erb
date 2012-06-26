@@ -1,0 +1,17 @@
+$("#dialog-form").html( '<%= escape_javascript(render(partial:"edit", locals:{person:@person})) %>' );
+$("#dialog-form" ).dialog({
+  title: "Profiel bewerken",
+  modal: true,
+  buttons: {
+    "Bijwerken" : function() {
+      $('#dialog-form form').submit();
+    },
+    "Sluiten": function() {
+      $( this ).dialog( "destroy" );
+    }
+  },
+  close: function() {
+    $( this ).dialog( "destroy" );
+  }
+});
+

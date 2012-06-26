@@ -1,7 +1,5 @@
 Tafelmanager2::Application.routes.draw do
 
-  get "comments/index"
-
   resources :locations, :only => [:index, :show] 
 
   namespace :account do
@@ -37,6 +35,7 @@ Tafelmanager2::Application.routes.draw do
       resources :comments, :on => :member, :only => [:index, :show, :create]
     end
     resources :training_registrations, :only => [:index, :create, :destroy]
+    resources :people, :only => [:edit, :update]
   end
   namespace :settings do
     resources :profile_fields, :except => :show do

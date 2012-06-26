@@ -6,7 +6,7 @@
   %p Geen gespreksleiders
 - else
   %ul.person-list
-    = render partial: 'shared/person', collection: conversation.conversation_leaders, locals: {contributor_type: 'conversation_leader'}
+    = render partial: 'shared/person', collection: conversation.conversation_leaders.map{|c| c.person}, locals: {contributor_type: 'conversation_leader'}
 .clear
 %h4 
   Deelnemers
@@ -14,5 +14,5 @@
   %p Geen deelnemers
 - else
   %ul.person-list
-    = render partial: 'shared/person', collection: conversation.participants, locals: {contributor_type: 'participant' }
+    = render partial: 'shared/person', collection: conversation.participants.map{|p| p.person}, locals: {contributor_type: 'participant' }
 .clear
