@@ -22,7 +22,7 @@ describe City::TrainingsController do
     end
     it "assigns all conversation_leaders as @conversation_leaders" do
       get :index, {}
-      assigns(:conversation_leaders).should eq([conversation_leader])
+      assigns(:conversation_leaders).should eq([conversation_leader.person])
     end
   end
 

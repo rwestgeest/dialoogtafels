@@ -1,6 +1,6 @@
 class City::TrainingsController < ApplicationController
   def index
-    @conversation_leaders = ConversationLeader.all
+    @conversation_leaders = Person.conversation_leaders_for(active_project) 
     @trainings = Training.all
   end
 
