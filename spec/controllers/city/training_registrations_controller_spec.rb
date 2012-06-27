@@ -7,15 +7,16 @@ describe City::TrainingRegistrationsController do
 
   let(:training) { FactoryGirl.create :training }
   alias_method :create_training, :training
-  let(:conversation_leader) { FactoryGirl.create :conversation_leader }
-  alias_method :create_conversation_leader, :conversation_leader
+  let(:person) { FactoryGirl.create :person }
+  alias_method :create_person, :person
 
   describe "GET 'index'" do
-    before { create_training; create_conversation_leader }
+    before { create_training; create_person }
     context "without conversation leader as attendee parameter" do
+      before { Person.stub(:conversation_leaders_for).with(active_project).and_return [person] }
       it "assigns all conversation leaders as attendees" do
         get :index 
-        assigns(:attendees).should == [conversation_leader]
+        assigns(:attendees).should == [person]
       end
       it "asks for attendee selection" do
         get :index
@@ -25,11 +26,11 @@ describe City::TrainingRegistrationsController do
     end
     context "with conversation leader as attendee parameter" do
       def do_get
-        get :index , :attendee_id => conversation_leader.to_param
+        get :index , :attendee_id => person.to_param
       end
       it "assigns the conversation leader and trainings" do
         do_get
-        assigns(:attendee).should == conversation_leader
+        assigns(:attendee).should == person
         assigns(:available_trainings).should == [training]
       end
       it "renders trainings" do
@@ -39,7 +40,7 @@ describe City::TrainingRegistrationsController do
       end
       context "registered trainings" do
         it "are not rendered in available" do
-          conversation_leader.register_for training
+          person.register_for training
           do_get
           response.body.should_not have_selector("#training_#{training.id}")
         end
@@ -48,7 +49,7 @@ describe City::TrainingRegistrationsController do
   end
 
   def valid_attributes
-    {:training_id => training.to_param, :attendee_id => conversation_leader.to_param}
+    {:training_id => training.to_param, :attendee_id => person.to_param}
   end
 
   describe "POST create" do
@@ -64,7 +65,7 @@ describe City::TrainingRegistrationsController do
 
       it "assignsthe conversation leader" do
         do_post
-        assigns(:attendee).should == conversation_leader
+        assigns(:attendee).should == person
       end
       it "registered training is removed from the available training list" do
         do_post
@@ -82,11 +83,11 @@ describe City::TrainingRegistrationsController do
       before do
         # Trigger the behavior that occurs when invalid params are submitted
         create_training
-        xhr :post, :create, {:training_id => "bogus", :attendee_id => conversation_leader.to_param}
+        xhr :post, :create, {:training_id => "bogus", :attendee_id => person.to_param}
       end
 
       it "assigns the conversation leader" do
-        assigns(:attendee).should == conversation_leader
+        assigns(:attendee).should == person
       end
 
       it "still has the training in the available list" do
@@ -102,12 +103,12 @@ describe City::TrainingRegistrationsController do
 
   describe "DELETE destroy" do
     before do
-      conversation_leader.register_for training 
+      person.register_for training 
     end
 
     describe "with valid params" do
       def do_post
-        xhr :delete, :destroy, id: training.to_param, :attendee_id => conversation_leader.to_param
+        xhr :delete, :destroy, id: training.to_param, :attendee_id => person.to_param
       end
       it "removes a training_registration" do
         expect {
@@ -117,7 +118,7 @@ describe City::TrainingRegistrationsController do
 
       it "assignsthe conversation leader" do
         do_post
-        assigns(:attendee).should == conversation_leader
+        assigns(:attendee).should == person
       end
       it "deregistered training is added to the available training list" do
         do_post
@@ -135,11 +136,11 @@ describe City::TrainingRegistrationsController do
       before do
         # Trigger the behavior that occurs when invalid params are submitted
         create_training
-        xhr :delete, :destroy, id: "bogus", :attendee_id => conversation_leader.to_param
+        xhr :delete, :destroy, id: "bogus", :attendee_id => person.to_param
       end
 
       it "assigns the conversation leader" do
-        assigns(:attendee).should == conversation_leader
+        assigns(:attendee).should == person
       end
 
       it "still does not have the training in the available list" do

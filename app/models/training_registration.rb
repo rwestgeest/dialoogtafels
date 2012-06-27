@@ -3,7 +3,7 @@ class TrainingRegistration < ActiveRecord::Base
   scope_to_tenant
   
   belongs_to :training
-  belongs_to :attendee, :class_name => 'ConversationLeader'
+  belongs_to :attendee, :class_name => 'Person'
 
   attr_accessible :training_id, :attendee_id
 end

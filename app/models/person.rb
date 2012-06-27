@@ -6,6 +6,8 @@ class Person < ActiveRecord::Base
   has_many :contributors
   has_many :participants
   has_many :conversation_leaders
+  has_many :training_registrations, :foreign_key => :attendee_id, :include => :training, :dependent => :destroy
+  has_many :trainings, :through => :training_registrations
   has_many :profile_field_values, :include => :profile_field
   has_many :conversations_participating_in_as_leader, through: :conversation_leaders, source: :conversation
   has_many :conversations_participating_in_as_participant, through: :participants, source: :conversation
@@ -17,6 +19,28 @@ class Person < ActiveRecord::Base
   attr_protected :tenant_id
 
   delegate :email, :to => :account, :allow_nil => true
+
+  scope :conversation_leaders_for, lambda{|project| includes(:conversation_leaders).where('contributors.project_id' => project.id) }
+
+  def register_for training
+    begin 
+      return register_for Training.find(training) unless training.is_a? Training
+      trainings << training
+      return training
+    rescue ActiveRecord::RecordNotFound
+      return nil
+    end
+  end
+
+  def cancel_registration_for training
+    begin 
+      training = trainings.find(training)
+      trainings.delete training
+      return training
+    rescue ActiveRecord::RecordNotFound
+      return nil
+    end
+  end
 
   def conversations_participating_in
     conversations_participating_in_as_leader + conversations_participating_in_as_participant

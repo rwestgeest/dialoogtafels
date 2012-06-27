@@ -47,6 +47,10 @@ module ControllerExtensions
     @current_account ||= Account.find(session[:current_account_id]) rescue nil
   end
 
+  def active_project
+    Tenant.current.active_project
+  end
+
   def current_organizer
     contribution = current_account.active_contribution 
     raise 'current account is not an organizer' unless contribution.is_a? Organizer

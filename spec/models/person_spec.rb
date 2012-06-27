@@ -119,25 +119,125 @@ describe Person do
         person.active_contributions_for(project).should == []
       end 
 
-      def create_organizer(person, project)
-        create_contributor(Organizer, person, project, nil)
-      end
-      def create_participant(person, project, conversation)
-        create_contributor(Participant, person, project, conversation)
+    end
+
+    describe "register_for training" do
+      let(:training) { FactoryGirl.create :training } 
+      let(:training_id) { training.id }
+      let(:person) { FactoryGirl.create :person }
+      let(:conversation_leader) { FactoryGirl.create :conversation_leader, person: person }
+
+      describe "adding one" do
+
+        it "adds the person it to the attendee list" do
+          person.register_for(training_id)
+          training.attendees == [person]
+        end 
+
+        it "creates a registration instance " do
+          expect { 
+            person.register_for(training_id)
+          }.to change(TrainingRegistration, :count).by(1)
+          TrainingRegistration.last.attendee.should == person
+          TrainingRegistration.last.training.should == training
+        end 
+        it "adds the training to the attendees training list" do
+          person.register_for(training_id)
+          person.should have(1).trainings
+        end
+
+        it "returns the added training" do
+          person.register_for(training_id).should == training
+        end
+
+        context  "when training not found" do
+          it "returns nil" do
+            person.register_for("bogus").should be_nil
+          end
+        end
+
+        context "when the conversation leader is destroyed" do
+          before { person.register_for(training_id) }
+          it "removes the registration" do
+            expect { person.destroy }.to change(TrainingRegistration, :count).by(-1)
+          end
+        end
       end
 
-      def create_conversation_leader(person, project, conversation)
-        create_contributor(ConversationLeader, person, project, conversation)
-      end
+      describe "removing one" do
+        before { person.register_for(training_id) }
+        it "destroys the traiing registration instance" do
+          expect { person.cancel_registration_for(training_id) }.to change(TrainingRegistration, :count).by(-1)
+        end
 
-      def create_contributor(contributor_class, person, project, conversation)
-        contributor = contributor_class.new
-        contributor.person = person
-        contributor.project = project
-        contributor.conversation = conversation if conversation
-        contributor.save!
-        contributor
+        it "returns the added training" do
+          person.cancel_registration_for(training_id).should == training
+        end
+
+        context  "when training not found" do
+          it "does not change the registration count" do
+            expect { person.cancel_registration_for("bogus") }.not_to change(TrainingRegistration, :count)
+          end
+          it "returns nil" do
+            person.cancel_registration_for("bogus").should be_nil
+          end
+        end
+
+        context  "when training exists but not registered for" do
+          let!(:other_training) { FactoryGirl.create :training }
+
+          it "does not change the registration count" do
+            expect { person.cancel_registration_for(other_training.id) }.not_to change(TrainingRegistration, :count)
+          end
+
+          it "returns nil" do
+            person.cancel_registration_for(other_training.id).should be_nil
+          end
+        end
       end
     end
+
+    describe 'conversation_leaders_for(project)' do
+      let(:person) { FactoryGirl.create(:person) }
+      let(:project) { Tenant.current.active_project }
+      let(:conversation) { FactoryGirl.create :conversation }
+
+      it "contains nothing by default" do
+        Person.conversation_leaders_for(project).should == []
+      end
+      it "contains the person if it plsys a converation leader role" do
+        create_conversation_leader(person, project, conversation)
+        Person.conversation_leaders_for(project).should == [person]
+      end
+      it "contains the person once if it plsys a converation leader role twice" do
+        create_conversation_leader(person, project, FactoryGirl.create(:conversation))
+        create_conversation_leader(person, project, conversation)
+        Person.conversation_leaders_for(project).should == [person]
+      end
+      it "excludeds the person if it plays conversation_leader in another project" do
+        create_conversation_leader(person, FactoryGirl.create(:project), conversation)
+        Person.conversation_leaders_for(project).should == []
+      end
+    end
+  end
+
+  def create_organizer(person, project)
+    create_contributor(Organizer, person, project, nil)
+  end
+  def create_participant(person, project, conversation)
+    create_contributor(Participant, person, project, conversation)
+  end
+
+  def create_conversation_leader(person, project, conversation)
+    create_contributor(ConversationLeader, person, project, conversation)
+  end
+
+  def create_contributor(contributor_class, person, project, conversation)
+    contributor = contributor_class.new
+    contributor.person = person
+    contributor.project = project
+    contributor.conversation = conversation if conversation
+    contributor.save!
+    contributor
   end
 end

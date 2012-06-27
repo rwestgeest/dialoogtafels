@@ -8,17 +8,15 @@ describe Contributor::TrainingRegistrationsController do
   let(:training) { FactoryGirl.create :training }
   alias_method :create_training, :training
 
-  let(:conversation_leader) { current_account.active_contribution }
+  let(:person) { current_account.person }
 
   describe "GET 'index'" do
-    before { create_training }
-    it "assigns all conversation leaders as attendees" do
-      get :index 
-      assigns(:attendees).should == [conversation_leader]
+    before do
+      create_training 
     end
     it "assigns the conversation leader and trainings" do
       get :index 
-      assigns(:attendee).should == conversation_leader
+      assigns(:attendee).should == person
       assigns(:available_trainings).should == [training]
     end
     it "renders trainings" do
@@ -28,7 +26,7 @@ describe Contributor::TrainingRegistrationsController do
     end
     context "registered trainings" do
       it "are not rendered in available" do
-        conversation_leader.register_for training
+        person.register_for training
         get :index 
         response.body.should_not have_selector("#training_#{training.id}")
       end
@@ -51,7 +49,7 @@ describe Contributor::TrainingRegistrationsController do
 
       it "assignsthe conversation leader" do
         do_post
-        assigns(:attendee).should == conversation_leader
+        assigns(:attendee).should == person
       end
       it "registered training is removed from the available training list" do
         do_post
@@ -69,11 +67,11 @@ describe Contributor::TrainingRegistrationsController do
       before do
         # Trigger the behavior that occurs when invalid params are submitted
         create_training
-        xhr :post, :create, {:training_id => "bogus", :attendee_id => conversation_leader.to_param}
+        xhr :post, :create, {:training_id => "bogus", :attendee_id => person.to_param}
       end
 
       it "assigns the conversation leader" do
-        assigns(:attendee).should == conversation_leader
+        assigns(:attendee).should == person
       end
 
       it "still has the training in the available list" do
@@ -88,7 +86,7 @@ describe Contributor::TrainingRegistrationsController do
   end
   describe "DELETE destroy" do
     before do
-      conversation_leader.register_for training 
+      person.register_for training 
     end
 
     describe "with valid params" do
@@ -103,7 +101,7 @@ describe Contributor::TrainingRegistrationsController do
 
       it "assignsthe conversation leader" do
         do_post
-        assigns(:attendee).should == conversation_leader
+        assigns(:attendee).should == person
       end
       it "deregistered training is added to the available training list" do
         do_post
@@ -125,7 +123,7 @@ describe Contributor::TrainingRegistrationsController do
       end
 
       it "assigns the conversation leader" do
-        assigns(:attendee).should == conversation_leader
+        assigns(:attendee).should == person
       end
 
       it "still does not have the training in the available list" do
