@@ -1,7 +1,7 @@
 - if (@active_contributions.empty?) 
   %h3 Geen inschrijvingen
 - else
-  %h3 Ingeschreven bij
+  %h3 Neemt deel aan
   - @active_contributions.each do |contribution|
     .conversation{ id: "conversation_registration_#{contribution.conversation_id}"}
       %h3
@@ -11,7 +11,7 @@
         %h4
           = time_period(contribution.conversation)
           %span.deregister-link
-            = link_to "> afmelden", city_registration_path(id: contribution.to_param, person_id:@person.to_param) , :method => :delete, :remote => true
+            = link_to "> uitschrijven", city_registration_path(id: contribution.to_param, person_id:@person.to_param) , :method => :delete, :remote => true
         %p.registration-info
           = registered_at(contribution)
           = registered_as(contribution)

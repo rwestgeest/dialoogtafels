@@ -7,6 +7,6 @@
       %h4{id: "available_conversation_#{conversation.id}"}
         = time_period(conversation)
         %span.register-link{:'data-toggle' => "#register_links_for_conversation_#{conversation.id}"}
-          = "> aanmelden"
+          = "> inschrijven"
       %p.register-links{id: "register_links_for_conversation_#{conversation.id}"}
         = city_registrations_registration_links conversation, @person
