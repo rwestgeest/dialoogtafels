@@ -7,7 +7,6 @@ class CreateCounterCacheForConversationsParticipants < ActiveRecord::Migration
       Tenant.current  =  tenant
       Conversation.all.each do |c|
         Conversation.update_counters c.id, :participant_count => c.participants.length, :conversation_leader_count => c.conversation_leaders.length
-        p c.participant_count, c.conversation_leader_count
       end
     end
   end
