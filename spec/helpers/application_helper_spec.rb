@@ -17,4 +17,31 @@ describe ApplicationHelper do
       time_period(conversation).should =~ /.*#{ I18n.l(today) }.*#{ I18n.l(now) }.*#{I18n.l(Date.tomorrow)}.*#{ I18n.l(an_hour_from_now) }$/
     end
   end
+  
+  describe "registration links" do
+    def link_to *args
+      "link_to #{args.join(', ')}"
+    end
+
+    describe 'participant_registration' do
+      let(:conversation) { stub(Conversation, :participants_full? => false) } 
+      it 'is rendered wen location has room for participants' do
+        participant_registration(conversation, 'text' ,'options').should == 'link_to text, options'
+      end
+      it 'is not rendered wen location has no room for participants' do
+        conversation.stub(:participants_full? => true)
+        participant_registration(conversation, 'text' ,'options').should be_nil
+      end
+    end
+    describe 'leader_registration' do
+      let(:conversation) { stub(Conversation, :leaders_full? => false) }
+      it 'is rendered wen location has room for leaders' do
+        leader_registration(conversation, 'text' ,'options').should == 'link_to text, options'
+      end
+      it 'is not rendered wen location has no room for leaders' do
+        conversation.stub(:leaders_full? => true)
+        leader_registration(conversation, 'text' ,'options').should be_nil
+      end
+    end
+  end
 end

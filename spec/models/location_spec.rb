@@ -60,11 +60,22 @@ describe Location do
         end
       end
     end
+
     describe 'available_conversations_for(person)' do
       let(:location) { FactoryGirl.create :location }
       let!(:conversation) { FactoryGirl.create :conversation, :location => location }
       let(:person) { FactoryGirl.create :person }
       it "containes all conversations if person has not been registered" do
+        location.available_conversations_for(person).should == [conversation]
+      end
+      it "contains conversations that have only conversation leaders full" do
+        Conversation.update_counters conversation.id, 
+                                    :conversation_leader_count => conversation.max_conversation_leaders 
+        location.available_conversations_for(person).should == [conversation]
+      end
+      it "contains conversations that have only paricipants full" do
+        Conversation.update_counters conversation.id, 
+                                    :participant_count => conversation.max_participants
         location.available_conversations_for(person).should == [conversation]
       end
       it "contains no conversations that are full" do

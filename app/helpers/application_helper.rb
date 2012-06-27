@@ -94,6 +94,15 @@ module ApplicationHelper
     page_side_bar 'city/locations/location_side_bar'
   end
 
+  def participant_registration(conversation, *args)
+    return nil if conversation.participants_full?
+    link_to *args
+  end
+  def leader_registration(conversation, *args)
+    return nil if conversation.leaders_full?
+    link_to *args
+  end
+
   private
   def alert_flash_tag(message)
     flash_tag(:alert, message)

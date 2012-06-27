@@ -1,5 +1,6 @@
 class Participant < Contributor
   attr_accessible :conversation_id
+  belongs_to :conversation, :counter_cache => :participant_count
 
   include ScopedModel
   scope_to_tenant

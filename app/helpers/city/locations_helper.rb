@@ -1,0 +1,2 @@
+module City::LocationsHelper
+end

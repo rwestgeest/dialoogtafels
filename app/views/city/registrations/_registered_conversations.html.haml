@@ -10,7 +10,7 @@
       .conversation-container
         %h4
           = time_period(contribution.conversation)
-          %span.register-link
+          %span.deregister-link
             = link_to "> afmelden", city_registration_path(id: contribution.to_param, person_id:@person.to_param) , :method => :delete, :remote => true
         %p.registration-info
           = registered_at(contribution)

@@ -19,11 +19,14 @@ class City::RegistrationsController < ApplicationController
       @location = contributor.conversation.location
       @active_contributions = @person.active_contributions_for(active_project)
       render :action => 'create'
-    rescue ActiveRecord::RecordNotFound
+    rescue ActiveRecord::RecordNotFound => e
+      logger.warn e
       head :not_found
-    rescue ActiveRecord::RecordInvalid
+    rescue ActiveRecord::RecordInvalid => e
+      logger.warn e.record.errors.full_messages
       head :not_found
-    rescue NameError
+    rescue NameError => e
+      logger.warn e
       head :not_found
     end
   end

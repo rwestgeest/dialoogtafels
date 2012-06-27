@@ -2,7 +2,6 @@ class Contributor < ApplicationModel
   attr_accessible :email, :name, :telephone, :conversation, :person
   belongs_to :person 
   belongs_to :project
-  belongs_to :conversation
   has_one :account, :through => :person
 
   scope :for_project, lambda { |project_id| where('project_id' => project_id) }

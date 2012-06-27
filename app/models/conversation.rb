@@ -16,9 +16,8 @@ class Conversation < ActiveRecord::Base
   validates_presence_of :end_date
   validates_presence_of :end_time
 
-  scope :availables, 
-                includes(:location => :project).where("conversations.conversation_leader_count < conversations.number_of_tables")
-                 .where("conversations.participant_count < (number_of_tables * projects.max_participants_per_table)")
+  scope :availables, includes(:location => :project)
+                    .where("(conversations.conversation_leader_count < conversations.number_of_tables) or (conversations.participant_count < (number_of_tables * projects.max_participants_per_table))")
 
   def initialize(*args)
     super(*args)
@@ -36,6 +35,14 @@ class Conversation < ActiveRecord::Base
 
   def max_participants
     number_of_tables * location.max_participants_per_table
+  end
+
+  def leaders_full?
+    conversation_leader_count >= max_conversation_leaders
+  end
+
+  def participants_full?
+    participant_count >= max_participants 
   end
 
 end

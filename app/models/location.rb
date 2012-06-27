@@ -17,7 +17,7 @@ class Location < ApplicationModel
   has_many :location_comments
 
 
-  attr_accessible :name, :address, :postal_code, :city, :organizer_id, :lattitude, :longitude, :published, :photo, :description
+  attr_accessible :name, :address, :postal_code, :city, :organizer_id, :lattitude, :longitude, :published, :photo, :description, :project
 
   validates_presence_of :name
   validates_presence_of :address

@@ -40,6 +40,35 @@ describe Conversation do
         end
       end
     end
+    describe "full" do 
+      let( :location ) { Location.new project: project }
+      let( :project ) { Project.new max_participants_per_table: 8 }
+      let( :conversation ) { Conversation.new location: location, number_of_tables: 2 }
+      subject { conversation }
+
+      context "for leader" do
+        it { should_not be_leaders_full }
+        it "is full when leader equals number of tables" do
+          conversation.conversation_leader_count = conversation.number_of_tables
+          conversation.should be_leaders_full
+        end
+        it "is full when leaders exceed  number of tables" do
+          conversation.conversation_leader_count = conversation.number_of_tables + 1
+          conversation.should be_leaders_full
+        end
+      end
+      context 'for participant' do
+      it { should_not be_participants_full }
+        it "is full when participant equals number of tables * max_participants per table" do
+          conversation.participant_count = conversation.number_of_tables * project.max_participants_per_table 
+          conversation.should be_participants_full
+        end
+        it "is full when participants exceed  number of tables" do
+          conversation.participant_count = conversation.number_of_tables * project.max_participants_per_table + 1
+          conversation.should be_participants_full
+        end
+      end
+    end
   end
 
 end

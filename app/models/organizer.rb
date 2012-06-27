@@ -2,6 +2,7 @@ class Organizer < Contributor
   include ScopedModel
   scope_to_tenant
   has_many :locations
+
   validates :email, :presence => true,
                     :unique_account => true,
                     :format => {:with => EMAIL_REGEXP }

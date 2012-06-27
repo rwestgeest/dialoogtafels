@@ -134,7 +134,7 @@ describe Person do
         contributor = contributor_class.new
         contributor.person = person
         contributor.project = project
-        contributor.conversation = conversation
+        contributor.conversation = conversation if conversation
         contributor.save!
         contributor
       end

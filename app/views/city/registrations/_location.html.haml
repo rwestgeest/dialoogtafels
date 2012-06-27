@@ -9,6 +9,4 @@
         %span.register-link{:'data-toggle' => "#register_links_for_conversation_#{conversation.id}"}
           = "> aanmelden"
       %p.register-links{id: "register_links_for_conversation_#{conversation.id}"}
-        = link_to "als deelnemer", city_registrations_path(person_id: @person.to_param, conversation_id: conversation.to_param, contribution: 'participant'), :method => :post, :remote => true
-        | 
-        = link_to "als gespreksleider", city_registrations_path(person_id: @person.to_param, conversation_id: conversation.to_param, contribution: 'conversation_leader'), :method => :post, :remote => true
+        = city_registrations_registration_links conversation, @person

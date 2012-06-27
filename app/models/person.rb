@@ -4,8 +4,11 @@ class Person < ActiveRecord::Base
   scope_to_tenant
   has_one :account
   has_many :contributors
+  has_many :participants
+  has_many :conversation_leaders
   has_many :profile_field_values, :include => :profile_field
-  has_many :conversations_participating_in, through: :contributors, source: :conversation
+  has_many :conversations_participating_in_as_leader, through: :conversation_leaders, source: :conversation
+  has_many :conversations_participating_in_as_participant, through: :participants, source: :conversation
 
   validates :email, :format => EMAIL_REGEXP, :if => :email_present?
   validates :name, :presence => true
@@ -15,6 +18,9 @@ class Person < ActiveRecord::Base
 
   delegate :email, :to => :account, :allow_nil => true
 
+  def conversations_participating_in
+    conversations_participating_in_as_leader + conversations_participating_in_as_participant
+  end
   def email=(email)
     self.account = TenantAccount.contributor(self) unless account
     self.account.email = email

@@ -64,6 +64,7 @@ describe ConversationLeader do
           conversation_leader.register_for(training_id)
           training.attendees == [conversation_leader]
         end 
+
         it "creates a registration instance " do
           expect { 
             conversation_leader.register_for(training_id)
@@ -86,6 +87,12 @@ describe ConversationLeader do
           end
         end
 
+        context "when the conversation leader is destroyed" do
+          before { conversation_leader.register_for(training_id) }
+          it "removes the registration" do
+            expect { conversation_leader.destroy }.to change(TrainingRegistration, :count).by(-1)
+          end
+        end
       end
 
       describe "removing one" do
