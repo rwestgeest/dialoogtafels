@@ -1,4 +1,4 @@
 = @comment.body
 
 Om te reageren, volg de onderstaande link
-= city_location_comment_url(@comment.to_param, :location_id => @comment.location_id, :host => Tenant.current.host)
+= city_location_comment_url(@comment.to_param, :location_id => @comment.reference_id, :host => Tenant.current.host)

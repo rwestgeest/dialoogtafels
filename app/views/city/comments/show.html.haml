@@ -1,5 +1,5 @@
 - title "Boodschap: #{@location_comment.parent_subject}"
-- context_action ".back", city_location_comments_path(:location_id => @location_comment.location_id)
+- context_action ".back", city_location_comments_path(:location_id => @location_comment.reference_id)
 
 #location-comment
   = render_comment @location_comment

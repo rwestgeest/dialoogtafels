@@ -121,7 +121,7 @@ module Factories
     factory :location_comment do
       body "some comment"
       association :author, factory: :person
-      association :location
+      association :reference, :factory => :location
     end
   end
 end

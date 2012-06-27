@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120627102629) do
+ActiveRecord::Schema.define(:version => 20120627123407) do
 
   create_table "accounts", :force => true do |t|
     t.string   "email",                :limit => 150,                      :null => false
@@ -66,21 +66,6 @@ ActiveRecord::Schema.define(:version => 20120627102629) do
 
   add_index "conversations", ["location_id"], :name => "index_conversations_on_location_id"
 
-  create_table "location_comments", :force => true do |t|
-    t.text     "body"
-    t.string   "ancestry"
-    t.integer  "author_id"
-    t.integer  "location_id"
-    t.integer  "tenant_id"
-    t.datetime "created_at",  :null => false
-    t.datetime "updated_at",  :null => false
-    t.string   "subject"
-  end
-
-  add_index "location_comments", ["ancestry"], :name => "index_location_comments_on_ancestry"
-  add_index "location_comments", ["author_id"], :name => "index_location_comments_on_author_id"
-  add_index "location_comments", ["tenant_id"], :name => "index_location_comments_on_tenant_id"
-
   create_table "locations", :force => true do |t|
     t.string   "name",               :limit => 100
     t.string   "postal_code",        :limit => 10,                     :null => false
@@ -100,6 +85,23 @@ ActiveRecord::Schema.define(:version => 20120627102629) do
     t.boolean  "published",                         :default => false
     t.text     "description"
   end
+
+  create_table "messages", :force => true do |t|
+    t.text     "body"
+    t.string   "ancestry"
+    t.integer  "author_id"
+    t.integer  "reference_id"
+    t.integer  "tenant_id"
+    t.datetime "created_at",   :null => false
+    t.datetime "updated_at",   :null => false
+    t.string   "subject"
+    t.string   "type"
+  end
+
+  add_index "messages", ["ancestry"], :name => "index_location_comments_on_ancestry"
+  add_index "messages", ["author_id"], :name => "index_location_comments_on_author_id"
+  add_index "messages", ["tenant_id"], :name => "index_location_comments_on_tenant_id"
+  add_index "messages", ["type"], :name => "index_messages_on_type"
 
   create_table "people", :force => true do |t|
     t.string   "name",       :limit => 50, :null => false

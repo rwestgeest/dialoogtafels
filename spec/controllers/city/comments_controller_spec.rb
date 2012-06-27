@@ -7,7 +7,7 @@ describe City::CommentsController do
 
   let(:location) { FactoryGirl.create :location, :organizer => current_organizer }
 
-  let(:location_comment) { FactoryGirl.create :location_comment, :location => location }
+  let(:location_comment) { FactoryGirl.create :location_comment, :reference => location }
   alias_method :create_location_comment, :location_comment
 
   def valid_attributes

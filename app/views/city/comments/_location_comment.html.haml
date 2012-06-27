@@ -5,7 +5,7 @@
   .location-body
     = markup location_comment.body
     .comment-actions
-      = link_to "antwoorden", city_location_comment_path(location_comment.to_param, :location_id => location_comment.location_id)
+      = link_to "antwoorden", city_location_comment_path(location_comment.to_param, :location_id => location_comment.reference_id)
     .comment-actions-line
     .clear
 

@@ -49,7 +49,7 @@ describe Notifications do
     end
 
     it "has a link to the comment" do
-      mail.body.encoded.should have_selector("a[href='#{city_location_comment_url(location_comment.to_param, :location_id => location_comment.location_id, :host => Tenant.current.host)}']")
+      mail.body.encoded.should have_selector("a[href='#{city_location_comment_url(location_comment.to_param, :location_id => location_comment.reference_id, :host => Tenant.current.host)}']")
     end
 
   end

@@ -12,7 +12,7 @@ class City::CommentsController < ApplicationController
   def create
     @location_comment = LocationComment.new(params[:location_comment])
     @location_comment.author = current_person
-    @location_comment.location = location
+    @location_comment.reference = location
     @location_comment.set_addressees(params[:notify_people])
     if @location_comment.save
       render 'create'
