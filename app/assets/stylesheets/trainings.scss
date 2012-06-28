@@ -1,0 +1,35 @@
+ul.training-attendee-list li {
+  display: inline;
+  float:left;
+  width:180px;
+  margin: 0;
+  padding:0.25em;
+  height:19px;
+  overflow: hidden;
+}
+
+ul.training-attendee-list li span {
+  width:51px;
+  float:left;
+}
+ul.training-attendee-list li span.no-operations {
+  display:block;
+}
+
+ul.training-attendee-list li span.operations {
+  display:none;
+}
+ul.training-attendee-list li:hover {
+  margin-left:0px;
+  background-color: #F4EBD5;
+  border-radius: 4px;
+}
+
+ul.training-attendee-list li:hover span.no-operations {
+  display:none;
+}
+
+ul.training-attendee-list li:hover span.operations {
+  display:block;
+}
+

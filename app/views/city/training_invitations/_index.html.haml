@@ -1,0 +1,6 @@
+#training-invitations
+  = render(partial: '/city/training_invitations/training_invitation', collection:  training_invitations)
+
+%h3 Nieuwe Uitnodiging:
+#new-training-invitation
+  = new_training_invitation_form @training 

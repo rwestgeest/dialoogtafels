@@ -2,9 +2,9 @@
   %h3 
     = message_subject(training_invitation)
     = message_info(training_invitation)
+  .message-addressees
+    %span= t('to')
+    = addressee_names(training_invitation)
   .message-body
     = markup training_invitation.body
-    .message-actions
-    .message-actions-line
-    .clear
 

@@ -20,7 +20,7 @@ class City::TrainingsController < ApplicationController
     @training = Training.new(params[:training])
 
     if @training.save
-      redirect_to city_training_path(@training), notice: 'Training was successfully created.'
+      redirect_to city_training_path(@training), notice: 'Training is aangemaakt'
     else
       render action: "new"
     end
@@ -30,7 +30,7 @@ class City::TrainingsController < ApplicationController
     @training = Training.find(params[:id])
 
     if @training.update_attributes(params[:training])
-      redirect_to city_training_path(@training), notice: 'Training was successfully updated.'
+      redirect_to city_training_path(@training), notice: 'Training is bijgewerkt'
     else
       render action: "edit"
     end

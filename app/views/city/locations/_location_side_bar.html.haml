@@ -1,7 +1,7 @@
 .right_heading Acties op locatie
 %ul
-  %li= link_to t( ".edit" ), edit_city_location_path(@location.to_param)
-  %li= link_to t( ".conversations" ), city_location_path(@location.to_param)
-  %li= link_to t( ".comments" ), city_location_comments_path(:location_id => @location.to_param)
-  %li= link_to t( ".publication" ), city_location_publication_path(:location_id => @location.to_param)
+  %li= aspect_link "city/locations#edit",  t( ".edit" ), edit_city_location_path(@location.to_param)
+  %li= aspect_link "city/locations#show", t( ".conversations" ), city_location_path(@location.to_param)
+  %li= aspect_link "city/comments", t( ".comments" ), city_location_comments_path(:location_id => @location.to_param)
+  %li= aspect_link "city/publications", t( ".publication" ), city_location_publication_path(:location_id => @location.to_param)
 

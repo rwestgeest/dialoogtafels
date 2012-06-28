@@ -232,6 +232,8 @@ nl:
       profile_select_field:
         create: "Maak profielveld aan" 
         update: "Bijwerken profielveld" 
+      training_invitation:
+        create: "Verzenden"
   notifications:
     account_reset:
       subject: "Je dialoogtafels account is gereset"
@@ -254,10 +256,10 @@ nl:
   city:
     locations:
       location_side_bar:
-        publication: "toon publicatie details" 
-        conversations: "toon dialooggesprekken" 
-        edit: "wijzig locatie" 
-        comments: "berichten"
+        publication: "Publicatie details" 
+        conversations: "Dialooggesprekken" 
+        edit: "Kaart" 
+        comments: "Berichten"
     comments:
       new_comment_form:
         all_coordinators: "Coordinatoren"
@@ -308,3 +310,5 @@ nl:
   registered_at: "Ingeschreven op %{time}"
   as: 'als'
   back: 'terug'
+  to: 'aan: '
+  nobody: 'niemand'

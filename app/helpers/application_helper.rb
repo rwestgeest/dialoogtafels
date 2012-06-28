@@ -102,6 +102,14 @@ module ApplicationHelper
     return nil if conversation.leaders_full?
     link_to *args
   end
+  
+  def select_person_link(person, path, selected_person)
+    if person == selected_person
+      content_tag :span, person.name, :class => 'selected-text'
+    else
+      link_to person.name, path
+    end
+  end
 
   private
   def alert_flash_tag(message)
