@@ -1,42 +1,42 @@
-.location-comment {
+.message {
  border: solid 1px #F4EBD5; 
  margin: 0.5em 0;
 }
-.location-comment:hover .comment-actions {
+.message:hover .message-actions {
   display: block;
 }
-.location-body {
+.message-body {
   padding:0 3px;
 }
-.location-body h1 {
+.message-body h1 {
   font-size: 1.5em;
 }
-.location-body h2 {
+.message-body h2 {
   font-size: 1.25em;
 }
-.location-body h3 {
+.message-body h3 {
   font-size: 1.15em;
 }
-.nested-comment {
+.nested-message {
   margin-left: 30px;
 }
-.comment-actions-line {
+.message-actions-line {
   height:1.5em;
 }
-.comment-actions {
+.message-actions {
   font-weight: normal;
   text-align: right;
   float: right;
   margin-left: 1em;
   display: none;
 }
-.comment-info {
+.message-info {
   font-weight: normal;
   color: grey;
   text-align: right;
   float: right;
 }
-.location-comment h3 {
+.message h3 {
   font-weight: bolder;
   font-size: inherit;
   background-color: #F4EBD5;

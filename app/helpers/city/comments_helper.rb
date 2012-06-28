@@ -1,7 +1,7 @@
 module City::CommentsHelper
   def render_nested comments
     comments.map do |comment, children|
-      render_comment(comment) + content_tag(:div, render_nested(children), :class => 'nested-comment')
+      render_comment(comment) + content_tag(:div, render_nested(children), :class => 'nested-message')
     end.join.html_safe
   end
   def render_comment comment
@@ -11,7 +11,7 @@ module City::CommentsHelper
     comment.subject 
   end
   def comment_info comment
-    content_tag :span, "door #{comment.author_name} op #{l comment.created_at, format: :human}", :class => "comment-info"
+    content_tag :span, "door #{comment.author_name} op #{l comment.created_at, format: :human}", :class => "message-info"
   end
   def parent_reference(comment, form)
      form.hidden_field(:parent_id) if comment

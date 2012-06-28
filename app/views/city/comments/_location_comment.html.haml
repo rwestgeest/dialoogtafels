@@ -1,11 +1,11 @@
-.location-comment
+.message
   %h3 
     = comment_subject(location_comment)
     = comment_info(location_comment)
-  .location-body
+  .message-body
     = markup location_comment.body
-    .comment-actions
+    .message-actions
       = link_to "antwoorden", city_location_comment_path(location_comment.to_param, :location_id => location_comment.reference_id)
-    .comment-actions-line
+    .message-actions-line
     .clear
 

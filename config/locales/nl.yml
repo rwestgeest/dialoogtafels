@@ -196,6 +196,8 @@ nl:
         label: "Label"
         type: "Soort veld"
         values: "Mogelijke waarden"
+      training_invitation:
+        subject: "Onderwerp"
     submit:
       account:
         update: "Wachtwoord wijzigen"
@@ -286,6 +288,12 @@ nl:
       index:
         trainings: "trainingen beheren"
         select_attendee: "Selecteer een gespreksleider uit de rechter kantlijn om zijn inschrijvingen te beheren"
+    training_invitations:
+      index:
+        new_invitation: "nieuwe uitnodiging"
+      new_training_invitation_form:
+        all_coordinators: "Coordinatoren"
+        all_conversation_leaders: "Deelnemers"
   contributor:
     type:
       organizer: "tafelorganisator"

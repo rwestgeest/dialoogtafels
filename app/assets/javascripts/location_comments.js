@@ -10,4 +10,5 @@ function enableGroupCheck(checker, checkees) {
 $(function() {
   enableGroupCheck('#all_coordinators', '.notify-coordinators');
   enableGroupCheck('#all_organizers', '.notify-organizers');
+  enableGroupCheck('#all_conversation_leaders', '.notify-conversation-leaders');
 });

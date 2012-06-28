@@ -24,8 +24,8 @@
           %li= notification_check_box account.person, 'notify-coordinators'
       .clear
       %h4 
-        = check_box_tag "all_organizers"
-        = label_tag t(".all_organizers")
+        = check_box_tag "all_conversation_leaders"
+        = label_tag t(".all_conversation_leaders")
       %ul.person-list
         - training.attendees.each do |attendee|
           %li= notification_check_box attendee, 'notify-conversation-leaders'
