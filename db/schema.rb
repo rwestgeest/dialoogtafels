@@ -31,16 +31,6 @@ ActiveRecord::Schema.define(:version => 20120627123407) do
 
   add_index "accounts", ["type"], :name => "index_accounts_on_type"
 
-  create_table "comment_addressees", :force => true do |t|
-    t.integer  "location_comment_id"
-    t.integer  "person_id"
-    t.datetime "created_at",          :null => false
-    t.datetime "updated_at",          :null => false
-  end
-
-  add_index "comment_addressees", ["location_comment_id"], :name => "index_comment_addressees_on_location_comment_id"
-  add_index "comment_addressees", ["person_id"], :name => "index_comment_addressees_on_person_id"
-
   create_table "contributors", :force => true do |t|
     t.string   "type"
     t.integer  "project_id"
@@ -85,6 +75,16 @@ ActiveRecord::Schema.define(:version => 20120627123407) do
     t.boolean  "published",                         :default => false
     t.text     "description"
   end
+
+  create_table "message_addressees", :force => true do |t|
+    t.integer  "message_id"
+    t.integer  "person_id"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
+  add_index "message_addressees", ["message_id"], :name => "index_comment_addressees_on_location_comment_id"
+  add_index "message_addressees", ["person_id"], :name => "index_comment_addressees_on_person_id"
 
   create_table "messages", :force => true do |t|
     t.text     "body"

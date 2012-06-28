@@ -8,13 +8,13 @@ shared_examples_for "a_message" do
   end
 end
 
-shared_examples_for "a_message_notifier" do |clazz, notification|
+shared_examples_for "a_message_notifier" do |message_class, notification_message|
   prepare_scope :tenant
   let(:author) { FactoryGirl.create :person }
 
   it "sends a notification to the author" do
-    Postman.should_receive(:schedule_message_notification) do |comment, addressee| 
-      comment.should be_an_instance_of(LocationComment)
+    Postman.should_receive(notification_message) do |comment, addressee| 
+      comment.should be_an_instance_of(message_class)
       comment.should be_persisted
       addressee.should == author
     end
@@ -26,14 +26,14 @@ shared_examples_for "a_message_notifier" do |clazz, notification|
     let(:addressee2) { FactoryGirl.create :person }
 
     it "sends a notification to the addressees" do
-      Postman.should_receive(:schedule_message_notification).with(an_instance_of(LocationComment), author)
-      Postman.should_receive(:schedule_message_notification).with(an_instance_of(LocationComment), addressee1)
-      Postman.should_receive(:schedule_message_notification).with(an_instance_of(LocationComment), addressee2)
+      Postman.should_receive(notification_message).with(an_instance_of(message_class), author)
+      Postman.should_receive(notification_message).with(an_instance_of(message_class), addressee1)
+      Postman.should_receive(notification_message).with(an_instance_of(message_class), addressee2)
       create_messaage_from(author, for_addressees(addressee1, addressee2))
     end
 
     it "when author in addressee list, sends notification to sender once" do
-      Postman.should_receive(:schedule_message_notification).with(an_instance_of(LocationComment), author).once
+      Postman.should_receive(notification_message).with(an_instance_of(message_class), author).once
       create_messaage_from(author, for_addressees(author))
     end
 
@@ -41,14 +41,14 @@ shared_examples_for "a_message_notifier" do |clazz, notification|
       let!(:parent) { create_messaage_from(author, for_addressees(addressee1)) }
       let(:replier) { FactoryGirl.create :person }
       it "sends a notification to the addressees and replie" do
-        Postman.should_receive(:schedule_message_notification).with(an_instance_of(LocationComment), author)
-        Postman.should_receive(:schedule_message_notification).with(an_instance_of(LocationComment), replier)
-        Postman.should_receive(:schedule_message_notification).with(an_instance_of(LocationComment), addressee1)
+        Postman.should_receive(notification_message).with(an_instance_of(message_class), author)
+        Postman.should_receive(notification_message).with(an_instance_of(message_class), replier)
+        Postman.should_receive(notification_message).with(an_instance_of(message_class), addressee1)
         create_messaage_from(replier, for_no_addressees,  as_reply_to(parent))
       end
       it "when addresses set, sends a notification these addressees and replie" do
-        Postman.should_receive(:schedule_message_notification).with(an_instance_of(LocationComment), replier)
-        Postman.should_receive(:schedule_message_notification).with(an_instance_of(LocationComment), addressee2)
+        Postman.should_receive(notification_message).with(an_instance_of(message_class), replier)
+        Postman.should_receive(notification_message).with(an_instance_of(message_class), addressee2)
         create_messaage_from(replier, for_addressees(addressee2),  as_reply_to(parent))
       end
     end

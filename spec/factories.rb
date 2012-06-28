@@ -123,5 +123,11 @@ module Factories
       association :author, factory: :person
       association :reference, :factory => :location
     end
+
+    factory :training_invitation do
+      body "some comment"
+      association :author, factory: :person
+      association :reference, :factory => :training
+    end
   end
 end

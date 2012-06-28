@@ -53,4 +53,23 @@ describe Notifications do
     end
 
   end
+
+  describe "training invitation" do
+    let(:training_invitation) { FactoryGirl.create :training_invitation, subject: "invitation", body: "#Header\nbody" }
+    let(:person) { FactoryGirl.create :person, email: "addressee@example.com"  }
+    let(:mail) { Notifications.new_training_invitation training_invitation, person }
+
+    it "renders the headers" do
+      mail.subject.should eq(training_invitation.subject)
+      mail.from.should eq([ person.tenant.from_email ])
+      mail.to.should eq([ person.email ])
+    end
+
+    it "puts the body marked up in the bdy" do
+      mail.body.encoded.should have_selector("h1")
+      mail.body.encoded.should include("Header")
+      mail.body.encoded.should include("body")
+    end
+
+  end
 end

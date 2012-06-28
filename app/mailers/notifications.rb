@@ -24,4 +24,9 @@ class Notifications < ActionMailer::Base
     @comment = comment 
     mail from: addressee.tenant.from_email, to: addressee.email, subject: @comment.subject
   end
+
+  def new_training_invitation(invitation, addressee)
+    @invitation = invitation 
+    mail from: addressee.tenant.from_email, to: addressee.email, subject: @invitation.subject
+  end
 end

@@ -1,8 +1,8 @@
-class LocationComment < Message
+class TrainingInvitation < Message
   attr_accessible :subject, :body, :author, :reference_id, :parent_id, :parent
   after_create :notify
 
-  belongs_to :reference, :class_name => 'Location'
+  belongs_to :reference, :class_name => 'Training'
   validates_presence_of :reference
 
   include ScopedModel
@@ -11,7 +11,7 @@ class LocationComment < Message
   protected 
   def notify
     people_to_notify.uniq.each do |addressee|
-      Postman.schedule_message_notification(self, addressee)
+      Postman.schedule_training_invitation(self, addressee)
     end
   end
 end
