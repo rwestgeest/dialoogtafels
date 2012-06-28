@@ -18,7 +18,7 @@ describe City::CommentsController do
     {:location_id => location.to_param }.merge(request_parameters)
   end
   context "without supplying a location" do
-    it { xhr(:get, :new); should respond_with(404) }
+    it { xhr(:get, :index); should respond_with(404) }
     it { xhr(:get, :show); should respond_with(404) }
     it { xhr(:post, :create, :location_comment => valid_attributes); should respond_with(404) }
   end

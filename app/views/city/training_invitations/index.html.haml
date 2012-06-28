@@ -1,0 +1,8 @@
+- title "Uitnodigingen voor #{@training.name}"
+- context_action '.new_invitation', city_training_training_invitations_path(training_id: @training.to_param, anchor: "new_comment")
+#training-invitations
+  = render(partial: 'training_invitation', collection:  @training_invitations)
+
+%h3 Nieuw bericht:
+#new-training-invitation
+  = new_training_invitation_form @training 

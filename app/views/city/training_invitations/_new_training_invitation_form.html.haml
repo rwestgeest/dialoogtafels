@@ -1,0 +1,35 @@
+%a{ id: 'new_invitation'}
+
+= form_for TrainingInvitation.new, :url => city_training_training_invitations_path(training_id: training.to_param), :remote => true  do |f|
+  .message-container
+    .message-subject-container
+      .label= f.label :subject
+      .input= f.text_field :subject
+    .clear
+    .message-body-container
+      .input= f.text_area :body
+    .clear
+    %h3 Notificaties
+    %p
+      Selecteer hieronder aan wie je deze uitnodiging wilt sturen.
+
+    .message-notifications-container
+        
+      %h4 
+        = check_box_tag "all_coordinators"
+        = label_tag t(".all_coordinators")
+
+      %ul.person-list
+        - TenantAccount.coordinators.each do |account|
+          %li= notification_check_box account.person, 'notify-coordinators'
+      .clear
+      %h4 
+        = check_box_tag "all_organizers"
+        = label_tag t(".all_organizers")
+      %ul.person-list
+        - training.attendees.each do |attendee|
+          %li= notification_check_box attendee, 'notify-conversation-leaders'
+
+    .actions
+      = f.submit :disable_with => "... versturen"
+

@@ -4,6 +4,7 @@ class Training < ActiveRecord::Base
   attr_accessible :name, :location, :max_participants, :description, :start_date, :start_time, :end_date, :end_time
   belongs_to :project
   has_many :training_registrations
+  has_many :training_invitations, foreign_key: :reference_id
   has_many :attendees, :through => :training_registrations
 
   before_validation :associate_to_active_project

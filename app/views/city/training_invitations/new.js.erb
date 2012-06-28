@@ -1,0 +1,4 @@
+$('#new-training-invitation').replaceWith('<%= escape_javascript(new_training_invitation_form(@training)) %>');
+enableGroupCheck('#all_coordinators', '.notify-coordinators');
+enableGroupCheck('#all_conversation_leaders', '.notify-conversation-leaders');
+
