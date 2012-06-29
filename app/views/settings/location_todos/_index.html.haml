@@ -1,0 +1,7 @@
+%ul.location_todo_list
+  - location_todos.each do |location_todo|
+    %li{id: "location_todo_#{location_todo.id}"}
+      = render :partial => 'settings/location_todos/location_todo', :locals => { :location_todo => location_todo } 
+
+= text_field_tag 'new_location_todo_input'
+%button#new_location_todo_button toevoegen

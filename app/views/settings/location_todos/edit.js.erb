@@ -1,0 +1,2 @@
+$('#location_todo_<%= @location_todo.id%>').html('<%= escape_javascript(render(:partial => "edit")) %>');
+enable_ok_button_for_location_todo_update('<%= @location_todo.id %>')

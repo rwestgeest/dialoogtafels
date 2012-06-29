@@ -1,0 +1,9 @@
+= link_to(image_tag('delete.gif'),
+     settings_location_todo_path(location_todo.id),
+     {:title => "todo item vrijgeven", :method => 'delete', :remote => true} )
+= check_box_tag location_todo.id, "1", false, :disabled => true
+= location_todo.name 
+&nbsp;
+= link_to(image_tag('edit.gif'),
+     edit_settings_location_todo_path(location_todo.id),
+     {:title => "bewerken", :method => 'get', :remote => true} )

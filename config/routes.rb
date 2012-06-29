@@ -1,5 +1,7 @@
 Tafelmanager2::Application.routes.draw do
 
+  get "location_todos/index"
+
   get "training_invitations/index"
 
   resources :locations, :only => [:index, :show] 
@@ -46,6 +48,7 @@ Tafelmanager2::Application.routes.draw do
     resources :profile_fields, :except => :show do
       post 'sort', :on => :collection
     end
+    resources :location_todos, :except => [:show, :index]
   end
 
   namespace :organizer do
