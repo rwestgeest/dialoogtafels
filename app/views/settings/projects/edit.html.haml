@@ -1,0 +1,33 @@
+- title "Project instellingen"
+- page_side_bar '/settings/side_bar'
+= form_for @project, :url => settings_project_path  do |f|
+  = errors_for @project
+  .dialog-container
+    .input-container
+      .label= f.label :name
+      .input= f.text_field :name
+
+    .input-container 
+      .label= f.label :start_date
+      .input.wide
+        = f.text_field(:start_date, :value => @project.start_date && l(@project.start_date), :class => :date_input)
+        = f.time_select(:start_time)
+
+    .input-container
+      .label= f.label :max_participants_per_table
+      .input= f.text_field :max_participants_per_table
+
+    .input-container
+      .label= f.label :conversation_length
+      .input= f.text_field :conversation_length
+      .span= t('minutes')
+
+    .clear
+  .dialog-container
+    %h3 Todo lijst
+    #location_todo_list_editor
+      = render partial: '/settings/location_todos/index', locals: { location_todos: @project.location_todos }
+  .actions
+    = f.submit
+
+

@@ -47,6 +47,15 @@ describe ActionGuard, :type => :authorisation do
     it { should_not authorize(conversation_leader).to_perform("city/locations#update")  }
   end
 
+  describe "settings" do
+    %w{maintainer coordinator}.each do |role|  
+      it { should authorize(account_for(role)).to_perform("settings") } 
+    end
+    %w{conversation_leader organizer participant}.each do |role|  
+      it { should_not authorize(account_for(role)).to_perform("settings") } 
+    end
+  end
+
   describe "city/training_registrations" do
     %w{maintainer coordinator}.each do |role|  
       it { should authorize(account_for(role)).to_perform("city/training_registrations") } 

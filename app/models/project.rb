@@ -1,9 +1,17 @@
 class Project < ActiveRecord::Base
+  include Schedulable
   include ScopedModel
   scope_to_tenant
 
-  attr_accessible :name, :max_participants_per_table
+  attr_accessible :name, :max_participants_per_table, :conversation_length, :start_date, :start_time
   validates :name, :presence => true
+  validates :max_participants_per_table, 
+    :presence => true,
+    :numericality => true
+
+  validates :conversation_length, 
+    :presence => true,
+    :numericality => true
 
   has_many :location_todos, :inverse_of => :project
   has_many :locations

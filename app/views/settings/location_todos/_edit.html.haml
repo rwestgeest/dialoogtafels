@@ -1,2 +1,2 @@
-<%= text_field_tag "update_location_todo_input_#{@location_todo.id}", @location_todo.name %>
-<button id="update_location_todo_button_<%= @location_todo.id %>">Ok</button>
+= text_field_tag "update_location_todo_input_#{@location_todo.id}", @location_todo.name 
+%button{ id: "update_location_todo_button_#{ @location_todo.id }" } Ok

@@ -54,6 +54,12 @@ nl:
               blank: "er is geen stad geselecteerd"
             name:
               blank: "je hebt geen naam ingegeven"
+            max_participants_per_table:
+              blank: "je hebt geen maximaal aantal deelnemers per tafel ingegeven"
+              not_a_number: "het maximaal aantal deelnemers moet een getal zijn"
+            conversation_length:
+              blank: "je hebt geen lengte van een gesprek ingegeven"
+              not_a_number: "de lengte indicatie van een gesprek moet een getal in minuten zijn" 
         location:
           attributes:
             name:
@@ -156,6 +162,9 @@ nl:
         password_confirmation: "Wachtwoord bevestiging"
       project:
         name: "Naam"
+        start_date: "Startdatum en -tijd"
+        max_participants_per_table: "Deelnemers per tafel"
+        conversation_length: "Duur van een gesprek"
       person:
         name: "Naam"
       organizer:
@@ -312,3 +321,4 @@ nl:
   back: 'terug'
   to: 'aan: '
   nobody: 'niemand'
+  minutes: 'minuten'

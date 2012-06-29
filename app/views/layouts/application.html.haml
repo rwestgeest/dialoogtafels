@@ -27,7 +27,7 @@
       #main-right-menu
         %ul
           = menu(request) do |m|
-            - m.tab("Instellingen", 'settings/profile_fields', highlight_on: 'settings')
+            - m.tab("Instellingen", 'settings/projects#edit', highlight_on: 'settings')
 
     %section#content-frame
       %section#flash_messages

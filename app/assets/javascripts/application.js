@@ -17,6 +17,8 @@
 //= require conversations
 //= require locations
 //= require location_comments
+//= require location_todos
+//= require project
 
 /* Dutch (UTF-8) initialisation for the jQuery UI date picker plugin. */
 /* Written by Mathias Bynens <http://mathiasbynens.be/> */

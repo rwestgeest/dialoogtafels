@@ -1,5 +1,7 @@
 Tafelmanager2::Application.routes.draw do
 
+  get "projects/edit"
+
   get "location_todos/index"
 
   get "training_invitations/index"
@@ -49,6 +51,7 @@ Tafelmanager2::Application.routes.draw do
       post 'sort', :on => :collection
     end
     resources :location_todos, :except => [:show, :index]
+    resource :project, only: [:edit, :update]
   end
 
   namespace :organizer do
