@@ -21,12 +21,7 @@ class Training < ActiveRecord::Base
   scope_to_tenant
 
   def has_invited?(person)
-    registration = registration_for(person)
-    registration && registration.invited || false
-  end
-
-  def registration_for(person)
-    training_registrations.where(:attendee_id => person.id).first
+    invites.include?(person.id)
   end
 
   def invite_people(people)
@@ -34,6 +29,9 @@ class Training < ActiveRecord::Base
   end
 
   private
+  def invites
+    training_registrations.where(:invited => true).map {|registration| registration.attendee_id}
+  end
   def associate_to_active_project
     self.project = tenant.active_project if tenant.present?
   end

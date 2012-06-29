@@ -34,7 +34,13 @@ class Message < ActiveRecord::Base
     self.addressees = Person.where(:id => addressee_ids)
   end
 
+  def propose_as_addressee?(person)
+    person == author || parents_addressees.include?(person)
+  end
 
+  def parents_addressees
+    parent && parent.addressees + [parent.author] || []
+  end
   protected
   def notify 
     raise 'define notification in subclass'

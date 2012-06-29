@@ -23,4 +23,5 @@ describe LocationComment do
       end
     end
   end
+
 end

@@ -11,7 +11,7 @@ describe TrainingInvitation do
     end
   end
 
-  describe "notifications", :focus =>true do
+  describe "notifications" do
     let(:reference) { FactoryGirl.create :training }
     it_should_behave_like "a_message_notifier", TrainingInvitation, :schedule_training_invitation 
 

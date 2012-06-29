@@ -1,7 +1,8 @@
 module City::CommentsHelper
   include ::MessagesHelper
   def render_nested comments
-    comments.map do |comment, children|
+    comments.collect do |comment|
+      children = comment.children
       render_comment(comment) + content_tag(:div, render_nested(children), :class => 'nested-message')
     end.join.html_safe
   end

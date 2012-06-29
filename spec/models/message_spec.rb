@@ -43,5 +43,27 @@ describe Message do
         end
       end
     end
+
+    describe "propose as a addressee" do
+      let(:message) { FactoryGirl.create :location_comment }
+      let(:any_other_person) { FactoryGirl.create :person }
+      subject{ message } 
+      it { should_not be_propose_as_addressee(any_other_person) }
+      it { should be_propose_as_addressee(message.author) }
+      context "for child" do
+        let(:child_author) { FactoryGirl.create :person }
+        let!(:child_message) { message.create_child(body: "body", author: child_author) }
+        subject { child_message }
+        it { should be_propose_as_addressee(child_message.author) }
+        it { should be_propose_as_addressee(message.author) }
+        it { should_not be_propose_as_addressee(any_other_person) }
+        it "should have parents addresse as proposed addresse" do
+          parents_addressee = FactoryGirl.create :person 
+          message.set_addressees [parents_addressee]
+          message.save
+          child_message.should be_propose_as_addressee(parents_addressee)
+        end
+      end
+    end
   end
 end

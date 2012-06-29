@@ -1,9 +1,9 @@
 - title "Boodschap: #{@location_comment.parent_subject}"
 - context_action ".back", city_location_comments_path(:location_id => @location_comment.reference_id)
 
-#location-comment
+#message
   = render_comment @location_comment
-.nested-comment
+.nested-message
   #location-comments
     = render_nested @location_comment.children.arrange
 

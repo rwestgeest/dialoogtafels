@@ -21,14 +21,14 @@
 
       %ul.person-list
         - TenantAccount.coordinators.each do |account|
-          %li= notification_check_box account.person, 'notify-coordinators'
+          %li= notification_check_box account.person, 'notify-coordinators', true
       .clear
       %h4 
         = check_box_tag "all_conversation_leaders"
         = label_tag t(".all_conversation_leaders")
       %ul.person-list
         - training.attendees.each do |attendee|
-          %li= notification_check_box attendee, 'notify-conversation-leaders'
+          %li= notification_check_box attendee, 'notify-conversation-leaders', !training.has_invited?(attendee)
 
     .actions
       = f.submit :disable_with => "... versturen"

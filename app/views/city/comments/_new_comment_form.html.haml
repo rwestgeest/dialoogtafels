@@ -1,6 +1,6 @@
 %a{ id: 'new_comment'}
 
-= form_for LocationComment.new(:parent => parent_comment), :url => city_location_comments_path(location_id: location.to_param), :remote => true  do |f|
+= form_for @location_comment = LocationComment.new(:parent => parent_comment), :url => city_location_comments_path(location_id: location.to_param), :remote => true  do |f|
   = parent_reference(parent_comment, f)
   .message-container
     - unless parent_comment
@@ -23,12 +23,12 @@
 
       %ul.person-list
         - TenantAccount.coordinators.each do |account|
-          %li= notification_check_box account.person, 'notify-coordinators'
+          %li= notification_check_box account.person, 'notify-coordinators', @location_comment.propose_as_addressee?(account.person)
       .clear
       %h4 
         = check_box_tag "all_organizers"
         = label_tag t(".all_organizers")
-      = notification_check_box location.organizer.person, 'notify-organizers'
+      = notification_check_box location.organizer.person, 'notify-organizers', @location_comment.propose_as_addressee?(location.organizer.person)
 
     .actions
       = f.submit :disable_with => "... versturen"

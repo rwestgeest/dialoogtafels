@@ -2,7 +2,7 @@
 - location_submenu
 - context_action '.new_comment', city_location_comments_path(location_id: @location.to_param, anchor: "new_comment")
 #location-comments
-  = render_nested @location_comments.arrange
+  = render_nested @location_comments.roots
 
 %h3 Nieuw bericht:
 #new-location-comment
