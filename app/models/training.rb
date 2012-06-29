@@ -20,6 +20,19 @@ class Training < ActiveRecord::Base
   include ScopedModel
   scope_to_tenant
 
+  def has_invited?(person)
+    registration = registration_for(person)
+    registration && registration.invited || false
+  end
+
+  def registration_for(person)
+    training_registrations.where(:attendee_id => person.id).first
+  end
+
+  def invite_people(people)
+    training_registrations.where(:attendee_id => people.collect{|p| p.id}).update_all(:invited => true)
+  end
+
   private
   def associate_to_active_project
     self.project = tenant.active_project if tenant.present?

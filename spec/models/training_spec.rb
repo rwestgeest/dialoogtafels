@@ -38,6 +38,32 @@ describe Training  do
       end
     end
 
+    describe "sending an invitation", :focus => true do
+      let(:attendee) { FactoryGirl.create :person }
+      let(:training) { FactoryGirl.create :training }
+      before { attendee.register_for(training) }
+
+      subject { training }
+
+      context "before sending" do
+        it {should_not have_invited(attendee)}
+      end 
+
+      context "after sending" do
+        let(:author) { FactoryGirl.create(:person) }
+        before { create_messaage_from(author, [attendee.id]) }
+        it { should have_invited(attendee) }
+        it { should_not have_invited(author) }
+      end 
+
+      def create_messaage_from(author, addressee_id_list = [], parent_comment = nil)
+        comment = FactoryGirl.build(:training_invitation, :subject => "subject", :reference_id => training.id, :author => author, :parent => parent_comment)
+        comment.set_addressees(addressee_id_list)
+        comment.save!
+        comment
+      end
+    end
+
   end
 
 end

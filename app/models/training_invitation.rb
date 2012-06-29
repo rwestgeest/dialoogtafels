@@ -13,5 +13,6 @@ class TrainingInvitation < Message
     people_to_notify.uniq.each do |addressee|
       Postman.schedule_training_invitation(self, addressee)
     end
+    reference.invite_people(people_to_notify)
   end
 end

@@ -141,6 +141,14 @@ describe Person do
           TrainingRegistration.last.attendee.should == person
           TrainingRegistration.last.training.should == training
         end 
+
+        it "cannot register twice" do
+          expect { 
+            person.register_for(training_id)
+            person.register_for(training_id)
+          }.to change(TrainingRegistration, :count).by(1)
+        end
+
         it "adds the training to the attendees training list" do
           person.register_for(training_id)
           person.should have(1).trainings
@@ -156,7 +164,7 @@ describe Person do
           end
         end
 
-        context "when the conversation leader is destroyed" do
+        context "when the person is destroyed" do
           before { person.register_for(training_id) }
           it "removes the registration" do
             expect { person.destroy }.to change(TrainingRegistration, :count).by(-1)
