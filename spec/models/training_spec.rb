@@ -38,7 +38,7 @@ describe Training  do
       end
     end
 
-    describe "sending an invitation", :focus => true do
+    describe "sending an invitation" do
       let(:attendee) { FactoryGirl.create :person }
       let(:training) { FactoryGirl.create :training }
       before { attendee.register_for(training) }
