@@ -129,5 +129,10 @@ module Factories
       association :author, factory: :person
       association :reference, :factory => :training
     end
+
+    factory :location_todo do |t| 
+      t.name "todo 1"
+      t.association :project
+    end
   end
 end

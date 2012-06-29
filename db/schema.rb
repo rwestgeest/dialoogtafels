@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120627123407) do
+ActiveRecord::Schema.define(:version => 20120629093259) do
 
   create_table "accounts", :force => true do |t|
     t.string   "email",                :limit => 150,                      :null => false
@@ -55,6 +55,28 @@ ActiveRecord::Schema.define(:version => 20120627123407) do
   end
 
   add_index "conversations", ["location_id"], :name => "index_conversations_on_location_id"
+
+  create_table "finished_location_todos", :force => true do |t|
+    t.integer  "location_todo_id"
+    t.integer  "location_id"
+    t.integer  "tenant_id"
+    t.datetime "created_at",       :null => false
+    t.datetime "updated_at",       :null => false
+  end
+
+  add_index "finished_location_todos", ["location_id"], :name => "index_finished_location_todos_on_location_id"
+  add_index "finished_location_todos", ["location_todo_id"], :name => "index_finished_location_todos_on_location_todo_id"
+
+  create_table "location_todos", :force => true do |t|
+    t.string   "name",       :limit => 100
+    t.integer  "project_id"
+    t.integer  "tenant_id"
+    t.datetime "created_at",                :null => false
+    t.datetime "updated_at",                :null => false
+  end
+
+  add_index "location_todos", ["name"], :name => "index_location_todos_on_name"
+  add_index "location_todos", ["project_id"], :name => "index_location_todos_on_project_id"
 
   create_table "locations", :force => true do |t|
     t.string   "name",               :limit => 100

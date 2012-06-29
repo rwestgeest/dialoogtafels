@@ -15,6 +15,7 @@ class Location < ApplicationModel
   has_many :conversation_leaders, through: :conversations
   has_many :participants, through: :conversations
   has_many :location_comments, foreign_key: :reference_id
+  has_many :finished_location_todos, :inverse_of => :location
 
 
   attr_accessible :name, :address, :postal_code, :city, :organizer_id, :lattitude, :longitude, :published, :photo, :description, :project
@@ -37,6 +38,26 @@ class Location < ApplicationModel
   def initialize(attributes = nil, options = {})
     super(attributes, options) 
     self.city ||= Tenant.current && Tenant.current.name 
+  end
+
+  def todo_progress
+    return 100 if project.location_todos.empty?
+    100 * finished_location_todos.count / project.location_todos.count
+  end
+
+  def tick_done(todo_id)
+    begin 
+      todo_to_tick = project.location_todos.find(todo_id)
+      return if todo_to_tick.done_for_location?(self)
+      FinishedLocationTodo.create(:location => self, :location_todo => todo_to_tick)
+    rescue ActiveRecord::RecordNotFound
+      # this is ok
+    end
+  end
+
+  def tick_undone(todo_id)
+    finished_todo = FinishedLocationTodo.where(:location_todo_id => todo_id, :location_id => self.id).first
+    finished_todo && finished_todo.destroy
   end
 
   def available_conversations_for(person)

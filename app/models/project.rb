@@ -5,6 +5,9 @@ class Project < ActiveRecord::Base
   attr_accessible :name, :max_participants_per_table
   validates :name, :presence => true
 
+  has_many :location_todos, :inverse_of => :project
+  has_many :locations
+
   def initialize(*attrs) 
     super(*attrs)
   end
@@ -16,6 +19,10 @@ class Project < ActiveRecord::Base
 
   def start_time
     super || Time.now
+  end
+
+  def location_count
+    locations.count
   end
 
 end
