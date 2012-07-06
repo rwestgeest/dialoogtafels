@@ -71,12 +71,16 @@ describe Registration::ConversationLeadersController do
         current_account.should == Account.last
         response.should redirect_to confirm_registration_conversation_leaders_url
       end
+      it "creates a notification for the registration" do
+        ConversationLeader.any_instance.should_receive(:save_with_notification)
+        post :create, conversation_leader: valid_attributes
+      end
     end
 
     describe "with invalid params" do
       before do
         # Trigger the behavior that occurs when invalid params are submitted
-        ConversationLeader.any_instance.stub(:save).and_return(false)
+        ConversationLeader.any_instance.stub(:save_with_notification).and_return(false)
         post :create, {:conversation_leader => valid_attributes}
       end
       it "assigns a newly created but unsaved person as @person" do

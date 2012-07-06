@@ -15,7 +15,7 @@ class Registration::ParticipantsController < PublicController
       return
     end
 
-    if @participant.save
+    if @participant.save_with_notification
       sign_in @participant.account
       redirect_to confirm_registration_participants_url, notice: I18n.t('registration.participants.welcome')
     else

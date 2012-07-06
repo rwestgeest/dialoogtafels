@@ -9,4 +9,7 @@ class Participant < Contributor
                     :format => {:with => EMAIL_REGEXP }
   validates :conversation, :presence => true
 
+  def save_with_notification
+    save && Postman.deliver(:new_participant, self)
+  end
 end

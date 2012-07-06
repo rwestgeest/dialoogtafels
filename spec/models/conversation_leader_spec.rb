@@ -53,6 +53,24 @@ describe ConversationLeader do
       end
     end
 
+    describe "save_with_notification" do
+      let!(:conversation) { FactoryGirl.create :conversation }
+      let(:conversation_leader) { FactoryGirl.build :conversation_leader, :conversation => conversation }
+      it "saves the conversation_leader" do
+        expect { conversation_leader.save_with_notification }.to change(ConversationLeader, :count).by(1)
+      end
+      it "sends a notification" do
+        Postman.stub(:deliver).with(:account_welcome, an_instance_of(TenantAccount))
+        Postman.should_receive(:deliver).with(:new_conversation_leader,an_instance_of(ConversationLeader))
+        conversation_leader.save_with_notification
+      end
+      it "does not send when save fails" do
+        Postman.should_not_receive(:deliver).with(:new_conversation_leader,an_instance_of(ConversationLeader))
+        conversation_leader.name = ''
+        conversation_leader.save_with_notification
+      end
+    end
+
   end
 end
 

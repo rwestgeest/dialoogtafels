@@ -66,12 +66,16 @@ describe Registration::ParticipantsController do
         current_account.should == Account.last
         response.should redirect_to confirm_registration_participants_url
       end
+      it "creates a notification for the registration" do
+        Participant.any_instance.should_receive(:save_with_notification)
+        post :create, participant: valid_attributes
+      end
     end
 
     describe "with invalid params" do
       before do
         # Trigger the behavior that occurs when invalid params are submitted
-        Participant.any_instance.stub(:save).and_return(false)
+        Participant.any_instance.stub(:save_with_notification).and_return(false)
         post :create, {:participant => valid_attributes}
       end
       it "assigns a newly created but unsaved person as @person" do

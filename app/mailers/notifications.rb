@@ -29,4 +29,12 @@ class Notifications < ActionMailer::Base
     @invitation = invitation 
     mail from: addressee.tenant.from_email, to: addressee.email, subject: @invitation.subject
   end
+
+  def new_participant(participant)
+    mail from: participant.tenant.from_email, to: participant.email
+  end
+
+  def new_conversation_leader(conversation_leader)
+    mail from: conversation_leader.tenant.from_email, to: conversation_leader.email
+  end
 end
