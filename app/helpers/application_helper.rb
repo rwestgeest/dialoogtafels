@@ -98,6 +98,7 @@ module ApplicationHelper
     return nil if conversation.participants_full?
     link_to *args
   end
+
   def leader_registration(conversation, *args)
     return nil if conversation.leaders_full?
     link_to *args
