@@ -69,19 +69,15 @@ describe Location do
         location.available_conversations_for(person).should == [conversation]
       end
       it "contains conversations that have only conversation leaders full" do
-        Conversation.update_counters conversation.id, 
-                                    :conversation_leader_count => conversation.max_conversation_leaders 
+        fillup(conversation, :conversation_leaders)
         location.available_conversations_for(person).should == [conversation]
       end
       it "contains conversations that have only paricipants full" do
-        Conversation.update_counters conversation.id, 
-                                    :participant_count => conversation.max_participants
+        fillup(conversation, :participants)
         location.available_conversations_for(person).should == [conversation]
       end
       it "contains no conversations that are full" do
-        Conversation.update_counters conversation.id, 
-                                    :conversation_leader_count => conversation.max_conversation_leaders, 
-                                    :participant_count => conversation.max_participants
+        fillup(conversation, :conversation_leaders, :participants)
         location.available_conversations_for(person).should == []
       end
       it "contains no conversations where person plays conversation leader" do
@@ -92,6 +88,49 @@ describe Location do
         Participant.create! conversation:  conversation , :person => person
         location.available_conversations_for(person).should == []
       end
+    end
+    describe "full?" do
+      let(:location) { FactoryGirl.create :location } 
+      let(:conversation) { FactoryGirl.create :conversation, location: location }
+      alias_method :create_conversation, :conversation
+
+      subject { location } 
+
+      it "is not full without conversations" do
+        location.should_not be_full
+      end
+
+      it "is not full with non full conversations " do
+        create_conversation
+        location.should_not be_full 
+      end
+
+      it "is full with one full conversaions" do
+        fillup(conversation, :conversation_leaders, :participants)
+        location.should be_full
+      end
+
+      context "with one full conversation" do
+        before { fillup(conversation, :conversation_leaders, :participants) }
+        let!(:another_conversation) { FactoryGirl.create :conversation, location: location  }
+
+        it "is not full with another non_full conversation" do
+          location.should_not be_full
+        end
+
+        it "is full with all full conversations" do
+          fillup(another_conversation, :conversation_leaders, :participants)
+          location.should be_full
+        end
+      end
+    end
+
+    def fillup(conversation, *what_to_fill)
+      return unless what_to_fill.include?(:conversation_leaders) || what_to_fill.include?(:participants)
+      counters = {}
+      counters[:conversation_leader_count] = conversation.max_conversation_leaders if what_to_fill.include?(:conversation_leaders)
+      counters[:participant_count] = conversation.max_participants if what_to_fill.include?(:participants)
+      Conversation.update_counters conversation.id, counters
     end
   end
 end

@@ -40,6 +40,10 @@ class Location < ApplicationModel
     self.city ||= Tenant.current && Tenant.current.name 
   end
 
+  def full? 
+    conversations.fulls.count == conversations.count && conversations.count > 0
+  end
+
   def todo_progress
     return 100 if project.location_todos.empty?
     100 * finished_location_todos.count / project.location_todos.count

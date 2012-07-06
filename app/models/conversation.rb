@@ -7,7 +7,7 @@ class Conversation < ActiveRecord::Base
   include ScopedModel
   scope_to_tenant
   
-  belongs_to :location
+  belongs_to :location, inverse_of: :conversations
   has_many :participants
   has_many :conversation_leaders
 
@@ -18,6 +18,9 @@ class Conversation < ActiveRecord::Base
 
   scope :availables, includes(:location => :project)
                     .where("(conversations.conversation_leader_count < conversations.number_of_tables) or (conversations.participant_count < (number_of_tables * projects.max_participants_per_table))")
+
+  scope :fulls, includes(:location => :project)
+                .where("(conversations.conversation_leader_count >= conversations.number_of_tables) and (conversations.participant_count >= (number_of_tables * projects.max_participants_per_table))")
 
   def initialize(*args)
     super(*args)
