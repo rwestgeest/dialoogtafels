@@ -20,6 +20,8 @@ class Training < ActiveRecord::Base
   include ScopedModel
   scope_to_tenant
 
+  scope :availables, where("participant_count < max_participants")
+
   def has_invited?(person)
     invites.include?(person.id)
   end

@@ -1,8 +1,7 @@
 class Contributor::TrainingRegistrationsController < ApplicationController
   def index
     @attendee = current_person
-    @available_trainings = Training.all - @attendee.trainings
-    render :index
+    render_index
   end
   def create
     @attendee = current_person
@@ -15,7 +14,7 @@ class Contributor::TrainingRegistrationsController < ApplicationController
     render_index
   end
   def render_index
-    @available_trainings = Training.all - @attendee.trainings
+    @available_trainings = Training.availables - @attendee.trainings
     render :index
   end
 end

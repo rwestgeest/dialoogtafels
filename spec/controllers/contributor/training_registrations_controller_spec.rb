@@ -12,7 +12,7 @@ describe Contributor::TrainingRegistrationsController do
 
   describe "GET 'index'" do
     before do
-      create_training 
+      create_training
     end
     it "assigns the conversation leader and trainings" do
       get :index 
@@ -28,6 +28,13 @@ describe Contributor::TrainingRegistrationsController do
       it "are not rendered in available" do
         person.register_for training
         get :index 
+        response.body.should_not have_selector("#training_#{training.id}")
+      end
+    end
+    context "full trainings" do
+      it "are not rendered in available" do
+        Training.update_counters training, :participant_count => training.max_participants
+        get :index
         response.body.should_not have_selector("#training_#{training.id}")
       end
     end

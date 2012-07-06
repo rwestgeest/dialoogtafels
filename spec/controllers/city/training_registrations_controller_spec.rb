@@ -45,6 +45,13 @@ describe City::TrainingRegistrationsController do
           response.body.should_not have_selector("#training_#{training.id}")
         end
       end
+      context "full trainings" do
+        it "are not rendered in available" do
+          Training.update_counters training, :participant_count => training.max_participants
+          do_get
+          response.body.should_not have_selector("#training_#{training.id}")
+        end
+      end
     end
   end
 

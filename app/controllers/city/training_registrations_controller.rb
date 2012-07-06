@@ -20,7 +20,7 @@ class City::TrainingRegistrationsController < ApplicationController
   end
   private
   def render_index
-    @available_trainings = Training.all - @attendee.trainings
+    @available_trainings = Training.availables - @attendee.trainings
     render :index
   end
 end
