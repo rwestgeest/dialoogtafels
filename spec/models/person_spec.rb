@@ -127,7 +127,7 @@ describe Person do
       let(:person) { FactoryGirl.create :person }
       let(:conversation_leader) { FactoryGirl.create :conversation_leader, person: person }
 
-      describe "adding one", :focus => true do
+      describe "adding one" do
 
         it "adds the person it to the attendee list" do
           person.register_for(training_id)
