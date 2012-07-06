@@ -129,6 +129,7 @@ GEM
     rb-readline (0.4.2)
     rdoc (3.12)
       json (~> 1.4)
+    recaptcha (0.3.4)
     rspec (2.10.0)
       rspec-core (~> 2.10.0)
       rspec-expectations (~> 2.10.0)
@@ -197,6 +198,7 @@ DEPENDENCIES
   paperclip (~> 3.0)
   rails (= 3.2.3)
   rb-readline
+  recaptcha
   rspec-rails (~> 2.10.0)
   sass-rails (~> 3.2.3)
   shoulda-matchers (~> 1.1.0)

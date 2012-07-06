@@ -9,6 +9,12 @@ class Registration::ParticipantsController < PublicController
   def create
     @participant = Participant.new(params[:participant])
 
+    unless Captcha.verified?(self)
+      flash.alert = I18n.t('registration.captcha_error')
+      render_new
+      return
+    end
+
     if @participant.save
       sign_in @participant.account
       redirect_to confirm_registration_participants_url, notice: I18n.t('registration.participants.welcome')

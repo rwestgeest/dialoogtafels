@@ -4,7 +4,7 @@ describe Registration::OrganizersController do
   prepare_scope :tenant
 
   def valid_attributes
-    FactoryGirl.attributes_for(:organizer).stringify_keys
+    @valid_attributes ||= FactoryGirl.attributes_for(:organizer).stringify_keys
   end
   
   describe "GET new" do
@@ -51,6 +51,7 @@ describe Registration::OrganizersController do
         response.should render_template("new")
       end
     end
+    it_should_behave_like "a_captcha_handler", :organizer
   end
 
 

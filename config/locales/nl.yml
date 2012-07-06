@@ -256,6 +256,7 @@ nl:
       new: 
         send_password: 'Reset mijn wachtwoord'
   registration:
+    captcha_error: "Je hebt de captcha niet goed ingevuld"
     organizers:
       welcome: "Dank voor je registratie en welkom bij dialoogtafels. Je kunt hieronder direct je locatie opgeven en publiceren."
     participants:

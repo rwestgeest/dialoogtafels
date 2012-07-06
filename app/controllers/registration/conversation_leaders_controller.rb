@@ -9,6 +9,12 @@ class Registration::ConversationLeadersController < PublicController
   def create
     @conversation_leader = ConversationLeader.new(params[:conversation_leader])
 
+    unless Captcha.verified?(self)
+      flash.alert = I18n.t('registration.captcha_error')
+      render_new
+      return
+    end
+
     if @conversation_leader.save
       sign_in @conversation_leader.account
       redirect_to confirm_registration_conversation_leaders_url, notice: I18n.t('registration.conversation_leaders.welcome')

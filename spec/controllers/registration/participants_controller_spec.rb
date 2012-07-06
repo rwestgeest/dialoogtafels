@@ -7,7 +7,7 @@ describe Registration::ParticipantsController do
   let(:conversation) { FactoryGirl.create :conversation }
 
   def valid_attributes
-    FactoryGirl.attributes_for(:participant, conversation_id: conversation.to_param).stringify_keys
+    @valid_attributes ||= FactoryGirl.attributes_for(:participant, conversation_id: conversation.to_param).stringify_keys
   end
 
   describe "GET new" do
@@ -82,6 +82,8 @@ describe Registration::ParticipantsController do
         response.should render_template("new")
       end
     end
+
+    it_should_behave_like "a_captcha_handler", :participant
   end
 
 end
