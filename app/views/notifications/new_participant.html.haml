@@ -1,0 +1,14 @@
+%h2 
+  Beste
+  =@organizer.name
+%p
+  =@participant.name
+  heeft zich aangemeld als deelnemer voor een gesprek op jouw locatie:
+  %br
+  =time_period @conversation
+
+%p
+  Kijk 
+  =link_to 'hier', city_location_path(@conversation.location.to_param, host: Tenant.current.host)
+  voor de huidige status van je aanmeldingen.
+

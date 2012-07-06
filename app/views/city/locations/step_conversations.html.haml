@@ -1,7 +1,8 @@
-- title 'Voeg dialoog ronden toe'
+- title 'Voeg gesprekken toe'
 .dialog-container
   %h3= @location.name
-#conversations
-  = render partial: 'conversations/index', locals: { conversations: @location.conversations }
+.dialog-container
+  #conversations
+    = render partial: 'conversations/index', locals: { conversations: @location.conversations }
 .actions
   = link_to "Voeg publicatie details toe", new_city_location_publication_path(:location_id => @location.to_param)

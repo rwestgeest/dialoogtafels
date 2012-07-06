@@ -15,22 +15,23 @@
         #title_container
           &nbsp;
         #topmenu
-      %section#submenu_container
-        .submenu
-          =link_to "waar kan ik meedoen", locations_url
-        .submenu
-          =link_to "aanmelden als tafelorganisator", new_registration_organizers_url
-        .submenu
-          =link_to "mijn tafels", login_url
-        .submenu
-          =link_to "terug naar de site", tenant_site_url
-      %section#content_container
-        = flash_tags
-        %h1= yield :title
-        = yield
-      %section#right_container{ :style=> "background: url('/assets/sassenheim_city_name_right.png') no-repeat" }
+      %section#columns
+        %section#submenu_container
+          .submenu
+            =link_to "waar kan ik meedoen", locations_url
+          .submenu
+            =link_to "aanmelden als tafelorganisator", new_registration_organizers_url
+          .submenu
+            =link_to "mijn tafels", login_url
+          .submenu
+            =link_to "terug naar de site", tenant_site_url
+        %section#content_container
+          = flash_tags
+          %h1= yield :title
+          = yield
+        %section#right_container{ :style=> "background: url('/assets/sassenheim_city_name_right.png') no-repeat" } &nbsp;
       .clear
-      #footer
+      %section#footer
         %span.dialoog_txt
           Dag van de Dialoog 
         &nbsp; &nbsp;

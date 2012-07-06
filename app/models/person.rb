@@ -27,9 +27,9 @@ class Person < ActiveRecord::Base
       return register_for Training.find(training) unless training.is_a? Training
       trainings << training
       return training
-    rescue ActiveRecord::RecordInvalid
+    rescue ActiveRecord::RecordInvalid => e
       return nil
-    rescue ActiveRecord::RecordNotFound
+    rescue ActiveRecord::RecordNotFound => e
       return nil
     end
   end

@@ -7,7 +7,6 @@ class TrainingRegistration < ActiveRecord::Base
 
   validates_presence_of :training
   validates_presence_of :attendee
-  validates_uniqueness_of :attendee_id
-
+  validates_uniqueness_of :attendee_id, scope: :training_id
   attr_accessible :training_id, :attendee_id
 end

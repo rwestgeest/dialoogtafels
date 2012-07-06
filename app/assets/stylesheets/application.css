@@ -9,8 +9,8 @@
  * compiled file, but it's generally better to create a new file per style scope.
  *
  *= require_self
- *= require locations
  *= require forms
+ *= require locations
  *= require location_comments
  *= require trainings
 */

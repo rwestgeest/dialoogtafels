@@ -30,11 +30,17 @@ class Notifications < ActionMailer::Base
     mail from: addressee.tenant.from_email, to: addressee.email, subject: @invitation.subject
   end
 
-  def new_participant(participant)
-    mail from: participant.tenant.from_email, to: participant.email
+  def new_participant(participant, addressee)
+    @participant = participant
+    @organizer = addressee
+    @conversation = participant.conversation
+    mail from: participant.tenant.from_email, to: addressee.email
   end
 
-  def new_conversation_leader(conversation_leader)
-    mail from: conversation_leader.tenant.from_email, to: conversation_leader.email
+  def new_conversation_leader(conversation_leader, addressee)
+    @conversation_leader = conversation_leader
+    @organizer = addressee
+    @conversation = conversation_leader.conversation
+    mail from: conversation_leader.tenant.from_email, to: addressee.email
   end
 end

@@ -1,0 +1,15 @@
+= "Beste #{ @organizer.name }"
+
+
+="#{ @conversation_leader.name } heeft zich aangemeld als gespreksleider een gesprek op jouw locatie:"
+
+
+=time_period @conversation
+
+
+Klik op de onderstaande link voor de huidige status van je aanmeldingen.
+
+
+=city_location_url(@conversation.location.to_param, host: Tenant.current.host) 
+
+

@@ -11,7 +11,7 @@ class ConversationLeader < Contributor
   validates :conversation, :presence => true
 
   def save_with_notification
-    save && Postman.deliver(:new_conversation_leader, self)
+    save && Postman.deliver(:new_conversation_leader, self, conversation.organizer)
   end
 
 end

@@ -248,6 +248,10 @@ nl:
       subject: "Je dialoogtafels account is gereset"
     account_welcome:
       subject: "Welkom bij dialoogtafels - er is een account voor je aangemakt"
+    new_participant:
+      subject: "Er is een nieuwe deelnemer aangemeld voor je tafel"
+    new_conversation_leader:
+      subject: "Er is een nieuwe gespreksleider aangemeld voor je tafel"
   account:
     sessions:
       new: 
@@ -314,6 +318,10 @@ nl:
     training_registrations:
       index:
         click_to_expand: "Klick om de beschrijving te lezen"
+  settings:
+    side_bar:
+      project: "Projectinstellingen"
+      profile_fields: "profielvelden"
   location_comment:
     reaction_to: "Reactie op '%{subject}'"
   not_authorized: "Je bent niet geautoriseerd voor deze actie"

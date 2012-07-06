@@ -127,7 +127,7 @@ describe Person do
       let(:person) { FactoryGirl.create :person }
       let(:conversation_leader) { FactoryGirl.create :conversation_leader, person: person }
 
-      describe "adding one" do
+      describe "adding one", :focus => true do
 
         it "adds the person it to the attendee list" do
           person.register_for(training_id)
@@ -142,11 +142,19 @@ describe Person do
           TrainingRegistration.last.training.should == training
         end 
 
-        it "cannot register twice" do
+        it "cannot register twice for the same training" do
           expect { 
             person.register_for(training_id)
             person.register_for(training_id)
           }.to change(TrainingRegistration, :count).by(1)
+        end
+
+        it "creates a registration instance for each training" do
+          another_training = FactoryGirl.create :training
+          expect {
+            person.register_for(training.id) 
+            person.register_for(another_training.id) 
+          }.to change(TrainingRegistration, :count).by(2)
         end
 
         it "adds the training to the attendees training list" do

@@ -10,6 +10,6 @@ class Participant < Contributor
   validates :conversation, :presence => true
 
   def save_with_notification
-    save && Postman.deliver(:new_participant, self)
+    save && Postman.deliver(:new_participant, self, conversation.organizer)
   end
 end

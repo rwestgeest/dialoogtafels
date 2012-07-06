@@ -28,6 +28,8 @@ class Conversation < ActiveRecord::Base
     write_attribute(:end_time, start_time && start_time + default_length.minutes) unless end_time
   end 
 
+  delegate :organizer, to: :location
+
   def default_length
     location && location.conversation_length || 0
   end

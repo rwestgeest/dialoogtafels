@@ -24,6 +24,11 @@ module ApplicationHelper
     raw m.render(request.parameters, current_account)
   end
 
+  def guarded_link_to(what, url_options, html_options = nil)
+    return '' unless ActionGuard.authorized?(current_account, url_options.stringify_keys)
+    link_to(what, url_options, html_options)
+  end
+
   def page_info(page_info)
     content_for(:page_info, page_info)
   end
@@ -83,7 +88,11 @@ module ApplicationHelper
   end
 
   def registered_at(object)
-    t('registered_at', time: l(object.created_at, format: :date))
+    if object.created_at
+      t('registered_at', time: l(object.created_at, format: :date))
+    else
+      'weet niet'
+    end
   end
 
   def registered_as(object)
@@ -135,6 +144,11 @@ module ApplicationHelper
         $('#notice').delay(10000).fadeOut('slow');
       </script>
     })
+  end
+
+  def recaptcha_error_flash_tag(message)
+    return '' if message != 'recaptcha-not-reachable'
+    flash_tag(:recaptcha_error, I18n.t(message))
   end
 
   def created_at(object)

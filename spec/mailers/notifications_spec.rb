@@ -72,4 +72,45 @@ describe Notifications do
     end
 
   end
+
+  describe "new_participant" do
+    let(:conversation) { FactoryGirl.create :conversation }
+    let(:organizer) { conversation.organizer }
+    let(:participant) { FactoryGirl.build :participant, conversation: conversation }
+    let(:mail) { Notifications.new_participant participant, organizer }
+    it "renders the headers" do
+      mail.subject.should eq(I18n.t("notifications.new_participant.subject"))
+      mail.to.should eq([organizer.email])
+      mail.from.should eq([organizer.tenant.from_email])
+    end
+    it "renders the organizer and participant names in the body" do
+      mail.body.encoded.should include(organizer.name)
+      mail.body.encoded.should include(participant.name)
+    end
+    it "renders a ling to the location" do
+      mail.body.encoded.should include(city_location_url(conversation.location.to_param, :host => organizer.tenant.host))
+    end
+  end
+
+  describe "new conversation_leader" do
+    let(:conversation) { FactoryGirl.create :conversation }
+    let(:organizer) { conversation.organizer }
+    let(:conversation_leader) { FactoryGirl.build :conversation_leader, conversation: conversation }
+    let(:mail) { Notifications.new_conversation_leader conversation_leader, organizer }
+
+    it "renders the headers" do
+      mail.subject.should eq(I18n.t("notifications.new_conversation_leader.subject"))
+      mail.to.should eq([organizer.email])
+      mail.from.should eq([organizer.tenant.from_email])
+    end
+
+    it "renders the organizer and conversation_leader names in the body" do
+      mail.body.encoded.should include(organizer.name)
+      mail.body.encoded.should include(conversation_leader.name)
+    end
+    it "renders a ling to the location" do
+      mail.body.encoded.should include(city_location_url(conversation.location.to_param, :host => organizer.tenant.host))
+    end
+  end
+
 end

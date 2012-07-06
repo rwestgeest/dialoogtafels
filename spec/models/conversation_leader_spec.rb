@@ -61,11 +61,14 @@ describe ConversationLeader do
       end
       it "sends a notification" do
         Postman.stub(:deliver).with(:account_welcome, an_instance_of(TenantAccount))
-        Postman.should_receive(:deliver).with(:new_conversation_leader,an_instance_of(ConversationLeader))
+        Postman.should_receive(:deliver).
+          with(:new_conversation_leader, 
+               an_instance_of(ConversationLeader),
+               conversation.organizer)
         conversation_leader.save_with_notification
       end
       it "does not send when save fails" do
-        Postman.should_not_receive(:deliver).with(:new_conversation_leader,an_instance_of(ConversationLeader))
+        Postman.should_not_receive(:deliver)
         conversation_leader.name = ''
         conversation_leader.save_with_notification
       end

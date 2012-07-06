@@ -1,6 +1,6 @@
 %li{:id => "person_#{person.id}", :title => "tel: #{person.telephone}"}
   %span.operations
-    = link_to image_tag('handle-small.png'), city_registrations_path(person_id: person.to_param), :title => "wijzig inschrijvingen"
+    = guarded_link_to image_tag('handle-small.png'), {controller: 'city/registrations', action: 'index', person_id: person.to_param}, :title => "wijzig inschrijvingen"
     = mail_to person.email, image_tag('mail.gif'), :class => 'email', :title => "Stuur een email"
     = link_to image_tag('edit.gif'), edit_city_person_path(person.id), :class => 'edit', :remote => true, :title => "bewerk profiel"
   %span.no-operations
