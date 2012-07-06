@@ -18,7 +18,7 @@ shared_examples_for "a_captcha_handler" do |model_name|
   it "assigns the organizer with the filled in values" do
     assigns(model_name).should be_a_new(model_class)
     valid_attributes.each do |key, value|
-      assigns(model_name).send(key).should be(value, "#{key}")
+      assigns(model_name).send(key).to_s.should eq(value)
     end
   end
 end
