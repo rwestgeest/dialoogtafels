@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120629093259) do
+ActiveRecord::Schema.define(:version => 20120706210448) do
 
   create_table "accounts", :force => true do |t|
     t.string   "email",                :limit => 150,                      :null => false
@@ -169,20 +169,23 @@ ActiveRecord::Schema.define(:version => 20120629093259) do
   end
 
   create_table "tenants", :force => true do |t|
-    t.string   "name",                     :limit => 50,                  :null => false
-    t.string   "url_code",                 :limit => 50,                  :null => false
-    t.string   "representative_name",      :limit => 50,                  :null => false
-    t.string   "representative_email",     :limit => 150,                 :null => false
-    t.string   "representative_telephone", :limit => 50,                  :null => false
+    t.string   "name",                     :limit => 50,                                                       :null => false
+    t.string   "url_code",                 :limit => 50,                                                       :null => false
+    t.string   "representative_name",      :limit => 50,                                                       :null => false
+    t.string   "representative_email",     :limit => 150,                                                      :null => false
+    t.string   "representative_telephone", :limit => 50,                                                       :null => false
     t.text     "invoice_address"
-    t.string   "site_url",                 :limit => 250,                 :null => false
-    t.string   "info_email",               :limit => 150,                 :null => false
-    t.string   "from_email",               :limit => 150,                 :null => false
-    t.datetime "created_at",                                              :null => false
-    t.datetime "updated_at",                                              :null => false
+    t.string   "site_url",                 :limit => 250,                                                      :null => false
+    t.string   "info_email",               :limit => 150,                                                      :null => false
+    t.string   "from_email",               :limit => 150,                                                      :null => false
+    t.datetime "created_at",                                                                                   :null => false
+    t.datetime "updated_at",                                                                                   :null => false
     t.integer  "current_project_id"
     t.integer  "active_project_id"
-    t.string   "host",                     :limit => 250, :default => "", :null => false
+    t.string   "host",                     :limit => 250, :default => "",                                      :null => false
+    t.string   "top_image",                               :default => "/assets/default_header_background.png"
+    t.string   "right_image",                             :default => "/assets/deault_city_name_right.png"
+    t.string   "public_style_sheet",                      :default => "public"
   end
 
   add_index "tenants", ["current_project_id"], :name => "index_tenants_on_current_project_id"

@@ -3,7 +3,7 @@ class Tenant < ActiveRecord::Base
   has_many :accounts
   has_one  :active_project, :class_name => "Project"
   attr_accessible :from_email, :info_email, :invoice_address, :name, :representative_email, :representative_name, 
-                  :representative_telephone, :site_url, :url_code, :host
+                  :representative_telephone, :site_url, :url_code, :host, :top_image, :right_image, :public_style_sheet
 
   validates :name, :presence => true
   validates :url_code, :presence => true

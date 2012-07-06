@@ -128,6 +128,13 @@ module ApplicationHelper
     link_to link, *args
   end
 
+  def top_background_image
+    current_tenant.top_image
+  end
+  def right_background_image
+    current_tenant.right_image
+  end
+
   private
   def selection_path(request_params)
     result = request_params['controller']

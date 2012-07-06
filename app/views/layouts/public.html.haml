@@ -9,7 +9,7 @@
       = javascript_include_tag "html5"
   %body
     #body_container
-      %section#top_container{:style=>"background: url('/assets/sassenheim_header_background.png');"}
+      %section#top_container{:style=>"background: url('#{top_background_image}');"}
         #dialoog_stad_top
           = current_tenant.name.upcase
         #title_container
@@ -29,7 +29,7 @@
           = flash_tags
           %h1= yield :title
           = yield
-        %section#right_container{ :style=> "background: url('/assets/sassenheim_city_name_right.png') no-repeat" } &nbsp;
+        %section#right_container{ :style=> "background: url('#{right_background_image}') no-repeat" } &nbsp;
       .clear
       %section#footer
         %span.dialoog_txt
