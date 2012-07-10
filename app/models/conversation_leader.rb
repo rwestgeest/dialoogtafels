@@ -10,6 +10,10 @@ class ConversationLeader < Contributor
                     :format => {:with => EMAIL_REGEXP }
   validates :conversation, :presence => true
 
+  def ordinal_value
+    1
+  end
+
   def save_with_notification
     save && Postman.deliver(:new_conversation_leader, self, conversation.organizer)
   end

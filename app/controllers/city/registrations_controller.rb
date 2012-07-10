@@ -3,7 +3,7 @@ class City::RegistrationsController < ApplicationController
     begin 
       @people = Person.all
       @person = Person.find(params[:person_id])
-      @active_contributions = @person.active_contributions_for(active_project)
+      @active_contributions = @person.conversation_contributions_for(active_project)
       render_index
     rescue ActiveRecord::RecordNotFound
       render :action => 'select_person'
@@ -17,7 +17,7 @@ class City::RegistrationsController < ApplicationController
       contributor.project = active_project
       contributor.save!
       @location = contributor.conversation.location
-      @active_contributions = @person.active_contributions_for(active_project)
+      @active_contributions = @person.conversation_contributions_for(active_project)
       render :action => 'create'
     rescue ActiveRecord::RecordNotFound => e
       logger.warn e
@@ -36,7 +36,7 @@ class City::RegistrationsController < ApplicationController
     contributor = Contributor.find(params[:id])
     @person = contributor.person
     @location = contributor.conversation.location
-    @active_contributions = @person.active_contributions_for(active_project)
+    @active_contributions = @person.conversation_contributions_for(active_project)
     contributor.destroy
     render :action => 'create'
     rescue ActiveRecord::RecordNotFound
@@ -50,7 +50,7 @@ class City::RegistrationsController < ApplicationController
     params[:contribution].camelize.constantize
   end
   def render_index
-    @active_contributions = @person.active_contributions_for(active_project)
+    @active_contributions = @person.conversation_contributions_for(active_project)
     @available_locations = Location.all
     render :action => 'index'
   end

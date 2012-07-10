@@ -200,9 +200,9 @@ describe Account do
           account.landing_page.should == '/organizer/locations'
         end
 
-        describe "current_contribution"  do
+        describe "highest_contribution"  do
           it "is the contribution to the current project" do
-            account.active_contribution.should == account.contribution_to(account.tenant.active_project)
+            account.highest_contribution.should == account.highest_contribution_to(account.tenant.active_project)
           end
         end
       end
@@ -254,11 +254,19 @@ describe Account do
       end
       context "for participant" do
         let(:account) { FactoryGirl.create(:participant).account }
-        it {should == 'participant'} 
+        it {should == 'participant'}
+        context "whos also a conversation leader" do
+          before { FactoryGirl.create(:conversation_leader, :person => account.person) }
+          it {should == 'conversation_leader'}
+        end
       end
       context "for conversation_leader" do
         let(:account) { FactoryGirl.create(:conversation_leader).account }
         it {should == 'conversation_leader'} 
+        context "whos also a participant" do
+          before { FactoryGirl.create(:participant, :person => account.person) }
+          it {should == 'conversation_leader'}
+        end
       end
       context "for maintainer" do
         let(:account) { FactoryGirl.create(:maintainer_account) }

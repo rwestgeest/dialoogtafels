@@ -9,6 +9,10 @@ class Participant < Contributor
                     :format => {:with => EMAIL_REGEXP }
   validates :conversation, :presence => true
 
+  def ordinal_value
+    2
+  end
+
   def save_with_notification
     save && Postman.deliver(:new_participant, self, conversation.organizer)
   end

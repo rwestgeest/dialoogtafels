@@ -7,6 +7,9 @@ class Organizer < Contributor
                     :unique_account => true,
                     :format => {:with => EMAIL_REGEXP }
 
+  def ordinal_value
+    0
+  end
 
   def self.for_project_and_person(project, person)
     organizer = new

@@ -5,7 +5,7 @@ describe Contributor::RegistrationsController do
   prepare_scope :tenant
   login_as :participant
 
-  let(:contributor) { current_account.active_contribution }
+  let(:contributor) { current_account.highest_contribution}
   let(:conversation) { contributor.conversation }
   let(:location) { conversation.location }
   def valid_parameters
@@ -18,6 +18,7 @@ describe Contributor::RegistrationsController do
       response.should be_success
     end
     it "assigns the conversations" do
+      pending "should show all conversations" 
       get 'show'
       assigns(:conversation).should == conversation
     end

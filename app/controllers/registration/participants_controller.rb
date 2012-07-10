@@ -24,7 +24,7 @@ class Registration::ParticipantsController < PublicController
   end
 
   def confirm
-    @conversation = current_account.active_contribution.conversation
+    @conversation = current_account.highest_contribution.conversation
     @location = @conversation.location
   end
 

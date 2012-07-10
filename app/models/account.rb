@@ -55,18 +55,18 @@ class Account < ActiveRecord::Base
     Postman.deliver(:account_reset, self)
   end
 
-  def active_contribution
-    contribution_to(tenant.active_project)
+  def highest_contribution
+    @highest_contribution ||= highest_contribution_to(tenant.active_project)
   end
 
-  def contribution_to(project)
-    person.contributors.where(:project_id => project).first
+  def highest_contribution_to(project)
+    person.highest_contribution(project)
   end
 
   def role
     unless @role_value 
       @role_value = super
-      @role_value = active_contribution.class.to_s.underscore if @role_value == Contributor && active_contribution
+      @role_value = highest_contribution.class.to_s.underscore if @role_value == Contributor && highest_contribution
     end
     @role_value
   end

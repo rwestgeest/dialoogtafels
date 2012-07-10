@@ -52,7 +52,7 @@ module ControllerExtensions
   end
 
   def current_organizer
-    contribution = current_account.active_contribution 
+    contribution = current_account.highest_contribution 
     raise 'current account is not an organizer' unless contribution.is_a? Organizer
     return contribution
   end

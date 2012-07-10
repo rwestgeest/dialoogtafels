@@ -85,7 +85,7 @@ describe Person do
       end
     end
 
-    describe "contributions for project" do
+    describe "conversation_contributions for project" do
       let(:person) { FactoryGirl.create(:person) }
       let(:project) { Tenant.current.active_project }
       let(:conversation) { FactoryGirl.create :conversation }
@@ -93,32 +93,69 @@ describe Person do
 
       it "contains the contributor for the project provided" do
         conversation_leader = create_conversation_leader(person, project, conversation)
-        person.active_contributions_for(project).should == [conversation_leader]
+        person.conversation_contributions_for(project).should == [conversation_leader]
       end
 
       it "contains more contributors if available" do
         conversation_leader = create_conversation_leader(person, project, conversation)
         participant = create_participant(person, project, conversation)
-        person.active_contributions_for(project).should == [conversation_leader, participant]
+        person.conversation_contributions_for(project).should == [conversation_leader, participant]
       end
 
       it "contains contributors for more conversation if available" do
         conversation_leader = create_conversation_leader(person, project, FactoryGirl.create(:conversation))
         participant = create_participant(person, project, conversation)
-        person.active_contributions_for(project).should == [conversation_leader, participant]
+        person.conversation_contributions_for(project).should == [conversation_leader, participant]
       end
 
       it "does not contain contributions for another project" do
         other_project = FactoryGirl.create(:project)
         conversation_leader = create_conversation_leader(person, other_project, conversation)
-        person.active_contributions_for(project).should == []
+        person.conversation_contributions_for(project).should == []
       end
 
       it "does not contain contributions where i am organizer" do
         create_organizer(person, project)
-        person.active_contributions_for(project).should == []
+        person.conversation_contributions_for(project).should == []
       end 
 
+    end
+
+    describe "highest_contribution" do
+      let(:person) { FactoryGirl.create(:person) }
+      let(:project) { Tenant.current.active_project }
+      let(:conversation) { FactoryGirl.create :conversation }
+      let(:location) { conversation.location }
+      subject { person.highest_contribution(project) }
+
+      context "when i am conversation_leader" do
+        let!(:conversation_leader) { create_conversation_leader(person, project, conversation) }
+        it { should == conversation_leader }
+        context "and organizer" do
+          let!(:organizer) { create_organizer(person, project ) }
+          it { should == organizer }
+        end
+        context "and participant" do
+          let!(:participant) { create_participant(person, project, conversation) }
+          it { should == conversation_leader }
+        end
+      end
+
+      context "when i am participant" do
+        let!(:participant) { create_participant(person, project, conversation) }
+        it { should == participant }
+      end
+
+      context "when i am organizer" do
+        let!(:organizer) { create_organizer(person, project ) }
+        it { should == organizer }
+      end
+
+      context "for a specific project" do
+        let!(:other_project) { FactoryGirl.create :project }
+        let!(:conversation_leader) { create_conversation_leader(person, other_project, conversation) }
+        it { person.highest_contribution(other_project).should == conversation_leader }
+      end
     end
 
     describe "register_for training" do

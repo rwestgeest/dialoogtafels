@@ -28,7 +28,7 @@ describe Registration::ParticipantsController do
  
   describe "GET conirm" do
     login_as :participant
-    let(:contributor) { current_account.active_contribution }
+    let(:contributor) { current_account.highest_contribution}
     let(:conversation) { contributor.conversation }
     let(:location) { conversation.location }
 
@@ -37,6 +37,7 @@ describe Registration::ParticipantsController do
       response.should be_success
     end
     it "assigns the conversations" do
+      pending "should show all conversations"
       get 'confirm'
       assigns(:conversation).should == conversation
     end

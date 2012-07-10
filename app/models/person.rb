@@ -47,6 +47,11 @@ class Person < ActiveRecord::Base
   def conversations_participating_in
     conversations_participating_in_as_leader + conversations_participating_in_as_participant
   end
+
+  def highest_contribution(project)
+    contributors.for_project(project).sort { |x,y| x.ordinal_value <=> y.ordinal_value }.first
+  end
+
   def email=(email)
     self.account = TenantAccount.contributor(self) unless account
     self.account.email = email
@@ -63,7 +68,7 @@ class Person < ActiveRecord::Base
     profile_field_value_for(attribute).value
   end
   
-  def active_contributions_for(project)
+  def conversation_contributions_for(project)
     # contributors.where('contributors.project_id' => project.id)
      contributors.for_project(project.id).where("contributors.type <> 'Organizer'") 
   end
