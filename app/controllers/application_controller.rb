@@ -39,11 +39,11 @@ class ApplicationController < ActionController::Base
   end
 
   def current_organizer
-    current_account.active_contribution
+    current_account.highest_contribution
   end
 
   def current_conversation_leader
-    current_account.active_contribution
+    current_account.highest_contribution
   end
 
   def current_account_id

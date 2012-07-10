@@ -1,13 +1,12 @@
 require 'spec_helper'
 
-describe Participant do
+describe Participant, :focus => true  do
   describe 'validations' do
     prepare_scope :tenant
     let(:existing_participant) { FactoryGirl.create :participant } 
     it { should_not validate_presence_of :email }
     it { should validate_presence_of :name }
     it { should validate_presence_of :person }
-    it { should_not allow_value(existing_participant.email).for(:email) }
     ["rob@", "@mo.nl", "123.nl", "123@nl", "aaa.123.nl", "aaa.123@nl"].each do |illegal_mail|
       it { should_not allow_value(illegal_mail).for(:email) }
     end
@@ -19,33 +18,13 @@ describe Participant do
   context "with current tenant" do
     prepare_scope :tenant
 
-    describe "creating an participant" do
-      let!(:conversation) { FactoryGirl.create :conversation }
-
-      def create_participant
-        FactoryGirl.create :participant, :conversation => conversation
-      end
-
-      it "associates it for the tenants active project" do
-        create_participant
-        Participant.last.project.should == Tenant.current.active_project
-      end
-
-      it "creates an person" do
-        expect{ create_participant }.to change(Person, :count).by(1)
-        Participant.last.person.should == Person.last
-      end
-
-      it "creates a worker account with role participant" do
-        expect{ create_participant }.to change(Account, :count).by(1)
-        Account.last.person.should == Person.last
-      end
-
-      it "sends a welcome message" do
-        Postman.should_receive(:deliver).with(:account_welcome, an_instance_of(TenantAccount))
-        create_participant
+    it_should_behave_like "creating_a_contributor", Participant do
+      before(:all) { @conversation = FactoryGirl.create :conversation }
+      def create_contributor(extra_attributes = {})
+        FactoryGirl.create :participant, { :conversation => @conversation }.merge(extra_attributes)
       end
     end
+
     describe "save_with_notification" do
       let!(:conversation) { FactoryGirl.create :conversation }
       let(:participant) { FactoryGirl.build :participant, :conversation => conversation }

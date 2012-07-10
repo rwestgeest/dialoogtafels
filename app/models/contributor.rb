@@ -26,7 +26,11 @@ class Contributor < ApplicationModel
 
 
   def email=(email) 
-    self.person = Person.new unless person
+    return unless email
+    unless person && person.persisted?
+      located_person = Person.includes(:account).where("lower(accounts.email) = ?", email.downcase).first
+      self.person = located_person && located_person || Person.new
+    end
     person.email = email
   end
 

@@ -10,7 +10,7 @@ describe Organizer::LocationsController do
   end
 
   def current_organizer
-    current_account.active_contribution
+    current_account.highest_contribution
   end
 
   def create_location(attributes = {})

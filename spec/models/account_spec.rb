@@ -34,14 +34,18 @@ describe Account do
           Account.authenticate_by_token(account.authentication_token).should == account
         end
       end
+
       describe 'on password' do
         before { account.confirm_with_password :password => 'secret', :password_confirmation => 'secret' }
         it "fails when password does not match" do
           Account.authenticate_by_email_and_password(account.email, 'xxxx').should be_nil
           Account.authenticate_by_email_and_password("other"+account.email, 'secret').should be_nil
         end
-        it "passes when password matcher" do
+        it "passes when password matches" do
           Account.authenticate_by_email_and_password(account.email, 'secret').should == account
+        end
+        it "passes when email is spelled in another case" do
+          Account.authenticate_by_email_and_password(account.email.upcase, 'secret').should == account
         end
         it "fails when account is not confirmed" do
           account.update_attribute :confirmed_at, nil
@@ -206,6 +210,7 @@ describe Account do
           end
         end
       end
+
       context "coordinator" do
         let(:account) { 
           FactoryGirl.create(:coordinator_account, 
