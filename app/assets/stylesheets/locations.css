@@ -176,4 +176,16 @@ ul.person-list li {
   margin: 0px auto;
   padding: 5px 10px;
   background:white;
+} 
+.conversation-leaders-background {
+  background: url('/assets/conversation-leader-background.png') no-repeat; 
+  background-position:7px 0; 
+  padding-top:13px;
+  margin-bottom:4px;
+}
+.participants-background {
+  background: url('/assets/participants-background.png') no-repeat; 
+  background-position:7px 0;
+  padding-top:14px;
+  padding-bottom:3px
 }

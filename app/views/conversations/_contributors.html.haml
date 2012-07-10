@@ -1,16 +1,20 @@
-%h4 
-  Gespreksleiders
-- if conversation.conversation_leaders.empty?
-  %p Geen gespreksleiders
-- else
-  %ul.person-list
-    = render partial: 'shared/person', collection: conversation.conversation_leaders.map{|c| c.person}
-.clear
-%h4 
-  Deelnemers
-- if conversation.participants.empty?
-  %p Geen deelnemers
-- else
-  %ul.person-list
-    = render partial: 'shared/person', collection: conversation.participants.map{|p| p.person}
-.clear
+.conversation-leaders-background{:title => "Gespeksleiders"}
+  - if conversation.conversation_leaders.empty?
+    %ul.person-list
+      %li
+        %span.no-operations &nbsp;
+        Geen gespreksleiders
+  - else
+    %ul.person-list
+      = render partial: 'shared/person', collection: conversation.conversation_leaders.map{|c| c.person}
+  .clear
+.participants-background{:title => "Deelnemers" } 
+  - if conversation.participants.empty?
+    %ul.person-list
+      %li
+        %span.no-operations &nbsp;
+        Geen deelnemers
+  - else
+    %ul.person-list
+      = render partial: 'shared/person', collection: conversation.participants.map{|p| p.person}
+  .clear

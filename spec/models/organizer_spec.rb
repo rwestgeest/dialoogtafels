@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe Organizer, :focus => true do
+describe Organizer do
   describe 'validations' do
     prepare_scope :tenant
     let(:existing_organizer) { FactoryGirl.create :organizer } 

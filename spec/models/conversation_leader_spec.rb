@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe ConversationLeader, :focus => true do
+describe ConversationLeader do
   describe 'validations' do
     prepare_scope :tenant
     let(:existing_conversation_leader) { FactoryGirl.create :conversation_leader } 

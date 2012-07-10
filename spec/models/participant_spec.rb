@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe Participant, :focus => true  do
+describe Participant do
   describe 'validations' do
     prepare_scope :tenant
     let(:existing_participant) { FactoryGirl.create :participant } 
