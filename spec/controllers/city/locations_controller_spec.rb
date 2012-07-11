@@ -7,6 +7,7 @@ describe City::LocationsController do
   login_as :coordinator
 
   before(:all) { @organizer = FactoryGirl.create :organizer } 
+
   attr_reader :organizer
 
   def valid_attributes
@@ -22,10 +23,27 @@ describe City::LocationsController do
   end
 
   describe "GET index" do
+    let!(:location) { create_location }
     it "assigns all locations as @locations" do
-      location = create_location
       get :index, {}
       assigns(:locations).should eq([location])
+    end
+
+    context "with todo item supplied" do
+      let(:todo) {FactoryGirl.create :location_todo, :project => location.project }
+      def do_get 
+        get :index, :todo => todo.id 
+      end
+      it "assigns the selected todo" do
+        do_get
+        assigns(:selected_todo).should == todo
+      end
+      it "filters the locations on the ones with that todo unfinished" do
+        location_with_finished_todo = create_location(project: location.project)
+        location_with_finished_todo.tick_done(todo.id)
+        do_get
+        assigns(:locations).should == [location]
+      end
     end
   end
 

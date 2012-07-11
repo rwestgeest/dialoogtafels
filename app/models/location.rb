@@ -16,6 +16,7 @@ class Location < ApplicationModel
   has_many :participants, through: :conversations
   has_many :location_comments, foreign_key: :reference_id
   has_many :finished_location_todos, :inverse_of => :location
+  has_many :todos, through: :project, source: :location_todos
 
 
   attr_accessible :name, :address, :postal_code, :city, :organizer_id, :lattitude, :longitude, :published, :photo, :description, :project

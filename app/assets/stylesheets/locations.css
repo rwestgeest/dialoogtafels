@@ -189,3 +189,15 @@ ul.person-list li {
   padding-top:14px;
   padding-bottom:3px
 }
+.location-todo-progress {
+  cursor: pointer; 
+  color: #acacac; 
+  text-align:right; 
+  height:1.4em; 
+  padding:0 2px; 
+}
+span.progress_indicator { color:gray; font-weight:bold;text-align:center; display:inline-block; width:50px;}
+ul.location-todo-list { border-top; 1px solid lightgrey;list-style-type:none;padding:0; }
+ul.location-todo-list .done { margin:2px 0; color:gray; font-weight:bold;text-align:center; display:inline-block; width:50px;}
+ul.location-todo-list li { margin:0; }
+

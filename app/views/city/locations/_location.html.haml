@@ -5,6 +5,9 @@
       %br
       %span.schedule= "Georganiseerd door #{person_entry location.organizer}"
 
+    %td.table-status
+      .location-todo-progress{id: "location-todo-progress-#{location.id}", title: "Wijzig todo status"}
+        = render partial: '/city/todos/progress', locals: { location: location }
     %td.location-modified-state
       = created_at(location)
       = updated_at(location)

@@ -1,5 +1,7 @@
+%div#dialog-form
 - title "Dialoog locaties voor #{active_project.name}"
 - context_action 'Nieuwe locatie', new_city_location_path
+- page_side_bar 'side_bar'
 - if (@locations.empty?)
   = link_to "Maak je eerste dialoog locatie aan", new_city_location_path
 - else

@@ -1,0 +1,16 @@
+$("#location-todo-progress-<%= @location.id %>").html('<%= escape_javascript(render(:partial => "progress", :locals => {:location => @location})) %>');
+<% @todos.each do |todo| -%>
+  $("#todo-progress-image-<%= todo.id %>").replaceWith('<%= escape_javascript(progress_image(todo.progress, "todo-progress-image-#{todo.id}")) %>');
+<% end -%>
+$("#dialog-form").html('<%= escape_javascript(render(:partial => "index")) %>');
+$(".todo_check").click(function() {
+  var todo_id = $(this).attr('data-todo-id');
+  $.ajax({
+      url: '/city/locations/<%= @location.to_param %>/todos/' + todo_id,
+      data: { checked: this.checked },
+      type: 'put'
+  });
+  return false;
+});
+
+

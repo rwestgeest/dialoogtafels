@@ -1,6 +1,11 @@
 class City::LocationsController < ApplicationController
   def index
-    @locations = Location.all
+    @locations = active_project.locations
+    if params[:todo] 
+      @selected_todo = active_project.location_todos.find(params[:todo]) 
+      finished_location_ids = @selected_todo.finished_location_todos.map {|finished_locaiton_todo| finished_locaiton_todo.location_id}
+      @locations = @locations.where("locations.id not in (?)", finished_location_ids)
+    end
   end
 
   def show

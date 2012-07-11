@@ -17,6 +17,7 @@ describe City::CommentsController do
   def with_location_scope(request_parameters = {})
     {:location_id => location.to_param }.merge(request_parameters)
   end
+
   context "without supplying a location" do
     it { xhr(:get, :index); should respond_with(404) }
     it { xhr(:get, :show); should respond_with(404) }

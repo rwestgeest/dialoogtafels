@@ -1,0 +1,6 @@
+%ul#location-todo-progress
+  %li= link_to 'Alle todo items', city_locations_path
+  - active_project.location_todos.each do |table_todo|
+    %li.progress
+      = progress_image(table_todo.progress, "todo-progress-image-#{table_todo.id}") 
+      = todo_link(table_todo)

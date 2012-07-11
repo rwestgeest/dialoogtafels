@@ -1,0 +1,24 @@
+$("#dialog-form").html('<%= escape_javascript(render(:partial => "index")) %>');
+$("#dialog-form" ).dialog({
+  title: "Todos voor <%= @location.name %>",
+  modal: true,
+  buttons: {
+    "Sluiten": function() {
+      $( this ).dialog( "destroy" );
+    }
+  },
+  close: function() {
+    $( this ).dialog( "destroy" );
+  }
+});
+$(".todo_check").click(function() {
+  var todo_id = $(this).attr('data-todo-id');
+  $.ajax({
+      url: '/city/locations/<%= @location.to_param %>/todos/' + todo_id,
+      data: { checked: this.checked },
+      type: 'put'
+  });
+  return false;
+});
+
+
