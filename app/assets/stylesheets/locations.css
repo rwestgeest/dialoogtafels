@@ -196,7 +196,15 @@ ul.person-list li {
   height:1.4em; 
   padding:0 2px; 
 }
-span.progress_indicator { color:gray; font-weight:bold;text-align:center; display:inline-block; width:50px;}
+span.progress_indicator { 
+  color:gray; 
+  font-weight:bold;
+  text-align:center; 
+  display:inline-block; 
+  width:50px;
+  border-radius: 3px;
+  box-shadow: 1px 1px 1px gray;
+}
 ul.location-todo-list { border-top; 1px solid lightgrey;list-style-type:none;padding:0; }
 ul.location-todo-list .done { margin:2px 0; color:gray; font-weight:bold;text-align:center; display:inline-block; width:50px;}
 ul.location-todo-list li { margin:0; }
