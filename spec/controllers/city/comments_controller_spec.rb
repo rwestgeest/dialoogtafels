@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe City::CommentsController do
+describe City::CommentsController, :focus => true do
   render_views
   prepare_scope :tenant
   login_as :organizer
@@ -42,23 +42,46 @@ describe City::CommentsController do
       response.body.should_not have_selector("form input[name='location_comment[parent_id]'][value='#{location_comment.id}'][type='hidden']")
     end
   end
+
   describe "GET 'show'" do
     before do 
       create_location_comment
       get 'show', with_location_scope(:id => location_comment.to_param)
     end
+
     it "assigns the location and its comments" do
       assigns(:location_comment).should  == location_comment
       assigns(:location).should == location
     end
+
     it "renders the show template" do
       response.should be_success
       response.should render_template 'show'
     end
+
     it "has a parent_id hidden in the form" do
       response.body.should have_selector("form input[name='location_comment[parent_id]'][value='#{location_comment.id}'][type='hidden']")
     end
   end
+
+  describe "GET 'show' with children" do
+    before do 
+      create_location_comment
+      FactoryGirl.create :location_comment, :parent => location_comment 
+    end
+    it "renders the show template for for one child" do
+      get 'show', with_location_scope(:id => location_comment.to_param)
+      response.should be_success
+      response.should render_template 'show'
+    end
+    it "renders the show temaplte for more children" do
+      FactoryGirl.create :location_comment, :parent => (FactoryGirl.create :location_comment, :parent => location_comment )
+      get 'show', with_location_scope(:id => location_comment.to_param)
+      response.should be_success
+      response.should render_template 'show'
+    end
+  end
+
   describe "POST 'create'" do
     context "with valid parameters" do
       def do_post(extra_params = {})

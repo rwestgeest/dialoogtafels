@@ -2,10 +2,7 @@
 - context_action ".back", city_location_comments_path(:location_id => @location_comment.reference_id)
 
 #message
-  = render_comment @location_comment
-.nested-message
-  #location-comments
-    = render_nested @location_comment.children.arrange
+  = render :partial => 'comment_tree', locals: { comment: @location_comment }
 
 %h3 Antwoord:
 #new-location-comment

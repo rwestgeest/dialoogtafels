@@ -3,7 +3,7 @@
 - context_action '.new_comment', city_location_comments_path(location_id: @location.to_param, anchor: "new_comment")
 
 #location-comments
-  = render_nested @location_comments.roots
+  = render partial: 'comment_tree', collection: @location_comments.roots, as: :comment
 
 %h3 Nieuw bericht:
 #new-location-comment
