@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe City::TodosControllertrue do
+describe City::TodosController do
   render_views 
   prepare_scope :tenant
   login_as :coordinator
