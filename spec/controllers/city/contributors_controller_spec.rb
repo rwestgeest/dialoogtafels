@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe City::ContributorsController, :focus => true do
+describe City::ContributorsController do
   render_views 
   prepare_scope :tenant
   login_as :coordinator
