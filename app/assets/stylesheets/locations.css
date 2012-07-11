@@ -205,7 +205,7 @@ span.progress_indicator {
   border-radius: 3px;
   box-shadow: 1px 1px 1px gray;
 }
-ul.location-todo-list { border-top; 1px solid lightgrey;list-style-type:none;padding:0; }
+ul.location-todo-list { border-top: 1px solid lightgrey;list-style-type:none;padding:0; }
 ul.location-todo-list .done { margin:2px 0; color:gray; font-weight:bold;text-align:center; display:inline-block; width:50px;}
 ul.location-todo-list li { margin:0; }
 .hidden-list-item {
