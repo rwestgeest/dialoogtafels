@@ -200,4 +200,25 @@ span.progress_indicator { color:gray; font-weight:bold;text-align:center; displa
 ul.location-todo-list { border-top; 1px solid lightgrey;list-style-type:none;padding:0; }
 ul.location-todo-list .done { margin:2px 0; color:gray; font-weight:bold;text-align:center; display:inline-block; width:50px;}
 ul.location-todo-list li { margin:0; }
+.hidden-list-item {
+  display:none;
+  padding: 10px;
+}
+.list-location { width:100%; padding: 10px 0pt; border-bottom: 1px solid #e9e7e7; }
+.list-location td { padding:5px; }
+.list-location .location-data a {
+    color: #8b5a1e;
+    font-size: 14px;
+    line-height: 1.4em;
+}
 
+.list-location .location-data a:link {text-decoration:none; }
+.list-location .location-data a:visited {text-decoration:none;}
+.list-location .location-data a:hover {text-decoration:none; background-color: #8b5a1e; color:white;}
+.list-location .location-data a:active {text-decoration:none;}
+.list-location .location-data a.image:hover {text-decoration:none; background-color: transparent }
+
+.list-location .location-data span { color: #acacac;}
+.list-location .location-modified-state { width:150px; text-align:right; color: #acacac; }
+.list-location .location-status  { width:150px; }
+.list-location .location-status .progress { color: #acacac; text-align:right; height:1.4em; padding:0 2px; }

@@ -3,4 +3,3 @@
     %li
       = check_box_tag(todo.name, "1", todo.done_for_location?(@location), :class => 'todo_check', :'data-todo-id' => todo.id, :'data-location-id' => @location.id) 
       = todo.name
-

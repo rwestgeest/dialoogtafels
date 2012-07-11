@@ -1,5 +1,7 @@
 Tafelmanager2::Application.routes.draw do
 
+  get "contributors/index"
+
   resources :locations, :only => [:index, :show] 
 
   namespace :account do
@@ -36,6 +38,7 @@ Tafelmanager2::Application.routes.draw do
       resource :publication, :on => :meber, :only => [:show, :new, :create, :edit, :update ]
       resources :comments, :on => :member, :only => [:index, :show, :create]
       resources :todos, :on => :member, :only => [:index, :update]
+      resources :contributors, :on => :member, :only => [:index]
     end
     resources :training_registrations, :only => [:index, :create, :destroy]
     resources :registrations, :only => [:index, :create, :destroy]

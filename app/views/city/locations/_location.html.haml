@@ -2,12 +2,19 @@
   %tr
     %td.location-data
       = link_to location.name, city_location_path(location)
+      .right
+        = link_to image_tag('expand_contributors.png'), city_location_contributors_path(:location_id => location.to_param), :remote => true, :disable_with => 'laden', class: 'image', title: 'Klik om deelnemers uit te klappen'
+        = link_to image_tag('buzz.png'), city_location_comments_path(location.to_param), class: 'image', title: 'Berichten'
+        = link_to image_tag('position.png'), edit_city_location_path(location.to_param), class: 'image', title: 'Kaart'
+        = link_to image_tag('publication.png'), city_location_publication_path(location.to_param), class: 'image', title: 'Publicatie'
       %br
       %span.schedule= "Georganiseerd door #{person_entry location.organizer}"
 
-    %td.table-status
+    %td.location-status
       .location-todo-progress{id: "location-todo-progress-#{location.id}", title: "Wijzig todo status"}
         = render partial: '/city/todos/progress', locals: { location: location }
     %td.location-modified-state
       = created_at(location)
       = updated_at(location)
+  %tr{ id: "location-contributors-#{location.id}_row", class: 'hidden-list-item'}
+    %td{colspan: 3, id: "location-contributors-#{location.id}"}

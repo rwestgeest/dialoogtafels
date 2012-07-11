@@ -27,7 +27,7 @@ class City::PublicationsController < ApplicationController
     @location = Location.find(params[:location_id])
 
     if @location.update_attributes(params[:location])
-      redirect_to city_location_publication_path(:location_id => @location.to_param), notice: 'Publication is bijgewerkt.' 
+      redirect_to city_location_publication_path(:location_id => @location.to_param), notice: 'Publicatie is bijgewerkt.' 
     else
       render action: "edit" 
     end

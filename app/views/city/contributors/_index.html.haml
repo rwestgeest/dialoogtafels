@@ -1,0 +1,25 @@
+.conversation-container
+  .conversation-leaders-background{:title => "Gespeksleiders"}
+    - if @conversation_leaders.empty?
+      %ul.person-list
+        %li
+          %span.no-operations &nbsp;
+          Geen gespreksleiders
+    - else
+      %ul.person-list
+        = render partial: 'shared/person', collection: @conversation_leaders.map{|c| c.person}
+    .clear
+  .participants-background{:title => "Deelnemers" } 
+    - if @participants.empty?
+      %ul.person-list
+        %li
+          %span.no-operations &nbsp;
+          Geen deelnemers
+    - else
+      %ul.person-list
+        = render partial: 'shared/person', collection: @participants.map{|p| p.person}
+    .clear
+.right
+  = link_to '> gespreksindeling', city_location_path(@location.id)
+  %button.close-button{ :'data-id' => "#location-contributors-#{@location.id}_row" } Sluiten
+

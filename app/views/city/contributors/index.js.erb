@@ -1,0 +1,5 @@
+$("#location-contributors-<%= @location.id %>").html('<%= escape_javascript(render(:partial => "index")) %>');
+$("#location-contributors-<%= @location.id %>_row").show(500);
+$('.close-button').click(function() {
+  $($(this).attr('data-id')).hide(500);
+});
