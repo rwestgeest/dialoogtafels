@@ -5,8 +5,7 @@ class Participant < Contributor
   include ScopedModel
   scope_to_tenant
 
-  validates :email, :unique_account => true,
-                    :format => {:with => EMAIL_REGEXP }
+  validates :email, :format => {:with => EMAIL_REGEXP }
   validates :conversation, :presence => true
 
   def ordinal_value

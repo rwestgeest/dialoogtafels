@@ -4,6 +4,7 @@ describe Organizer do
   describe 'validations' do
     prepare_scope :tenant
     let(:existing_organizer) { FactoryGirl.create :organizer } 
+
     it { should validate_presence_of :email }
     it { should validate_presence_of :name }
     it { should validate_presence_of :person }

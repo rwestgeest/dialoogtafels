@@ -2,6 +2,8 @@
 
 = form_for @account, :url => account_session_path do |f|
   = errors_for @account
+  - if @maintainer_login
+    = hidden_field_tag :maintainer, 'maintainer'
   .dialog-container
     .input-container
       .label= f.label :email

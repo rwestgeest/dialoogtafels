@@ -48,6 +48,8 @@ nl:
             password:
               blank: "je hebt geen wachtwoord opgegeven"
               confirmation: "de opgegeven wachtwoorden zijn niet hetzelfde"
+            person:
+              blank: "er is geen persoon gekoppeld aan dit account - neem contact op met de beheerder van deze applicatie"
         project:
           attributes:
             tenant:

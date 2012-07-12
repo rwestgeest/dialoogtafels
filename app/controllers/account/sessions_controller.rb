@@ -2,10 +2,16 @@ class Account::SessionsController < ApplicationController
   layout 'sessions'
   def new
     @account = Account.new
+    @maintainer_login = params[:maintainer] && true || false
   end
 
   def create
-    @account = TenantAccount.authenticate_by_email_and_password(account_params[:email], account_params[:password])
+    if params[:maintainer]
+      @account = MaintainerAccount.authenticate_by_email_and_password(account_params[:email], account_params[:password])
+      @maintainer_login = true 
+    else
+      @account = TenantAccount.authenticate_by_email_and_password(account_params[:email], account_params[:password])
+    end
     if @account 
       sign_in @account
       redirect_to @account.landing_page
@@ -23,6 +29,6 @@ class Account::SessionsController < ApplicationController
   private 
 
   def account_params
-    @account_params ||= params[:account]
+    params[:account]
   end
 end

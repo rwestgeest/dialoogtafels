@@ -114,6 +114,7 @@ Tafelmanager2::Application.routes.draw do
   # just remember to delete public/index.html.
   root :to => 'locations#index'
   match '/login' => 'account/sessions#new'
+  match '/maintainer_login' => 'account/sessions#new', :maintainer => 'maintainer'
 
   # See how all your routes lay out with "rake routes"
 

@@ -6,7 +6,6 @@ class ConversationLeader < Contributor
   scope_to_tenant
 
   validates :email, :presence => true,
-                    :unique_account => true,
                     :format => {:with => EMAIL_REGEXP }
   validates :conversation, :presence => true
 

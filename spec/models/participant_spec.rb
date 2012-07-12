@@ -21,7 +21,12 @@ describe Participant do
     it_should_behave_like "creating_a_contributor", Participant do
       before(:all) { @conversation = FactoryGirl.create :conversation }
       def create_contributor(extra_attributes = {})
+        begin
         FactoryGirl.create :participant, { :conversation => @conversation }.merge(extra_attributes)
+        rescue ActiveRecord::RecordInvalid => e
+          p e.record.errors
+          raise e
+        end
       end
     end
 

@@ -1,6 +1,5 @@
 = form_for [:admin, @tenant] do |f|
   = errors_for @tenant
-
   .input-container
     .label= f.label :name
     .input= f.text_field :name
@@ -23,11 +22,28 @@
     .label= f.label :url_code
     .input= f.text_field :url_code
   .input-container
+    .label= f.label :host
+    .input= f.text_field :host
+  .input-container
     .label= f.label :info_email
     .input= f.text_field :info_email
   .input-container
     .label= f.label :from_email
     .input= f.text_field :from_email
+  .input-container
+    .label= f.label :top_image
+    .input= f.text_field :top_image
+  .input-container
+    .label= f.label :right_image
+    .input= f.text_field :right_image
+  .input-container
+    .label= f.label :public_style_sheet
+    .input= f.text_field :public_style_sheet
+  .input-container
+    .label
+    .input
+      = f.check_box :framed_integration 
+      = f.label :framed_integration
   .clear
 
   .actions
