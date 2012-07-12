@@ -1,6 +1,8 @@
 - if active_project.location_todos.empty? 
   %p Je kunt todo items definieren die je vervolgens in dit scherm per tafel kan afvinken.
-  %p De items definieer je in de <%= link_to 'projectinstellingen', settings_project_path %>.
+  %p
+    De items definieer je in de 
+    = link_to 'projectinstellingen', edit_settings_project_path
 - else
   .right_heading Todo items
   %p  Selecteer een van de todo items hieronder om alleen de tafels te te tonen waarvan die todo niet af is.
