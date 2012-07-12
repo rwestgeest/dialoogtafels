@@ -18,6 +18,10 @@ html, body {
 body { 
 	background:white url(/assets/page_bg.gif) repeat;
 }
+body.framed {
+  background:white;
+  overflow: hidden;
+}
 /* layout */
 table {
 	font-size: 12px;

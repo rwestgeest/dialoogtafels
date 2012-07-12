@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120706210448) do
+ActiveRecord::Schema.define(:version => 20120712083858) do
 
   create_table "accounts", :force => true do |t|
     t.string   "email",                :limit => 150,                      :null => false
@@ -186,6 +186,7 @@ ActiveRecord::Schema.define(:version => 20120706210448) do
     t.string   "top_image",                               :default => "/assets/default_header_background.png"
     t.string   "right_image",                             :default => "/assets/deault_city_name_right.png"
     t.string   "public_style_sheet",                      :default => "public"
+    t.boolean  "framed_integration",                      :default => false
   end
 
   add_index "tenants", ["current_project_id"], :name => "index_tenants_on_current_project_id"

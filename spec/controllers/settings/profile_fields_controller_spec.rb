@@ -145,4 +145,25 @@ describe Settings::ProfileFieldsController do
     end
   end
 
+  describe "POST sort" do
+    attr_reader :another_profile_field
+    before do
+      create_profile_field
+      @another_profile_field = FactoryGirl.create :profile_string_field
+    end
+    it "orders the fields according to the order" do
+      xhr :post, :sort, :profile_field => [another_profile_field.to_param, profile_field.to_param]
+      get :index
+      assigns[:profile_fields].should == [another_profile_field, profile_field]
+    end
+    it "accepts a non number in the list of profile fields" do
+      xhr :post, :sort, :profile_field => [another_profile_field.to_param, profile_field.to_param, "new"]
+      response.should be_success
+    end
+    it "ignores non existing fields" do
+      xhr :post, :sort, :profile_field => [another_profile_field.to_param, profile_field.to_param, "445555555", "new"]
+      response.should be_success
+    end
+  end
+
 end

@@ -48,3 +48,4 @@ $(function() {
     $($(this).attr('data-toggle')).toggle();
   });
 });
+

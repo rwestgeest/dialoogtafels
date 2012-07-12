@@ -46,6 +46,12 @@ module ApplicationHelper
     self.output_buffer = render(:file => "layouts/#{layout}")
   end
 
+  def tenant_styles
+    if current_tenant.has_public_style_sheet?
+      stylesheet_link_tag current_tenant.public_style_sheet, :media => "all" 
+    end
+  end
+
   def flash_tags
     raw(flash.collect do |name, message| 
       flash[name] = nil

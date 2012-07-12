@@ -40,7 +40,10 @@ class Tenant < ActiveRecord::Base
       NullTenant.new
     end
   end
-
+  
+  def has_public_style_sheet? 
+    public_style_sheet && !public_style_sheet.strip.empty?
+  end
   def create_accoun_and_project
     old_current = Tenant.current 
     begin 

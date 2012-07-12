@@ -1,5 +1,6 @@
 - title "Project instellingen"
 - page_side_bar '/settings/side_bar'
+= javascript_tag '$(function(){$("#project_start_date").datepicker({changeMonth: true, changeYear:true });});'
 = form_for @project, :url => settings_project_path  do |f|
   = errors_for @project
   .dialog-container

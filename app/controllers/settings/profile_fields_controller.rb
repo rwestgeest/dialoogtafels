@@ -32,10 +32,10 @@ class Settings::ProfileFieldsController < ApplicationController
   end
 
   def sort
-    params[:profile_field].each_with_index do |field_index, order|
-      ProfileField.find(field_index).update_attribute :order, order
+    params[:profile_field].select{|field_id| field_id.to_i != 0 }.each_with_index do |field_index, order|
+      ProfileField.find(field_index).update_attribute :order, order rescue ActiveRecord::RecordNotFound
     end
-    render :nothing
+    render nothing: true
   end
 
   def destroy

@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe City::CommentsController, :focus => true do
+describe City::CommentsController do
   render_views
   prepare_scope :tenant
   login_as :organizer
