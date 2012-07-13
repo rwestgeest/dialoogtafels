@@ -1,4 +1,4 @@
-=form_for conversation, :remote => true do |f| 
+=form_for conversation, :remote => true, :disable_with => '...'  do |f| 
   = errors_for conversation
   .dialog-container
     = f.hidden_field :location_id

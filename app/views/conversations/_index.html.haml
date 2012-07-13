@@ -2,10 +2,10 @@
   #conversation_new
     %p
       Er zijn nog geen dialoog gesprekken gepland.
-    = link_to "plan je eerste dialoogronde", new_conversation_path(:location_id => @location.to_param), :'data-remote' => true
+    = link_to "plan je eerste dialoogronde", new_conversation_path(:location_id => @location.to_param), :'data-remote' => true, :disable_with => '...'
 - else
   - conversations.each do |conversation|
     = render partial: 'conversations/show', locals: {conversation: conversation}
   #conversation_new
     .actions
-      = link_to "dialooggesprek toevoegen", new_conversation_path(:location_id => @location.to_param), :'data-remote' => true
+      = link_to "dialooggesprek toevoegen", new_conversation_path(:location_id => @location.to_param), :'data-remote' => true, :disable_with => '...'

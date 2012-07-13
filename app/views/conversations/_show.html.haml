@@ -2,7 +2,7 @@
   %h3
     = time_period(conversation).capitalize
     %span.operations 
-      = link_to image_tag('edit.gif'), edit_conversation_path(conversation.to_param), :class => 'edit', :title => 'wijzig dit dialooggesprek', :'data-remote' => true
+      = link_to image_tag('edit.gif'), edit_conversation_path(conversation.to_param), :class => 'edit', :title => 'wijzig dit dialooggesprek', :remote => true
       = link_to image_tag('delete.gif'), conversation_path(conversation.to_param), 
                                                         :method => :delete, 
                                                         :class => 'delete', 
