@@ -13,7 +13,7 @@
                 %br
                 %span.schedule= time_period(training) 
               %td.training-register-link
-                = link_to "> registreer", city_training_registrations_path(training_id: training.to_param, attendee_id:attendee.to_param) , :method => :post, :remote => true
+                = link_to "> registreer", city_training_registrations_path(training_id: training.to_param, attendee_id:attendee.to_param) , :method => :post, :remote => true, :disable_with => '... registreren'
   %td.input_column_eq_right
     .dialog-container
       - if (attendee.training_registrations.empty?) 
@@ -30,4 +30,4 @@
               %td.training-register-link
                 = registered_at(training_registration)
                 %br
-                = link_to "> afmelden", city_training_registration_path(id: training_registration.training_id, attendee_id:attendee.to_param) , :method => :delete, :remote => true
+                = link_to "> afmelden", city_training_registration_path(id: training_registration.training_id, attendee_id:attendee.to_param) , :method => :delete, :remote => true, :disable_with => '... afmelden'
