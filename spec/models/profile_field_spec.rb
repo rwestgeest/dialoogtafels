@@ -49,5 +49,6 @@ describe ProfileField do
     it { ProfileField.new.type_name.should == 'profile_field.type.profile_field' }
     it { ProfileSelectionField.new.type_name.should == 'profile_field.type.profile_selection_field' }
     it { ProfileStringField.new.type_name.should == 'profile_field.type.profile_string_field' }
+    it { ProfileTextField.new.type_name.should == 'profile_field.type.profile_text_field' }
   end
 end

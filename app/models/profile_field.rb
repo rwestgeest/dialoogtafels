@@ -10,7 +10,9 @@ class ProfileField < ActiveRecord::Base
     super
   end
   def self.selection_options
-    [['tekst regel', 'ProfileStringField'], ['selectielijst', 'ProfileSelectionField']]
+    [['tekst regel', 'ProfileStringField'], 
+     ['telst blok', 'ProfileTextField'],
+     ['selectielijst', 'ProfileSelectionField']]
   end
 
   def label=(new_label)

@@ -23,13 +23,21 @@ input.large { width: 250px; height: 18px; padding: 0px; }
   min-height: 24px;
 	width: 100%;
 }
-.dialog-container .input-container.field-type {
+.dialog-container .field-type-container {
   float:right;
   width:300px;
 }
-.dialog-container .input-container.field-type textarea {
+.dialog-container .field-type-container textarea {
   width:25em;
   height:5em;
+}
+.dialog-container .left-input-container {
+	display: block;
+  padding: 3px 0px;
+	position:relative;
+  min-height: 24px;
+	width: 300px;
+  float: left;
 }
 .dialog-container .input-container select.normal{
   width:219px;
@@ -81,6 +89,9 @@ div.actions {margin:10px; padding:10px 0px; clear:both; font-size:12px; text-ali
   width:534px;
   height:150px;
 	overflow:auto;
+}
+textarea.profile_text_area {
+  width: 219px;
 }
 .message-container {
   @extend .dialog-container;

@@ -2,6 +2,7 @@ $("#dialog-form").html( '<%= escape_javascript(render(partial:"edit", locals:{pe
 $("#dialog-form" ).dialog({
   title: "Profiel bewerken",
   modal: true,
+  width: "450px",
   buttons: {
     "Bijwerken" : function() {
       $('#dialog-form form').submit();

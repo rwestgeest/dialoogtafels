@@ -106,6 +106,10 @@ module Factories
       sequence(:label) {|n| "string_field_#{n}"} 
       sequence(:field_name) {|n| "string_field_#{n}"} 
     end
+    factory :profile_text_field do
+      sequence(:label) {|n| "text_field_#{n}"} 
+      sequence(:field_name) {|n| "text_field_#{n}"} 
+    end
     factory :profile_selection_field do
       sequence(:label) {|n| "selection_field_#{n}"} 
       sequence(:field_name) {|n| "selection_field_field_#{n}"} 

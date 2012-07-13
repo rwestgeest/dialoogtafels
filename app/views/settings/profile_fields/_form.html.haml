@@ -1,16 +1,16 @@
 = errors_for profile_field
 .dialog-container
   .handle{:title => "Sleep om te verplaatsen"}
-  .input-container.left 
+  .left-input-container
     .label= f.label :label
     .input
       = f.text_field(:label)
-  .input-container.field-type
+  .field-type-container
     .input-container
       .label= f.label :type
       .input
         = f.select :type, ProfileField.selection_options,{}, :id => "profile_field_type_#{profile_field.to_param}", class: 'normal'
-    .input-container{ id: "profile_selection_field_container_#{profile_field.to_param}", :style => profile_field.is_a?(ProfileStringField) ? "display:none;" : "display:block;"}
+    .input-container{ id: "profile_selection_field_container_#{profile_field.to_param}", :style => profile_field.is_a?(ProfileSelectionField) ? "display:block;" : "display:none;"}
       .label= f.label :values
       .input
         = f.text_area :values

@@ -142,6 +142,10 @@ nl:
           attributes:
             label:
               blank: "je hebt geen label voor dit veld gegeven"
+        profile_text_field:
+          attributes:
+            label:
+              blank: "je hebt geen label voor dit veld gegeven"
         profile_selection_field:
           attributes:
             values:
