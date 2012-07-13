@@ -34,13 +34,20 @@ table, td {
 #dialoog_stad_top {
 	position:absolute;
 	bottom: 48px;
-	right: 200px;
+  right: 0px;
 	font-size:16px;
-	font-weight:700;
 	text-align:right;
 	letter-spacing: 2px;
 	color:#FFF;
 	width: 500px;
+}
+#city-name {
+	font-weight:700;
+}
+#login-link {
+	float:right;
+  width: 180px;
+  margin: 0 10px;
 }
 #topmenu {
 	color: #c388c2;

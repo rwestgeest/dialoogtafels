@@ -3,6 +3,7 @@
   %head
     %title= yield :title
     = stylesheet_link_tag "public", :media => "all"
+    = tenant_styles 
     = javascript_include_tag "application"
     = csrf_meta_tags
     /[if lt IE 9]
@@ -11,20 +12,21 @@
     #body_container
       %section#top_container{:style=>"background: url('#{top_background_image}');"}
         #dialoog_stad_top
-          = current_tenant.name.upcase
+          #login-link
+            =link_to "login", login_url
+          #city-name
+            = current_tenant.name.upcase
         #title_container
           &nbsp;
         #topmenu
       %section#columns
         %section#submenu_container
           .submenu
-            =link_to "waar kan ik meedoen", locations_url
+            =link_to "Home", tenant_site_url
           .submenu
-            =link_to "aanmelden als tafelorganisator", new_registration_organizers_url
+            =link_to "Waar kan ik meedoen?", locations_url
           .submenu
-            =link_to "mijn tafels", login_url
-          .submenu
-            =link_to "terug naar de site", tenant_site_url
+            =link_to "Aanmelden als tafelorganisator", new_registration_organizers_url
         %section#content_container
           = flash_tags
           %h1= yield :title
