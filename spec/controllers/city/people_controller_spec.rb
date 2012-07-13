@@ -3,7 +3,7 @@ require 'spec_helper'
 describe City::PeopleController do
   render_views
   prepare_scope :tenant
-  login_as :organizer
+  login_as :coordinator
 
   let(:person) { FactoryGirl.create :person }
   alias_method :create_person, :person

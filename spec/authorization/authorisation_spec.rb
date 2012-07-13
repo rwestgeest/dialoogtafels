@@ -33,12 +33,6 @@ describe ActionGuard, :type => :authorisation do
     it { should_not authorize(organizer).to_perform("city/locations#new")  }
     it { should_not authorize(organizer).to_perform("city/locations#create")  }
 
-    it { should authorize(maintainer).to_perform("city/locations/projects")  }
-    it { should authorize(coordinator).to_perform("city/locations/projects")  }
-    it { should_not authorize(organizer).to_perform("city/locations/projects")  }
-    it { should_not authorize(participant).to_perform("city/locations/projects")  }
-    it { should_not authorize(conversation_leader).to_perform("city/locations/projects")  }
-
     it { should authorize(organizer).to_perform("city/locations#edit")  }
     it { should authorize(organizer).to_perform("city/locations#update")  }
 
@@ -80,6 +74,42 @@ describe ActionGuard, :type => :authorisation do
     end
     %w{conversation_leader organizer participant}.each do |role|  
       it { should_not authorize(account_for(role)).to_perform("city/registrations") } 
+    end
+  end
+
+  describe "city/people" do
+    %w{maintainer coordinator}.each do |role|  
+      it { should authorize(account_for(role)).to_perform("city/people") } 
+    end
+    %w{conversation_leader organizer participant}.each do |role|  
+      it { should_not authorize(account_for(role)).to_perform("city/people") } 
+    end
+  end
+
+  describe "city/comments" do
+    %w{maintainer coordinator organizer}.each do |role|  
+      it { should authorize(account_for(role)).to_perform("city/comments") } 
+    end
+    %w{conversation_leader participant}.each do |role|  
+      it { should_not authorize(account_for(role)).to_perform("city/comments") } 
+    end
+  end
+
+  describe "city/projects" do
+    %w{maintainer coordinator}.each do |role|  
+      it { should authorize(account_for(role)).to_perform("city/projects") } 
+    end
+    %w{conversation_leader organizer participant}.each do |role|  
+      it { should_not authorize(account_for(role)).to_perform("city/projects") } 
+    end
+  end
+
+  describe "city/todos" do
+    %w{maintainer coordinator}.each do |role|  
+      it { should authorize(account_for(role)).to_perform("city/todos") } 
+    end
+    %w{conversation_leader organizer participant}.each do |role|  
+      it { should_not authorize(account_for(role)).to_perform("city/todos") } 
     end
   end
 

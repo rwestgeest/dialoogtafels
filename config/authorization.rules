@@ -4,23 +4,28 @@ role :organizer, 2
 role :conversation_leader, 3
 role :participant, 4
 role :contributor, 5
-allow 'admin', :at_least => :maintainer
-allow 'city/trainings', :at_least => :coordinator
-allow 'city/training_registrations', :at_least => :coordinator
-allow 'city/training_invitations', :at_least => :coordinator
-allow 'city/registrations', :at_least => :coordinator
-allow 'city/locations#index', :at_least => :coordinator
-allow 'city/locations#new', :at_least => :coordinator
-allow 'city/locations#create', :at_least => :coordinator
-allow 'city/locations/projects', :at_least => :coordinator
-allow 'city/locations', :at_least => :organizer
-allow 'conversations', :at_least => :organizer
-allow 'city/publications', :at_least => :organizer
-allow 'organizer', :only_by => :organizer
-allow 'contributor/registration', :at_least => :participant, :at_most => :conversation_leader
-allow 'contributor/profile', :at_least => :participant, :at_most => :coordinator
-allow 'contributor/training_registrations', :only_by => :conversation_leader
-allow 'accounts/password', :at_least => :participant
-allow 'accounts/sessions#destroy', :at_least => :participant
-allow 'settings', :at_least => :coordinator
+allow 'admin',                              :at_least => :maintainer
+allow 'city/comments',                      :at_least => :organizer
+allow 'city/locations#index',               :at_least => :coordinator
+allow 'city/locations#new',                 :at_least => :coordinator
+allow 'city/locations#create',              :at_least => :coordinator
+allow 'city/locations/projects',            :at_least => :coordinator
+allow 'city/locations',                     :at_least => :organizer
+allow 'city/locations',                     :at_least => :organizer
+allow 'city/people',                        :at_least => :coordinator
+allow 'city/projects',                      :at_least => :coordinator
+allow 'city/registrations',                 :at_least => :coordinator
+allow 'city/todos',                         :at_least => :coordinator
+allow 'city/trainings',                     :at_least => :coordinator
+allow 'city/training_registrations',        :at_least => :coordinator
+allow 'city/training_invitations',          :at_least => :coordinator
+allow 'conversations',                      :at_least => :organizer
+allow 'city/publications',                  :at_least => :organizer
+allow 'organizer',                          :only_by =>  :organizer
+allow 'contributor/registration',           :at_least => :participant,        :at_most => :conversation_leader
+allow 'contributor/profile',                :at_least => :participant,        :at_most => :coordinator
+allow 'contributor/training_registrations', :only_by =>  :conversation_leader
+allow 'accounts/password',                  :at_least => :participant
+allow 'accounts/sessions#destroy',          :at_least => :participant
+allow 'settings',                           :at_least => :coordinator
 allow ''
