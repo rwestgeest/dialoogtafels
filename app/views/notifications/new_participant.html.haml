@@ -9,6 +9,6 @@
 
 %p
   Kijk 
-  =link_to 'hier', city_location_path(@conversation.location.to_param, host: Tenant.current.host)
+  =link_to 'hier', city_location_url(@conversation.location.to_param, host: Tenant.current.host)
   voor de huidige status van je aanmeldingen.
 

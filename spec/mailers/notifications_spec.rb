@@ -87,7 +87,7 @@ describe Notifications do
       mail.body.encoded.should include(organizer.name)
       mail.body.encoded.should include(participant.name)
     end
-    it "renders a ling to the location" do
+    it "renders a link to the location" do
       mail.body.encoded.should include(city_location_url(conversation.location.to_param, :host => organizer.tenant.host))
     end
   end
