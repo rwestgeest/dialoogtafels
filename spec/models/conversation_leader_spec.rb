@@ -26,6 +26,17 @@ describe ConversationLeader do
       end
     end
 
+    describe "first landing page" do
+      let(:conversation_leader) { FactoryGirl.create :conversation_leader }
+      subject { conversation_leader }
+      its(:first_landing_page) { should == '/registration/conversation_leaders/confirm' }
+
+      context "when account is coordinator" do
+        before { conversation_leader.account.update_attribute :role, Account::Coordinator }
+        its(:first_landing_page) { should == "/city/registrations?person_id=#{conversation_leader.person_id}" }
+      end
+    end
+
     describe "save_with_notification" do
       let!(:conversation) { FactoryGirl.create :conversation }
       let(:conversation_leader) { FactoryGirl.build :conversation_leader, :conversation => conversation }

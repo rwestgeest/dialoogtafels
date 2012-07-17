@@ -7,7 +7,9 @@ describe 'application_controller' do
       render :text => ''
     end
   end
+
   describe MyController do
+
     describe 'current tenant' do
       it "is nil by default" do
         get :index
@@ -19,8 +21,10 @@ describe 'application_controller' do
         Tenant.current.should == current
       end
     end
+
     context "with tenant scope" do
       prepare_scope :tenant
+
       describe 'not allowed for action' do
         login_as :organizer
         before do
@@ -35,6 +39,7 @@ describe 'application_controller' do
           controller.should_not be_signed_in
         end
       end
+
     end
   end
 end

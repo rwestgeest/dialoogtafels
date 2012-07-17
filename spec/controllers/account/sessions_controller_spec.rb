@@ -28,6 +28,13 @@ describe Account::SessionsController do
       response.body.should_not have_selector('form input#maintainer')
     end
 
+    context "when email passed" do
+      it "fills in the email address" do
+        get "new", :email => "some@email.com" 
+        response.body.should have_selector("form input#account_email[value='some@email.com']")
+      end
+    end
+
     context "with maintainer type" do
       before { get "new", :maintainer => "maintainer" }
       it "renders the form" do

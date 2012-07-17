@@ -21,13 +21,18 @@ describe Organizer::LocationsController do
     organizer_locations_url(*args)
   end
 
-
   describe "GET index" do
+    let!(:location) { create_location }
+    let!(:other_location) { create_location(:organizer => FactoryGirl.create(:organizer)) }
+
+    before { get :index, {} }
+
     it "assigns all organizer_locations as @organizer_locations" do
-      location = create_location
-      other_location = create_location(:organizer => FactoryGirl.create(:organizer))
-      get :index, {}
       assigns(:locations).should eq([location])
+    end
+    it "renders the index page" do
+      response.should be_success
+      response.should render_template 'index'
     end
   end
 
@@ -37,6 +42,8 @@ describe Organizer::LocationsController do
       assigns(:location).should be_a_new(Location)
     end
   end
+
+
   it_should_behave_like "a_locations_creator"
 
 end

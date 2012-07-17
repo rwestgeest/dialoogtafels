@@ -23,5 +23,26 @@ describe Organizer do
         FactoryGirl.create :organizer, extra_attributes
       end
     end
+
+    describe "first landing page" do
+      let(:organizer) { FactoryGirl.create :organizer }
+      subject { organizer }
+      its(:first_landing_page) { should == '/organizer/locations/new' }
+      context "when account is coordinator" do
+        before { organizer.account.update_attribute :role, Account::Coordinator }
+        its(:first_landing_page) { should == "/city/locations/new?organizer_id=#{organizer.id}" }
+      end
+    end
+
+    describe "creating a organizer" do
+      context "when organizer exists" do
+        let!(:existing_organizer) { FactoryGirl.create :organizer } 
+        it "fails" do 
+          new_organizer = Organizer.new(:email => existing_organizer.email)
+          new_organizer.should_not be_valid
+          new_organizer.errors[:email].should include(I18n.t('activerecord.errors.models.organizer.attributes.email.existing'))
+        end
+      end
+    end
   end
 end

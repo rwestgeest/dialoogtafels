@@ -82,7 +82,7 @@ nl:
           attributes:
             email:
               blank: "je hebt geen email adres opgegeven"
-              existing: "dit emailadres is al in gebruik"
+              existing: "je hebt je al opgegeven als tafelorganisator - probeer in te loggen met dit email adres"
               invalid: "het opgegeven email adres is ongeldig"
             name:
               blank: "je hebt geen naam ingegeven"
@@ -253,7 +253,7 @@ nl:
     account_reset:
       subject: "Je dialoogtafels account is gereset"
     account_welcome:
-      subject: "Welkom bij dialoogtafels - er is een account voor je aangemakt"
+      subject: "Welkom bij dialoogtafels - er is een account voor je aangemaakt"
     new_participant:
       subject: "Er is een nieuwe deelnemer aangemeld voor je tafel"
     new_conversation_leader:

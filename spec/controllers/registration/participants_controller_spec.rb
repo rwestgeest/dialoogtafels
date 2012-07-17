@@ -61,11 +61,12 @@ describe Registration::ParticipantsController do
         assigns(:participant).should be_persisted
       end
 
-      it "signs in and redirects to confirm" do
+      it "signs in and redirects to first_landing_page" do
+        Participant.any_instance.stub(:first_landing_page).and_return "/first_landing"
         post :create, {:participant => valid_attributes}
         flash.notice.should == I18n.t('.registration.participants.welcome')
         current_account.should == Account.last
-        response.should redirect_to confirm_registration_participants_url
+        response.should redirect_to '/first_landing'
       end
       it "creates a notification for the registration" do
         Participant.any_instance.should_receive(:save_with_notification)

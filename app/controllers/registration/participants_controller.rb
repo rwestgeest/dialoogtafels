@@ -17,14 +17,14 @@ class Registration::ParticipantsController < PublicController
 
     if @participant.save_with_notification
       sign_in @participant.account
-      redirect_to confirm_registration_participants_url, notice: I18n.t('registration.participants.welcome')
+      redirect_to @participant.first_landing_page, notice: I18n.t('registration.participants.welcome')
     else
       render_new
     end
   end
 
   def confirm
-    @conversation = current_account.highest_contribution.conversation
+    @conversation = current_participant.conversation
     @location = @conversation.location
   end
 

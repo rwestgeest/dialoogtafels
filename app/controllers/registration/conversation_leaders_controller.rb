@@ -17,7 +17,7 @@ class Registration::ConversationLeadersController < PublicController
 
     if @conversation_leader.save_with_notification
       sign_in @conversation_leader.account
-      redirect_to confirm_registration_conversation_leaders_url, notice: I18n.t('registration.conversation_leaders.welcome')
+      redirect_to @conversation_leader.first_landing_page, notice: I18n.t('registration.conversation_leaders.welcome')
     else
       render_new
     end

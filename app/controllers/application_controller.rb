@@ -46,6 +46,10 @@ class ApplicationController < ActionController::Base
     current_account.highest_contribution
   end
 
+  def current_participant
+    current_account.highest_contribution
+  end
+
   def current_account_id
     session[:current_account_id]
   end

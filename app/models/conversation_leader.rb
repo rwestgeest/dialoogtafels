@@ -13,6 +13,14 @@ class ConversationLeader < Contributor
     1
   end
 
+  def first_landing_page
+    if account.role == Account::Coordinator
+      "/city/registrations?person_id=#{account.person_id}"
+    else
+      '/registration/conversation_leaders/confirm'
+    end
+  end
+
   def save_with_notification
     save && Postman.deliver(:new_conversation_leader, self, conversation.organizer)
   end

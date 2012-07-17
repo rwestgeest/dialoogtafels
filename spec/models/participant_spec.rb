@@ -30,6 +30,17 @@ describe Participant do
       end
     end
 
+    describe "first landing page" do
+      let(:participant) { FactoryGirl.create :participant }
+      subject { participant }
+      its(:first_landing_page) { should == '/registration/participants/confirm' }
+
+      context "when account is coordinator" do
+        before { participant.account.update_attribute :role, Account::Coordinator }
+        its(:first_landing_page) { should == "/city/registrations?person_id=#{participant.person_id}" }
+      end
+    end
+
     describe "save_with_notification" do
       let!(:conversation) { FactoryGirl.create :conversation }
       let(:participant) { FactoryGirl.build :participant, :conversation => conversation }

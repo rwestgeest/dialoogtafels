@@ -2,6 +2,7 @@ class Account::SessionsController < ApplicationController
   layout 'sessions'
   def new
     @account = Account.new
+    @account.email = params[:email]
     @maintainer_login = params[:maintainer] && true || false
   end
 

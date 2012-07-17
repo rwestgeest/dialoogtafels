@@ -66,11 +66,12 @@ describe Registration::ConversationLeadersController do
         conversation.conversation_leaders.should include ConversationLeader.last
       end
 
-      it "signs in an redirects to confirm" do
+      it "signs in an redirects to contributors first_landing_page" do
+        ConversationLeader.any_instance.stub(:first_landing_page).and_return "/first_landing"
         post :create, {:conversation_leader => valid_attributes}
         flash.notice.should == I18n.t('.registration.conversation_leaders.welcome')
         current_account.should == Account.last
-        response.should redirect_to confirm_registration_conversation_leaders_url
+        response.should redirect_to '/first_landing'
       end
       it "creates a notification for the registration" do
         ConversationLeader.any_instance.should_receive(:save_with_notification)
