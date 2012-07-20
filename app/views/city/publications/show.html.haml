@@ -1,6 +1,11 @@
-- title "Publicatievoorbeeld '#{@location.name}' #{published(@location)}"
+- title raw("Publicatievoorbeeld '#{@location.name}' #{published(@location)}")
 - context_action".edit", edit_city_location_publication_path(:location_id => @location.to_param)
 - location_submenu
+- unless @location.published
+  %p
+    Deze locatie is in concept, dus nog niet gepubliceerd. Wijzig de publicatiedetails om de locatie te publiceren.
+
+
 .publication-example
   .example-content
     .city-details-container

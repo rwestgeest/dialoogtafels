@@ -90,7 +90,9 @@ module ApplicationHelper
   end
 
   def published(location)
-    location.published && '' || '(concept)'
+    return '' if location.published 
+    raw(link_to '(concept)', edit_city_location_publication_path(location_id:  location.id), 
+                                    :title => 'Deze locatie is nog niet zichtbaar op te site, wijzig publicatiedetails om te publiceren')
   end
 
   def registered_at(object)
