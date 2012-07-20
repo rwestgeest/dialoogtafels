@@ -8,8 +8,8 @@ class Conversation < ActiveRecord::Base
   scope_to_tenant
   
   belongs_to :location
-  has_many :participants
-  has_many :conversation_leaders
+  has_many :participants, dependent: :destroy
+  has_many :conversation_leaders, dependent: :destroy
 
   validates_presence_of :start_date
   validates_presence_of :start_time

@@ -2,6 +2,7 @@
   %tr
     %td.location-data
       = link_to location.name, city_location_path(location)
+      = published(location)
       .right
         = link_to image_tag('expand_contributors.png'), city_location_contributors_path(:location_id => location.to_param), :remote => true, :disable_with => 'laden', class: 'image', title: 'Klik om deelnemers uit te klappen'
         = link_to image_tag('buzz.png'), city_location_comments_path(location.to_param), class: 'image', title: 'Berichten'

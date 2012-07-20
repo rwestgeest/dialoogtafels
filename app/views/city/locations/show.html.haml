@@ -1,5 +1,9 @@
 %div#dialog-form
 - title "Indeling gesprekken van #{ @location.name}"
+- context_action ".destroy_location", city_location_path(@location.to_param),
+                                                           method: :delete,
+                                                           title: "Deze locatie inclusief gesprekken verwijderen",
+                                                           confirm: "Weet je zeker dat je deze locatie wilt verwijderen?. Alle bijbehorende gesprekken en inschrijvingen gaan dan verloren"
 - location_submenu
 #conversations
   = render partial: 'conversations/index', locals: { conversations: @location.conversations }

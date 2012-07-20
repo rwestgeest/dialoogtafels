@@ -280,6 +280,8 @@ nl:
         conversations: "Dialooggesprekken" 
         edit: "Kaart" 
         comments: "Berichten"
+      show: 
+        destroy_location: "locatie verwijderen"
     comments:
       new_comment_form:
         all_coordinators: "Coordinatoren"

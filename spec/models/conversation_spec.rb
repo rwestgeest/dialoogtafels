@@ -22,6 +22,19 @@ describe Conversation do
       its(:end_time) { should be_within(1).of(conversation.start_time + project.conversation_length.minutes) } 
     end
 
+    describe "destroying a conversation" do
+      let!(:conversation) { FactoryGirl.create :conversation } 
+      let!(:participant) { FactoryGirl.create :participant, conversation: conversation  } 
+      let!(:conversation_leader) { FactoryGirl.create :conversation_leader, conversation: conversation } 
+      it "destroys the associating participants" do
+        expect { conversation.destroy }.to change(Participant, :count).by(-1)
+        Participant.should_not be_exist(participant.id)
+      end
+      it "destroys the associating conversation_leaders" do
+        expect { conversation.destroy }.to change(ConversationLeader, :count).by(-1)
+        ConversationLeader.should_not be_exist(conversation_leader.id)
+      end
+    end
 
     describe "setting start date and start time" do
       let(:location) {FactoryGirl.create :location} 

@@ -32,6 +32,14 @@ describe Location do
       end
     end
 
+    describe "destroying a location" do 
+      it "destroys the conversations" do
+        conversation = FactoryGirl.create :conversation
+        expect { conversation.location.destroy }.to change(Conversation, :count).by(-1)
+        Conversation.should_not be_exists(conversation.id)
+      end
+    end
+
     describe "publisheds" do
       let!(:published) { FactoryGirl.create :location, :published => true }
       let!(:concept) { FactoryGirl.create :location, :published => false }
