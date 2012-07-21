@@ -17,15 +17,15 @@ class Registration::ConversationLeadersController < PublicController
 
     if @conversation_leader.save_with_notification
       sign_in @conversation_leader.account
-      redirect_to @conversation_leader.first_landing_page, notice: I18n.t('registration.conversation_leaders.welcome')
+      redirect_to confirm_registration_conversation_leaders_path, notice: I18n.t('registration.conversation_leaders.welcome')
     else
       render_new
     end
   end
 
   def confirm
-    @conversation = current_account.highest_contribution.conversation
-    @location = @conversation.location
+    @conversations = current_participant.person.conversations_participating_in
+    @locations = @conversations.map { |c| c.location }
   end
 
   private 

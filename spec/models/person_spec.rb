@@ -89,6 +89,7 @@ describe Person do
       let(:person) { FactoryGirl.create(:person) }
       let(:project) { Tenant.current.active_project }
       let(:conversation) { FactoryGirl.create :conversation }
+      let(:other_conversation) { FactoryGirl.create :conversation } 
       let(:location) { conversation.location }
 
       it "contains the contributor for the project provided" do
@@ -98,7 +99,7 @@ describe Person do
 
       it "contains more contributors if available" do
         conversation_leader = create_conversation_leader(person, project, conversation)
-        participant = create_participant(person, project, conversation)
+        participant = create_participant(person, project, other_conversation)
         person.conversation_contributions_for(project).should == [conversation_leader, participant]
       end
 
@@ -125,6 +126,7 @@ describe Person do
       let(:person) { FactoryGirl.create(:person) }
       let(:project) { Tenant.current.active_project }
       let(:conversation) { FactoryGirl.create :conversation }
+      let(:other_conversation) { FactoryGirl.create :conversation }
       let(:location) { conversation.location }
       subject { person.highest_contribution(project) }
 
@@ -136,7 +138,7 @@ describe Person do
           it { should == organizer }
         end
         context "and participant" do
-          let!(:participant) { create_participant(person, project, conversation) }
+          let!(:participant) { create_participant(person, project, other_conversation) }
           it { should == conversation_leader }
         end
       end

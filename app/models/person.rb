@@ -11,6 +11,7 @@ class Person < ActiveRecord::Base
   has_many :profile_field_values, :include => :profile_field
   has_many :conversations_participating_in_as_leader, through: :conversation_leaders, source: :conversation
   has_many :conversations_participating_in_as_participant, through: :participants, source: :conversation
+  has_many :conversations_participating_in, through: :contributors, source: :conversation
 
   validates :email, :format => EMAIL_REGEXP, :if => :email_present?
   validates :name, :presence => true

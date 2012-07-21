@@ -26,24 +26,27 @@ describe Registration::ParticipantsController do
     end
   end
  
-  describe "GET conirm" do
+  describe "GET confirm" do
     login_as :participant
-    let(:contributor) { current_account.highest_contribution}
-    let(:conversation) { contributor.conversation }
-    let(:location) { conversation.location }
+    let!(:conversation_leader) { FactoryGirl.create :conversation_leader, person: current_account.person }
+    let(:conversations_where_i_participate) { current_account.person.conversations_participating_in_as_participant }
+    let(:conversations_which_i_lead ) { current_account.person.conversations_participating_in }
+    let(:conversations) { (conversations_where_i_participate + conversations_which_i_lead).uniq }
+    let(:locations) { conversations.map {|c| c.location} }
 
     it "returns http success" do
       get 'confirm'
       response.should be_success
     end
     it "assigns the conversations" do
-      pending "should show all conversations"
       get 'confirm'
-      assigns(:conversation).should == conversation
+      assigns(:conversations).sort.should == conversations.sort
     end
     it "renders the location" do
       get 'confirm' 
-      response.body.should include(location.name)
+      locations.each do  |location |
+        response.body.should include(location.name)
+      end
     end
   end
 
@@ -61,13 +64,13 @@ describe Registration::ParticipantsController do
         assigns(:participant).should be_persisted
       end
 
-      it "signs in and redirects to first_landing_page" do
-        Participant.any_instance.stub(:first_landing_page).and_return "/first_landing"
+      it "signs in and redirects to confirmation" do
         post :create, {:participant => valid_attributes}
         flash.notice.should == I18n.t('.registration.participants.welcome')
         current_account.should == Account.last
-        response.should redirect_to '/first_landing'
+        response.should redirect_to confirm_registration_participants_path
       end
+
       it "creates a notification for the registration" do
         Participant.any_instance.should_receive(:save_with_notification)
         post :create, participant: valid_attributes

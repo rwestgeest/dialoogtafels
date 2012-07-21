@@ -5,19 +5,13 @@ class Participant < Contributor
   include ScopedModel
   scope_to_tenant
 
-  validates :email, :format => {:with => EMAIL_REGEXP }
+  validates :email, :presence => true,
+            :unique_contributor => true,
+            :format => {:with => EMAIL_REGEXP }
   validates :conversation, :presence => true
 
   def ordinal_value
     2
-  end
-
-  def first_landing_page
-    if account.role == Account::Coordinator
-      "/city/registrations?person_id=#{account.person_id}"
-    else
-      '/registration/participants/confirm'
-    end
   end
 
   def save_with_notification

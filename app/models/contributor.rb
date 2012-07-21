@@ -5,16 +5,20 @@ class Contributor < ApplicationModel
   has_one :account, :through => :person
 
   scope :for_project, lambda { |project_id| where('project_id' => project_id) }
+  scope :by_email_and_conversation_id, 
+        lambda { |email, conversation_id| includes(:person, :account).where('accounts.email' => email).where('conversation_id' => conversation_id) }
 
   before_validation :associate_to_active_project
   EMAIL_REGEXP = /\A([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})\Z/i
-  class UniqueAccountValidator < ActiveModel::EachValidator
+  class UniqueContributorValidator < ActiveModel::EachValidator
     def validate_each(record, attribute, value) 
-      if a=Account.find_by_email(value) and a.person != record.person
+      if Contributor.by_email_and_conversation_id(value, record.conversation_id).exists?
         record.errors.add(attribute, I18n.t("activerecord.errors.models.#{record.class.to_s.underscore}.attributes.#{attribute}.existing")) 
       end
     end
   end
+
+
   validates :project, :presence => true
   validates :person, :presence => true
   validates :name, :presence => true

@@ -94,7 +94,7 @@ nl:
           attributes:
             email:
               blank: "je hebt geen email adres opgegeven"
-              existing: "dit emailadres is al in gebruik"
+              existing: "je bent al met dit email adres op dit dialooggesprek ingeschreven"
               invalid: "het opgegeven email adres is ongeldig"
             name:
               blank: "je hebt geen naam ingegeven"
@@ -106,7 +106,7 @@ nl:
           attributes:
             email:
               blank: "je hebt geen email adres opgegeven"
-              existing: "dit emailadres is al in gebruik"
+              existing: "je bent al met dit email adres op dit dialooggesprek ingeschreven"
               invalid: "het opgegeven email adres is ongeldig"
             name:
               blank: "je hebt geen naam ingegeven"

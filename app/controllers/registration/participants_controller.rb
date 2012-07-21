@@ -17,15 +17,15 @@ class Registration::ParticipantsController < PublicController
 
     if @participant.save_with_notification
       sign_in @participant.account
-      redirect_to @participant.first_landing_page, notice: I18n.t('registration.participants.welcome')
+      redirect_to confirm_registration_participants_path, notice: I18n.t('registration.participants.welcome')
     else
       render_new
     end
   end
 
   def confirm
-    @conversation = current_participant.conversation
-    @location = @conversation.location
+    @conversations = current_participant.person.conversations_participating_in
+    @locations = @conversations.map { |c| c.location }
   end
 
   private 

@@ -26,14 +26,22 @@ describe ConversationLeader do
       end
     end
 
-    describe "first landing page" do
-      let(:conversation_leader) { FactoryGirl.create :conversation_leader }
-      subject { conversation_leader }
-      its(:first_landing_page) { should == '/registration/conversation_leaders/confirm' }
-
-      context "when account is coordinator" do
-        before { conversation_leader.account.update_attribute :role, Account::Coordinator }
-        its(:first_landing_page) { should == "/city/registrations?person_id=#{conversation_leader.person_id}" }
+    describe "creating a conversation_leader" do
+      context "when participant exists for the same location" do
+        let!(:existing_participant) { FactoryGirl.create :participant } 
+        it "fails" do 
+          new_participant = ConversationLeader.new(:email => existing_participant.email, :conversation => existing_participant.conversation)
+          new_participant.should_not be_valid
+          new_participant.errors[:email].should include(I18n.t('activerecord.errors.models.conversation_leader.attributes.email.existing'))
+        end
+      end
+      context "when conversation_leader exists for the same location" do
+        let!(:existing_conversation_leader) { FactoryGirl.create :conversation_leader } 
+        it "fails" do 
+          new_participant = ConversationLeader.new(:email => existing_conversation_leader.email, :conversation => existing_conversation_leader.conversation)
+          new_participant.should_not be_valid
+          new_participant.errors[:email].should include(I18n.t('activerecord.errors.models.conversation_leader.attributes.email.existing'))
+        end
       end
     end
 

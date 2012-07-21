@@ -26,24 +26,27 @@ describe Registration::ConversationLeadersController do
     end
   end
 
-  describe "GET conirm" do
+  describe "GET confirm" do
     login_as :conversation_leader
-    let(:contributor) { current_account.highest_contribution}
-    let(:conversation) { contributor.conversation }
-    let(:location) { conversation.location }
+    let!(:participant) { FactoryGirl.create :participant, person: current_account.person }
+    let(:conversations_where_i_participate) { current_account.person.conversations_participating_in_as_participant }
+    let(:conversations_which_i_lead ) { current_account.person.conversations_participating_in }
+    let(:conversations) { (conversations_where_i_participate + conversations_which_i_lead).uniq }
+    let(:locations) { conversations.map {|c| c.location} }
 
     it "returns http success" do
       get 'confirm'
       response.should be_success
     end
     it "assigns the conversations" do
-      pending "should show all conversations"
       get 'confirm'
-      assigns(:conversation).should == conversation
+      assigns(:conversations).sort.should == conversations.sort
     end
     it "renders the location" do
       get 'confirm' 
-      response.body.should include(location.name)
+      locations.each do  |location |
+        response.body.should include(location.name)
+      end
     end
   end
 
@@ -67,11 +70,10 @@ describe Registration::ConversationLeadersController do
       end
 
       it "signs in an redirects to contributors first_landing_page" do
-        ConversationLeader.any_instance.stub(:first_landing_page).and_return "/first_landing"
         post :create, {:conversation_leader => valid_attributes}
         flash.notice.should == I18n.t('.registration.conversation_leaders.welcome')
         current_account.should == Account.last
-        response.should redirect_to '/first_landing'
+        response.should redirect_to confirm_registration_conversation_leaders_path
       end
       it "creates a notification for the registration" do
         ConversationLeader.any_instance.should_receive(:save_with_notification)
