@@ -1,6 +1,5 @@
 class Contributor::RegistrationsController < ApplicationController
   def show
-    @conversation = current_account.highest_contribution.conversation
-    @location = @conversation.location
+    @conversations = current_participant.person.conversations_participating_in
   end
 end

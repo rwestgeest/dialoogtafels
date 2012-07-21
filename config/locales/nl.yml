@@ -271,7 +271,7 @@ nl:
       welcome: "Dank voor je registratie en welkom bij dialoogtafels. Je kunt hieronder direct je locatie opgeven en publiceren."
     participants:
       welcome: "Dank voor je registratie en welkom bij dialoogtafels."
-    conversation_leader:
+    conversation_leaders:
       welcome: "Dank voor je registratie en welkom bij dialoogtafels."
   city:
     locations:

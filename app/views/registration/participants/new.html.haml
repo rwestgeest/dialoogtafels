@@ -29,8 +29,8 @@
     .input-container
       .label= f.label :telephone
       .input= f.text_field :telephone
-    .captcha-container
-      = recaptcha_tags :display => { :theme => 'white', :lang => I18n.locale }
+
+    = render partial: 'shared/captcha'
     .clear
   .actions
     = link_to "terug", location_path(@location)

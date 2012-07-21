@@ -1,0 +1,7 @@
+.captcha-container
+  Type hieronder de woorden met een spatie ertussen in. Gebruik eventueel het refresh (
+  = image_tag 'refresh-recaptcha.gif'
+  ) knopje om andere woorden te laten verschijnen.
+.captcha-container
+  = recaptcha_tags :display => { :theme => 'white', :lang => I18n.locale }
+

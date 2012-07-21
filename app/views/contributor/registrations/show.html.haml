@@ -1,6 +1,8 @@
-- title "Mijn inschrijving"
+- title "Mijn inschrijvingen"
 
-%h3
-  = @location.name
+- @conversations.each do |conversation| 
+  %h3
+    = conversation.location.name
+  = render :partial => 'conversation', locals: { conversation: conversation }
 
-= render :partial => 'conversation', locals: { conversation: @conversation }
+
