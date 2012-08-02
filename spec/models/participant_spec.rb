@@ -69,6 +69,7 @@ describe Participant do
         participant.save_with_notification
       end
     end
+
   end
 end
 
