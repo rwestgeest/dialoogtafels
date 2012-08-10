@@ -3,6 +3,9 @@ shared_examples_for "a_captcha_handler" do |model_name|
   let(:model_class) { model_name.to_s.camelize.constantize } 
   before do 
     Captcha.stub(:verified?).with(controller) { false }
+    do_post
+  end
+  def do_post
     post :create, {model_name => valid_attributes }
   end
 

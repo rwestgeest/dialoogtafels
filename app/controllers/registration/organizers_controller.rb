@@ -1,14 +1,16 @@
 class Registration::OrganizersController < PublicController
 
   def new
-    @organizer = Organizer.new
+    @person = Person.new 
+    render_new
   end
 
   def create
-    @organizer = Organizer.new(params[:organizer])
+    @person = Person.new(params[:person])
+    @organizer = Organizer.new(:person => @person)
 
-    if Organizer.by_email(@organizer.email).exists?
-      redirect_to new_account_session_path(:email => @organizer.email), :notice => "Een tafelorganisator met dit email adres bestaat al. Probeer in te loggen"
+    if Organizer.by_email(@person.email).exists?
+      redirect_to new_account_session_path(:email => @person.email), :notice => "Een tafelorganisator met dit email adres bestaat al. Probeer in te loggen"
       return 
     end
 
@@ -22,7 +24,13 @@ class Registration::OrganizersController < PublicController
       sign_in @organizer.account
       redirect_to @organizer.first_landing_page, notice: I18n.t('registration.organizers.welcome')
     else
-      render action: "new" 
+      render_new
     end
+  end
+
+  private 
+  def render_new
+    @profile_fields = ProfileField.all
+    render action: "new" 
   end
 end

@@ -1,13 +1,15 @@
 class Registration::ParticipantsController < PublicController
-  append_before_filter :check_conversation, :only => :new
+  append_before_filter :check_conversation, :only => [ :new, :create ]
 
   def new
-    @participant = Participant.new conversation_id: params[:conversation_id]
+    @person = Person.new 
     render_new
   end
 
   def create
-    @participant = Participant.new(params[:participant])
+    @person = Person.find_by_email(params[:person][:email]) || Person.new(params[:person])
+    @person.attributes = params[:person]
+    @participant = Participant.new(:person => @person, :conversation => @conversation)
 
     unless Captcha.verified?(self)
       flash.alert = I18n.t('registration.captcha_error')
@@ -30,14 +32,15 @@ class Registration::ParticipantsController < PublicController
 
   private 
   def render_new
-    @conversation = @participant.conversation
     @location = @conversation.location
+    @profile_fields = ProfileField.all
     render action: "new" 
   end
 
   def check_conversation
-     unless params[:conversation_id] && Conversation.exists?(params[:conversation_id])
-      head :not_found
-     end
+    unless params[:conversation_id] && Conversation.exists?(params[:conversation_id])
+      return head :not_found
+    end
+    @conversation = Conversation.find params[:conversation_id]
   end
 end

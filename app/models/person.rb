@@ -74,6 +74,10 @@ class Person < ActiveRecord::Base
 
   scope :conversation_leaders_for, lambda{|project| includes(:conversation_leaders).where('contributors.project_id' => project.id) }
 
+  def self.find_by_email email
+    includes(:account).where('accounts.email' => email).first
+  end
+
   def register_for training
     begin 
       return register_for Training.find(training) unless training.is_a? Training

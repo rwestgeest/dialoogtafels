@@ -13,9 +13,9 @@
       = time_period(conversation).capitalize
     .conversation-container
       .right
-        = participant_registration conversation, '> schrijf je in als deelnemer', new_registration_participants_path(:conversation_id => conversation)
+        = participant_registration conversation, '> schrijf je in als deelnemer', new_registration_participant_path(:conversation_id => conversation)
         %br
-        = leader_registration conversation, '> schrijf je in als gespreksleider', new_registration_conversation_leaders_path(:conversation_id => conversation)
+        = leader_registration conversation, '> schrijf je in als gespreksleider', new_registration_conversation_leader_path(:conversation_id => conversation)
       .clear
 
 

@@ -14,11 +14,11 @@ Tafelmanager2::Application.routes.draw do
   end
 
   namespace :registration do 
-    resource :organizers, :only => [:new, :create] 
-    resource :participants, :only => [:new, :create]  do
+    resources :organizers, :only => [:new, :create] 
+    resources :participants, :only => [:new, :create]  do
       collection { get 'confirm' }
     end
-    resource :conversation_leaders, :only => [:new, :create]  do
+      resources :conversation_leaders, :only => [:new, :create]  do
       collection { get 'confirm' }
     end
   end
