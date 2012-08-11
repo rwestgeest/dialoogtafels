@@ -16,7 +16,7 @@ class Registration::OrganizersController < PublicController
 
     unless Captcha.verified?(self)
       flash.alert = I18n.t('registration.captcha_error')
-      render :action => 'new'
+      render_new
       return
     end
 
