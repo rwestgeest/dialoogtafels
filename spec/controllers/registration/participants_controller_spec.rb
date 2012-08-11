@@ -23,7 +23,7 @@ describe Registration::ParticipantsController do
 
     it "puts the conversation_id in a hidden field" do
       do_get
-      response.body.should have_selector "input[name='conversation_id'][type='hidden']"
+      response.body.should have_selector "input[name='conversation_id'][type='hidden'][value='#{conversation.to_param}']"
     end
 
     it_should_behave_like "a_registration_form_with_profile_fields"

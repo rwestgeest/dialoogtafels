@@ -16,7 +16,7 @@
 
 = form_for @person, :url => registration_participants_path  do |f|
   = errors_for @person
-  = hidden_field_tag :conversation_id, value: @conversation.id
+  = hidden_field_tag :conversation_id, @conversation.id
   .dialog-container
     .input-container
       .label= f.label :email
