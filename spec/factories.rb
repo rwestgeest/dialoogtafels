@@ -87,14 +87,19 @@ module Factories
       end
     end
 
+    factory :training_type do
+      sequence( :name ) { |n| "training_#{n}" }
+      description "desc"
+    end
+
     factory :training do
       start_date { Date.today }
       start_time { Time.now }
       end_date { Date.today }
       end_time { Time.now }
-      sequence( :name ) { |n| "training_#{n}" }
       sequence( :location ) { |n| "location_#{n}" }
       max_participants 10
+      association :training_type
     end
 
     factory :profile_field do

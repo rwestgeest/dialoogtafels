@@ -209,9 +209,14 @@ ActiveRecord::Schema.define(:version => 20120814135242) do
   add_index "training_registrations", ["training_id", "attendee_id"], :name => "index_training_registrations_on_training_id_and_attendee_id"
 
   create_table "training_types", :force => true do |t|
-    t.string "name",        :default => "", :null => false
-    t.text   "description", :default => ""
+    t.string  "name",        :default => "", :null => false
+    t.text    "description", :default => ""
+    t.integer "project_id"
+    t.integer "tenant_id"
   end
+
+  add_index "training_types", ["project_id"], :name => "index_training_types_on_project_id"
+  add_index "training_types", ["tenant_id"], :name => "index_training_types_on_tenant_id"
 
   create_table "trainings", :force => true do |t|
     t.datetime "start_time",                        :null => false
@@ -220,15 +225,14 @@ ActiveRecord::Schema.define(:version => 20120814135242) do
     t.string   "location",          :default => "", :null => false
     t.integer  "participant_count", :default => 0
     t.integer  "tenant_id"
-    t.integer  "project_id"
     t.datetime "created_at",                        :null => false
     t.datetime "updated_at",                        :null => false
     t.integer  "training_type_id"
   end
 
   add_index "trainings", ["location", "start_time"], :name => "index_trainings_on_location_and_start_time"
-  add_index "trainings", ["tenant_id", "project_id"], :name => "index_trainings_on_tenant_id_and_project_id"
   add_index "trainings", ["tenant_id"], :name => "index_trainings_on_tenant_id"
+  add_index "trainings", ["tenant_id"], :name => "index_trainings_on_tenant_id_and_project_id"
   add_index "trainings", ["training_type_id"], :name => "index_trainings_on_training_type_id"
 
 end

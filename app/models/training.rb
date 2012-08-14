@@ -2,13 +2,13 @@ class Training < ActiveRecord::Base
   include Schedulable
 
   attr_accessible :name, :location, :max_participants, :description, :start_date, :start_time, :end_date, :end_time
-  belongs_to :project
+
+  belongs_to :training_type
+
   has_many :training_registrations
   has_many :training_invitations, foreign_key: :reference_id
   has_many :attendees, :through => :training_registrations
 
-  before_validation :associate_to_active_project
-  validates_presence_of :name
   validates_presence_of :location
   validates :max_participants, :presence => true, :numericality => true
   validates_presence_of :start_time
@@ -16,11 +16,14 @@ class Training < ActiveRecord::Base
   validates_presence_of :end_time
   validates_presence_of :end_date
 
-
   include ScopedModel
   scope_to_tenant
 
   scope :availables, where("participant_count < max_participants")
+
+  delegate :project, to: :training_type
+  delegate :name, to: :training_type
+  delegate :description, to: :training_type
 
   def has_invited?(person)
     invites.include?(person.id)
@@ -34,8 +37,4 @@ class Training < ActiveRecord::Base
   def invites
     training_registrations.where(:invited => true).map {|registration| registration.attendee_id}
   end
-  def associate_to_active_project
-    self.project = tenant.active_project if tenant.present?
-  end
-
 end

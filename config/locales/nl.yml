@@ -118,8 +118,6 @@ nl:
               blank: "er is geen geldige dialoog gekoppeld"
         training:
           attributes:
-            name:
-              blank: "je hebt geen naam ingegeven"
             location:
               blank: "je hebt geen locatie ingegeven"
             start_time:
@@ -130,6 +128,12 @@ nl:
               blank: "je hebt geen eindtijd ingegeven"
             end_datum:
               blank: "je hebt geen einddatum ingegeven"
+        training_type:
+          attributes:
+            name:
+              blank: "je hebt geen naam ingegeven"
+            project:
+              blank: "deze training is niet geassocieerd met een project"
         profile_field:
           attributes:
             field_name:

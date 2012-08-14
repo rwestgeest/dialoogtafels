@@ -2,7 +2,6 @@ require 'spec_helper'
 
 describe Training  do
   it_should_behave_like 'a_scoped_object', :training
-  it { should validate_presence_of :name }
   it { should validate_presence_of :location }
   it { should validate_presence_of :max_participants }
   it { should validate_numericality_of :max_participants }
