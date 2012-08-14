@@ -3,6 +3,7 @@ class TrainingType < ActiveRecord::Base
   scope_to_tenant
 
   belongs_to :project
+  has_many :trainings
 
   before_validation :associate_to_active_project
   validates_presence_of :name

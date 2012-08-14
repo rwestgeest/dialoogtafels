@@ -9,19 +9,29 @@ describe City::TrainingsController do
     FactoryGirl.attributes_for :training
   end
 
-  let(:training) { FactoryGirl.create :training }
+  let(:training_type) { FactoryGirl.create :training_type }
+
+  let(:training) { FactoryGirl.create :training, training_type: training_type}
   alias_method :create_training, :training
+
   let(:conversation_leader) { FactoryGirl.create :conversation_leader }
   alias_method :create_conversation_leader, :conversation_leader
   
+  def with_training_type_scope(request_parameters = {})
+    {:training_type_id => training_type.to_param }.merge(request_parameters)
+  end
+
   describe "GET index" do
     before {  create_training; create_conversation_leader }
+    def do_get
+      get :index, with_training_type_scope
+    end
     it "assigns all trainings as @trainings" do
-      get :index, {}
+      do_get
       assigns(:trainings).should eq([training])
     end
     it "assigns all conversation_leaders as @conversation_leaders" do
-      get :index, {}
+      do_get
       assigns(:conversation_leaders).should eq([conversation_leader.person])
     end
   end
@@ -29,14 +39,14 @@ describe City::TrainingsController do
   describe "GET show" do
     it "assigns the requested training as @training" do
       create_training
-      get :show, {:id => training.to_param}
+      get :show, with_training_type_scope(:id => training.to_param)
       assigns(:training).should eq(training)
     end
   end
 
   describe "GET new" do
     it "assigns a new training as @training" do
-      get :new, {}
+      get :new, with_training_type_scope 
       assigns(:training).should be_a_new(Training)
     end
   end
@@ -44,14 +54,14 @@ describe City::TrainingsController do
   describe "GET edit" do
     it "assigns the requested training as @training" do
       create_training
-      get :edit, {:id => training.to_param}
+      get :edit, with_training_type_scope(:id => training.to_param)
       assigns(:training).should eq(training)
     end
   end
 
   describe "POST create" do
     def do_post
-      post :create, {:training => valid_attributes}
+      post :create, with_training_type_scope(:training => valid_attributes)
     end
     describe "with valid params" do
       it "creates a new Training" do
@@ -90,8 +100,8 @@ describe City::TrainingsController do
 
   describe "PUT update" do
     before { create_training }
-    def do_put
-      put :update, {:id => training.to_param, :training => valid_attributes}
+    def do_put(attributes = valid_attributes)
+      put :update, with_training_type_scope(:id => training.to_param, :training => attributes)
     end
     describe "with valid params" do
       it "updates the requested training" do
@@ -100,7 +110,7 @@ describe City::TrainingsController do
         # receives the :update_attributes message with whatever params are
         # submitted in the request.
         Training.any_instance.should_receive(:update_attributes).with({'these' => 'params'})
-        put :update, {:id => training.to_param, :training => {'these' => 'params'}}
+        do_put 'these' => 'params'
       end
 
       it "assigns the requested training as @training" do
@@ -133,14 +143,18 @@ describe City::TrainingsController do
 
   describe "DELETE destroy" do
     before { create_training }
+    def do_delete
+      delete :destroy, with_training_type_scope(:id => training.to_param)
+    end
+
     it "destroys the requested training" do
       expect {
-        delete :destroy, {:id => training.to_param}
+        do_delete
       }.to change(Training, :count).by(-1)
     end
 
     it "redirects to the trainings list" do
-      delete :destroy, {:id => training.to_param}
+      do_delete
       response.should redirect_to(city_trainings_url)
     end
   end
