@@ -1,14 +1,13 @@
 class ProfileField < ActiveRecord::Base
-  attr_accessible :label, :type, :values, :field_name
+  attr_accessible :label, :type, :values, :field_name, :on_form
   include ScopedModel
   scope_to_tenant
 
   validates :field_name, :presence => :true, :uniqueness => true
   validates :label, :presence => :true, :uniqueness => true
 
-  def initialize(*args)
-    super
-  end
+  scope :on_form, where(:on_form => true)
+
   def self.selection_options
     [['tekst regel', 'ProfileStringField'], 
      ['telst blok', 'ProfileTextField'],

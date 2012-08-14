@@ -1,20 +1,26 @@
 = errors_for profile_field
 .dialog-container
   .handle{:title => "Sleep om te verplaatsen"}
-  .left-input-container
-    .label= f.label :label
-    .input
-      = f.text_field(:label)
-  .field-type-container
-    .input-container
-      .label= f.label :type
+  .left
+    .left-input-container
+      .label= f.label :label
       .input
-        = f.select :type, ProfileField.selection_options,{}, :id => "profile_field_type_#{profile_field.to_param}", class: 'normal'
-    .input-container{ id: "profile_selection_field_container_#{profile_field.to_param}", :style => profile_field.is_a?(ProfileSelectionField) ? "display:block;" : "display:none;"}
-      .label= f.label :values
+        = f.text_field(:label)
+    .field-type-container
+      .input-container
+        .label= f.label :type
+        .input
+          = f.select :type, ProfileField.selection_options,{}, :id => "profile_field_type_#{profile_field.to_param}", class: 'normal'
+      .input-container{ id: "profile_selection_field_container_#{profile_field.to_param}", :style => profile_field.is_a?(ProfileSelectionField) ? "display:block;" : "display:none;"}
+        .label= f.label :values
+        .input
+          = f.text_area :values
+    .clear
+    .left-input-container
       .input
-        = f.text_area :values
-  .clear
+        = f.check_box :on_form
+        = f.label :on_form
+    .clear
   .actions
     = link_to "sluiten", '#', :id => "close_form"
     = f.submit

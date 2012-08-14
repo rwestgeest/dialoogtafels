@@ -30,7 +30,7 @@ class Registration::OrganizersController < PublicController
 
   private 
   def render_new
-    @profile_fields = ProfileField.all
+    @profile_fields = ProfileField.on_form
     render action: "new" 
   end
 end

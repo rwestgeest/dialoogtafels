@@ -33,7 +33,7 @@ class Registration::ParticipantsController < PublicController
   private 
   def render_new
     @location = @conversation.location
-    @profile_fields = ProfileField.all
+    @profile_fields = ProfileField.on_form
     render action: "new" 
   end
 
