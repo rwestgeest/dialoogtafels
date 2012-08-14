@@ -2,23 +2,23 @@ class City::TrainingsController < ApplicationController
   append_before_filter :check_training_type
   def index
     @conversation_leaders = Person.conversation_leaders_for(active_project) 
-    @trainings = @training_type.trainings
+    @trainings = trainings
   end
 
   def show
-    @training = @training_type.trainings.find(params[:id])
+    @training = trainings.find(params[:id])
   end
 
   def new
-    @training = @training_type.trainings.new
+    @training = trainings.new
   end
 
   def edit
-    @training = @training_type.trainings.find(params[:id])
+    @training = trainings.find(params[:id])
   end
 
   def create
-    @training = @training_type.trainings.build(params[:training])
+    @training = trainings.build(params[:training])
 
     if @training.save
       redirect_to city_training_path(@training), notice: 'Training is aangemaakt'
@@ -28,7 +28,7 @@ class City::TrainingsController < ApplicationController
   end
 
   def update
-    @training = @training_type.trainings.find(params[:id])
+    @training = trainings.find(params[:id])
 
     if @training.update_attributes(params[:training])
       redirect_to city_training_path(@training), notice: 'Training is bijgewerkt'
@@ -38,16 +38,23 @@ class City::TrainingsController < ApplicationController
   end
 
   def destroy
-    @training = Training.find(params[:id])
+    @training = trainings.find(params[:id])
     @training.destroy
 
     redirect_to city_trainings_url
   end
+
   private 
   def check_training_type
     unless params[:training_type_id] && TrainingType.exists?(params[:training_type_id])
       head :not_found
     end
-    @training_type = TrainingType.find(params[:training_type_id])
   end
+  def trainings
+    @trainings ||= training_type.trainings
+  end
+  def training_type
+    @training_type ||= TrainingType.find(params[:training_type_id])
+  end
+
 end
