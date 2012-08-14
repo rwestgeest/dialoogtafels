@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120811185935) do
+ActiveRecord::Schema.define(:version => 20120814135242) do
 
   create_table "accounts", :force => true do |t|
     t.string   "email",                :limit => 150,                      :null => false
@@ -163,11 +163,12 @@ ActiveRecord::Schema.define(:version => 20120811185935) do
   create_table "projects", :force => true do |t|
     t.string   "name"
     t.integer  "tenant_id"
-    t.datetime "created_at",                                  :null => false
-    t.datetime "updated_at",                                  :null => false
+    t.datetime "created_at",                                   :null => false
+    t.datetime "updated_at",                                   :null => false
     t.integer  "conversation_length",        :default => 180
     t.datetime "start_time"
     t.integer  "max_participants_per_table", :default => 8
+    t.boolean  "trainings_on_form",          :default => true
   end
 
   create_table "tenants", :force => true do |t|
@@ -207,22 +208,27 @@ ActiveRecord::Schema.define(:version => 20120811185935) do
   add_index "training_registrations", ["tenant_id"], :name => "index_training_registrations_on_tenant_id"
   add_index "training_registrations", ["training_id", "attendee_id"], :name => "index_training_registrations_on_training_id_and_attendee_id"
 
+  create_table "training_types", :force => true do |t|
+    t.string "name",        :default => "", :null => false
+    t.text   "description", :default => ""
+  end
+
   create_table "trainings", :force => true do |t|
     t.datetime "start_time",                        :null => false
     t.datetime "end_time",                          :null => false
     t.integer  "max_participants",  :default => 20
-    t.string   "name",              :default => "", :null => false
-    t.text     "description",       :default => ""
     t.string   "location",          :default => "", :null => false
     t.integer  "participant_count", :default => 0
     t.integer  "tenant_id"
     t.integer  "project_id"
     t.datetime "created_at",                        :null => false
     t.datetime "updated_at",                        :null => false
+    t.integer  "training_type_id"
   end
 
   add_index "trainings", ["location", "start_time"], :name => "index_trainings_on_location_and_start_time"
   add_index "trainings", ["tenant_id", "project_id"], :name => "index_trainings_on_tenant_id_and_project_id"
   add_index "trainings", ["tenant_id"], :name => "index_trainings_on_tenant_id"
+  add_index "trainings", ["training_type_id"], :name => "index_trainings_on_training_type_id"
 
 end

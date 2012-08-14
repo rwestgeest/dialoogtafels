@@ -51,6 +51,8 @@ group :development do
   gem "rspec-rails", "~> 2.10.0"
   gem "capybara"
   gem "nifty-generators"
+  gem "guard"
+  gem "guard-rspec"
 end
 
 group :rake do
