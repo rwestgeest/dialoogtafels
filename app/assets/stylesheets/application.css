@@ -62,6 +62,7 @@ div.clear {
   clear:both;
 }
 a.edit { padding: 2px; }
+a.mail { padding: 2px; }
 a.email { padding: 1px; }
 a.move { padding: 1px; }
 

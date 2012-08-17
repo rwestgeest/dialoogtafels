@@ -1,6 +1,6 @@
-var old_html = $('#training_new').html();
-$('#training_new').html('<%= escape_javascript(render(partial:"form", locals: {training: @training})) %>');
+var old_html = $('#training_new_<%= @training_type.to_param %>').html();
+$('#training_new_<%= @training_type.to_param %>').html('<%= escape_javascript(render(partial:"form", locals: {training: @training})) %>');
 $("#close_form").click(function(){
-  $('#training_new').html(old_html);
+  $('#training_new_<%= @training_type.to_param %>').html(old_html);
 });
 

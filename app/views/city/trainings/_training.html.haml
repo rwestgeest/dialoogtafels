@@ -1,8 +1,11 @@
 .conversation{:id => "training_#{training.to_param}"}
   %h3
     = time_period(training).capitalize
+    bij
+    = training.location
     %span.operations 
       = link_to image_tag('edit.gif'), edit_city_training_path(training.to_param, :training_type_id => training.training_type_id), :class => 'edit', :title => 'wijzig deze trainingsbijeenkomst', :remote => true
+      = link_to image_tag('mail.gif'), city_training_training_invitations_path(:training_id => training.to_param), :class => 'mail', :title => 'uitnodigingen'
       = link_to image_tag('delete.gif'), city_training_path(training.to_param, :training_type_id => training.training_type_id), 
                                                         :method => :delete, 
                                                         :class => 'delete', 

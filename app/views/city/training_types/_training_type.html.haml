@@ -5,3 +5,5 @@
     %td.training-modified-state
       = created_at(training_type)
       = updated_at(training_type)
+  %tr{ id: "training-planning-#{training_type.to_param}_row", class: 'hidden-list-item'}
+    %td{colspan: 2, id: "training-planning-#{training_type.to_param}"}

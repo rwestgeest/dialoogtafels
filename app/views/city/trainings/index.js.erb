@@ -1,2 +1,2 @@
-$('#trainings').html('<%= escape_javascript(render(partial:"index", locals: { trainings: @trainings } )) %>');
+$("#trainings_<%= @training_type.to_param %>").html('<%= escape_javascript(render(partial:"index", locals: { training_type: @training_type } )) %>');
 

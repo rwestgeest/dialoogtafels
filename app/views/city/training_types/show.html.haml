@@ -6,4 +6,4 @@
                                                            method: :delete,
                                                            title: "#{@training_type.name} inclusief geplande data en inschrijvingen",
                                                            confirm: "Weet je zeker dat je #{@training_type.name} wilt verwijderen?. Alle bijbehorende trainingsbijeenkomten en inschrijvingen gaan dan verloren"
-= render partial: 'city/trainings/index', locals: { trainings: @training_type.trainings }
+= render partial: 'city/trainings/index', locals: { training_type: @training_type }
