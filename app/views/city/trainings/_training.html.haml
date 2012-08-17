@@ -1,10 +1,18 @@
-%table{ id: "list-training-#{training.id}", class: 'list-training' }
-  %tr
-    %td.training-data
-      = link_to training.name, city_training_path(training)
-      %br
-      %span.schedule= time_period(training) 
-    %td.training-modified-state
-      = created_at(training)
-      = updated_at(training)
+.conversation{:id => "training_#{training.to_param}"}
+  %h3
+    = time_period(training).capitalize
+    %span.operations 
+      = link_to image_tag('edit.gif'), edit_city_training_path(training.to_param, :training_type_id => training.training_type_id), :class => 'edit', :title => 'wijzig deze trainingsbijeenkomst', :remote => true
+      = link_to image_tag('delete.gif'), city_training_path(training.to_param, :training_type_id => training.training_type_id), 
+                                                        :method => :delete, 
+                                                        :class => 'delete', 
+                                                        :title => 'verwijder deze trainingbijeenkomst', 
+                                                        :'data-remote' => true, 
+                                                        :confirm => 'Weet je zeker dat je deze trainingsbijeenkomst wilt verwijderen? De bijbehorende inschrijvingen gaan dan ook verloren.'
+    %span.table-info
+      maximaal deelnemers: 
+      = training.max_participants
+  .conversation-container
+    .clear
+      = render :partial => 'city/trainings/training_attendees', locals: { training: training }
 

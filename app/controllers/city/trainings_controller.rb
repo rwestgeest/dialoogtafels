@@ -1,7 +1,6 @@
 class City::TrainingsController < ApplicationController
   append_before_filter :check_training_type
   def index
-    @conversation_leaders = Person.conversation_leaders_for(active_project) 
     @trainings = trainings
   end
 
@@ -21,7 +20,8 @@ class City::TrainingsController < ApplicationController
     @training = trainings.build(params[:training])
 
     if @training.save
-      redirect_to city_training_path(@training), notice: 'Training is aangemaakt'
+      @trainings = @training.training_type.trainings
+      render action: "index"
     else
       render action: "new"
     end
@@ -31,7 +31,7 @@ class City::TrainingsController < ApplicationController
     @training = trainings.find(params[:id])
 
     if @training.update_attributes(params[:training])
-      redirect_to city_training_path(@training), notice: 'Training is bijgewerkt'
+      render action: "show"
     else
       render action: "edit"
     end
@@ -40,8 +40,8 @@ class City::TrainingsController < ApplicationController
   def destroy
     @training = trainings.find(params[:id])
     @training.destroy
-
-    redirect_to city_trainings_url
+    @trainings = trainings
+    render action: 'index'
   end
 
   private 

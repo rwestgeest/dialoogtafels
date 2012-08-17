@@ -14,6 +14,7 @@ class SplitTrainingTypeFromTraining < ActiveRecord::Migration
       t.text     "description",       :default => ""
       t.references :project
       t.references :tenant
+      t.timestamps
     end
     add_index :training_types, :project_id
     add_index :training_types, :tenant_id 

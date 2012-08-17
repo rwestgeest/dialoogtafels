@@ -30,6 +30,9 @@ Tafelmanager2::Application.routes.draw do
   end
 
   namespace :city do 
+    resources :training_types do
+      resources :trainings, :on => :member
+    end
     resources :trainings do
       resources :training_invitations, :on => :member, :only => [:index, :create]
     end

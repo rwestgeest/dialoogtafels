@@ -1,10 +1,8 @@
 = javascript_include_tag :trainings
-= form_for [:city, @training] do |f|
+= form_for [:city, @training], :remote => true do |f|
   = errors_for @training
+  = hidden_field_tag :training_type_id, @training_type.id
   .dialog-container
-    .input-container
-      .label= f.label :name
-      .input= f.text_field :name
     .input-container 
       .label= f.label :start_date
       .input.wide
@@ -21,9 +19,7 @@
     .input-container
       .label= f.label :location
       .input= f.text_field :location
-    .input-container
-      .label= f.label :description
-      .input= f.text_area :description
     .clear
   .actions
+    = link_to "sluiten", '#', :id => "close_form"
     = f.submit

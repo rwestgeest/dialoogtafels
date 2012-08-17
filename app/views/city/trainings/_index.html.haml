@@ -1,0 +1,5 @@
+#trainings
+  = render partial: 'city/trainings/training', collection: trainings
+  #training_new
+    .actions
+      = link_to 'plan een training', new_city_training_path(training_type_id: @training_type.to_param), remote: true

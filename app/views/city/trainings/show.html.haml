@@ -8,13 +8,7 @@
 = markup @training.description
 
 %h3 Deelnemers
-- if @training.attendees.empty?
-  %p Geen gespreksleiders ingeschreven aan deze training
-- else
-  %ul.person-list.training-attendee-list
-    - @training.attendees.each do |attendee|
-      = render partial: 'shared/person', locals: {person: attendee} 
-  .clear
+= render :partial => 'training_attendees', locals: { training: @training }
 %h3 Uitnodigingen
 = render :partial => '/city/training_invitations/index', locals: {training_invitations: @training.training_invitations}
 

@@ -1,9 +1,10 @@
 class TrainingType < ActiveRecord::Base
+  attr_accessible :name, :description
   include ScopedModel
   scope_to_tenant
 
   belongs_to :project
-  has_many :trainings
+  has_many :trainings, order: :start_time
 
   before_validation :associate_to_active_project
   validates_presence_of :name

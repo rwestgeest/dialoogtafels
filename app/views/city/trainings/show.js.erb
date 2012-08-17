@@ -1,0 +1,2 @@
+$('#training_<%= @training.to_param %>').replaceWith('<%= escape_javascript(render(partial:"training", locals: {training: @training})) %>');
+

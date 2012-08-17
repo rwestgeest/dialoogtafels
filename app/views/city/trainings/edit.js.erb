@@ -1,0 +1,5 @@
+var old_html_<%= @training.to_param %> = $('#training_<%= @training.to_param %>').html();
+$('#training_<%= @training.to_param %>').html('<%= escape_javascript(render(partial:"form", locals: {training: @training})) %>');
+$("#close_form").click(function(){
+  $('#training_<%= @training.to_param %>').html(old_html_<%= @training.to_param %>);
+});

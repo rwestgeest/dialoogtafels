@@ -1,0 +1,12 @@
+= form_for [:city, @training_type] do |f|
+  = errors_for @training_type
+  .dialog-container
+    .input-container
+      .label= f.label :name
+      .input= f.text_field :name
+    .input-container
+      .label= f.label :description
+      .input= f.text_area :description
+    .clear
+  .actions
+    = f.submit

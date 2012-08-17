@@ -207,9 +207,10 @@ nl:
       training:
         start_date: "Aanvang"
         end_date: "Einde"
-        name: "Training" 
         max_participants: "Maximaal aantal deelnemers"
         location: "Locatie" 
+      training_type:
+        name: "Training" 
         description: "Omschijving"
       profile_field:
         label: "Label"
@@ -242,6 +243,9 @@ nl:
       training:
         create: "Maak training aan"
         update: "Bijwerken"
+      training_type:
+        create: "Maak training aan"
+        update: "Bijwereken"
       profile_field:
         create: "Maak profielveld aan" 
         update: "Bijwerken profielveld" 
@@ -304,6 +308,14 @@ nl:
       show:
         index: "terug naar de lijst"
         edit: "wijzig deze training"
+        delete: "verwijder deze training"
+        sure: "Weet je zeker dat je deze training wilt verwijderen?"
+    training_types:
+      index:
+        new: "maak een nieuwe training"
+        registrations: "registraties beheren"
+      show:
+        edit: "wijzig deze training" 
         delete: "verwijder deze training"
         sure: "Weet je zeker dat je deze training wilt verwijderen?"
     registrations:

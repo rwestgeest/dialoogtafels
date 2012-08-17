@@ -1,0 +1,9 @@
+%div#dialog-form
+- title "Planning voor #{@training_type.name}"
+- context_action ".edit", edit_city_training_type_path(@training_type.to_param),
+                                                           title: "#{@training_type.name} wijzigen"
+- context_action ".delete", city_training_type_path(@training_type.to_param),
+                                                           method: :delete,
+                                                           title: "#{@training_type.name} inclusief geplande data en inschrijvingen",
+                                                           confirm: "Weet je zeker dat je #{@training_type.name} wilt verwijderen?. Alle bijbehorende trainingsbijeenkomten en inschrijvingen gaan dan verloren"
+= render partial: 'city/trainings/index', locals: { trainings: @training_type.trainings }

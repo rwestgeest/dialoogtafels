@@ -209,10 +209,12 @@ ActiveRecord::Schema.define(:version => 20120814135242) do
   add_index "training_registrations", ["training_id", "attendee_id"], :name => "index_training_registrations_on_training_id_and_attendee_id"
 
   create_table "training_types", :force => true do |t|
-    t.string  "name",        :default => "", :null => false
-    t.text    "description", :default => ""
-    t.integer "project_id"
-    t.integer "tenant_id"
+    t.string   "name",        :default => "", :null => false
+    t.text     "description", :default => ""
+    t.integer  "project_id"
+    t.integer  "tenant_id"
+    t.datetime "created_at",                  :null => false
+    t.datetime "updated_at",                  :null => false
   end
 
   add_index "training_types", ["project_id"], :name => "index_training_types_on_project_id"
