@@ -78,6 +78,11 @@ class Person < ActiveRecord::Base
     includes(:account).where('accounts.email' => email).first
   end
 
+  def replace_training_registrations(training_ids)
+    training_registrations.destroy_all
+    training_ids.each {|training_id| register_for(training_id) }
+  end
+
   def register_for training
     begin 
       return register_for Training.find(training) unless training.is_a? Training
@@ -88,6 +93,10 @@ class Person < ActiveRecord::Base
     rescue ActiveRecord::RecordNotFound => e
       return nil
     end
+  end
+
+  def registered_for_training?(training_id)
+    trainings.where(:id => training_id).exists?
   end
 
   def cancel_registration_for training

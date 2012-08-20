@@ -1,8 +1,9 @@
+%div#dialog-form
 - title "Trainingen beheren voor #{active_project.name}"
-- context_action '.registrations', city_training_registrations_path
 - context_action '.new', new_city_training_type_path
+- page_side_bar 'side_bar'
 - if (@training_types.empty?)
-  = link_to "Maak je eerste training aan", new_city_training_path
+  = link_to "Maak je eerste training aan", new_city_training_type_path
 - else
   = render :partial => 'training_type', :collection => @training_types
 .clear

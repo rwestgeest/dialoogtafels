@@ -1,9 +1,5 @@
-.right_heading Inschrijvingen voor
-%ul
-  %span.selected-text Trainingen
-  %li= link_to "Gesprekken", city_registrations_path(:person_id => @attendee.to_param)
-.right_heading van
+.right_heading Training inschrijvingen voor
 %ul
   - @attendees.each do |attendee|
-    %li= select_person_link attendee, city_training_registrations_path(:attendee_id => attendee.to_param), @attendee
+    %li= select_person_link attendee, city_training_registration_path(attendee.to_param), @attendee
 

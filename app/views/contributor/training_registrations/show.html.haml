@@ -1,0 +1,9 @@
+- title "Mijn trainingen"
+- if (@training_types.empty?)
+  %p
+    Er zijn nog geen trainingen gepland
+- else
+  = form_for contributor_training_registrations_path, :method => :put do 
+    = render :partial => 'training_type', :collection => @training_types
+    = submit_tag "update"
+.clear

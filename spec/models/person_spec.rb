@@ -105,6 +105,62 @@ describe Person do
       end
     end
 
+    describe "replace training_registrations" do
+      let(:training) { FactoryGirl.create :training } 
+      let(:training_id) { training.id }
+      let(:person) { FactoryGirl.create :person }
+      let(:conversation_leader) { FactoryGirl.create :conversation_leader, person: person }
+
+      it "creates a registration instance" do
+        expect {
+          person.replace_training_registrations([ training_id ])
+        }.to change(TrainingRegistration, :count).by(1)
+      end
+
+      it "creates only one registration instance when training is passed multiple times" do
+        expect { 
+          person.replace_training_registrations [training_id, training_id]
+        }.to change(TrainingRegistration, :count).by(1)
+      end
+
+      it "ignores illegal training ids" do
+        expect { 
+          person.replace_training_registrations ["bogus"] 
+        }.not_to change(TrainingRegistration, :count)
+      end
+
+      context "when registerd for a training" do
+        before { person.register_for(FactoryGirl.create :training) }
+        
+        it "removes existing registrations" do
+          expect {
+            person.replace_training_registrations([ training_id ])
+          }.not_to change(TrainingRegistration, :count)
+        end
+
+        it "registers for the new training" do
+          person.replace_training_registrations([training_id])
+          person.should be_registered_for_training(training_id)
+        end
+      end
+
+      describe "registering for more trainings" do 
+        let!(:other_training) {  FactoryGirl.create :training  }
+
+        it "creates more registration instances" do
+          expect { 
+            person.replace_training_registrations [training_id, other_training.id]
+          }.to change(TrainingRegistration, :count).by(2)
+        end
+        it "registers for all trainings" do
+          person.replace_training_registrations [training_id, other_training.id]
+          person.should be_registered_for_training(training_id)
+          person.should be_registered_for_training(other_training.id)
+        end
+      end
+
+    end
+
     describe "register_for training" do
       let(:training) { FactoryGirl.create :training } 
       let(:training_id) { training.id }
@@ -117,6 +173,11 @@ describe Person do
           person.register_for(training_id)
           training.attendees == [person]
         end 
+
+        it "makes it registerd for training" do
+          person.register_for(training_id)
+          person.should be_registered_for_training(training)
+        end
 
         it "creates a registration instance " do
           expect { 
@@ -168,6 +229,11 @@ describe Person do
         before { person.register_for(training_id) }
         it "destroys the traiing registration instance" do
           expect { person.cancel_registration_for(training_id) }.to change(TrainingRegistration, :count).by(-1)
+        end
+
+        it "makes it not registerd for training" do
+          person.cancel_registration_for(training_id)
+          person.should_not be_registered_for_training(training)
         end
 
         it "returns the added training" do

@@ -37,14 +37,6 @@ describe City::TrainingsController do
     end
   end
 
-  describe "GET show" do
-    it "assigns the requested training as @training" do
-      create_training
-      get :show, with_training_type_scope(:id => training.to_param)
-      assigns(:training).should eq(training)
-    end
-  end
-
   describe "GET new" do
     before { xhr :get, :new, with_training_type_scope }
 

@@ -34,6 +34,7 @@ class Registration::ConversationLeadersController < PublicController
   def render_new
     @location = @conversation.location
     @profile_fields = ProfileField.on_form
+    @training_types = TrainingType.all
     render action: "new" 
   end
 

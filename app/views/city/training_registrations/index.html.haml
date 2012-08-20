@@ -1,7 +1,0 @@
-- title "Trainingen voor #{@attendee.name}"
-- context_action '.trainings', city_trainings_path
-- page_side_bar 'side_bar'
-%table.columns-layout{id: 'trainings'}
-  = render :partial => 'index', locals: {available_trainings: @available_trainings, attendee: @attendee}
-.clear
-

@@ -24,6 +24,11 @@ describe ActionGuard, :type => :authorisation do
     it { should_not authorize(organizer).to_perform("city/trainings")  }
   end
 
+  describe "city/training_types" do
+    it { should authorize(coordinator).to_perform("city/training_types")  }
+    it { should_not authorize(organizer).to_perform("city/training_types")  }
+  end
+
   describe "city/locations" do
     it { should authorize(coordinator).to_perform("city/locations#index")  }
     it { should authorize(coordinator).to_perform("city/locations#new")  }

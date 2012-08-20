@@ -11,10 +11,6 @@ describe City::TrainingsController do
       get("/city/training_types/33/trainings/new").should route_to("city/trainings#new", :training_type_id => "33")
     end
 
-    it "routes to #show" do
-      get("/city/training_types/33/trainings/1").should route_to("city/trainings#show", :id => "1", :training_type_id => "33")
-    end
-
     it "routes to #edit" do
       get("/city/training_types/33/trainings/1/edit").should route_to("city/trainings#edit", :id => "1", :training_type_id => "33")
     end

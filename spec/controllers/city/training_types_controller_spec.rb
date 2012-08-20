@@ -21,6 +21,11 @@ describe City::TrainingTypesController do
       do_get
       assigns(:training_types).should eq([training_type])
     end
+    it "assigns all conversation_leaders's people as @people" do
+      conversation_leader_person = FactoryGirl.create(:conversation_leader).person
+      do_get
+      assigns(:people).should eq([conversation_leader_person])
+    end
   end
 
   describe "GET show" do

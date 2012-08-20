@@ -26,12 +26,12 @@ Tafelmanager2::Application.routes.draw do
   namespace :contributor do
     resource :profile, :only => [:edit, :update]
     resource :registration, :only => [:show]
-    resources :training_registrations, :only => [:index, :create, :destroy]
+    resource :training_registrations, :only => [:show, :update]
   end
 
   namespace :city do 
     resources :training_types do
-      resources :trainings, :on => :member
+      resources :trainings, :on => :member, :except => [:show]
     end
     resources :trainings do
       resources :training_invitations, :on => :member, :only => [:index, :create]
@@ -43,7 +43,7 @@ Tafelmanager2::Application.routes.draw do
       resources :todos, :on => :member, :only => [:index, :update]
       resources :contributors, :on => :member, :only => [:index]
     end
-    resources :training_registrations, :only => [:index, :create, :destroy]
+    resources :training_registrations, :only => [:show, :update]
     resources :registrations, :only => [:index, :create, :destroy]
     resources :people, :only => [:edit, :update]
   end

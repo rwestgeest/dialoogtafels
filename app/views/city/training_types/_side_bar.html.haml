@@ -1,0 +1,4 @@
+.right_heading Training inschrijvingen voor
+%ul
+  - @people.each do |person|
+    %li= link_to person.name, city_training_registration_path(person.to_param)

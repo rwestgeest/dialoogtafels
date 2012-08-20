@@ -1,9 +1,6 @@
 %table{ id: "list-training-#{training_type.id}", class: 'list-training' }
   %tr
     %td.training-data
-      = link_to training_type.name, city_training_type_path(training_type)
-    %td.training-modified-state
-      = created_at(training_type)
-      = updated_at(training_type)
-  %tr{ id: "training-planning-#{training_type.to_param}_row", class: 'hidden-list-item'}
-    %td{colspan: 2, id: "training-planning-#{training_type.to_param}"}
+      %h2= link_to training_type.name, city_training_type_path(training_type.to_param)
+      = render partial: 'city/trainings/index', locals: { training_type: training_type }
+

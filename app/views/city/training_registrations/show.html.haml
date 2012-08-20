@@ -1,0 +1,11 @@
+- title "Trainingen voor #{@attendee.name}"
+- context_action '.trainings', city_training_types_path
+- page_side_bar 'side_bar'
+- if (@training_types.empty?)
+  = link_to "Maak je eerste training aan", new_city_training_type_path
+- else
+  = form_for city_training_registration_path(@attendee.to_param), :method => :put do 
+    = render :partial => 'training_type', :collection => @training_types
+    = submit_tag "update"
+.clear
+

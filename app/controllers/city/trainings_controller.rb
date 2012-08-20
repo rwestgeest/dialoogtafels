@@ -4,10 +4,6 @@ class City::TrainingsController < ApplicationController
     @trainings = trainings
   end
 
-  def show
-    @training = trainings.find(params[:id])
-  end
-
   def new
     @training = trainings.new
   end

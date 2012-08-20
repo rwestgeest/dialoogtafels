@@ -1,26 +1,18 @@
 class City::TrainingRegistrationsController < ApplicationController
-  def index
+  def show
     begin 
       @attendees = Person.conversation_leaders_for(active_project)
-      @attendee = Person.find(params[:attendee_id])
-      render_index
+      @attendee = Person.find(params[:id])
+      @training_types = TrainingType.all
+      render :show
     rescue ActiveRecord::RecordNotFound
       render :action => 'select_attendee'
     end
   end
-  def create
-    @attendee = Person.find(params[:attendee_id])
-    @attendee.register_for(params[:training_id])
-    render_index
-  end
-  def destroy
-    @attendee = Person.find(params[:attendee_id])
-    @attendee.cancel_registration_for(params[:id])
-    render_index
-  end
-  private
-  def render_index
-    @available_trainings = Training.availables - @attendee.trainings
-    render :index
+
+  def update
+    @attendee = Person.find(params[:id])
+    @attendee.replace_training_registrations params[:training_registrations].values
+    redirect_to city_training_registration_path(params[:id]), notice: 'Inschrijvingen bijgewerkt'
   end
 end

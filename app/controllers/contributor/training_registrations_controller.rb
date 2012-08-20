@@ -1,20 +1,14 @@
 class Contributor::TrainingRegistrationsController < ApplicationController
-  def index
+  def show
     @attendee = current_person
-    render_index
+    @training_types = TrainingType.all
+    render :show
   end
-  def create
+
+  def update
     @attendee = current_person
-    @attendee.register_for(params[:training_id])
-    render_index
+    @attendee.replace_training_registrations params[:training_registrations].values
+    redirect_to contributor_training_registrations_path, notice: "Trainingen bijgewerkt"
   end
-  def destroy
-    @attendee = current_person
-    @attendee.cancel_registration_for(params[:id])
-    render_index
-  end
-  def render_index
-    @available_trainings = Training.availables - @attendee.trainings
-    render :index
-  end
+
 end

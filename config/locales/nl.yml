@@ -325,7 +325,7 @@ nl:
     training_registrations:
       select_attendee:
         trainings: "trainingen beheren"
-      index:
+      show:
         trainings: "trainingen beheren"
         select_attendee: "Selecteer een gespreksleider uit de rechter kantlijn om zijn inschrijvingen te beheren"
     training_invitations:
