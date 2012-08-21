@@ -30,12 +30,13 @@
       .label= f.label :telephone
       .input= f.text_field :telephone
     .clear
-  .dialog-container
-    - @profile_fields.each do |profile_field|
-      .input-container
-        .label= f.label profile_field.field_name_with_prefix, profile_field.label
-        .input= profile_field.render_field_on(f)
-    .clear
+  - unless @profile_fields.empty?
+    .dialog-container
+      - @profile_fields.each do |profile_field|
+        .input-container
+          .label= f.label profile_field.field_name_with_prefix, profile_field.label
+          .input= profile_field.render_field_on(f)
+      .clear
   .dialog-container
     = render partial: 'shared/captcha'
     .clear
