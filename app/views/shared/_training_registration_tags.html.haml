@@ -6,10 +6,11 @@
       %ul.nobullets
         %li
           = radio_button_tag("training_registrations[#{training_type.to_param}]", 0, true)
-          ik doe niet mee aan 
+          = dont_register_message 
           = training_type.name.downcase
         - training_type.trainings.availables.each do |training|
           %li{:id => "training_#{training.id}"}
-            = radio_button_tag("training_registrations[#{training_type.to_param}]", training.to_param, @attendee.registered_for_training?(training.to_param))
+            = radio_button_tag("training_registrations[#{training_type.to_param}]", training.to_param, attendee.registered_for_training?(training.to_param))
             = time_period(training)
+
 

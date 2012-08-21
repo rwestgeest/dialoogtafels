@@ -11,10 +11,17 @@ describe Registration::OrganizersController do
     def do_get
       get :new, {}
     end
+
     it "assigns a new person as @person" do
       do_get
       assigns(:person).should be_a_new(Person)
     end
+
+    it "renders a form" do
+      do_get
+      response.body.should have_selector "form[action='#{registration_organizers_path}'][method='post']"
+    end
+
     it_should_behave_like "a_registration_form_with_profile_fields"
   end
 

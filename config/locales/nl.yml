@@ -177,6 +177,8 @@ nl:
         conversation_length: "Duur van een gesprek"
       person:
         name: "Naam"
+        email: "Email"
+        telephone: "Telefoon"
       organizer:
         email: "Email"
         name: "Naam"
@@ -216,6 +218,7 @@ nl:
         label: "Label"
         type: "Soort veld"
         values: "Mogelijke waarden"
+        on_form: "Zet dit veld op het inschrijfformulier"
       training_invitation:
         subject: "Onderwerp"
     submit:
@@ -226,12 +229,7 @@ nl:
         update: "Project opslaan"
       person:
         update: "Profiel bijwerken"
-      organizer:
-        create: "Registreer"
-      conversation_leader:
-        create: "Registreer"
-      participant:
-        create: "Registreer"
+        create: "Aanmelden"
       location:
         create: "Maak locatie aan"
         update: "Locatie bijwereken"

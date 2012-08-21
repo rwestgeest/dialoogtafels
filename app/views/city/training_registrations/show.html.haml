@@ -5,7 +5,7 @@
   = link_to "Maak je eerste training aan", new_city_training_type_path
 - else
   = form_for city_training_registration_path(@attendee.to_param), :method => :put do 
-    = render :partial => 'training_type', :collection => @training_types
+    = training_registration_tags @training_types, @attendee, 'doet niet mee aan'
     = submit_tag "update"
 .clear
 

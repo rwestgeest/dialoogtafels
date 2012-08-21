@@ -10,7 +10,7 @@ class ProfileField < ActiveRecord::Base
 
   def self.selection_options
     [['tekst regel', 'ProfileStringField'], 
-     ['telst blok', 'ProfileTextField'],
+     ['tekst blok', 'ProfileTextField'],
      ['selectielijst', 'ProfileSelectionField']]
   end
 

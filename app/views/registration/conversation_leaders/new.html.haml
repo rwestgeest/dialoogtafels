@@ -14,7 +14,7 @@
   Dialoog georganiseerd
   = time_period @conversation
 
-= form_for @person, :url => registration_participants_path  do |f|
+= form_for @person, :url => registration_conversation_leaders_path  do |f|
   = errors_for @person
   = hidden_field_tag :conversation_id, @conversation.id
   .dialog-container
@@ -38,7 +38,7 @@
           .input= profile_field.render_field_on(f)
       .clear
   .dialog-container
-    = render :partial => 'training_type', :collection => @training_types
+    = training_registration_tags @training_types, @person, 'ik doe niet mee aan'
     .clear
   .dialog-container
     = render partial: 'shared/captcha'

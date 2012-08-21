@@ -4,6 +4,6 @@
     Er zijn nog geen trainingen gepland
 - else
   = form_for contributor_training_registrations_path, :method => :put do 
-    = render :partial => 'training_type', :collection => @training_types
+    = training_registration_tags @training_types, @attendee, 'ik doe niet mee aan'
     = submit_tag "update"
 .clear

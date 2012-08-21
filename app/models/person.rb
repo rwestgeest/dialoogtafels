@@ -57,7 +57,7 @@ class Person < ActiveRecord::Base
   has_many :contributors
   has_many :participants
   has_many :conversation_leaders
-  has_many :training_registrations, :foreign_key => :attendee_id, :include => :training, :dependent => :destroy
+  has_many :training_registrations, :foreign_key => :attendee_id, :include => :training, :dependent => :destroy, :autosave => true
   has_many :trainings, :through => :training_registrations
   has_many :profile_field_values, :include => :profile_field
   has_many :conversations_participating_in_as_leader, through: :conversation_leaders, source: :conversation
@@ -96,7 +96,7 @@ class Person < ActiveRecord::Base
   end
 
   def registered_for_training?(training_id)
-    trainings.where(:id => training_id).exists?
+    !training_registrations.select { |training_registration| training_registration.training_id == training_id.to_i }.empty?
   end
 
   def cancel_registration_for training

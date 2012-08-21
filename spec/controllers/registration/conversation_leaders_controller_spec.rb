@@ -21,6 +21,11 @@ describe Registration::ConversationLeadersController do
       assigns(:conversation).should == conversation
     end
 
+    it "renders a form" do
+      do_get
+      response.body.should have_selector "form[action='#{registration_conversation_leaders_path}'][method='post']"
+    end
+
     it "puts the conversation_id in a hidden field" do
       do_get
       response.body.should have_selector "input[name='conversation_id'][type='hidden'][value='#{conversation.to_param}']"
@@ -61,8 +66,8 @@ describe Registration::ConversationLeadersController do
 
   describe "POST create" do
     describe "with valid params" do
-      def do_post
-        post :create, {:person => valid_attributes, :conversation_id => conversation.to_param}
+      def do_post(additional_attributes = {})
+        post :create, {:person => valid_attributes, :conversation_id => conversation.to_param}.merge(additional_attributes)
       end
 
       it "creates a new conversation_leader" do
@@ -71,6 +76,16 @@ describe Registration::ConversationLeadersController do
 
       it "creates a new person" do
         expect { do_post }.to change(Person, :count).by(1)
+      end
+
+      describe "when training registrations provided" do
+        let!(:training) { FactoryGirl.create :training }
+        it "creates a training registration" do
+          expect { 
+            do_post( training_registrations: { training.training_type_id => training.to_param })  
+          }.to change(TrainingRegistration, :count).by(1)
+        end
+       
       end
 
       describe "when person with same email exists" do
@@ -118,11 +133,17 @@ describe Registration::ConversationLeadersController do
         do_post
         response.should render_template("new")
       end
+
+      # it "preserves the training selection" do
+      #   training = FactoryGirl.create(:training)
+      #   do_post(:training_registrations => {training.training_type_id => training.to_param})
+      #   assigns(:person).should be_registered_for_training(training.to_param)
+      # end
     end
 
     describe "with invalid params" do
       it_should_behave_like "a_failing_conversation_leader_registration" do
-        def do_post
+        def do_post(additional_parameters = {})
           # Trigger the behavior that occurs when invalid params are submitted
           ConversationLeader.any_instance.stub(:save_with_notification).and_return(false)
           post :create, {:person => valid_attributes, :conversation_id => conversation.to_param}
@@ -132,8 +153,8 @@ describe Registration::ConversationLeadersController do
 
     describe "without email" do
       it_should_behave_like "a_failing_conversation_leader_registration" do
-        def do_post 
-          post :create, { :person => valid_attributes(email: nil), :conversation_id => conversation.to_param }
+        def do_post(additional_parameters = {})
+          post :create, { :person => valid_attributes(email: nil), :conversation_id => conversation.to_param }.merge(additional_parameters)
         end
       end
     end

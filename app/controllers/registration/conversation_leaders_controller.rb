@@ -9,6 +9,9 @@ class Registration::ConversationLeadersController < PublicController
   def create
     @person = Person.find_by_email(params[:person][:email]) || Person.new(params[:person])
     @person.attributes = params[:person]
+    # training_registrations.each do |training_id|
+    #   @person.training_registrations << TrainingRegistration.new(:training_id => training_id)
+    # end
     @conversation_leader = ConversationLeader.new :person => @person, :conversation => @conversation
 
     unless Captcha.verified?(self)
@@ -18,6 +21,7 @@ class Registration::ConversationLeadersController < PublicController
     end
 
     if @conversation_leader.save_with_notification
+      @person.replace_training_registrations(training_registrations)
       sign_in @conversation_leader.account
       redirect_to confirm_registration_conversation_leaders_path, notice: I18n.t('registration.conversation_leaders.welcome')
     else
@@ -43,5 +47,9 @@ class Registration::ConversationLeadersController < PublicController
       return head :not_found
     end
     @conversation = Conversation.find params[:conversation_id]
+  end
+
+  def training_registrations
+    params[:training_registrations] && params[:training_registrations].values || []
   end
 end

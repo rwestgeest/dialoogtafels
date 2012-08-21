@@ -21,6 +21,11 @@ describe Registration::ParticipantsController do
       assigns(:conversation).should == conversation
     end
 
+    it "renders a form" do
+      do_get
+      response.body.should have_selector "form[action='#{registration_participants_path}'][method='post']"
+    end
+
     it "puts the conversation_id in a hidden field" do
       do_get
       response.body.should have_selector "input[name='conversation_id'][type='hidden'][value='#{conversation.to_param}']"

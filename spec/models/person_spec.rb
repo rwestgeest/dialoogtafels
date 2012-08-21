@@ -176,7 +176,7 @@ describe Person do
 
         it "makes it registerd for training" do
           person.register_for(training_id)
-          person.should be_registered_for_training(training)
+          person.should be_registered_for_training(training_id)
         end
 
         it "creates a registration instance " do

@@ -143,6 +143,10 @@ module ApplicationHelper
     current_tenant.right_image
   end
 
+  def training_registration_tags training_types, attendee, dont_register_message
+    render( partial: 'shared/training_registration_tags', collection: training_types, :as => :training_type, locals: { attendee: attendee, dont_register_message: dont_register_message })
+  end
+
   private
   def selection_path(request_params)
     result = request_params['controller']
