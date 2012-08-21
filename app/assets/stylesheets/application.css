@@ -477,5 +477,18 @@ span.hidden { display:none }
 }
 .profile_field_example {
   float: left;
+  width: 300px;
+  margin-left:20px;
+}
+.profile_field_example .label { 
+  font-weight: normal;
+  width: 60px;
+}
+.profile_field_properties {
+  float: left;
+}
+.profile_field_properties span {
+  top: -0.5em;
+  position: relative;
 }
 

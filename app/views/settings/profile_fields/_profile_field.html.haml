@@ -3,9 +3,14 @@
   .profile_field_example
     = form_for Person.new, :url => '#' do |f|
       .input-container
-        #label= profile_field.label
-        #input= profile_field.render_field_on(f, :disabled => true)
+        .label= profile_field.label
+        .input= profile_field.render_field_on(f, :disabled => true)
       .clear
+  .profile_field_properties
+    - if profile_field.on_form
+      = image_tag 'notice.png'
+      %span 
+        op inschrijfformulier
   .right
     = link_to image_tag('edit.gif'), edit_settings_profile_field_path(profile_field.to_param), :class => 'edit', :title => 'wijzig dit veld', :'data-remote' => true
     = link_to image_tag('delete.gif'), settings_profile_field_path(profile_field.to_param), 

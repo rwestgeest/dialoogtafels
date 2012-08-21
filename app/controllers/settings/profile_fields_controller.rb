@@ -25,6 +25,7 @@ class Settings::ProfileFieldsController < ApplicationController
   def update
     @profile_field = ProfileField.find(params[:id])
     if @profile_field.update_attributes(params[:profile_field])
+      @profile_field = ProfileField.find(params[:id]) # make sure that the class changes
       render action: "show" 
     else
       render action: "edit" 
