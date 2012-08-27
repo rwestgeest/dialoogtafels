@@ -13,6 +13,17 @@ describe LocationsController do
       get :index, {}
       assigns(:locations).should eq([location])
     end
+
+    context "when no locations availables" do
+      it "it renders no locations" do
+        get :index
+        assigns(:locations).should eq([])
+      end
+      it "renders a new organisiers link" do
+        get :index 
+        response.body.should have_selector("a[href='#{new_registration_organizer_url}']")
+      end
+    end
   end
 
   describe "GET show" do

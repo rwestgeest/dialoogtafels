@@ -3,7 +3,7 @@
 .banner-list
   - if @locations.empty?
     %h2 Er zijn nog geen locaties aangemeld
-    = link_to "Doe mee en meld jouw locatie als eerste aan", new_registration_organizers_url
+    = link_to "Doe mee en meld jouw locatie als eerste aan", new_registration_organizer_url
   - else
     = render :partial => 'location', :collection => @locations
     .clear
