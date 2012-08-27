@@ -3,6 +3,9 @@ $theme_color: red;
 h1, h2 {
 	color: $theme_color;
 }
+a {
+  color: $theme_color;
+}
 
 .submenu a,
 .submenu a:hover {

@@ -3,7 +3,9 @@ $theme_color: #594A9D;
 h1, h2 {
 	color: $theme_color;
 }
-
+a {
+  color: $theme_color;
+}
 .submenu a:hover {
 	color: $theme_color;
 }
