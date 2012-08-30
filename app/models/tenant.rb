@@ -1,6 +1,22 @@
 class Tenant < ActiveRecord::Base
-  has_many :projects
-  has_many :accounts
+  has_many :projects, dependent: :destroy
+  has_many :accounts, dependent: :destroy
+
+  # just to make sure all is destroyed on destroy
+  has_many :people, dependent: :destroy
+  has_many :contributors, dependent: :destroy
+  has_many :locations, dependent: :destroy
+  has_many :conversations, dependent: :destroy
+  has_many :conversations, dependent: :destroy
+  has_many :accounts, dependent: :destroy
+  has_many :location_todos, dependent: :destroy
+  has_many :finished_location_todos, dependent: :destroy
+  has_many :messages, dependent: :destroy
+  has_many :profile_fields, dependent: :destroy
+  has_many :profile_field_values, dependent: :destroy
+  has_many :trainings, dependent: :destroy
+  has_many :training_registrations, dependent: :destroy
+
   has_one  :active_project, :class_name => "Project"
   attr_accessible :from_email, :info_email, :invoice_address, :name, :representative_email, :representative_name, 
                   :representative_telephone, :site_url, :url_code, :host, :top_image, :right_image, :public_style_sheet, :framed_integration
