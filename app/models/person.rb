@@ -59,7 +59,7 @@ class Person < ActiveRecord::Base
   has_many :conversation_leaders
   has_many :training_registrations, :foreign_key => :attendee_id, :include => :training, :dependent => :destroy, :autosave => true
   has_many :trainings, :through => :training_registrations
-  has_many :profile_field_values, :include => :profile_field
+  has_many :profile_field_values, include: :profile_field, inverse_of: :person, autosave: true
   has_many :conversations_participating_in_as_leader, through: :conversation_leaders, source: :conversation
   has_many :conversations_participating_in_as_participant, through: :participants, source: :conversation
   has_many :conversations_participating_in, through: :contributors, source: :conversation

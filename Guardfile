@@ -13,7 +13,10 @@ guard 'rspec', :version => 2 do
   watch(%r{^spec/support/(.+)\.rb$})                  { "spec" }
   watch('config/routes.rb')                           { "spec/routing" }
   watch('app/controllers/application_controller.rb')  { "spec/controllers" }
-  
+
+  # who uses specific shared examples  
+  watch(%r{^spec/shared/profile_field_holder_examples.rb}) { "spec/models/person_spec.rb" }
+
   # Capybara request specs
   watch(%r{^app/views/(.+)/.*\.(erb|haml)$})          { |m| "spec/requests/#{m[1]}_spec.rb" }
   

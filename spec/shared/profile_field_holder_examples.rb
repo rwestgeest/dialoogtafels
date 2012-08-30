@@ -32,6 +32,22 @@ shared_examples_for "a_profile_field_holder" do
       end
     end
 
+    describe "setting at creation" do
+      let(:klass) { subject.class }
+      let(:object_name) { subject.class.to_s.underscore } 
+
+      it "creates an instance" do
+        begin
+        expect{ FactoryGirl.create object_name, :profile_age => "55" }.to change(klass, :count).by(1)
+        rescue ActiveRecord::RecordInvalid => e 
+          p e.record.errors.full_messages
+          puts e.backtrace.join($/)
+          raise e 
+        end
+      end
+
+    end
+
     describe "getting" do
       it "returns the value when set" do
         subject.update_attributes :profile_age => "66"
