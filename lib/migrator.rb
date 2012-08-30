@@ -35,7 +35,7 @@ class Migrator
 
   attr_reader :output
 
-  def migrate!(url_code, output = $STDOUT)
+  def migrate!(url_code, output = $stdout)
     @output = output
     organizing_city = VersionOne::OrganizingCity.find_by_url_code(url_code)
     begin 
