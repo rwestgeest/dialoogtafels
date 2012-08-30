@@ -40,7 +40,11 @@ class Migrator
                            name: source_person.name,
                            telephone: source_person.telephone,
                            email: source_person.email)
-        person.update_attributes profile_adres: source_person.address
+        person.update_attributes profile_adres: source_person.address,
+                                 profile_organisatie: source_person.organization,
+                                 profile_postcode: source_person.postal_code,
+                                 profile_woonplaats: source_person.city,
+                                 profile_opmerkingen: source_person.handicap
       end
 
       organizing_city.accounts.admins.each do |source_account|
