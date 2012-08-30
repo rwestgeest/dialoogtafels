@@ -119,8 +119,6 @@ describe Migrator do
       its(:profile_opmerkingen) { should == source_person.handicap } 
     end
 
-
-
     describe "organizer" do
       let(:source_organizer) { source_city.organizers.first }
       let(:first_organizer) { Organizer.by_email(source_organizer.email).first}
@@ -144,6 +142,15 @@ describe Migrator do
         end
       end
     end
+
+    describe "location_todos" do
+      subject { LocationTodo }
+      its(:count) { should_not == 0 }
+      its(:count) { should == source_project.table_todos.count }
+      it "'s names match" do
+        subject.all.collect {|t| t.name}.sort.should == source_project.table_todos.collect{|t| t.name}.sort
+      end
+    end
   
     describe "location" do
       let(:first_location) { Location.first }
@@ -164,6 +171,109 @@ describe Migrator do
     describe "locations" do
       subject { Location }
       its(:count) { should == source_city.sites.count }
+    end
+
+    describe "conversations" do 
+      it "creates a corresponding location for each conversation" do
+        source_city.sites.each do |site|
+          Location.all.should include(migrator.locations[site.id])
+        end
+      end
+      it "creates a conversation for each table with unique start time" do
+        source_city.sites.each do |site|
+          tables = TableTimeCollection.new(site.tables)
+          location = location_for(site)
+          location.should have(tables.size).conversations
+          tables.each_time do |time|
+            conversation_at(location, time).should_not be_nil
+            conversation_at(location, time).number_of_tables.should == tables.at(time).size
+          end
+        end
+      end
+    end
+
+    def conversation_at(location, time)
+      location.conversations.where(:start_time => time).first
+    end
+    def location_for(site_or_table)
+      site_id = site_or_table.is_a?(VersionOne::Site) && site_or_table.id || site_or_table.site_id
+      migrator.locations[site_id]
+    end
+
+    describe "conversation leaders" do
+      subject {ConversationLeader }
+      its(:count) { should == source_city.leaders.select { |l| l.table != nil || l.table_of_preference != nil }.size }
+      it "registers at the conversation at the appropriate time" do
+        source_city.leaders.each do |source_leader| 
+          leader = migrator.leaders[source_leader.id]
+          table = source_leader.table
+          leader.conversation.should == conversation_at(location_for(table), table.time) if table
+        end
+      end
+    end
+
+    describe "conversation_leader_ambitions" do
+      pending "will do that later"
+    end
+
+    describe "participants" do
+      subject { Participant } 
+      its(:count) { should == source_city.participants.select { |l| l.table != nil || l.table_of_preference != nil }.size }
+      it "registers at the conversatio at the appropriate time" do
+        source_city.participants.each do |source_participant| 
+          participant = migrator.participants[source_participant.id]
+          table = source_participant.table
+          participant.conversation.should == conversation_at(location_for(table), table.time) if table
+        end
+      end
+    end
+
+    describe "participant_ambitions" do
+      pending "will do that later"
+    end
+
+    def type_part_of(string)
+      string.split('-').first.strip
+    end
+
+    def rest_part_of(string)
+      string.split('-')[1..-1].join('-').strip
+    end
+
+    describe "trainingtypes" do
+      subject { TrainingType } 
+      its(:count) { should == source_city.trainings.collect { |t| type_part_of(t.location) }.uniq.size }
+    end
+
+    describe "trainings" do
+      subject { Training } 
+      its (:count) { should == source_city.trainings.count } 
+      it "trainings are planned at the correct type" do
+        source_city.trainings.each do |training| 
+          migrator.trainings[training.id].training_type.should == migrator.training_types[type_part_of(training.location)]
+        end
+      end
+    end
+
+    describe "training" do
+      let(:source_training) { source_city.trainings.first }
+      subject { migrator.trainings[source_training.id] }
+      its (:location) { should_not include(type_part_of(source_training.location)) } 
+      its (:location) { should == rest_part_of(source_training.location) } 
+    end
+
+    describe "training_tregistrations" do
+      subject { TrainingRegistration } 
+      its(:count) { should == source_city.trainings.inject(0) {|sum, t| sum + t.training_registrations.count}}
+      it "are migrated" do
+        source_city.trainings.each do |training|
+          migrated_training = migrator.trainings[training.id]
+          migrated_training.should have(training.training_registrations.count).training_registrations
+          training.training_registrations.each do |registration|
+            migrator.people[registration.email].should be_registered_for_training(migrated_training.id)
+          end
+        end
+      end
     end
 
     describe "output" do

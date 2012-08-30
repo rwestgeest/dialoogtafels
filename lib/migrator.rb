@@ -1,11 +1,35 @@
+class TableTimeCollection
+  def initialize(tables)
+    @tables = {}
+    tables.each { |table| self << table }
+  end
+  def << (table)
+    at(table.time) << table
+  end
+  def at(time)
+    @tables[time] ||= []
+  end
+  def size
+    @tables.size
+  end
+  def each_time(&block)
+    @tables.keys.each &block
+  end
+end
+
 class Migrator 
-  attr_reader :organizers, :people, :accounts
+  attr_reader :organizers, :people, :accounts, :locations, :leaders, :participants, :training_types, :trainings
 
   def initialize(filename)
     @filename = filename
     @organizers = {}
     @people = {}
     @accounts = {} 
+    @locations = {}
+    @leaders = {}
+    @participants = {}
+    @training_types = {}
+    @trainings = {}
     prepare_database
   end
 
@@ -32,6 +56,12 @@ class Migrator
                     start_time:  organizing_city.current_project.default_table_start_time,
                     max_participants_per_table: organizing_city.max_participants_per_table,
                     conversation_length: organizing_city.table_duration.to_i * 60)
+
+      organizing_city.current_project.table_todos.each do |table_todo|
+        migrate_todo(
+          name: table_todo.name 
+        )
+      end
 
 
       organizing_city.people.each do |source_person|
@@ -69,6 +99,16 @@ class Migrator
                         longitude: site.longitude )
       end
 
+      organizing_city.leaders.each do |source_leader| 
+        migrate_leader( source_leader )
+      end
+
+      organizing_city.participants.each do |source_participant| 
+        migrate_participant( source_participant )
+      end
+
+      migrate_trainings(organizing_city.trainings)
+
     rescue ActiveRecord::RecordInvalid  => e
       output.puts e.record.errors.full_messages
       output.puts "Migratie is gefaald!"
@@ -98,6 +138,12 @@ class Migrator
     end
   end
 
+  def migrate_todo(attributes)
+    migrate_thing "todo", attributes do
+      LocationTodo.create(attributes)
+    end
+  end
+
   def migrate_admin(source_account) 
     if !account_exists?(source_account.email)
       person = add_person( source_account.email, migrate_thing("person for account", nil) { 
@@ -115,6 +161,24 @@ class Migrator
     })
   end
 
+  def migrate_leader(source_leader)
+    table = source_leader.table || source_leader.table_of_preference
+    return unless table
+    add_leader(source_leader.id, migrate_thing("conversation_leader") {
+      ConversationLeader.create!(person: people[source_leader.email], 
+                                 conversation: locations[table.site_id].conversations.where(start_time: table.time).first)
+    })
+  end
+
+  def migrate_participant(source_participant)
+    table = source_participant.table || source_participant.table_of_preference
+    return unless table
+    add_participant(source_participant.id, migrate_thing("conversation_participant") {
+      Participant.create!(person: people[source_participant.email], 
+                          conversation: locations[table.site_id].conversations.where(start_time: table.time).first)
+    })
+  end
+
   def migrate_organizer(source_organizer, attributes)
     add_organizer source_organizer.id, migrate_thing( "organizer", attributes) { 
       Organizer.create!(:person => people[source_organizer.email])
@@ -122,8 +186,48 @@ class Migrator
   end
 
   def migrate_location(source_site, attributes)
-    migrate_thing "location", attributes do 
-      assign_attributes(Location.new, attributes).save!
+    add_location source_site.id, migrate_thing("location", attributes) {
+      save(assign_attributes(Location.new, attributes))
+    }
+    migrate_conversations(source_site)
+  end
+
+  def migrate_trainings(source_trainings) 
+    source_trainings.each do |training| 
+      tokens = training.location.split('-')
+      training_type_name = tokens.first.strip
+      training_type = create_training_type(training_type_name)
+      planned_training = add_training(training.id, training_type.trainings.create!(
+        start_time: training.time,
+        start_date: training.time.to_date,
+        end_date: (training.time + 2.hours).to_date,
+        end_time: training.time + 2.hours,
+        max_participants: training.max_participants,
+        location: tokens[1..-1].join('-').strip
+      ))
+      training.training_registrations.each do |registration|
+        people[registration.email].register_for(planned_training)
+      end
+    end
+  end
+
+  def create_training_type(name)
+    unless @training_types[name]
+      @training_types[name] = TrainingType.create!(name: name)
+    end
+    @training_types[name]
+  end
+
+  def migrate_conversations(source_site)
+    tables = TableTimeCollection.new(source_site.tables)
+    tables.each_time do |time|
+      end_time = tables.at(time).first.ends_at
+      Conversation.create! location: locations[source_site.id],
+                           start_date: time.to_date, 
+                           start_time: time,
+                           end_date: end_time.to_date,
+                           end_time: end_time,
+                           number_of_tables: tables.at(time).size
     end
   end
 
@@ -151,10 +255,30 @@ class Migrator
     organizer
   end
 
+  def add_leader(key, leader)
+    leaders[key] = leader
+    leader
+  end
+
+  def add_participant(key, participant)
+    participants[key] = participant
+    participant
+  end
+
   def add_person(email, person)
     people[email] = person
     accounts[email] = person.account
     person
+  end
+
+  def add_location(site_id, location)
+    locations[site_id] = location
+    location
+  end
+
+  def add_training(training_id, training)
+    trainings[training_id] = training
+    training
   end
 
   def person_exists?(email)
