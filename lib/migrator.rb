@@ -39,7 +39,8 @@ class Migrator
     @output = output
     organizing_city = VersionOne::OrganizingCity.find_by_url_code(url_code)
     begin 
-      migrate_organizing_city(organizing_city.accounts.admins.first.email,name: organizing_city.name, 
+    Tenant.transaction do
+      migrate_organizing_city(organizing_city.accounts.admins.first,name: organizing_city.name, 
                      url_code: organizing_city.url_code,
                      site_url: organizing_city.site_url,
                      invoice_address: organizing_city.invoice_address,
@@ -96,7 +97,8 @@ class Migrator
                         postal_code: site.postal_code,
                         city: site.city,
                         lattitude: site.lattitude,
-                        longitude: site.longitude )
+                        longitude: site.longitude,
+                        published: true)
       end
 
       organizing_city.leaders.each do |source_leader| 
@@ -108,7 +110,7 @@ class Migrator
       end
 
       migrate_trainings(organizing_city.trainings)
-
+    end
     rescue ActiveRecord::RecordInvalid  => e
       output.puts e.record.errors.full_messages
       output.puts "Migratie is gefaald!"
@@ -117,19 +119,23 @@ class Migrator
     output << 'Migratie gelukt'
   end
 
-  def migrate_organizing_city(first_administrator_email, attributes)
+  def migrate_organizing_city(first_administrator, attributes)
     tenant = migrate_thing "city", attributes do 
-      Tenant.create!(attributes.merge(representative_email: first_administrator_email))
+      Tenant.create!(attributes.merge(representative_email: first_administrator.email,
+                                      representative_name: first_administrator.login,
+                                      representative_telephone: 'onbekend'))
     end
     tenant.update_attribute :representative_email, attributes[:representative_email]
+    tenant.update_attribute :representative_name, attributes[:representative_name]
+    tenant.update_attribute :representative_telephone, attributes[:representative_telephone]
     Tenant.current = tenant
     add_person Person.first.email, Person.first
 
-    ProfileTextField.create!(field_name: 'organisatie', label: 'Organisatie')
-    ProfileStringField.create!(field_name: 'adres', label: 'Adres')
-    ProfileStringField.create!(field_name: 'postcode', label: 'Postcode')
-    ProfileStringField.create!(field_name: 'woonplaats', label: 'Wooplaats')
-    ProfileTextField.create!(field_name: 'opmerkingen', label: 'Bijzonderheden')
+    ProfileTextField.create!(field_name: 'organisatie', label: 'Organisatie', on_form: true)
+    ProfileStringField.create!(field_name: 'adres', label: 'Adres', on_form: true)
+    ProfileStringField.create!(field_name: 'postcode', label: 'Postcode', on_form: true)
+    ProfileStringField.create!(field_name: 'woonplaats', label: 'Wooplaats', on_form: true)
+    ProfileTextField.create!(field_name: 'opmerkingen', label: 'Bijzonderheden', on_form: true)
   end
 
   def migrate_project(attributes)
@@ -186,16 +192,25 @@ class Migrator
   end
 
   def migrate_location(source_site, attributes)
+    return if source_site.tables.empty?
     add_location source_site.id, migrate_thing("location", attributes) {
       save(assign_attributes(Location.new, attributes))
     }
     migrate_conversations(source_site)
   end
 
+  def create_name_and_location(location)
+    if location.include? '-'
+      tokens = location.split('-')
+      return tokens.first.strip, tokens[1..-1].join('-').strip
+    else
+      return "Gespreksleiderstraining", location
+    end
+  end
   def migrate_trainings(source_trainings) 
     source_trainings.each do |training| 
-      tokens = training.location.split('-')
-      training_type_name = tokens.first.strip
+      training_type_name, location_name = create_name_and_location(training.location)
+
       training_type = create_training_type(training_type_name)
       planned_training = add_training(training.id, training_type.trainings.create!(
         start_time: training.time,
@@ -203,7 +218,7 @@ class Migrator
         end_date: (training.time + 2.hours).to_date,
         end_time: training.time + 2.hours,
         max_participants: training.max_participants,
-        location: tokens[1..-1].join('-').strip
+        location: location_name
       ))
       training.training_registrations.each do |registration|
         people[registration.email].register_for(planned_training)
@@ -225,14 +240,15 @@ class Migrator
       Conversation.create! location: locations[source_site.id],
                            start_date: time.to_date, 
                            start_time: time,
-                           end_date: end_time.to_date,
                            end_time: end_time,
+                           end_date: time.to_date,
                            number_of_tables: tables.at(time).size
     end
   end
 
   def migrate_thing(what, attributes = nil)
     begin
+      output.puts "migrating #{what}"
       yield
     rescue ActiveRecord::RecordInvalid  => e
       output.puts "error while migrating #{what} with attributes #{attributes.inspect}" 

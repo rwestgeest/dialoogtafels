@@ -8,6 +8,12 @@ describe LocationTodo do
 
   context "with tenant scope" do
     prepare_scope :tenant
+    describe "creating one" do
+      it "associates it for the tenants active project" do
+        FactoryGirl.create :location_todo 
+        LocationTodo.last.project.should == Tenant.current.active_project
+      end
+    end
     describe 'progress' do
       let(:project) { Tenant.current.active_project }
       let(:location_todo) { FactoryGirl.create :location_todo, :project => project }

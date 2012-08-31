@@ -8,8 +8,24 @@ describe ProfileField do
   describe "with tenant scope" do
     prepare_scope :tenant
     let!(:existing_field) { FactoryGirl.create :profile_string_field }
-    it { should validate_uniqueness_of :field_name }  
-    it { should validate_uniqueness_of :label }  
+    it "is not allowed to share a field name" do
+      FactoryGirl.build(:profile_string_field, field_name: existing_field.field_name ).should_not be_valid
+    end
+    it "is not allowed to share a field label" do
+      FactoryGirl.build(:profile_string_field, label: existing_field.label ).should_not be_valid
+    end
+    context "with an existing field from another tenant" do
+      attr_reader :existing_field
+      before do
+        for_tenant(FactoryGirl.create :tenant) { @existing_field = FactoryGirl.create :profile_string_field }
+      end
+      it "is not allowed to share a field name" do
+        FactoryGirl.build(:profile_string_field, field_name: existing_field.field_name ).should be_valid
+      end
+      it "is not allowed to share a field label" do
+        FactoryGirl.build(:profile_string_field, label: existing_field.label ).should be_valid
+      end
+    end
   end
 
   describe "field_name" do 

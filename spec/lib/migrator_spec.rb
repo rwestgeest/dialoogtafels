@@ -2,7 +2,7 @@ require 'spec_helper'
 require 'migrator'
 require 'version_one'
 
-describe Migrator do
+describe Migrator do # focus: true do
   attr_reader :migrator
   before(:all) do 
     @migrator = Migrator.new('db/test_old_database.sqlite3')
@@ -28,19 +28,31 @@ describe Migrator do
     Tenant.find_by_url_code('tilburg').destroy rescue nil
   end
 
-  describe "when city is invalid" do
-    before do 
-      source_city.update_attribute :invoice_address,  ''
-    end
-    
-    it "creates nothing" do
-      expect { do_migrate }.not_to change(Tenant, :count)
-    end
+  shared_examples_for "a_failing_migration" do
+
+    it { expect { do_migrate }.not_to change(Tenant, :count) }
+    it { expect { do_migrate }.not_to change(Project, :count) }
+    it { expect { do_migrate }.not_to change(Account, :count) }
+    it { expect { do_migrate }.not_to change(Location, :count) }
+    it { expect { do_migrate }.not_to change(Person, :count) }
+    it { expect { do_migrate }.not_to change(Contributor, :count) }
+    it { expect { do_migrate }.not_to change(Training, :count) }
+    it { expect { do_migrate }.not_to change(TrainingRegistration, :count) }
+    it { expect { do_migrate }.not_to change(ProfileField, :count) }
+    it { expect { do_migrate }.not_to change(ProfileFieldValue, :count) }
 
     it "puts a message with errors on output" do
       do_migrate
-      output.should include('invoice_address')
+      output.should include('name')
     end
+  end
+
+  it_should_behave_like "a_failing_migration" do
+    before { source_city.update_attribute :name,  '' }
+  end
+
+  it_should_behave_like "a_failing_migration" do
+    before { source_city.people.first.update_attribute :name,  '' }
   end
 
   describe "succesfull migration" do
@@ -66,6 +78,9 @@ describe Migrator do
     describe "profile_fields" do
       subject { current_tenant.profile_fields } 
       its (:count)  { should be(5) }
+      it "should all be on form" do
+        subject.each {|field| field.should be_on_form} 
+      end
     end
 
     describe "active_project" do
@@ -83,6 +98,12 @@ describe Migrator do
       its( :count) { should == source_city.accounts.admins.count }
       it "'s email addresses match with the original admin email addresses" do
         subject.collect{|a|a.email}.sort.should == source_city.accounts.admins.collect {|a| a.email}.sort
+      end
+      it "first coordinator has the login name of the first admin" do
+        subject.first.name.should == source_city.accounts.admins.first.login
+      end
+      it "first coordinator has a telephone of 'onbekend;'" do
+        subject.first.telephone.should == 'onbekend'
       end
     end
 
@@ -170,23 +191,32 @@ describe Migrator do
 
     describe "locations" do
       subject { Location }
-      its(:count) { should == source_city.sites.count }
+      its(:count) { should == source_city.sites.select {|s| s.tables.count > 0 }.size }
+    end
+    def migratable_source_sites(&block)
+      source_city.sites.select {|s| not s.tables.empty? }.each(&block)
     end
 
     describe "conversations" do 
-      it "creates a corresponding location for each conversation" do
-        source_city.sites.each do |site|
-          Location.all.should include(migrator.locations[site.id])
+      it "creates at least one conversation for each location" do
+        migratable_source_sites do |site|
+          migrator.locations[site.id].should have_at_least(1).conversations
+          migrator.locations[site.id].should be_published
         end
       end
+
       it "creates a conversation for each table with unique start time" do
-        source_city.sites.each do |site|
+        migratable_source_sites do |site|
           tables = TableTimeCollection.new(site.tables)
           location = location_for(site)
           location.should have(tables.size).conversations
           tables.each_time do |time|
-            conversation_at(location, time).should_not be_nil
-            conversation_at(location, time).number_of_tables.should == tables.at(time).size
+            conversation = conversation_at(location, time)
+            conversation.should_not be_nil
+            conversation.number_of_tables.should == tables.at(time).size
+            conversation.start_date.should == time.to_date
+            conversation.start_time.should == time
+            conversation.end_date.should == time.to_date
           end
         end
       end

@@ -3,8 +3,8 @@ class ProfileField < ActiveRecord::Base
   include ScopedModel
   scope_to_tenant
 
-  validates :field_name, :presence => :true, :uniqueness => true
-  validates :label, :presence => :true, :uniqueness => true
+  validates :field_name, presence: true, uniqueness: { scope: :tenant_id }
+  validates :label, presence: true, uniqueness: { scope: :tenant_id }
 
   scope :on_form, where(:on_form => true)
 
