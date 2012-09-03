@@ -2,7 +2,7 @@ require 'spec_helper'
 require 'migrator'
 require 'version_one'
 
-describe Migrator, broken: true do # not really broken - but slow and in the way - smell
+describe Migrator do # not really broken - but slow and in the way - smell
   attr_reader :migrator
   before(:all) do 
     @migrator = Migrator.new('db/test_old_database.sqlite3')
@@ -69,6 +69,9 @@ describe Migrator, broken: true do # not really broken - but slow and in the way
       its(:representative_name) { should == source_city.representative_name }
       its(:representative_email) { should == source_city.representative_email }
       its(:representative_telephone) { should == source_city.representative_telephone }
+      its(:organizer_confirmation_text) { should == source_city.organizer_application_confirmation_text }
+      its(:conversation_leader_confirmation_text) { should == source_city.leader_application_confirmation_text }
+      its(:participant_confirmation_text) { should == source_city.participant_application_confirmation_text }
       its(:invoice_address) { should == source_city.invoice_address }
       its(:site_url) { should == source_city.site_url  }
       its(:host) { should == source_city.url_code + '.dialoogtafels.nl' }

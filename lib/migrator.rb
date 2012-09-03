@@ -47,6 +47,9 @@ class Migrator
                      representative_name: organizing_city.representative_name,
                      representative_email: organizing_city.representative_email,
                      representative_telephone: organizing_city.representative_telephone,
+                     organizer_confirmation_text: organizing_city.organizer_application_confirmation_text,
+                     conversation_leader_confirmation_text: organizing_city.leader_application_confirmation_text,
+                     participant_confirmation_text: organizing_city.participant_application_confirmation_text,
                      info_email: organizing_city.info_mail_address,
                      from_email: organizing_city.info_mail_address,
                      host: "#{organizing_city.url_code}.dialoogtafels.nl")

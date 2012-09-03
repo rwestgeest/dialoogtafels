@@ -20,7 +20,8 @@ class Tenant < ActiveRecord::Base
 
   has_one  :active_project, :class_name => "Project"
   attr_accessible :from_email, :info_email, :invoice_address, :name, :representative_email, :representative_name, 
-                  :representative_telephone, :site_url, :url_code, :host, :top_image, :right_image, :public_style_sheet, :framed_integration
+                  :representative_telephone, :site_url, :url_code, :host, :top_image, :right_image, :public_style_sheet, :framed_integration,
+                  :organizer_confirmation_text, :conversation_leader_confirmation_text, :participant_confirmation_text
 
   validates :name, :presence => true
   validates :url_code, :presence => true
