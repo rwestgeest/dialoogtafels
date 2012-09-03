@@ -6,6 +6,7 @@ class Tenant < ActiveRecord::Base
   has_many :people, dependent: :destroy
   has_many :contributors, dependent: :destroy
   has_many :locations, dependent: :destroy
+  has_many :organizers, dependent: :destroy
   has_many :conversations, dependent: :destroy
   has_many :conversations, dependent: :destroy
   has_many :accounts, dependent: :destroy
@@ -31,6 +32,10 @@ class Tenant < ActiveRecord::Base
 
   after_create :create_accoun_and_project
 
+  def coordinator_accounts
+    accounts.where :role => Account::Coordinator
+  end
+
   class NullTenant
     def host
       'test.host'
@@ -39,6 +44,7 @@ class Tenant < ActiveRecord::Base
       'noreply@dialoogtafels.nl'
     end
   end
+
   class << self 
     def current 
       Thread.current[:current_tenant] 
@@ -52,6 +58,17 @@ class Tenant < ActiveRecord::Base
     def use_host host
       self.current = Tenant.find_by_host host
     end
+
+    def for(tenant, &block)
+      old_tenant = Tenant.current
+      begin
+        Tenant.current = tenant if tenant
+        yield
+      ensure
+        Tenant.current = old_tenant
+      end
+    end
+
     def null
       NullTenant.new
     end

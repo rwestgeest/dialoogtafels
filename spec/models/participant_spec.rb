@@ -48,28 +48,6 @@ describe Participant do
         end
       end
     end
-
-    describe "save_with_notification" do
-      let!(:conversation) { FactoryGirl.create :conversation }
-      let(:participant) { FactoryGirl.build :participant, :conversation => conversation }
-      it "saves the participant" do
-        expect { participant.save_with_notification }.to change(Participant, :count).by(1)
-      end
-      it "sends a notification" do
-        Postman.stub(:deliver).with(:account_welcome, an_instance_of(TenantAccount))
-        Postman.should_receive(:deliver).
-          with(:new_participant,
-              an_instance_of(Participant),
-              conversation.organizer)
-        participant.save_with_notification
-      end
-      it "does not send when save fails" do
-        Postman.should_not_receive(:deliver)
-        participant.name = ''
-        participant.save_with_notification
-      end
-    end
-
   end
 end
 

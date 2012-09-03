@@ -101,7 +101,7 @@ describe Registration::ParticipantsController do
       end
 
       it "creates a notification for the registration" do
-        Participant.any_instance.should_receive(:save_with_notification)
+        Messenger.should_receive(:new_participant).with an_instance_of(Participant)
         do_post
       end
     end
@@ -117,13 +117,18 @@ describe Registration::ParticipantsController do
         do_post
         response.should render_template("new")
       end
+
+      it "does not send any email" do
+        Messenger.should_not_receive(:new_participant)
+      end
+
     end
 
     describe "with invalid params" do
       it_should_behave_like "a_failing_participant_registration" do
         def do_post
           # Trigger the behavior that occurs when invalid params are submitted
-          Participant.any_instance.stub(:save_with_notification).and_return(false)
+          Participant.any_instance.stub(:save).and_return(false)
           post :create, {:person => valid_attributes, :conversation_id => conversation.to_param}
         end
       end

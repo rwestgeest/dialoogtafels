@@ -117,7 +117,7 @@ describe Registration::ConversationLeadersController do
       end
 
       it "creates a notification for the registration" do
-        ConversationLeader.any_instance.should_receive(:save_with_notification)
+        Messenger.should_receive(:new_conversation_leader).with an_instance_of(ConversationLeader)
         do_post
       end
     end
@@ -145,7 +145,7 @@ describe Registration::ConversationLeadersController do
       it_should_behave_like "a_failing_conversation_leader_registration" do
         def do_post(additional_parameters = {})
           # Trigger the behavior that occurs when invalid params are submitted
-          ConversationLeader.any_instance.stub(:save_with_notification).and_return(false)
+          ConversationLeader.any_instance.stub(:save).and_return(false)
           post :create, {:person => valid_attributes, :conversation_id => conversation.to_param}
         end
       end

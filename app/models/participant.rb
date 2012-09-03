@@ -14,7 +14,4 @@ class Participant < Contributor
     2
   end
 
-  def save_with_notification
-    save && Postman.deliver(:new_participant, self, conversation.organizer)
-  end
 end

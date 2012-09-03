@@ -23,10 +23,6 @@ describe TenantAccount do
       it "creates an account" do
         expect { FactoryGirl.create :coordinator_account }.to change(TenantAccount, :count).by(1)
       end
-      it "sends a welcome message" do
-        Postman.should_receive(:deliver).with(:account_welcome, an_instance_of(TenantAccount))
-        account = FactoryGirl.create :coordinator_account
-      end
     end
     describe 'coordinators' do
       it "contains all coordinators" do

@@ -20,10 +20,6 @@ describe MaintainerAccount do
     it "creates an account" do
       expect { FactoryGirl.create :maintainer_account }.to change(MaintainerAccount, :count).by(1)
     end
-    it "sends a welcome message" do
-      Postman.should_receive(:deliver).with(:account_welcome, an_instance_of(MaintainerAccount))
-      account = FactoryGirl.create :maintainer_account
-    end
   end
 
 end

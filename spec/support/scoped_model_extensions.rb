@@ -3,13 +3,7 @@ module ScopedModelExtensions
     base.extend(ClassMethods)
   end
   def for_tenant(tenant, &block)
-    old_tenant = Tenant.current
-    begin
-      Tenant.current = tenant if tenant
-      yield
-    ensure
-      Tenant.current = old_tenant
-    end
+    Tenant.for(tenant, &block)
   end
   module ClassMethods
     def prepare_scope(scoped_model)
@@ -17,7 +11,7 @@ module ScopedModelExtensions
         begin
         Tenant.current= FactoryGirl.create(scoped_model, :url_code => 'test', :host => 'test.host') 
         rescue Exception => e
-          p "could not create current scope"
+          p "could not create current scope #{e.inspect}"
         end
 
       }

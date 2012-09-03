@@ -1,10 +1,11 @@
 %div{:id => "trainings_#{training_type.to_param}"}
   - if training_type.trainings.empty?
-    %p
-      Er zijn nog geen trainingen voor 
-      = training_type.name
-      gepland.
-      = link_to "plan een '#{training_type.name}'", new_city_training_path(training_type_id: training_type.to_param), remote: true
+    %div{:id => "training_new_#{training_type.to_param}"}
+      %p
+        Er zijn nog geen trainingen voor 
+        = training_type.name
+        gepland.
+        = link_to "plan een '#{training_type.name}'", new_city_training_path(training_type_id: training_type.to_param), remote: true
   - else
     = render partial: 'city/trainings/training', collection: training_type.trainings
     %div{:id => "training_new_#{training_type.to_param}"}

@@ -14,8 +14,4 @@ class ConversationLeader < Contributor
     1
   end
 
-  def save_with_notification
-    save && Postman.deliver(:new_conversation_leader, self, conversation.organizer)
-  end
-
 end

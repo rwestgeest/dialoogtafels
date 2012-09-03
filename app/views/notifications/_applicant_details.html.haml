@@ -1,0 +1,15 @@
+%table{border:0}
+  %tr
+    %th Naam
+    %td= @applicant.name
+  %tr
+    %th Email
+    %td= @applicant.email
+  %tr
+    %th Telefoon
+    %td= @applicant.telephone
+  - ProfileField.on_form.each do |profile_field|
+    %tr
+      %th= profile_field.label
+      %td= @applicant.person.get_profile_attribute(profile_field.field_name)
+

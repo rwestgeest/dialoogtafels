@@ -20,8 +20,9 @@ class Registration::ConversationLeadersController < PublicController
       return
     end
 
-    if @conversation_leader.save_with_notification
+    if @conversation_leader.save
       @person.replace_training_registrations(training_registrations)
+      Messenger.new_conversation_leader(@conversation_leader)
       sign_in @conversation_leader.account
       redirect_to confirm_registration_conversation_leaders_path, notice: I18n.t('registration.conversation_leaders.welcome')
     else

@@ -260,6 +260,10 @@ nl:
       subject: "Je dialoogtafels account is gereset"
     account_welcome:
       subject: "Welkom bij dialoogtafels - er is een account voor je aangemaakt"
+    participant_confirmation:
+      subject: "Welkom bij dialoogtafels - er is een account voor je aangemaakt"
+    conversation_leader_confirmation:
+      subject: "Welkom bij dialoogtafels - er is een account voor je aangemaakt"
     new_participant:
       subject: "Er is een nieuwe deelnemer aangemeld voor je tafel"
     new_conversation_leader:

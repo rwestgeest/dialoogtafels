@@ -10,16 +10,6 @@ class Notifications < ActionMailer::Base
     mail from: account.tenant.from_email, to: account.email
   end
 
-  # Subject can be set in your I18n file at config/locales/en.yml
-  # with the following lookup:
-  #
-  #   en.notifications.account_welcome.subject
-  #
-  def account_welcome(account)
-    @account = account
-    mail from:account.tenant.from_email, to: account.email
-  end
-
   def new_comment(comment, addressee)
     @comment = comment 
     mail from: addressee.tenant.from_email, to: addressee.email, subject: @comment.subject
@@ -30,14 +20,26 @@ class Notifications < ActionMailer::Base
     mail from: addressee.tenant.from_email, to: addressee.email, subject: @invitation.subject
   end
 
-  def new_participant(participant, addressee)
+  def participant_confirmation(participant, mailing_settings)
+    @message = mailing_settings.participant_confirmation_text
+    @applicant = participant
+    mail from: participant.tenant.from_email, to:participant.email
+  end
+
+  def conversation_leader_confirmation(conversation_leader, mailing_settings)
+    @message = mailing_settings.conversation_leader_confirmation_text
+    @applicant = conversation_leader
+    mail from: conversation_leader.tenant.from_email, to:conversation_leader.email
+  end
+
+  def new_participant(addressee, participant)
     @participant = participant
     @organizer = addressee
     @conversation = participant.conversation
     mail from: participant.tenant.from_email, to: addressee.email
   end
 
-  def new_conversation_leader(conversation_leader, addressee)
+  def new_conversation_leader(addressee, conversation_leader)
     @conversation_leader = conversation_leader
     @organizer = addressee
     @conversation = conversation_leader.conversation

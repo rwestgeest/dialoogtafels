@@ -19,12 +19,15 @@ class ProfileField < ActiveRecord::Base
     return if !label || field_name && !field_name.empty?
     self.field_name = label.gsub(' ', '_').gsub(/[!?<>\.,\/\*\-@%;:#\^&\(\)\{\}\[\]\\"']/, '').underscore 
   end
+
   def field_name_with_prefix
     'profile_' + field_name
   end
+
   def render_field_on(form, options = {})
     form.text_field field_name_with_prefix, options
   end
+
   def type_name
     @type_name ||= 'profile_field.type.' + self.class.to_s.underscore
   end

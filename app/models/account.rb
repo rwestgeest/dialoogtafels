@@ -2,7 +2,6 @@ require 'authenticable'
 
 class Account < ActiveRecord::Base
   include Authenticable
-  on_account_creation :send_confirmation_message
   on_account_reset :send_reset_message
 
   Maintainer = 'maintainer'

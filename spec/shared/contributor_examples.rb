@@ -10,7 +10,7 @@ shared_examples_for "creating_a_contributor" do |contributor_class|
     contributor_class.last.project.should == project
   end
 
-  it "creates an person" do
+  it "creates a person" do
     expect{ create_contributor }.to change(Person, :count).by(1)
     contributor_class.last.person.should == Person.last
   end
@@ -65,9 +65,5 @@ shared_examples_for "creating_a_contributor" do |contributor_class|
     Account.last.person.should == Person.last
   end
 
-  it "sends a welcome message" do
-    Postman.should_receive(:deliver).with(:account_welcome, an_instance_of(TenantAccount))
-    create_contributor
-  end
 end
 

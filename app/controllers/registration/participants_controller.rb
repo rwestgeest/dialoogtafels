@@ -17,7 +17,8 @@ class Registration::ParticipantsController < PublicController
       return
     end
 
-    if @participant.save_with_notification
+    if @participant.save
+      Messenger.new_participant(@participant)
       sign_in @participant.account
       redirect_to confirm_registration_participants_path, notice: I18n.t('registration.participants.welcome')
     else

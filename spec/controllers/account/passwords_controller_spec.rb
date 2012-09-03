@@ -8,6 +8,7 @@ describe Account::PasswordsController do
   def valid_parameters
     {:password => 'secret', :password_confirmation => 'secret' }
   end
+
   describe "GET 'edit'" do
     it "returns http success" do
       get 'edit'
@@ -18,6 +19,7 @@ describe Account::PasswordsController do
       end
     end
   end
+
   describe "PUT 'update'" do
     context "with valid params" do
       def update 
