@@ -140,7 +140,7 @@ describe Admin::TenantsController do
     end
   end
 
-  describe "PUT notify done" do
+  describe "PUT notify new" do
     let!(:tenant) { Tenant.create! valid_attributes }
     def do_post
       put :notify_new, :id => tenant

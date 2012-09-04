@@ -1,6 +1,6 @@
 set :deploy_to, "/var/www/rails/#{application}-gator-test"
 set :domain, "#{user}@test.gator.#{application}.nl"
-set :rails_env, "development"
+set :rails_env, "test"
 set :passenger_port, 3032
 
 namespace :vlad do
