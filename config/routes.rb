@@ -60,7 +60,9 @@ Tafelmanager2::Application.routes.draw do
   end
 
   namespace :admin do 
-    resources :tenants 
+    resources :tenants do
+      put 'notify_new', :on => :member
+    end
   end
 
   resources :conversations 

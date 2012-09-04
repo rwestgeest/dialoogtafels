@@ -69,6 +69,12 @@ class Admin::TenantsController < ApplicationController
     end
   end
 
+  def notify_new
+    @tenant = Tenant.find(params[:id])
+    Messenger.new_tenant(@tenant)
+    redirect_to admin_tenants_url, :notice => "messages sent"
+  end
+
   # DELETE /admin/tenants/1
   # DELETE /admin/tenants/1.json
   def destroy

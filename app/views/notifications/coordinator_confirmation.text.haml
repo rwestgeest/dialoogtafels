@@ -1,0 +1,9 @@
+= "Beste #{@coordinator.name},"
+
+Welkom bij dialoogtafels. 
+
+Er is een coordinator account voor je aangemaakt. 
+
+Je logt in met je email en wachtwoord. Gebruikt de onderstaande link om je account te activeren. 
+= account_response_session_url(@coordinator.authentication_token, :host => @tenant.host)
+

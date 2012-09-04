@@ -1,0 +1,21 @@
+%h3 
+  Beste
+  = @organizer.name
+
+%p
+  = @tenant.name
+  is overgezet naar de een nieuwe aanmeldomgeving voor de dag van de dialoog.
+%p
+  Je kunt hier je locatie waar je dialooggesprekken organiseerd beter publiceren dan voorheen zodat je wellicht makkelijker deelnemers trekt.
+%p
+  Je kun een wervende tekst bij je locatie opgeven en een foto plaatsen.
+%h3 
+  Inloggen
+%p 
+  Je logt in met je email en wachtwoord. Klik 
+  = link_to "hier", account_response_session_url(@organizer.account.authentication_token, :host => @tenant.host)
+  om je account te activeren.
+%h3
+  We hebben de volgende gegevens geregistreerd
+
+= render :partial => 'applicant_details'

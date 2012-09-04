@@ -16,7 +16,7 @@ describe Messenger do
   describe "notify_new_organizer" do
     let!(:organizer) { FactoryGirl.build :organizer }
     it "delivers an confirmation to the organizer" do
-      postman.should_receive(:deliver).with(:organizer_confirmation, organizer)
+      postman.should_receive(:deliver).with(:organizer_confirmation, organizer, tenant)
       messenger.new_organizer(organizer)
     end
     it "delivers a notification to the coordinators" do
@@ -27,8 +27,12 @@ describe Messenger do
   describe "notify new tenant" do
     let(:new_tenant) { FactoryGirl.create :tenant }
 
+    it "first coordinator account is not nil" do
+      new_tenant.coordinator_accounts.first.should_not be_nil
+    end
+
     it "delivers an account confirmation and a tenant_creation confirmation to the first coordinator" do
-      postman.should_receive(:deliver).with(:tenant_creation, new_tenant.representative_email, new_tenant)
+      postman.should_receive(:deliver).with(:tenant_creation, new_tenant)
       postman.should_receive(:deliver).with(:coordinator_confirmation, new_tenant.coordinator_accounts.first)
       messenger.new_tenant(new_tenant)
     end

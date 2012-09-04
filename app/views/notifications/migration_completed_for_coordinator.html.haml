@@ -1,0 +1,18 @@
+%h3 
+  Beste
+  = @coordinator.name 
+
+%p
+  Nogmaals welkom bij dialoogtafels. Je stad is overgezet naar de nieuwe omgeving.
+%p
+  Elke coordinator en tafelorganisator heeft een email ontvangen met benodigde details om in te loggen.
+%p
+  De tafelorganisatoren hebben ook een email ontvangen met een aanmoediging om hun locaties 'in de etalage te zetten'.
+
+%p 
+  Je logt in met je email en wachtwoord. Klik 
+  = link_to "hier", account_response_session_url(@coordinator.authentication_token, :host => @tenant.host)
+  om je account te activeren.
+
+
+= render :partial => 'tenant_details'

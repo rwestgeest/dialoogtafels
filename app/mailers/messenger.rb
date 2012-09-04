@@ -5,12 +5,14 @@ class Messenger
   end
 
   def new_organizer(organizer)
-    postman.deliver(:organizer_confirmation, organizer)
+    postman.deliver(:organizer_confirmation, organizer, tenant)
   end
 
   def new_tenant(created_tenant)
-    postman.deliver(:tenant_creation, created_tenant.representative_email, created_tenant)
-    postman.deliver(:coordinator_confirmation, created_tenant.coordinator_accounts.first)
+    Tenant.for created_tenant do
+      postman.deliver(:tenant_creation, created_tenant)
+      postman.deliver(:coordinator_confirmation, created_tenant.coordinator_accounts.first)
+    end
   end
 
   def new_participant(participant) 

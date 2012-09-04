@@ -52,21 +52,33 @@ describe Registration::OrganizersController do
         current_account.should == Account.last
         response.should redirect_to '/first_landing'
       end
+
+      it "sends a new_organizer event" do
+        Messenger.should_receive(:new_organizer).with an_instance_of(Organizer)
+        do_post
+      end
     end
 
     describe "with invalid params" do
-      it "assigns a newly created but unsaved person as @person" do
+      before do
         # Trigger the behavior that occurs when invalid params are submitted
         Person.any_instance.stub(:save).and_return(false)
+      end
+      def do_post
         post :create, {:person => {}}
+      end
+      it "assigns a newly created but unsaved person as @person" do
+        do_post
         assigns(:person).should be_a_new(Person)
       end
 
       it "re-renders the 'new' template" do
-        # Trigger the behavior that occurs when invalid params are submitted
-        Person.any_instance.stub(:save).and_return(false)
-        post :create, {:person => {}}
+        do_post
         response.should render_template("new")
+      end
+      it "does not send a new_organizer event" do
+        Messenger.should_not_receive(:new_organizer)
+        do_post
       end
     end
 
@@ -84,6 +96,11 @@ describe Registration::OrganizersController do
       it "redirects to login page" do
         do_post 
         response.should redirect_to( new_account_session_path(:email => organizer.email) )
+      end
+
+      it "does not send a new_organizer event" do
+        Messenger.should_not_receive(:new_organizer)
+        do_post
       end
     end
 

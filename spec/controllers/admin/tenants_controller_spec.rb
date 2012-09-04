@@ -140,6 +140,21 @@ describe Admin::TenantsController do
     end
   end
 
+  describe "PUT notify done" do
+    let!(:tenant) { Tenant.create! valid_attributes }
+    def do_post
+      put :notify_new, :id => tenant
+    end
+    it "sends a message notification" do
+      Messenger.should_receive :new_tenant, tenant
+      do_post
+    end
+    it "redirects back to the list" do
+      do_post
+      response.should redirect_to admin_tenants_url
+    end
+  end
+
   describe "DELETE destroy" do
     it "destroys the requested tenant" do
       tenant = Tenant.create! valid_attributes

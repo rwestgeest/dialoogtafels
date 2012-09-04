@@ -1,0 +1,8 @@
+= @message
+
+Je logt in met je email en wachtwoord. Gebruik de onderstaande link om je account te activeren.
+
+= account_response_session_url(@applicant.account.authentication_token, :host => @tenant.host)
+
+= render :partial => 'applicant_details'
+

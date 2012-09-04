@@ -1,0 +1,26 @@
+Je kunt dus direct aan de slag op de onderstaande link
+
+= root_url(:host => @tenant.host)
+
+De volgende links zijn van belang:
+
+Voor het aanmelden van een tafelorganisator:
+= new_registration_organizer_url(:host => @tenant.host)
+
+Voor het aanmelden van deelnemes of gespreksleiders:
+= root_url(:host => @tenant.host)
+
+Details van de registratie:
+
+= "Stad: #{@tenant.name}"
+= "Naam: #{@tenant.representative_name}"
+= "Email: #{@tenant.representative_email}"
+= "Telefoon: #{@tenant.representative_telephone}"
+= "Factuuradres: #{@tenant.invoice_address}"
+= "Dialoogsite: #{@tenant.site_url}"
+= "Dialoogtafels url: #{@tenant.host}"
+= "Info email: #{@tenant.info_email}"
+= "Afzender email: #{@tenant.from_email}"
+= "Stylesheet: #{@tenant.public_style_sheet}"
+= "Header plaatje: #{@tenant.top_image}"
+= "Rechter kantlijn: #{@tenant.right_image}"

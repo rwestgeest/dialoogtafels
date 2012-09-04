@@ -1,0 +1,19 @@
+= "Beste #{@organizer.name}, 
+
+= "#{@tenant.name} is overgezet naar een nieuwe aanmeldomgeving voor de dag van de dialoog."
+
+Je kunt hier je locatie waar je dialooggesprekken organiseerd beter publiceren dan voorheen zodat je wellicht makkelijker deelnemers trekt.
+
+Je kun een wervende tekst bij je locatie opgeven en een foto plaatsen.
+
+Kijk maar eens op
+
+= root_url(host: @tenant.host)
+
+Je logt in met je email en wachtwoord. Gebruik de onderstaande link om je account te activeren.
+
+= account_response_session_url(@organizer.account.authentication_token, :host => @tenant.host)
+
+We hebben de volgende gegevens geregistreerd:
+
+= render :partial => 'applicant_details'

@@ -1,0 +1,14 @@
+%h3 
+  Beste
+  = @coordinator.name 
+
+%p
+  Welkom bij dialoogtafels. 
+%p
+  Er is een coordinator account voor je aangemaakt. 
+
+%p 
+  Je logt in met je email en wachtwoord. Klik 
+  = link_to "hier", account_response_session_url(@coordinator.authentication_token, :host => @tenant.host)
+  om je account te activeren.
+

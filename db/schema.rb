@@ -172,27 +172,27 @@ ActiveRecord::Schema.define(:version => 20120903122721) do
   end
 
   create_table "tenants", :force => true do |t|
-    t.string   "name",                                  :limit => 50,                                                                                                                                                                                                                                 :null => false
-    t.string   "url_code",                              :limit => 50,                                                                                                                                                                                                                                 :null => false
-    t.string   "representative_name",                   :limit => 50,                                                                                                                                                                                                                                 :null => false
-    t.string   "representative_email",                  :limit => 150,                                                                                                                                                                                                                                :null => false
-    t.string   "representative_telephone",              :limit => 50,                                                                                                                                                                                                                                 :null => false
+    t.string   "name",                                  :limit => 50,                                                                                                       :null => false
+    t.string   "url_code",                              :limit => 50,                                                                                                       :null => false
+    t.string   "representative_name",                   :limit => 50,                                                                                                       :null => false
+    t.string   "representative_email",                  :limit => 150,                                                                                                      :null => false
+    t.string   "representative_telephone",              :limit => 50,                                                                                                       :null => false
     t.text     "invoice_address"
-    t.string   "site_url",                              :limit => 250,                                                                                                                                                                                                                                :null => false
-    t.string   "info_email",                            :limit => 150,                                                                                                                                                                                                                                :null => false
-    t.string   "from_email",                            :limit => 150,                                                                                                                                                                                                                                :null => false
-    t.datetime "created_at",                                                                                                                                                                                                                                                                          :null => false
-    t.datetime "updated_at",                                                                                                                                                                                                                                                                          :null => false
+    t.string   "site_url",                              :limit => 250,                                                                                                      :null => false
+    t.string   "info_email",                            :limit => 150,                                                                                                      :null => false
+    t.string   "from_email",                            :limit => 150,                                                                                                      :null => false
+    t.datetime "created_at",                                                                                                                                                :null => false
+    t.datetime "updated_at",                                                                                                                                                :null => false
     t.integer  "current_project_id"
     t.integer  "active_project_id"
-    t.string   "host",                                  :limit => 250, :default => "",                                                                                                                                                                                                                :null => false
+    t.string   "host",                                  :limit => 250, :default => "",                                                                                      :null => false
     t.string   "top_image",                                            :default => "/assets/default_header_background.png"
     t.string   "right_image",                                          :default => "/assets/deault_city_name_right.png"
     t.string   "public_style_sheet",                                   :default => "public"
     t.boolean  "framed_integration",                                   :default => false
-    t.text     "organizer_confirmation_text",                          :default => "'Welkom,\n\nDankje voor je aanmelding als deelnemer aan de dag van de dialoog.\n\nEr is een account voor je aangemaakt.\n\nGebruik de onderstaande link om je account te bevestigen en locaties aan te melden.'"
-    t.text     "participant_confirmation_text",                        :default => "'Welkom,\n\nDankje voor je aanmelding als deelnemer aan de dag van de dialoog.\n\nHieronder vind je de details van je aanmelding.'"
-    t.text     "conversation_leader_confirmation_text",                :default => "'Welkom,\n\nDankje voor je aanmelding als deelnemer aan de dag van de dialoog.\n\nHieronder vind je de details van je aanmelding.'"
+    t.text     "organizer_confirmation_text",                          :default => "'Welkom,\n\nDankje voor je aanmelding als tafelorganistor aan de dag van de dialoog.'"
+    t.text     "participant_confirmation_text",                        :default => "'Welkom,\n\nDankje voor je aanmelding als deelnemer aan de dag van de dialoog.'"
+    t.text     "conversation_leader_confirmation_text",                :default => "'Welkom,\n\nDankje voor je aanmelding als gespreksleider aan de dag van de dialoog.'"
   end
 
   add_index "tenants", ["current_project_id"], :name => "index_tenants_on_current_project_id"

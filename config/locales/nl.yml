@@ -258,12 +258,20 @@ nl:
   notifications:
     account_reset:
       subject: "Je dialoogtafels account is gereset"
-    account_welcome:
-      subject: "Welkom bij dialoogtafels - er is een account voor je aangemaakt"
+    tenant_creation:
+      subject: "De dialoogtafelsomgeving is aangemaakt"
+    coordinator_confirmation:
+      subject: "Welkom bij dialoogtafels - er is een account voor je gemaakt"
+    migration_completed_for_coordinator:
+      subject: "De dialoogtafelsomgeving is overgezet"
+    migration_completed_for_organizer:
+      subject: "De dialoogtafelsomgeving is vernieuwd"
+    organizer_confirmation:
+      subject: "Welkom bij dialoogtafels - er is een account voor je gemaakt"
     participant_confirmation:
-      subject: "Welkom bij dialoogtafels - er is een account voor je aangemaakt"
+      subject: "Welkom bij dialoogtafels"
     conversation_leader_confirmation:
-      subject: "Welkom bij dialoogtafels - er is een account voor je aangemaakt"
+      subject: "Welkom bij dialoogtafels"
     new_participant:
       subject: "Er is een nieuwe deelnemer aangemeld voor je tafel"
     new_conversation_leader:

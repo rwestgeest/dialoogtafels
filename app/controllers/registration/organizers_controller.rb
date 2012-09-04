@@ -8,7 +8,6 @@ class Registration::OrganizersController < PublicController
   def create
     @person = Person.new(params[:person])
     @organizer = Organizer.new(:person => @person)
-
     if Organizer.by_email(@person.email).exists?
       redirect_to new_account_session_path(:email => @person.email), :notice => "Een tafelorganisator met dit email adres bestaat al. Probeer in te loggen"
       return 
@@ -21,6 +20,7 @@ class Registration::OrganizersController < PublicController
     end
 
     if @organizer.save
+      Messenger.new_organizer(@organizer)
       sign_in @organizer.account
       redirect_to @organizer.first_landing_page, notice: I18n.t('registration.organizers.welcome')
     else
@@ -34,3 +34,4 @@ class Registration::OrganizersController < PublicController
     render action: "new" 
   end
 end
+

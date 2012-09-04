@@ -80,15 +80,11 @@ class Tenant < ActiveRecord::Base
   end
 
   def create_accoun_and_project
-    old_current = Tenant.current 
-    begin 
-      Tenant.current = self
+    Tenant.for self do
       self.active_project = Project.new(:name => "Dag van de dialoog #{Date.today.year}").for_tenant(self)
       self.accounts << TenantAccount.coordinator(:email => representative_email, :telephone => representative_telephone, :name => representative_name).for_tenant(self)
       save
       update_attribute :active_project_id, active_project.id
-    ensure
-      Tenant.current = old_current
     end
   end
 

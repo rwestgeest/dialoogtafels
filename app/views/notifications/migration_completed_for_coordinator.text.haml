@@ -1,0 +1,10 @@
+Nogmaals welkom bij dialoogtafels. Je stad is overgezet naar de nieuwe omgeving.
+
+Elke coordinator en tafelorganisator heeft een email ontvangen met benodigde details om in te loggen.
+
+De tafelorganisatoren hebben ook een email ontvangen met een aanmoediging om hun locaties 'in de etalage te zetten'.
+
+Je logt in met je email en wachtwoord. Gebruikt de onderstaande link om je account te activeren. 
+= account_response_session_url(@coordinator.authentication_token, :host => @tenant.host)
+
+= render :partial => 'tenant_details'

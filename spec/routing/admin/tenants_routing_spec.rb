@@ -27,6 +27,10 @@ describe Admin::TenantsController do
       put("/admin/tenants/1").should route_to("admin/tenants#update", :id => "1")
     end
 
+    it "routes to #notify_done" do
+      put("/admin/tenants/1/notify_new").should route_to("admin/tenants#notify_new", :id => "1")
+    end
+
     it "routes to #destroy" do
       delete("/admin/tenants/1").should route_to("admin/tenants#destroy", :id => "1")
     end
