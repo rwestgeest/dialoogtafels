@@ -64,7 +64,6 @@ describe Person do
         create_organizer(person, project)
         person.conversation_contributions_for(project).should == []
       end 
-
     end
 
     describe "highest_contribution" do
@@ -158,7 +157,6 @@ describe Person do
           person.should be_registered_for_training(other_training.id)
         end
       end
-
     end
 
     describe "register_for training" do
@@ -271,11 +269,15 @@ describe Person do
       it "contains nothing by default" do
         Person.conversation_leaders_for(project).should == []
       end
-      it "contains the person if it plsys a converation leader role" do
+      it "contains the person if it plays a converation leader role" do
         create_conversation_leader(person, project, conversation)
         Person.conversation_leaders_for(project).should == [person]
       end
-      it "contains the person once if it plsys a converation leader role twice" do
+      it "contains the person if it has a conversation_leader_ambition" do
+        create_conversation_leader(person, project)
+        Person.conversation_leaders_for(project).should == [person]
+      end
+      it "contains the person once if it plays a converation leader role twice" do
         create_conversation_leader(person, project, FactoryGirl.create(:conversation))
         create_conversation_leader(person, project, conversation)
         Person.conversation_leaders_for(project).should == [person]
@@ -284,18 +286,70 @@ describe Person do
         create_conversation_leader(person, FactoryGirl.create(:project), conversation)
         Person.conversation_leaders_for(project).should == []
       end
+
+      describe "without table" do
+        it "should be empty when it has a conversation" do
+          create_conversation_leader(person, project, conversation) 
+          Person.conversation_leaders_without_table_for(project).should == []
+        end
+        it "should contain people with only the ambition" do
+          create_conversation_leader(person, project, nil) 
+          Person.conversation_leaders_without_table_for(project).should == [person]
+        end
+      end
+    end
+
+    describe 'participants_for(project)' do
+      let(:person) { FactoryGirl.create(:person) }
+      let(:project) { Tenant.current.active_project }
+      let(:conversation) { FactoryGirl.create :conversation }
+
+      it "contains nothing by default" do
+        Person.participants_for(project).should == []
+      end
+      it "contains the person if it plays a converation leader role" do
+        create_participant(person, project, conversation)
+        Person.participants_for(project).should == [person]
+      end
+      it "contains the person if it has a participant_ambition" do
+        create_participant(person, project)
+        Person.participants_for(project).should == [person]
+      end
+      it "contains the person once if it plays a converation leader role twice" do
+        create_participant(person, project, FactoryGirl.create(:conversation))
+        create_participant(person, project, conversation)
+        Person.participants_for(project).should == [person]
+      end
+      it "excludeds the person if it plays participant in another project" do
+        create_participant(person, FactoryGirl.create(:project), conversation)
+        Person.participants_for(project).should == []
+      end
+
+      describe "without table" do
+        it "should be empty when it has a conversation" do
+          create_participant(person, project, conversation) 
+          Person.participants_without_table_for(project).should == []
+        end
+        it "should contain people with only the ambition" do
+          create_participant(person, project, nil) 
+          Person.participants_without_table_for(project).should == [person]
+        end
+      end
     end
   end
 
   def create_organizer(person, project)
     create_contributor(Organizer, person, project, nil)
   end
-  def create_participant(person, project, conversation)
-    create_contributor(Participant, person, project, conversation)
+
+  def create_participant(person, project, conversation = nil)
+    create_contributor(ParticipantAmbition, person, project, nil) rescue ActiveRecord::RecordInvalid # ignore 
+    create_contributor(Participant, person, project, conversation) if conversation
   end
 
-  def create_conversation_leader(person, project, conversation)
-    create_contributor(ConversationLeader, person, project, conversation)
+  def create_conversation_leader(person, project, conversation = nil)
+    create_contributor(ConversationLeaderAmbition, person, project, nil) rescue ActiveRecord::RecordInvalid # ignore 
+    create_contributor(ConversationLeader, person, project, conversation) if conversation
   end
 
   def create_contributor(contributor_class, person, project, conversation)

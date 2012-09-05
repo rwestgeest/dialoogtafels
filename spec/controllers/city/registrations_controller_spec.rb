@@ -15,9 +15,10 @@ describe City::RegistrationsController do
   alias_method :create_conversation_leader, :conversation_leader
 
   describe "GET 'index'" do
+
     context "without person as person parameter" do
       before { create_person; get :index }
-      it "assigns all conversation leaders as attendees" do
+      it "assigns all people leaders as people" do
         assigns(:people).should include(person)
       end
       it "asks for attendee selection" do
@@ -25,6 +26,7 @@ describe City::RegistrationsController do
         response.body.should include(I18n.t("city.registrations.index.select_attendee"))
       end
     end
+
     context "with person as attendee parameter" do
       before do 
         create_conversation
@@ -35,6 +37,7 @@ describe City::RegistrationsController do
         assigns(:active_contributions).should == [conversation_leader]
         assigns(:available_locations).should == [location]
       end
+
       it "renders conversations" do
         response.should be_success
         response.body.should have_selector("#available_conversation_#{conversation.id}")

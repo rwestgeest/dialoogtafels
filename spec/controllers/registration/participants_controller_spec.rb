@@ -73,6 +73,10 @@ describe Registration::ParticipantsController do
         expect { do_post }.to change(Participant, :count).by(1)
       end
 
+      it "creates a new participant_ambition" do
+        expect { do_post }.to change(ParticipantAmbition, :count).by(1)
+      end
+
       it "creates a new person" do
         expect { do_post }.to change(Person, :count).by(1)
       end
@@ -84,6 +88,9 @@ describe Registration::ParticipantsController do
         end
         it "creates a new participant" do
           expect { do_post }.to change(Participant, :count).by(1)
+        end
+        it "creates a new participant_ambition" do
+          expect { do_post }.to change(ParticipantAmbition, :count).by(1)
         end
       end
 
@@ -116,6 +123,10 @@ describe Registration::ParticipantsController do
       it "re-renders the 'new' template" do
         do_post
         response.should render_template("new")
+      end
+
+      it "does not create a new participant_ambition" do
+        expect { do_post }.not_to change(ParticipantAmbition, :count)
       end
 
       it "does not send any email" do

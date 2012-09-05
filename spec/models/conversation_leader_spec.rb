@@ -27,7 +27,7 @@ describe ConversationLeader do
     end
 
     describe "creating a conversation_leader" do
-      context "when participant exists for the same location" do
+      context "when participant exists for the same conversation" do
         let!(:existing_participant) { FactoryGirl.create :participant } 
         it "fails" do 
           new_participant = ConversationLeader.new(:email => existing_participant.email, :conversation => existing_participant.conversation)
@@ -35,7 +35,7 @@ describe ConversationLeader do
           new_participant.errors[:email].should include(I18n.t('activerecord.errors.models.conversation_leader.attributes.email.existing'))
         end
       end
-      context "when conversation_leader exists for the same location" do
+      context "when conversation_leader exists for the same conversation" do
         let!(:existing_conversation_leader) { FactoryGirl.create :conversation_leader } 
         it "fails" do 
           new_participant = ConversationLeader.new(:email => existing_conversation_leader.email, :conversation => existing_conversation_leader.conversation)

@@ -171,6 +171,7 @@ class Migrator
   end
 
   def migrate_leader(source_leader)
+    migrate_thing("conversation_leader_ambition") { ConversationLeaderAmbition.create :person => people[ source_leader.email ]  }
     table = source_leader.table || source_leader.table_of_preference
     return unless table
     add_leader(source_leader.id, migrate_thing("conversation_leader") {
@@ -180,6 +181,7 @@ class Migrator
   end
 
   def migrate_participant(source_participant)
+    migrate_thing("participant_ambition") { ParticipantAmbition.create :person => people[ source_participant.email ]  }
     table = source_participant.table || source_participant.table_of_preference
     return unless table
     add_participant(source_participant.id, migrate_thing("conversation_participant") {

@@ -1,7 +1,7 @@
 class City::RegistrationsController < ApplicationController
   def index
     begin 
-      @people = Person.all
+      @people = Person.order(:name)
       @person = Person.find(params[:person_id])
       @active_contributions = @person.conversation_contributions_for(active_project)
       render_index
@@ -9,6 +9,7 @@ class City::RegistrationsController < ApplicationController
       render :action => 'select_person'
     end
   end
+
   def create
     begin
       @person = Person.find(params[:person_id])

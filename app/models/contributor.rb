@@ -5,6 +5,7 @@ class Contributor < ApplicationModel
   has_one :account, :through => :person
 
   scope :for_project, lambda { |project_id| where('project_id' => project_id) }
+  scope :actives, where(:type => [ 'ConversationLeader', 'Participant', 'Organizer'])
   scope :by_email_and_conversation_id, 
         lambda { |email, conversation_id| includes(:person, :account).where('accounts.email' => email).where('conversation_id' => conversation_id) }
 

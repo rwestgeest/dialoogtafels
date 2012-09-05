@@ -2,7 +2,7 @@ require 'spec_helper'
 require 'migrator'
 require 'version_one'
 
-describe Migrator, :broken => true do # not really broken - but slow and in the way - smell
+describe Migrator do #, :broken => true do # not really broken - but slow and in the way - smell
   attr_reader :migrator
   before(:all) do 
     @migrator = Migrator.new('db/test_old_database.sqlite3')
@@ -228,6 +228,7 @@ describe Migrator, :broken => true do # not really broken - but slow and in the 
     def conversation_at(location, time)
       location.conversations.where(:start_time => time).first
     end
+
     def location_for(site_or_table)
       site_id = site_or_table.is_a?(VersionOne::Site) && site_or_table.id || site_or_table.site_id
       migrator.locations[site_id]
@@ -246,7 +247,8 @@ describe Migrator, :broken => true do # not really broken - but slow and in the 
     end
 
     describe "conversation_leader_ambitions" do
-      pending "will do that later"
+      subject { ConversationLeaderAmbition }
+      its(:count) { should == source_city.leaders.count } 
     end
 
     describe "participants" do
@@ -262,7 +264,8 @@ describe Migrator, :broken => true do # not really broken - but slow and in the 
     end
 
     describe "participant_ambitions" do
-      pending "will do that later"
+      subject { ParticipantAmbition }
+      its(:count) { should == source_city.participants.count } 
     end
 
     def type_part_of(string)

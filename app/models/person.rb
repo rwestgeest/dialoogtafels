@@ -16,8 +16,7 @@ module ProfileFields
   end
   
   def conversation_contributions_for(project)
-    # contributors.where('contributors.project_id' => project.id)
-     contributors.for_project(project.id).where("contributors.type <> 'Organizer'") 
+     contributors.actives.for_project(project.id).where("contributors.type <> 'Organizer'") 
   end
 
   def attribute_method?(attr_name)
@@ -57,6 +56,7 @@ class Person < ActiveRecord::Base
   has_many :contributors
   has_many :participants
   has_many :conversation_leaders
+  has_many :conversation_leader_ambitions
   has_many :training_registrations, :foreign_key => :attendee_id, :include => :training, :dependent => :destroy, :autosave => true
   has_many :trainings, :through => :training_registrations
   has_many :profile_field_values, include: :profile_field, inverse_of: :person, autosave: true
@@ -72,7 +72,13 @@ class Person < ActiveRecord::Base
 
   delegate :email, :to => :account, :allow_nil => true
 
-  scope :conversation_leaders_for, lambda{|project| includes(:conversation_leaders).where('contributors.project_id' => project.id) }
+  scope :conversation_leaders_for, lambda{|project| includes(:contributors).where('contributors.project_id' => project.id, 'contributors.type' => ['ConversationLeader', 'ConversationLeaderAmbition']) }
+  scope :conversation_leaders_with_table_for, lambda{|project| includes(:conversation_leaders).where('contributors.project_id' => project.id) }
+  scope :conversation_leaders_without_table_for, lambda { |project| conversation_leaders_for(project) - conversation_leaders_with_table_for(project) }
+
+  scope :participants_for, lambda{|project| includes(:contributors).where('contributors.project_id' => project.id, 'contributors.type' => ['Participant', 'ParticipantAmbition']) }
+  scope :participants_with_table_for, lambda{|project| includes(:participants).where('contributors.project_id' => project.id) }
+  scope :participants_without_table_for, lambda { |project| participants_for(project) - participants_with_table_for(project) }
 
   def self.find_by_email email
     includes(:account).where('accounts.email' => email).first
@@ -114,7 +120,7 @@ class Person < ActiveRecord::Base
   end
 
   def highest_contribution(project)
-    contributors.for_project(project).sort { |x,y| x.ordinal_value <=> y.ordinal_value }.first
+    contributors.actives.for_project(project).sort { |x,y| x.ordinal_value <=> y.ordinal_value }.first
   end
 
   def email=(email)

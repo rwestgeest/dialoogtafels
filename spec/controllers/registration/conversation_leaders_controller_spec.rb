@@ -74,6 +74,10 @@ describe Registration::ConversationLeadersController do
         expect { do_post }.to change(ConversationLeader, :count).by(1)
       end
 
+      it "creates a new conversation_leader_ambition" do
+        expect { do_post }.to change(ConversationLeaderAmbition, :count).by(1)
+      end
+
       it "creates a new person" do
         expect { do_post }.to change(Person, :count).by(1)
       end
@@ -95,6 +99,10 @@ describe Registration::ConversationLeadersController do
         end
         it "creates a new participant" do
           expect { do_post }.to change(ConversationLeader, :count).by(1)
+        end
+
+        it "creates a new conversation_leader_ambition" do
+          expect { do_post }.to change(ConversationLeaderAmbition, :count).by(1)
         end
       end
 
@@ -127,6 +135,10 @@ describe Registration::ConversationLeadersController do
         do_post
         assigns(:person).should be_a_new(Person)
         assigns(:conversation).should == conversation
+      end
+
+      it "does not create a new conversation_leader_ambition" do
+        expect { do_post }.not_to change(ConversationLeaderAmbition, :count)
       end
 
       it "re-renders the 'new' template" do

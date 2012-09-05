@@ -21,6 +21,7 @@ class Registration::ConversationLeadersController < PublicController
     end
 
     if @conversation_leader.save
+      ConversationLeaderAmbition.create person: @person
       @person.replace_training_registrations(training_registrations)
       Messenger.new_conversation_leader(@conversation_leader)
       sign_in @conversation_leader.account

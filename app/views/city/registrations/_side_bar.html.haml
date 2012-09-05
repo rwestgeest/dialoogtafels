@@ -1,4 +1,10 @@
 .right_heading Inschrijvingen voor
+
+-# %p
+-#   = form_tag action: city_registrations_path do 
+-#     = label_tag 'Filter lijst'
+-#     = select_tag :filter, options_for_select([['Deelnemers', 'participant'], ['Gespreksleiders', 'conversation_leader']])
+
 %ul
   - @people.each do |person|
     %li= select_person_link person, city_registrations_path(:person_id => person.to_param), @person

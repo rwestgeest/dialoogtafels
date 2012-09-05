@@ -18,6 +18,7 @@ class Registration::ParticipantsController < PublicController
     end
 
     if @participant.save
+      ParticipantAmbition.create person: @person
       Messenger.new_participant(@participant)
       sign_in @participant.account
       redirect_to confirm_registration_participants_path, notice: I18n.t('registration.participants.welcome')
