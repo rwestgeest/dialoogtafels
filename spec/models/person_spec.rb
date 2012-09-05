@@ -299,6 +299,28 @@ describe Person do
       end
     end
 
+    describe 'organizers_for(project)' do
+      let(:person) { FactoryGirl.create(:person) }
+      let(:project) { Tenant.current.active_project }
+
+      it "contains nothing by default" do
+        Person.organizers_for(project).should == []
+      end
+
+      it "contains the person if it plays a organizer role" do
+        create_organizer(person, project)
+        Person.organizers_for(project).should == [person]
+      end
+
+      it "contains all peiple that play an organizer role" do
+        other_person = FactoryGirl.create(:person)
+        create_organizer(person, project)
+        create_organizer(other_person, project)
+        Person.organizers_for(project).should include(person)
+        Person.organizers_for(project).should include(other_person)
+      end
+    end
+
     describe 'participants_for(project)' do
       let(:person) { FactoryGirl.create(:person) }
       let(:project) { Tenant.current.active_project }
