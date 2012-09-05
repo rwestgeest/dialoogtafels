@@ -14,7 +14,6 @@ describe City::PeopleController do
     FactoryGirl.attributes_for(:person)
   end
 
-
   describe "GET 'edit'" do
     before do 
       create_profile_field
