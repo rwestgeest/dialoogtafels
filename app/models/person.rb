@@ -54,9 +54,9 @@ class Person < ActiveRecord::Base
   scope_to_tenant
   has_one :account
   has_many :contributors
+  has_many :organizers
   has_many :participants
   has_many :conversation_leaders
-  has_many :conversation_leader_ambitions
   has_many :training_registrations, :foreign_key => :attendee_id, :include => :training, :dependent => :destroy, :autosave => true
   has_many :trainings, :through => :training_registrations
   has_many :profile_field_values, include: :profile_field, inverse_of: :person, autosave: true
@@ -79,6 +79,8 @@ class Person < ActiveRecord::Base
   scope :participants_for, lambda{|project| includes(:contributors).where('contributors.project_id' => project.id, 'contributors.type' => ['Participant', 'ParticipantAmbition']) }
   scope :participants_with_table_for, lambda{|project| includes(:participants).where('contributors.project_id' => project.id) }
   scope :participants_without_table_for, lambda { |project| participants_for(project) - participants_with_table_for(project) }
+
+  scope :organizers_for, lambda{|project| includes(:organizers).where('contributors.project_id' => project.id)}
 
   def self.find_by_email email
     includes(:account).where('accounts.email' => email).first
