@@ -2,3 +2,4 @@ $('#conversations').html('<%= escape_javascript(render(:partial => 'index', loca
 $('#page-title').html('Deelnamen voor <%= @person.name %>');
 $('#people_list li').removeClass('selected');
 $('#people_list li#person_<%= @person.to_param %>').addClass('selected');
+enable_registration_togglers();

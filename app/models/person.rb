@@ -46,6 +46,7 @@ module ProfileFields
   end
 end
 
+
 class Person < ActiveRecord::Base
   EMAIL_REGEXP = /\A([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})\Z/i
   include ScopedModel
@@ -74,13 +75,48 @@ class Person < ActiveRecord::Base
 
   scope :conversation_leaders_for, lambda{|project| includes(:contributors).where('contributors.project_id' => project.id, 'contributors.type' => ['ConversationLeader', 'ConversationLeaderAmbition']) }
   scope :conversation_leaders_with_table_for, lambda{|project| includes(:conversation_leaders).where('contributors.project_id' => project.id) }
-  scope :conversation_leaders_without_table_for, lambda { |project| conversation_leaders_for(project) - conversation_leaders_with_table_for(project) }
+  scope :conversation_leaders_without_table_for, lambda {|project| joins("LEFT JOIN contributors as c1 on (people.id=c1.person_id AND c1.type='ConversationLeaderAmbition')").
+                                                           joins("LEFT JOIN contributors as c2 on (c1.person_id=c2.person_id AND c2.type='ConversationLeader' AND c2.project_id = '#{project.id}')").where('c2.id is null').where('c1.project_id' => project.id) }
 
   scope :participants_for, lambda{|project| includes(:contributors).where('contributors.project_id' => project.id, 'contributors.type' => ['Participant', 'ParticipantAmbition']) }
-  scope :participants_with_table_for, lambda{|project| includes(:participants).where('contributors.project_id' => project.id) }
-  scope :participants_without_table_for, lambda { |project| participants_for(project) - participants_with_table_for(project) }
+  # SELECT "people"."id" AS t0_r0, "people"."name" AS t0_r1, "people"."telephone" AS t0_r2, "people"."project_id" AS t0_r3, "people"."tenant_id" AS t0_r4, "people"."created_at" AS t0_r5, 
+  # "people"."updated_at" AS t0_r6, "contributors"."id" AS t1_r0, "contributors"."type" AS t1_r1, "contributors"."project_id" AS t1_r2, "contributors"."tenant_id" AS t1_r3, 
+  # "contributors"."person_id" AS t1_r4, "contributors"."created_at" AS t1_r5, "contributors"."updated_at" AS t1_r6, "contributors"."conversation_id" AS t1_r7 
+  # FROM "people" 
+  # LEFT OUTER JOIN "contributors" ON "contributors"."person_id" = "people"."id" 
+  # WHERE "people"."tenant_id" = 1 AND "contributors"."project_id" = 1 AND "contributors"."type" IN ('Participant', 'ParticipantAmbition')
+  
+  scope :participants_with_table_for, lambda{|project| includes(:contributors).where('contributors.project_id' => project.id, 'contributors.type' => 'Participant') }
+  # LEFT OUTER JOIN "contributors" ON "contributors"."person_id" = "people"."id" 
+  # WHERE "people"."tenant_id" = 1 AND "contributors"."project_id" = 1 AND "contributors"."type" = 'Participant'
+  
+  # scope :participants_with_table_for, lambda{|project| includes(:participants).where('contributors.project_id' => project.id) }
+  scope :participants_without_table_for, lambda {|project| joins("LEFT JOIN contributors as c1 on (people.id=c1.person_id AND c1.type='ParticipantAmbition')").
+                                                           joins("LEFT JOIN contributors as c2 on (c1.person_id=c2.person_id AND c2.type='Participant' AND c2.project_id = '#{project.id}')").where('c2.id is null').where('c1.project_id' => project.id) }
+  # SELECT "people".* FROM "people" 
+  # LEFT JOIN contributors as c1 on (people.id=c1.person_id AND c1.type='ParticipantAmbition') 
+  # LEFT JOIN contributors as c2 on (c1.person_id=c2.person_id AND c2.type='Participant') 
+  # WHERE "people"."tenant_id" = 1 AND "c1"."project_id" = 1 AND "c2"."project_id" = 1 AND (c2.id is null)
+  
+  # scope :participants_without_table_for, lambda { |project| participants_for(project) - participants_with_table_for(project) }
+                                                                
+  # select c1.person_id, c2.person_id from contributors as c1 left join contributors as c2 on(c1.people_id = c2.people_id) where c1.type=PA and c2.type=P and c2.person_id is null
+  # select * from people as p left join contributors as c1 on(people.id = c1.person_id AND c1.type='ParticipantAmbition') left join contributors as c2 on(c1.person_id = c2.person_id and c2.type='Participant') where c2.id is null
+
 
   scope :organizers_for, lambda{|project| includes(:organizers).where('contributors.project_id' => project.id)}
+
+  include ModelFilter
+
+  define_filters do
+    all 
+    organizers :organizers_for
+    participants :participants_for
+    conversation_leaders :conversation_leaders_for
+    free_participants :participants_without_table_for
+    free_conversation_leaders :conversation_leaders_without_table_for
+  end
+
 
   def self.find_by_email email
     includes(:account).where('accounts.email' => email).first

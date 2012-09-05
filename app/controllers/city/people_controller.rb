@@ -1,4 +1,9 @@
 class City::PeopleController < ApplicationController
+
+  def index
+    @people = Person.filter(params['people_filter']).call(active_project).order(:name)
+  end
+
   def edit
     @person = Person.find(params[:id])
     @profile_fields = ProfileField.order("'profile_fields.order'")

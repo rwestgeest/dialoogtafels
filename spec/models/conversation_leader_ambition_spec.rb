@@ -22,5 +22,13 @@ describe ConversationLeaderAmbition do
         ConversationLeaderAmbition.create person: person 
       }.to change(ConversationLeaderAmbition, :count).by(1)
     end
+    it "for different projects creates more instances" do
+      expect { 
+        ConversationLeaderAmbition.create person: person 
+        ambition_for_other_project = ConversationLeaderAmbition.new person: person
+        ambition_for_other_project.project = FactoryGirl.create(:project)
+        ambition_for_other_project.save
+      }.to change(ConversationLeaderAmbition, :count).by(2)
+    end
   end
 end

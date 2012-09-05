@@ -18,6 +18,7 @@
 //= require locations
 //= require location_comments
 //= require location_todos
+//= require registrations
 //= require project
 
 /* Dutch (UTF-8) initialisation for the jQuery UI date picker plugin. */
@@ -42,10 +43,5 @@ jQuery(function($){
 		showMonthAfterYear: false,
 		yearSuffix: ''};
 	$.datepicker.setDefaults($.datepicker.regional['nl']);
-});
-$(function() {
-  $('span.register-link').click(function() {
-    $($(this).attr('data-toggle')).toggle();
-  });
 });
 

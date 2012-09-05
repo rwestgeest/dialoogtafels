@@ -32,6 +32,7 @@ describe City::RegistrationsController do
         create_conversation
         get :index , :person_id => person.to_param
       end
+
       it "assigns the person and locations" do
         assigns(:person).should == person
         assigns(:active_contributions).should == [conversation_leader]
@@ -42,6 +43,35 @@ describe City::RegistrationsController do
         response.should be_success
         response.body.should have_selector("#available_conversation_#{conversation.id}")
       end
+    end
+  end
+
+  describe "XHR GET 'index'" do
+
+    context "without person as person parameter" do
+      before { create_person; get :index }
+      it "returns not found" do
+        xhr :get, :index
+        should respond_with(:not_found)
+      end
+    end
+
+    context "with person as attendee parameter" do
+      before do 
+        create_conversation
+        xhr :get, :index , :person_id => person.to_param
+      end
+
+      it "assigns the person and locations" do
+        assigns(:person).should == person
+        assigns(:active_contributions).should == [conversation_leader]
+        assigns(:available_locations).should == [location]
+      end
+
+      it "should render index js" do
+        response.should render_template 'index'
+      end
+
     end
   end
 

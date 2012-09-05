@@ -1,4 +1,5 @@
 class City::RegistrationsController < ApplicationController
+
   def index
     begin 
       @people = Person.order('name')
@@ -7,7 +8,14 @@ class City::RegistrationsController < ApplicationController
       @active_contributions = @person.conversation_contributions_for(active_project)
       render_index
     rescue ActiveRecord::RecordNotFound
-      render :action => 'select_person'
+      respond_to do |format|
+        format.html do
+          render :action => 'select_person'
+        end
+        format.js do
+          head :not_found
+        end
+      end
     end
   end
 

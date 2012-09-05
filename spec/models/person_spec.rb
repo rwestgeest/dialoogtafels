@@ -292,6 +292,12 @@ describe Person do
           create_conversation_leader(person, project, conversation) 
           Person.conversation_leaders_without_table_for(project).should == []
         end
+        it "contains the person once if it plays a conversation_leader two projects" do
+          old_project = FactoryGirl.create(:project)
+          create_conversation_leader(person, old_project, conversation)
+          create_conversation_leader(person, project, nil)
+          Person.conversation_leaders_without_table_for(project).should == [person]
+        end
         it "should contain people with only the ambition" do
           create_conversation_leader(person, project, nil) 
           Person.conversation_leaders_without_table_for(project).should == [person]
@@ -333,12 +339,17 @@ describe Person do
         create_participant(person, project, conversation)
         Person.participants_for(project).should == [person]
       end
-      it "contains the person if it has a participant_ambition" do
+      it "contains the person if it has a participant_ambition"  do
         create_participant(person, project)
         Person.participants_for(project).should == [person]
       end
-      it "contains the person once if it plays a converation leader role twice" do
+      it "contains the person once if it plays a participant role twice" do
         create_participant(person, project, FactoryGirl.create(:conversation))
+        create_participant(person, project, conversation)
+        Person.participants_for(project).should == [person]
+      end
+      it "contains the person once if it plays a participant two projects" do
+        create_participant(person, FactoryGirl.create(:project), FactoryGirl.create(:conversation))
         create_participant(person, project, conversation)
         Person.participants_for(project).should == [person]
       end
@@ -352,12 +363,49 @@ describe Person do
           create_participant(person, project, conversation) 
           Person.participants_without_table_for(project).should == []
         end
+        it "contains the person once if it plays a participant two projects" do
+          old_project = FactoryGirl.create(:project)
+          create_participant(person, old_project, conversation)
+          create_participant(person, project, nil)
+          Person.participants_without_table_for(project).should == [person]
+        end
         it "should contain people with only the ambition" do
           create_participant(person, project, nil) 
           Person.participants_without_table_for(project).should == [person]
         end
       end
     end
+  end
+  describe "filtering on" do
+    it "nothing gets all people" do
+      Person.should_not_receive(:all)
+      Person.filter(nil).call('project')
+    end
+    it "participants gets the participants for the current project" do
+      Person.should_receive(:participants_for).with('project')
+      Person.filter('participants').call('project')
+    end
+    it "conversation_leaders gets the conversation_leaders for the current project" do
+      Person.should_receive(:conversation_leaders_for).with('project')
+      Person.filter('conversation_leaders').call('project')
+    end
+    it "free_conversation_leaders gets conversation_leaders without a table for the current project" do
+      Person.should_receive(:conversation_leaders_without_table_for).with('project')
+      Person.filter('free_conversation_leaders').call('project')
+    end
+    it "free_participants gets participants without a table for the current project" do
+      Person.should_receive(:participants_without_table_for).with('project')
+      Person.filter('free_participants').call('project')
+    end
+    it "organizers gets organizers for the current project" do
+      Person.should_receive(:organizers_for).with('project')
+      Person.filter('organizers').call('project')
+    end
+    it "all gets all people for the current project" do
+      Person.should_not_receive(:all)
+      Person.filter('all').call('project')
+    end
+
   end
 
   def create_organizer(person, project)

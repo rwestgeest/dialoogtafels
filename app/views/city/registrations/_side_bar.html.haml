@@ -1,14 +1,10 @@
 .right_heading Inschrijvingen voor
 
 %p
-  = form_tag action: city_registrations_path do 
+  = form_tag city_people_path, :method => :get, :remote => true, :id => 'filter_form' do 
     = label_tag 'Filter lijst'
-    = select_tag :filter, options_for_select([['Deelnemers', 'participant'], ['Gespreksleiders', 'conversation_leader']])
+    = select_tag :people_filter, options_for_select(people_filters_for_select)
 
 %div#people_list
   = render partial: 'city/people/index' 
-
--# %ul
--#   - @people.each do |person|
--#     %li= select_person_link person, city_registrations_path(:person_id => person.to_param), @person
 

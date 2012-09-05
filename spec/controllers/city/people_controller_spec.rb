@@ -14,6 +14,22 @@ describe City::PeopleController do
     FactoryGirl.attributes_for(:person)
   end
 
+  describe "XHR GET 'index'" do
+
+    before { create_person }
+    it "assigns the people" do
+      xhr :get, 'index'
+      assigns(:people).should include person
+    end
+
+    context "when called with filter" do
+      it "returns the filtered people" do
+        xhr :get, 'index', :people_filter => 'all'
+        assigns(:people).should include person
+      end
+    end
+  end
+
   describe "GET 'edit'" do
     before do 
       create_profile_field

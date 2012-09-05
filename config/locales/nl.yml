@@ -358,6 +358,13 @@ nl:
       profile_fields: "profielvelden"
   location_comment:
     reaction_to: "Reactie op '%{subject}'"
+  people_filter_label:
+    all: "Alle"
+    participants: "Deelnemers"
+    conversation_leaders: "Gespreksleiders"
+    free_participants: "Niet ingedeelde deelnemers"
+    free_conversation_leaders: "Niet ingedeelde gespreksleiders"
+    organizers: "Tafelorganisatoren"
   not_authorized: "Je bent niet geautoriseerd voor deze actie"
   registered_at: "Ingeschreven op %{time}"
   as: 'als'
