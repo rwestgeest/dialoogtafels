@@ -1,7 +1,7 @@
 class City::TrainingTypesController < ApplicationController
   def index
     @training_types = TrainingType.all
-    @people = Person.conversation_leaders_for active_project
+    @people = Person.conversation_leaders_for(active_project).order(:name)
   end
 
   def show

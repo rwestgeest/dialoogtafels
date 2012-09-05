@@ -2,5 +2,6 @@
 - context_action 'back', :back
 - page_side_bar 'side_bar'
 %table.columns-layout{id: 'conversations'}
+#conversations
   = render :partial => 'index', locals: {available_locations: @available_locations, person: @person}
 .clear

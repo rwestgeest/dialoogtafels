@@ -171,6 +171,7 @@ ul.main-sub-menu li {
 #side-bar a:active {color: #8b5a1e;}
 
 span.selected-text { background-color: #c8c8c8; padding:2px; margin:2px; font-bolder:bold; }
+#side-bar li.selected { background-color: #c8c8c8; padding:2px; margin:2px; font-bolder:bold; }
 
 #notice {
     margin:10px;
@@ -238,6 +239,8 @@ div.main-sub-menu { float:right; }
 #page-header {
     background-color:#F4EBD5;
     padding:10px;
+}
+#page-title {
     font-size:large;
     font-weight:bold;
 }

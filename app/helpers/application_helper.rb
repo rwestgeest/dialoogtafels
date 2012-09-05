@@ -123,9 +123,9 @@ module ApplicationHelper
   
   def select_person_link(person, path, selected_person)
     if person == selected_person
-      content_tag :span, person.name, :class => 'selected-text'
+      link_to person.name, path, :remote => true
     else
-      link_to person.name, path
+      link_to person.name, path, :remote => true
     end
   end
 

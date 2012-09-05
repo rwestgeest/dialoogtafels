@@ -1,7 +1,7 @@
 class City::TrainingRegistrationsController < ApplicationController
   def show
     begin 
-      @attendees = Person.conversation_leaders_for(active_project)
+      @attendees = Person.conversation_leaders_for(active_project).order(:name)
       @attendee = Person.find(params[:id])
       @training_types = TrainingType.all
       render :show
