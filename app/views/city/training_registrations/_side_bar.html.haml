@@ -1,5 +1,5 @@
 .right_heading Training inschrijvingen voor
 %ul
   - @attendees.each do |attendee|
-    %li= select_person_link attendee, city_training_registration_path(attendee.to_param), @attendee
+    %li{person_link_attributes(attendee, @attendee)}= link_to attendee.name, city_training_registration_path(attendee.to_param)
 

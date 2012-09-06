@@ -129,6 +129,11 @@ module ApplicationHelper
     end
   end
 
+  def person_link_attributes(person, selected_person)
+    attrs = {id:"person_#{person.to_param}"}
+    person == selected_person && attrs.merge(class: "selected") || attrs
+  end
+
   def aspect_link(path, link, *args)
     if (selection_path request.parameters) =~ /^#{path}/
       return content_tag :span, link, :class => "selected-text"
