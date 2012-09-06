@@ -120,6 +120,18 @@ Tafelmanager2::Application.routes.draw do
   root :to => 'locations#index'
   match '/login' => 'account/sessions#new'
   match '/maintainer_login' => 'account/sessions#new', :maintainer => 'maintainer'
+  match '/registreer/tafelorganisator' => 'registration/organizers#new' 
+  match '/map' => 'locations#index' 
+  # temp routes tilburg
+  match '/registreer/deelnemer/tilburg', :to => lambda { |hash| [ 302, {'Location'=> "http://tilburg.dialoogtafels.nl/" }, [] ] }
+  match '/registreer/gespreksleider/tilburg', :to => lambda { |hash| [ 302, {'Location'=> "http://tilburg.dialoogtafels.nl/" }, [] ] }
+  match '/registreer/tafelorganisator/tilburg', :to => lambda { |hash| [ 302, {'Location'=> "http://tilburg.dialoogtafels.nl/registreer/tafelorganisator" }, [] ] }
+  match '/table_map/tilburg', :to => lambda { |hash| [ 302, {'Location'=> "http://tilburg.dialoogtafels.nl/map" }, [] ] }
+  # temp routes amsterdam
+  match '/registreer/deelnemer/amsterdam', :to => lambda { |hash| [ 302, {'Location'=> "http://amsterdam.dialoogtafels.nl/" }, [] ] }
+  match '/registreer/gespreksleider/amsterdam', :to => lambda { |hash| [ 302, {'Location'=> "http://amsterdam.dialoogtafels.nl/" }, [] ] }
+  match '/registreer/tafelorganisator/amsterdam', :to => lambda { |hash| [ 302, {'Location'=> "http://amsterdam.dialoogtafels.nl/registreer/tafelorganisator" }, [] ] }
+  match '/table_map/amsterdam', :to => lambda { |hash| [ 302, {'Location'=> "http://amsterdam.dialoogtafels.nl/map" }, [] ] }
 
   # See how all your routes lay out with "rake routes"
 
