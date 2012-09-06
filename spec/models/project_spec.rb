@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe Project do
+describe Project, focus:true do
   describe 'validation' do
     it { should validate_presence_of :name }
     it { should validate_presence_of :conversation_length }

@@ -89,7 +89,7 @@ describe Registration::ConversationLeadersController do
             do_post( training_registrations: { training.training_type_id => training.to_param })  
           }.to change(TrainingRegistration, :count).by(1)
         end
-       
+
       end
 
       describe "when person with same email exists" do

@@ -175,6 +175,9 @@ nl:
         start_date: "Startdatum en -tijd"
         max_participants_per_table: "Deelnemers per tafel"
         conversation_length: "Duur van een gesprek"
+        organizer_confirmation_text: "Organisator"
+        conversation_leader_confirmation_text: "Gespreksleider"
+        participant_confirmation_text: "Deelnemer"
       person:
         name: "Naam"
         email: "Email"

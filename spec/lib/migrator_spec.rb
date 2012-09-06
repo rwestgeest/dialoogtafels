@@ -2,7 +2,7 @@ require 'spec_helper'
 require 'migrator'
 require 'version_one'
 
-describe Migrator do #, :broken => true do # not really broken - but slow and in the way - smell
+describe Migrator, :broken => true do # not really broken - but slow and in the way - smell
   attr_reader :migrator
   before(:all) do 
     @migrator = Migrator.new('db/test_old_database.sqlite3')

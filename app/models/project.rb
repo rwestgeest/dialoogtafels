@@ -3,7 +3,10 @@ class Project < ActiveRecord::Base
   include ScopedModel
   scope_to_tenant
 
-  attr_accessible :name, :max_participants_per_table, :conversation_length, :start_date, :start_time
+  attr_accessible :name, :max_participants_per_table, :conversation_length, 
+                  :start_date, :start_time, :organizer_confirmation_text, 
+                  :participant_confirmation_text, :conversation_leader_confirmation_text
+
   validates :name, :presence => true
   validates :max_participants_per_table, 
     :presence => true,

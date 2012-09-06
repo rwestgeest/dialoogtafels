@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120903122721) do
+ActiveRecord::Schema.define(:version => 20120906140505) do
 
   create_table "accounts", :force => true do |t|
     t.string   "email",                :limit => 150,                      :null => false
@@ -163,36 +163,36 @@ ActiveRecord::Schema.define(:version => 20120903122721) do
   create_table "projects", :force => true do |t|
     t.string   "name"
     t.integer  "tenant_id"
-    t.datetime "created_at",                                   :null => false
-    t.datetime "updated_at",                                   :null => false
-    t.integer  "conversation_length",        :default => 180
+    t.datetime "created_at",                                                                                                                                 :null => false
+    t.datetime "updated_at",                                                                                                                                 :null => false
+    t.integer  "conversation_length",                   :default => 180
     t.datetime "start_time"
-    t.integer  "max_participants_per_table", :default => 8
-    t.boolean  "trainings_on_form",          :default => true
+    t.integer  "max_participants_per_table",            :default => 8
+    t.boolean  "trainings_on_form",                     :default => true
+    t.text     "organizer_confirmation_text",           :default => "'Welkom,\n\nDankje voor je aanmelding als tafelorganistor aan de dag van de dialoog.'"
+    t.text     "participant_confirmation_text",         :default => "'Welkom,\n\nDankje voor je aanmelding als deelnemer aan de dag van de dialoog.'"
+    t.text     "conversation_leader_confirmation_text", :default => "'Welkom,\n\nDankje voor je aanmelding als gespreksleider aan de dag van de dialoog.'"
   end
 
   create_table "tenants", :force => true do |t|
-    t.string   "name",                                  :limit => 50,                                                                                                       :null => false
-    t.string   "url_code",                              :limit => 50,                                                                                                       :null => false
-    t.string   "representative_name",                   :limit => 50,                                                                                                       :null => false
-    t.string   "representative_email",                  :limit => 150,                                                                                                      :null => false
-    t.string   "representative_telephone",              :limit => 50,                                                                                                       :null => false
+    t.string   "name",                     :limit => 50,                                                       :null => false
+    t.string   "url_code",                 :limit => 50,                                                       :null => false
+    t.string   "representative_name",      :limit => 50,                                                       :null => false
+    t.string   "representative_email",     :limit => 150,                                                      :null => false
+    t.string   "representative_telephone", :limit => 50,                                                       :null => false
     t.text     "invoice_address"
-    t.string   "site_url",                              :limit => 250,                                                                                                      :null => false
-    t.string   "info_email",                            :limit => 150,                                                                                                      :null => false
-    t.string   "from_email",                            :limit => 150,                                                                                                      :null => false
-    t.datetime "created_at",                                                                                                                                                :null => false
-    t.datetime "updated_at",                                                                                                                                                :null => false
+    t.string   "site_url",                 :limit => 250,                                                      :null => false
+    t.string   "info_email",               :limit => 150,                                                      :null => false
+    t.string   "from_email",               :limit => 150,                                                      :null => false
+    t.datetime "created_at",                                                                                   :null => false
+    t.datetime "updated_at",                                                                                   :null => false
     t.integer  "current_project_id"
     t.integer  "active_project_id"
-    t.string   "host",                                  :limit => 250, :default => "",                                                                                      :null => false
-    t.string   "top_image",                                            :default => "/assets/default_header_background.png"
-    t.string   "right_image",                                          :default => "/assets/deault_city_name_right.png"
-    t.string   "public_style_sheet",                                   :default => "public"
-    t.boolean  "framed_integration",                                   :default => false
-    t.text     "organizer_confirmation_text",                          :default => "'Welkom,\n\nDankje voor je aanmelding als tafelorganistor aan de dag van de dialoog.'"
-    t.text     "participant_confirmation_text",                        :default => "'Welkom,\n\nDankje voor je aanmelding als deelnemer aan de dag van de dialoog.'"
-    t.text     "conversation_leader_confirmation_text",                :default => "'Welkom,\n\nDankje voor je aanmelding als gespreksleider aan de dag van de dialoog.'"
+    t.string   "host",                     :limit => 250, :default => "",                                      :null => false
+    t.string   "top_image",                               :default => "/assets/default_header_background.png"
+    t.string   "right_image",                             :default => "/assets/deault_city_name_right.png"
+    t.string   "public_style_sheet",                      :default => "public"
+    t.boolean  "framed_integration",                      :default => false
   end
 
   add_index "tenants", ["current_project_id"], :name => "index_tenants_on_current_project_id"

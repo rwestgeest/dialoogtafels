@@ -146,11 +146,11 @@ describe Notifications do
     end
 
     it "puts the confirmation text in the body" do
-      mail.body.encoded.should include_marked_up(current_tenant.participant_confirmation_text)
+      mail.body.encoded.should include_marked_up(current_tenant.active_project.participant_confirmation_text)
     end
 
     it "puts the confirmation plain text in the body" do
-      mail.body.encoded.should include_plain(current_tenant.participant_confirmation_text)
+      mail.body.encoded.should include_plain(current_tenant.active_project.participant_confirmation_text)
     end
 
     it_should_behave_like "an_application_confirmation_mail_body" do
@@ -170,11 +170,11 @@ describe Notifications do
     end
 
     it "puts the confirmation text in the body" do
-      mail.body.encoded.should include_marked_up(current_tenant.conversation_leader_confirmation_text)
+      mail.body.encoded.should include_marked_up(current_tenant.active_project.conversation_leader_confirmation_text)
     end
 
     it "puts the confirmation plain text in the body" do
-      mail.body.encoded.should include_plain(current_tenant.conversation_leader_confirmation_text)
+      mail.body.encoded.should include_plain(current_tenant.active_project.conversation_leader_confirmation_text)
     end
 
     it_should_behave_like "an_application_confirmation_mail_body" do
@@ -195,6 +195,14 @@ describe Notifications do
 
     it "should render the account confirmation link" do
       mail.body.encoded.should include(account_response_session_url(organizer.account.authentication_token, :host => current_tenant.host))
+    end
+
+    it "puts the confirmation text in the body" do
+      mail.body.encoded.should include_marked_up(current_tenant.active_project.organizer_confirmation_text)
+    end
+
+    it "puts the confirmation plain text in the body" do
+      mail.body.encoded.should include_plain(current_tenant.active_project.organizer_confirmation_text)
     end
 
     it_should_behave_like "an_application_confirmation_mail_body" do
