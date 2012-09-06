@@ -3,12 +3,18 @@
   = @organizer.name
 
 %p
+  Er is een nieuwe site ontwikkeld voor de aanmeldingen voor de 
+  = @tenant.active_project.name
+  in 
   = @tenant.name
-  is overgezet naar de een nieuwe aanmeldomgeving voor de dag van de dialoog.
 %p
-  Je kunt hier je locatie waar je dialooggesprekken organiseerd beter publiceren dan voorheen zodat je wellicht makkelijker deelnemers trekt.
+  Op deze site kunnen de locaties van de dialooggesprekken beter gepubliceerd worden.
+  Op deze manier trek je wellicht eenvoudiger deelnemers aan. Je kunt je locatie voorzien van een foto en van een wervende tekst.
+  Kijk maar eens op:
+
 %p
-  Je kun een wervende tekst bij je locatie opgeven en een foto plaatsen.
+  = root_url(host: @tenant.host)
+
 %h3 
   Inloggen
 %p 
