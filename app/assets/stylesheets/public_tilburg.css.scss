@@ -1,0 +1,27 @@
+$theme_color: #594A9D;
+
+h1, h2 {
+	color: $theme_color;
+}
+a {
+  color: $theme_color;
+}
+.submenu a:hover {
+	color: $theme_color;
+}
+section#footer .dialoog_txt {
+	color: $theme_color;
+}
+section#top_container {
+  height:201px;
+}
+#city-name {
+  display:none;
+}
+#dialoog_stad_top {
+  bottom:18px;
+}
+section#right_container {
+  min-height:678px;
+}
+
