@@ -55,11 +55,24 @@ module Factories
       association :conversation
     end
 
+    factory :participant_ambition  do
+      sequence( :email ) { |n| "mail_#{n}@participant.com" }
+      sequence( :name ) { |n| "organizer_#{n}" }
+      sequence( :telephone ) { |n| "telephone#{n}" }
+      association :conversation
+    end
+
     factory :conversation_leader  do
       sequence( :email ) { |n| "mail_#{n}@conversationleader.com" }
       sequence( :name ) { |n| "organizer_#{n}" }
       sequence( :telephone ) { |n| "telephone#{n}" }
       association :conversation
+    end
+
+    factory :conversation_leader_ambition  do
+      sequence( :email ) { |n| "mail_#{n}@conversationleader.com" }
+      sequence( :name ) { |n| "organizer_#{n}" }
+      sequence( :telephone ) { |n| "telephone#{n}" }
     end
 
     factory :maintainer_account, :class => MaintainerAccount, :aliases => [:account] do
