@@ -102,6 +102,16 @@ nl:
               blank: "je hebt geen telefoon opgegeven"
             person: 
               blank: "er zijn geen persoongegevens gekoppeld"
+        person:
+          attributes:
+            email:
+              blank: "je hebt geen email adres opgegeven"
+              existing: "je bent al met dit email adres ingeschreven"
+              invalid: "het opgegeven email adres is ongeldig"
+            name:
+              blank: "je hebt geen naam ingegeven"
+            telephone:
+              blank: "je hebt geen telefoon opgegeven"
         participant:
           attributes:
             email:

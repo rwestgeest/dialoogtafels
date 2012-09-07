@@ -4,6 +4,7 @@ describe Messenger do
   let!(:postman)  { mock(Postman) }
   let(:messenger) { Messenger.new postman, tenant } 
   let(:tenant) { Tenant.current }
+  let(:active_project) { tenant.active_project } 
   prepare_scope :tenant
 
   describe "used as class" do
@@ -16,7 +17,7 @@ describe Messenger do
   describe "notify_new_organizer" do
     let!(:organizer) { FactoryGirl.build :organizer }
     it "delivers an confirmation to the organizer" do
-      postman.should_receive(:deliver).with(:organizer_confirmation, organizer, tenant)
+      postman.should_receive(:deliver).with(:organizer_confirmation, organizer, tenant.active_project)
       messenger.new_organizer(organizer)
     end
     it "delivers a notification to the coordinators" do
@@ -62,14 +63,26 @@ describe Messenger do
     let!(:organizer) { FactoryGirl.create :organizer }
     let!(:location) { FactoryGirl.create :location, organizer: organizer } 
     let!(:conversation) { FactoryGirl.create :conversation, location: location }
+    let(:person) { FactoryGirl.create :person }
 
     describe "notify new participant" do
-      let(:participant) { FactoryGirl.create :participant, conversation: conversation }
 
       it "confirms participant and notifies organizer" do
-        postman.should_receive(:deliver).with(:new_participant, organizer, participant)
-        postman.should_receive(:deliver).with(:participant_confirmation, participant, tenant)
-        messenger.new_participant(participant)
+        postman.should_receive(:deliver).with(:new_participant, organizer, person, conversation)
+        postman.should_receive(:deliver).with(:participant_confirmation, person, active_project)
+        messenger.new_participant(person, conversation)
+      end
+
+      it "deliers a notificcation to the coordinators" do
+        pending "implement when we have coordinators mailing list setting" 
+      end
+    end
+
+    describe "notify new participant ambition" do
+
+      it "confirms participant " do
+        postman.should_receive(:deliver).with(:participant_confirmation, person, active_project)
+        messenger.new_participant_ambition(person)
       end
 
       it "deliers a notificcation to the coordinators" do
@@ -78,12 +91,23 @@ describe Messenger do
     end
 
     describe "notify new conversation leader" do
-      let(:conversation_leader) { FactoryGirl.create :conversation_leader, conversation: conversation }
 
       it "confirms conversation_leader and notifies organizer" do
-        postman.should_receive(:deliver).with(:new_conversation_leader, organizer, conversation_leader)
-        postman.should_receive(:deliver).with(:conversation_leader_confirmation, conversation_leader, tenant)
-        messenger.new_conversation_leader(conversation_leader)
+        postman.should_receive(:deliver).with(:new_conversation_leader, organizer, person, conversation)
+        postman.should_receive(:deliver).with(:conversation_leader_confirmation, person, active_project)
+        messenger.new_conversation_leader(person, conversation)
+      end
+
+      it "deliers a notificcation to the coordinators" do
+        pending "implement when we have coordinators mailing list setting" 
+      end
+    end
+
+    describe "notify new conversation leader ambition" do
+
+      it "confirms conversation_leader" do
+        postman.should_receive(:deliver).with(:conversation_leader_confirmation, person, active_project)
+        messenger.new_conversation_leader_ambition(person)
       end
 
       it "deliers a notificcation to the coordinators" do

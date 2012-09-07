@@ -10,6 +10,7 @@ describe Person do
     end
     it {should validate_presence_of :telephone }
     it {should validate_presence_of :name }
+    it {should validate_presence_of :email }
   end
 
   context "with current tenant" do 
@@ -19,10 +20,6 @@ describe Person do
       it "creates an account if email address is supplied" do
         expect{ FactoryGirl.create :person }.to change(Account, :count).by(1)
         Account.last.person.should === Person.last
-      end
-      it "creates no account if email addres is not supplied" do
-        expect{ FactoryGirl.create :person, :email => nil }.to change(Person, :count).by(1)
-        expect{ FactoryGirl.create :person, :email => nil }.not_to change(Account, :count).by(1)
       end
     end
 
@@ -375,7 +372,9 @@ describe Person do
         end
       end
     end
+
   end
+
   describe "filtering on" do
     it "nothing gets all people" do
       Person.should_not_receive(:all)
@@ -405,7 +404,6 @@ describe Person do
       Person.should_not_receive(:all)
       Person.filter('all').call('project')
     end
-
   end
 
   def create_organizer(person, project)

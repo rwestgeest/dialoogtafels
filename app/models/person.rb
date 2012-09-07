@@ -53,7 +53,7 @@ class Person < ActiveRecord::Base
   include ProfileFields
 
   scope_to_tenant
-  has_one :account
+  has_one :account, inverse_of: :person
   has_many :contributors
   has_many :organizers
   has_many :participants
@@ -65,7 +65,7 @@ class Person < ActiveRecord::Base
   has_many :conversations_participating_in_as_participant, through: :participants, source: :conversation
   has_many :conversations_participating_in, through: :contributors, source: :conversation
 
-  validates :email, :format => EMAIL_REGEXP, :if => :email_present?
+  validates :email, :presence => true, :format => EMAIL_REGEXP
   validates :name, :presence => true
   validates :telephone, :presence => true
 

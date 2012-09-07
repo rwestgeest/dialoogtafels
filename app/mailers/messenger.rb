@@ -5,7 +5,7 @@ class Messenger
   end
 
   def new_organizer(organizer)
-    postman.deliver(:organizer_confirmation, organizer, tenant)
+    postman.deliver(:organizer_confirmation, organizer, tenant.active_project)
   end
 
   def new_tenant(created_tenant)
@@ -15,14 +15,22 @@ class Messenger
     end
   end
 
-  def new_participant(participant) 
-    postman.deliver(:new_participant, participant.conversation.location.organizer, participant)
-    postman.deliver(:participant_confirmation, participant, tenant)
+  def new_participant(person, conversation) 
+    postman.deliver(:new_participant, conversation.location.organizer, person, conversation)
+    postman.deliver(:participant_confirmation, person, tenant.active_project)
   end
 
-  def new_conversation_leader(conversation_leader) 
-    postman.deliver(:new_conversation_leader, conversation_leader.conversation.location.organizer, conversation_leader)
-    postman.deliver(:conversation_leader_confirmation, conversation_leader, tenant)
+  def new_participant_ambition(person) 
+    postman.deliver(:participant_confirmation, person, tenant.active_project)
+  end
+
+  def new_conversation_leader(person, conversation) 
+    postman.deliver(:new_conversation_leader, conversation.location.organizer, person, conversation)
+    postman.deliver(:conversation_leader_confirmation, person, tenant.active_project)
+  end
+
+  def new_conversation_leader_ambition(person) 
+    postman.deliver(:conversation_leader_confirmation, person, tenant.active_project)
   end
 
   def migration_completed(created_tenant)

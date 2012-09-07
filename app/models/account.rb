@@ -14,7 +14,7 @@ class Account < ActiveRecord::Base
   EMAIL_REGEXP = /\A([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})\Z/i
 
 
-  belongs_to :person
+  belongs_to :person, inverse_of: :account
   before_create :generate_authentication_token
 
   attr_accessible :email, :password, :password_confirmation, :role, :name, :telephone

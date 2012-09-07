@@ -137,7 +137,7 @@ describe Notifications do
 
   describe "participant_confirmation" do
     let(:participant) { FactoryGirl.create :participant }
-    let(:mail) { Notifications.participant_confirmation participant, current_tenant }
+    let(:mail) { Notifications.participant_confirmation participant, active_project }
 
     it "renders the headers" do
       mail.subject.should eq(I18n.t("notifications.participant_confirmation.subject"))
@@ -146,11 +146,11 @@ describe Notifications do
     end
 
     it "puts the confirmation text in the body" do
-      mail.body.encoded.should include_marked_up(current_tenant.active_project.participant_confirmation_text)
+      mail.body.encoded.should include_marked_up(active_project.participant_confirmation_text)
     end
 
     it "puts the confirmation plain text in the body" do
-      mail.body.encoded.should include_plain(current_tenant.active_project.participant_confirmation_text)
+      mail.body.encoded.should include_plain(active_project.participant_confirmation_text)
     end
 
     it_should_behave_like "an_application_confirmation_mail_body" do
@@ -161,7 +161,7 @@ describe Notifications do
 
   describe "conversation_leader_confirmation" do
     let(:conversation_leader) { FactoryGirl.create :conversation_leader }
-    let(:mail) { Notifications.conversation_leader_confirmation conversation_leader, current_tenant }
+    let(:mail) { Notifications.conversation_leader_confirmation conversation_leader, active_project }
 
     it "renders the headers" do
       mail.subject.should eq(I18n.t("notifications.conversation_leader_confirmation.subject"))
@@ -170,11 +170,11 @@ describe Notifications do
     end
 
     it "puts the confirmation text in the body" do
-      mail.body.encoded.should include_marked_up(current_tenant.active_project.conversation_leader_confirmation_text)
+      mail.body.encoded.should include_marked_up(active_project.conversation_leader_confirmation_text)
     end
 
     it "puts the confirmation plain text in the body" do
-      mail.body.encoded.should include_plain(current_tenant.active_project.conversation_leader_confirmation_text)
+      mail.body.encoded.should include_plain(active_project.conversation_leader_confirmation_text)
     end
 
     it_should_behave_like "an_application_confirmation_mail_body" do
@@ -185,7 +185,7 @@ describe Notifications do
 
   describe "organizer_confirmation" do
     let(:organizer) { FactoryGirl.create :organizer }
-    let(:mail) { Notifications.organizer_confirmation organizer, current_tenant }
+    let(:mail) { Notifications.organizer_confirmation organizer, active_project }
 
     it "renders the headers" do
       mail.subject.should eq(I18n.t("notifications.organizer_confirmation.subject"))
@@ -198,11 +198,11 @@ describe Notifications do
     end
 
     it "puts the confirmation text in the body" do
-      mail.body.encoded.should include_marked_up(current_tenant.active_project.organizer_confirmation_text)
+      mail.body.encoded.should include_marked_up(active_project.organizer_confirmation_text)
     end
 
     it "puts the confirmation plain text in the body" do
-      mail.body.encoded.should include_plain(current_tenant.active_project.organizer_confirmation_text)
+      mail.body.encoded.should include_plain(active_project.organizer_confirmation_text)
     end
 
     it_should_behave_like "an_application_confirmation_mail_body" do
@@ -269,27 +269,29 @@ describe Notifications do
   describe "new_participant" do
     let(:conversation) { FactoryGirl.create :conversation }
     let(:organizer) { conversation.organizer }
-    let(:participant) { FactoryGirl.build :participant, conversation: conversation }
-    let(:mail) { Notifications.new_participant organizer, participant }
+    let(:person) { FactoryGirl.build :person }
+    let(:mail) { Notifications.new_participant organizer, person, conversation }
+
     it "renders the headers" do
       mail.subject.should eq(I18n.t("notifications.new_participant.subject"))
       mail.to.should eq([organizer.email])
       mail.from.should eq([organizer.tenant.from_email])
     end
-    it "renders the organizer and participant names in the body" do
+    it "renders the organizer and person names in the body" do
       mail.body.encoded.should include(organizer.name)
-      mail.body.encoded.should include(participant.name)
+      mail.body.encoded.should include(person.name)
     end
     it "renders a link to the location" do
       mail.body.encoded.should include(city_location_url(conversation.location.to_param, :host => organizer.tenant.host))
     end
+
   end
 
   describe "new conversation_leader" do
     let(:conversation) { FactoryGirl.create :conversation }
     let(:organizer) { conversation.organizer }
-    let(:conversation_leader) { FactoryGirl.build :conversation_leader, conversation: conversation }
-    let(:mail) { Notifications.new_conversation_leader organizer, conversation_leader }
+    let(:person) { FactoryGirl.build :person }
+    let(:mail) { Notifications.new_conversation_leader organizer, person, conversation }
 
     it "renders the headers" do
       mail.subject.should eq(I18n.t("notifications.new_conversation_leader.subject"))
@@ -299,7 +301,7 @@ describe Notifications do
 
     it "renders the organizer and conversation_leader names in the body" do
       mail.body.encoded.should include(organizer.name)
-      mail.body.encoded.should include(conversation_leader.name)
+      mail.body.encoded.should include(person.name)
     end
     it "renders a ling to the location" do
       mail.body.encoded.should include(city_location_url(conversation.location.to_param, :host => organizer.tenant.host))
@@ -330,5 +332,8 @@ describe Notifications do
 
   def current_tenant
     Tenant.current
+  end
+  def active_project
+    current_tenant.active_project
   end
 end

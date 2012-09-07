@@ -121,6 +121,7 @@ Tafelmanager2::Application.routes.draw do
   match '/login' => 'account/sessions#new'
   match '/maintainer_login' => 'account/sessions#new', :maintainer => 'maintainer'
   match '/registreer/tafelorganisator' => 'registration/organizers#new' 
+  match '/registreer/gespreksleider' => 'registration/conversation_leaders#new' 
   match '/map' => 'locations#index' 
   # temp routes tilburg
   match '/registreer/deelnemer/tilburg', :to => lambda { |hash| [ 302, {'Location'=> "http://tilburg.dialoogtafels.nl/" }, [] ] }

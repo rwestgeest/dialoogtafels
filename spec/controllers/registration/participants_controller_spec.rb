@@ -10,15 +10,11 @@ describe Registration::ParticipantsController do
     @valid_attributes ||= FactoryGirl.attributes_for(:person).merge(overrides).stringify_keys
   end
 
-  describe "GET new" do
-    def do_get
-      get :new, :conversation_id => conversation.to_param
-    end
+  shared_examples_for "a_participant_registration_form" do
 
     it "assigns a new person as @person" do
       do_get
       assigns(:person).should be_a_new(Person)
-      assigns(:conversation).should == conversation
     end
 
     it "renders a form" do
@@ -26,16 +22,158 @@ describe Registration::ParticipantsController do
       response.body.should have_selector "form[action='#{registration_participants_path}'][method='post']"
     end
 
-    it "puts the conversation_id in a hidden field" do
-      do_get
-      response.body.should have_selector "input[name='conversation_id'][type='hidden'][value='#{conversation.to_param}']"
+    it_should_behave_like "a_registration_form_with_profile_fields"
+  end
+
+  describe "GET new" do
+    describe "with conversation parameter" do
+      def do_get
+        get :new, :conversation_id => conversation.to_param
+      end
+
+      it_should_behave_like "a_participant_registration_form" 
+
+      it "assigns a new conversation as @conversation" do
+        do_get
+        assigns(:conversation).should == conversation
+      end
+      it "puts the conversation_id in a hidden field" do
+        do_get
+        response.body.should have_selector "input[name='conversation_id'][type='hidden'][value='#{conversation.to_param}']"
+      end
+
     end
 
-    it_should_behave_like "a_registration_form_with_profile_fields"
+    describe "without conversation parameter" do
+      def do_get
+        get(:new) 
+      end
 
-    it "renders not found when conversation_id not given" do
-      get(:new) 
-      should respond_with(404)
+      it_should_behave_like "a_participant_registration_form"
+
+      it "renders the new ambition template" do
+        do_get
+        response.should render_template(:new_ambition)
+      end
+    end
+  end
+
+  describe "POST create" do
+    shared_examples_for "a_participant_registrar" do
+      it "creates a new participant_ambition" do
+        expect { do_post }.to change(ParticipantAmbition, :count).by(1)
+      end
+
+      it "signs in and redirects to confirmation" do
+        do_post
+        flash.notice.should == I18n.t('.registration.participants.welcome')
+        current_account.should == Account.last
+        response.should redirect_to confirm_registration_participants_path
+      end
+
+      it "creates a notification for the registration" do
+        Messenger.should_receive(:new_participant_ambition).with an_instance_of(Person)
+        do_post
+      end
+
+      context "when conversation provided" do
+        def do_post(additional_attributes = {})
+          post :create, {:person => valid_attributes, :conversation_id => conversation.to_param}.merge(additional_attributes)
+        end
+
+        it "creates a new participant" do
+          expect { do_post }.to change(Participant, :count).by(1)
+        end
+
+        it "the new conversation leader is associated with the conversation" do
+          do_post
+          conversation.participants.should include Participant.last
+        end
+
+        it "creates a notification for the registration" do
+          Messenger.should_receive(:new_participant).with an_instance_of(Person),  conversation
+          do_post
+        end
+      end
+
+    end
+
+    describe "with valid params" do
+      def do_post
+        post :create, {:person => valid_attributes}
+      end
+
+      it_should_behave_like "a_participant_registrar"
+
+      it "creates a new person" do
+        expect { do_post }.to change(Person, :count).by(1)
+      end
+
+      it "assigns a newly created person as @person" do
+        do_post
+        assigns(:person).should be_a(Person)
+        assigns(:person).should be_persisted
+      end
+
+      describe "when person with same email exists" do
+        before { Person.create valid_attributes }
+        it "does not create a new person" do 
+          expect { do_post }.not_to change(Person, :count)
+        end
+
+        it_should_behave_like "a_participant_registrar" 
+      end
+
+    end
+
+    shared_examples_for "a_failing_participant_registration" do
+      it "assigns a newly created but unsaved person as @person" do
+        do_post
+        assigns(:person).should be_a_new(Person)
+        assigns(:conversation).should == conversation
+      end
+
+      it "re-renders the 'new' template" do
+        do_post
+        response.should render_template("new")
+      end
+
+      it "does not create a new participant" do
+        expect { do_post }.not_to change(Participant, :count)
+      end
+
+      it "does not create a new participant_ambition" do
+        expect { do_post }.not_to change(ParticipantAmbition, :count)
+      end
+
+      it "does not send any email" do
+        Messenger.should_not_receive(:new_participant)
+      end
+
+    end
+
+    describe "with invalid params" do
+      it_should_behave_like "a_failing_participant_registration" do
+        def do_post
+          # Trigger the behavior that occurs when invalid params are submitted
+          Person.any_instance.stub(:save).and_return(false)
+          post :create, {:person => valid_attributes, :conversation_id => conversation.to_param}
+        end
+      end
+    end
+
+    describe "without email" do
+      it_should_behave_like "a_failing_participant_registration" do
+        def do_post 
+          post :create, { :person => valid_attributes(email: nil), :conversation_id => conversation.to_param }
+        end
+      end
+    end
+
+    it_should_behave_like "a_captcha_handler", :person do 
+      def do_post
+        post :create, {:person => valid_attributes, :conversation_id => conversation.id}
+      end
     end
   end
 
@@ -59,108 +197,6 @@ describe Registration::ParticipantsController do
       get 'confirm' 
       locations.each do  |location |
         response.body.should include(location.name)
-      end
-    end
-  end
-
-  describe "POST create" do
-    describe "with valid params" do
-      def do_post
-        post :create, {:person => valid_attributes, :conversation_id => conversation.to_param}
-      end
-
-      it "creates a new participant" do
-        expect { do_post }.to change(Participant, :count).by(1)
-      end
-
-      it "creates a new participant_ambition" do
-        expect { do_post }.to change(ParticipantAmbition, :count).by(1)
-      end
-
-      it "creates a new person" do
-        expect { do_post }.to change(Person, :count).by(1)
-      end
-
-      describe "when person with same email exists" do
-        before { Person.create valid_attributes }
-        it "does not create a new person" do 
-          expect { do_post }.not_to change(Person, :count)
-        end
-        it "creates a new participant" do
-          expect { do_post }.to change(Participant, :count).by(1)
-        end
-        it "creates a new participant_ambition" do
-          expect { do_post }.to change(ParticipantAmbition, :count).by(1)
-        end
-      end
-
-      it "assigns a newly created person as @person" do
-        do_post
-        assigns(:participant).should be_a(Participant)
-        assigns(:participant).should be_persisted
-      end
-
-      it "signs in and redirects to confirmation" do
-        do_post
-        flash.notice.should == I18n.t('.registration.participants.welcome')
-        current_account.should == Account.last
-        response.should redirect_to confirm_registration_participants_path
-      end
-
-      it "creates a notification for the registration" do
-        Messenger.should_receive(:new_participant).with an_instance_of(Participant)
-        do_post
-      end
-    end
-
-    shared_examples_for "a_failing_participant_registration" do
-      it "assigns a newly created but unsaved person as @person" do
-        do_post
-        assigns(:person).should be_a_new(Person)
-        assigns(:conversation).should == conversation
-      end
-
-      it "re-renders the 'new' template" do
-        do_post
-        response.should render_template("new")
-      end
-
-      it "does not create a new participant_ambition" do
-        expect { do_post }.not_to change(ParticipantAmbition, :count)
-      end
-
-      it "does not send any email" do
-        Messenger.should_not_receive(:new_participant)
-      end
-
-    end
-
-    describe "with invalid params" do
-      it_should_behave_like "a_failing_participant_registration" do
-        def do_post
-          # Trigger the behavior that occurs when invalid params are submitted
-          Participant.any_instance.stub(:save).and_return(false)
-          post :create, {:person => valid_attributes, :conversation_id => conversation.to_param}
-        end
-      end
-    end
-
-    describe "without email" do
-      it_should_behave_like "a_failing_participant_registration" do
-        def do_post 
-          post :create, { :person => valid_attributes(email: nil), :conversation_id => conversation.to_param }
-        end
-      end
-    end
-
-    it "renders not found when conversation_id not given" do
-      post :create, :person => valid_attributes
-      should respond_with(404)
-    end
-
-    it_should_behave_like "a_captcha_handler", :person do 
-      def do_post
-        post :create, {:person => valid_attributes, :conversation_id => conversation.id}
       end
     end
   end

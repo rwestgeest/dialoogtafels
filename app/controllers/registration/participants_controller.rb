@@ -1,5 +1,4 @@
 class Registration::ParticipantsController < PublicController
-  append_before_filter :check_conversation, :only => [ :new, :create ]
 
   def new
     @person = Person.new 
@@ -9,7 +8,6 @@ class Registration::ParticipantsController < PublicController
   def create
     @person = Person.find_by_email(params[:person][:email]) || Person.new(params[:person])
     @person.attributes = params[:person]
-    @participant = Participant.new(:person => @person, :conversation => @conversation)
 
     unless Captcha.verified?(self)
       flash.alert = I18n.t('registration.captcha_error')
@@ -17,10 +15,15 @@ class Registration::ParticipantsController < PublicController
       return
     end
 
-    if @participant.save
+    if @person.save
       ParticipantAmbition.create person: @person
-      Messenger.new_participant(@participant)
-      sign_in @participant.account
+      if conversation
+        Participant.create(:person => @person, :conversation => conversation)
+        Messenger.new_participant(@person, conversation)
+      else
+        Messenger.new_participant_ambition(@person)
+      end
+      sign_in @person.account
       redirect_to confirm_registration_participants_path, notice: I18n.t('registration.participants.welcome')
     else
       render_new
@@ -28,21 +31,23 @@ class Registration::ParticipantsController < PublicController
   end
 
   def confirm
-    @conversations = current_participant.person.conversations_participating_in
+    @conversations = current_person.conversations_participating_in
     @locations = @conversations.map { |c| c.location }
   end
 
   private 
   def render_new
-    @location = @conversation.location
     @profile_fields = ProfileField.on_form
-    render action: "new" 
+    if conversation
+      @location = conversation.location
+      render action: "new" 
+    else
+      render action: "new_ambition"
+    end
   end
 
-  def check_conversation
-    unless params[:conversation_id] && Conversation.exists?(params[:conversation_id])
-      return head :not_found
-    end
-    @conversation = Conversation.find params[:conversation_id]
+  def conversation 
+    @conversation ||= Conversation.find params[:conversation_id] rescue nil
   end
+
 end

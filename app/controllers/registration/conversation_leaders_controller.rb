@@ -1,5 +1,4 @@
 class Registration::ConversationLeadersController < PublicController
-  append_before_filter :check_conversation, :only => [:new, :create]
 
   def new
     @person = Person.new 
@@ -12,7 +11,6 @@ class Registration::ConversationLeadersController < PublicController
     # training_registrations.each do |training_id|
     #   @person.training_registrations << TrainingRegistration.new(:training_id => training_id)
     # end
-    @conversation_leader = ConversationLeader.new :person => @person, :conversation => @conversation
 
     unless Captcha.verified?(self)
       flash.alert = I18n.t('registration.captcha_error')
@@ -20,11 +18,17 @@ class Registration::ConversationLeadersController < PublicController
       return
     end
 
-    if @conversation_leader.save
+    if @person.save
       ConversationLeaderAmbition.create person: @person
+      if conversation
+        ConversationLeader.create :person => @person, :conversation => conversation
+        Messenger.new_conversation_leader(@person, conversation)
+      else
+        Messenger.new_conversation_leader_ambition(@person)
+      end
+
       @person.replace_training_registrations(training_registrations)
-      Messenger.new_conversation_leader(@conversation_leader)
-      sign_in @conversation_leader.account
+      sign_in @person.account
       redirect_to confirm_registration_conversation_leaders_path, notice: I18n.t('registration.conversation_leaders.welcome')
     else
       render_new
@@ -32,23 +36,24 @@ class Registration::ConversationLeadersController < PublicController
   end
 
   def confirm
-    @conversations = current_participant.person.conversations_participating_in
+    @conversations = current_person.conversations_participating_in
     @locations = @conversations.map { |c| c.location }
   end
 
   private 
   def render_new
-    @location = @conversation.location
     @profile_fields = ProfileField.on_form
     @training_types = TrainingType.all
-    render action: "new" 
+    if conversation
+      @location = conversation.location
+      render action: "new" 
+    else
+      render action: "new_ambition"
+    end
   end
 
-  def check_conversation
-    unless params[:conversation_id] && Conversation.exists?(params[:conversation_id])
-      return head :not_found
-    end
-    @conversation = Conversation.find params[:conversation_id]
+  def conversation 
+    @conversation ||= Conversation.find params[:conversation_id] rescue nil
   end
 
   def training_registrations
