@@ -1,8 +1,11 @@
 - title "Bedankt voor je inschrijving"
 
-%h2 Je bent in geschreven bij
-- @conversations.each do |conversation| 
-  %h3
-    = conversation.location.name
-  = render :partial => 'contributor/registrations/conversation', locals: { conversation: conversation }
+- if @conversations.empty?
+  %p
+- else
+  %h2 Je bent in geschreven bij
+  - @conversations.each do |conversation| 
+    %h3
+      = conversation.location.name
+    = render :partial => 'contributor/registrations/conversation', locals: { conversation: conversation }
 
