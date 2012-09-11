@@ -63,11 +63,11 @@ class Account < ActiveRecord::Base
   end
 
   def role
-    unless @role_value 
-      @role_value = super
-      @role_value = highest_contribution.class.to_s.underscore if @role_value == Contributor && highest_contribution
+    unless @highest_contribution_role
+      @highest_contribution_role = highest_contribution.class.to_s.underscore if super == Contributor && highest_contribution
     end
-    @role_value
+    return @highest_contribution_role if super == Account::Contributor && highest_contribution
+    return super
   end
 
   def landing_page

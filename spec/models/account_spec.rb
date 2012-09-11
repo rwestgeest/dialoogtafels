@@ -252,6 +252,15 @@ describe Account do
       context "for coordinator" do
         let(:account) { FactoryGirl.create(:coordinator_account) }
         it {should == 'coordinator' } 
+        # context "that is also organizers" do
+        #   it "should still be coordinator" do
+        #     organizer =  FactoryGirl.create :organizer 
+        #     person = organizer.person 
+        #     account = person.account
+        #     p account.update_attribute :role, 'coordinator' 
+        #     account.role.should == 'coordinator' 
+        #   end
+        # end
       end
       context "for organizer" do
         let(:account) { FactoryGirl.create(:organizer).account }
