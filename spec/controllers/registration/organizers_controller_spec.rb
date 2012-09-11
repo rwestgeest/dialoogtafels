@@ -26,23 +26,10 @@ describe Registration::OrganizersController do
   end
 
   describe "POST create" do
-    describe "with valid params" do
-      def do_post
-        post :create, {:person => valid_attributes}
-      end
+    shared_examples_for "an_organizer_registrar" do
 
       it "creates a new Organizer" do
         expect { do_post }.to change(Organizer, :count).by(1)
-      end
-
-      it "creates a new Person" do
-        expect { do_post }.to change(Person, :count).by(1)
-      end
-
-      it "assigns a newly created organizer as @organizer" do
-        do_post
-        assigns(:organizer).should be_a(Organizer)
-        assigns(:organizer).should be_persisted
       end
 
       it "signs in and redirects to the organizers first_landing_page" do
@@ -52,10 +39,35 @@ describe Registration::OrganizersController do
         current_account.should == Account.last
         response.should redirect_to '/first_landing'
       end
-
+      it "assigns a newly created organizer as @organizer" do
+        do_post
+        assigns(:organizer).should be_a(Organizer)
+        assigns(:organizer).should be_persisted
+      end
       it "sends a new_organizer event" do
         Messenger.should_receive(:new_organizer).with an_instance_of(Organizer)
         do_post
+      end
+    end
+    describe "with valid params" do
+      def do_post
+        post :create, {:person => valid_attributes}
+      end
+
+      it_should_behave_like "an_organizer_registrar"
+
+      it "creates a new Person" do
+        expect { do_post }.to change(Person, :count).by(1)
+      end
+
+      describe "when person with same email exists" do
+        before { Person.create valid_attributes }
+
+        it "does not create a new person" do 
+          expect { do_post }.not_to change(Person, :count)
+        end
+
+        it_should_behave_like "an_organizer_registrar"
       end
     end
 
