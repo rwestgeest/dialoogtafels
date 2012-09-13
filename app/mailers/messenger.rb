@@ -50,7 +50,7 @@ class Messenger
 
   private
   def self.messenger_instance
-    @messenger_instance ||= Messenger.new(Postman, Tenant.current)
+    Messenger.new(Postman, Tenant.current)
   end
   attr_reader :postman, :tenant
 end

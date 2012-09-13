@@ -35,7 +35,11 @@ class Location < ApplicationModel
   delegate :max_participants_per_table, :to => :project
 
   scope :publisheds, where(:published => true)
-  scope :availables_for_participants, where(:published => true)
+  scope :availables_for_participants, 
+        includes(:conversations, :project).
+        where('locations.published' => true).
+        where('conversations.id is not null').
+        where('conversations.participant_count < projects.max_participants_per_table')
 
   def initialize(attributes = nil, options = {})
     super(attributes, options) 
