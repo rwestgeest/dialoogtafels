@@ -45,7 +45,7 @@ describe Registration::OrganizersController do
         assigns(:organizer).should be_persisted
       end
       it "sends a new_organizer event" do
-        Messenger.should_receive(:new_organizer).with an_instance_of(Organizer)
+        Messenger.should_receive(:new_organizer).with an_instance_of(Person)
         do_post
       end
     end

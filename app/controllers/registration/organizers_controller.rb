@@ -20,7 +20,7 @@ class Registration::OrganizersController < PublicController
     end
 
     if @organizer.save
-      Messenger.new_organizer(@organizer)
+      Messenger.new_organizer(@person)
       sign_in @organizer.account
       redirect_to @organizer.first_landing_page, notice: I18n.t('registration.organizers.welcome')
     else

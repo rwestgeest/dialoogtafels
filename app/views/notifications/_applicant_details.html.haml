@@ -14,5 +14,5 @@
   - ProfileField.on_form.each do |profile_field|
     %tr
       %th= profile_field.label
-      %td= @applicant.person.get_profile_attribute(profile_field.field_name)
+      %td= @applicant.get_profile_attribute(profile_field.field_name)
 

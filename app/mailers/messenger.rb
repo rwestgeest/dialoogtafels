@@ -36,7 +36,7 @@ class Messenger
   def migration_completed(created_tenant)
     Tenant.for created_tenant do
       created_tenant.organizers.each do |organizer| 
-        postman.deliver(:migration_completed_for_organizer, organizer)
+        postman.deliver(:migration_completed_for_organizer, organizer.person)
       end
       created_tenant.coordinator_accounts.each do |coordinator|
         postman.deliver(:migration_completed_for_coordinator, coordinator)

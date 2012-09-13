@@ -70,14 +70,14 @@ describe Notifications do
 
     context "when Profile field exists" do
       let!(:profile_field) { FactoryGirl.create :profile_string_field, field_name: 'address' }
-      before { applicant.person.update_attribute :profile_address, 'adres' }
+      before { applicant.update_attribute :profile_address, 'adres' }
       it { should_not include(profile_field.label) }
-      it { should_not include(applicant.person.profile_address) }
+      it { should_not include(applicant.profile_address) }
 
       context "and is in form" do
         before { profile_field.update_attribute :on_form, true }
         it { should include(profile_field.label) }
-        it { should include(applicant.person.profile_address) }
+        it { should include(applicant.profile_address) }
       end
 
     end
@@ -97,7 +97,7 @@ describe Notifications do
   end
 
   describe "migration_completed_for_organizer" do
-    let(:organizer) { FactoryGirl.create :organizer }
+    let(:organizer) { FactoryGirl.create :person }
     let(:mail) { Notifications.migration_completed_for_organizer organizer }
     let(:tenant) { organizer.tenant }
 
@@ -136,7 +136,7 @@ describe Notifications do
   end
 
   describe "participant_confirmation" do
-    let(:participant) { FactoryGirl.create :participant }
+    let(:participant) { FactoryGirl.create :person }
     let(:mail) { Notifications.participant_confirmation participant, active_project }
 
     it "renders the headers" do
@@ -160,7 +160,7 @@ describe Notifications do
   end
 
   describe "conversation_leader_confirmation" do
-    let(:conversation_leader) { FactoryGirl.create :conversation_leader }
+    let(:conversation_leader) { FactoryGirl.create :person }
     let(:mail) { Notifications.conversation_leader_confirmation conversation_leader, active_project }
 
     it "renders the headers" do
@@ -184,7 +184,7 @@ describe Notifications do
   end
 
   describe "organizer_confirmation" do
-    let(:organizer) { FactoryGirl.create :organizer }
+    let(:organizer) { FactoryGirl.create :person }
     let(:mail) { Notifications.organizer_confirmation organizer, active_project }
 
     it "renders the headers" do

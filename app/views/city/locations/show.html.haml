@@ -1,10 +1,16 @@
 %div#dialog-form
-- title "Indeling gesprekken van #{ @location.name}"
+- title "Inschrijvingen gesprekken van #{ @location.name}"
 - context_action ".destroy_location", city_location_path(@location.to_param),
                                                            method: :delete,
                                                            title: "Deze locatie inclusief gesprekken verwijderen",
                                                            confirm: "Weet je zeker dat je deze locatie wilt verwijderen?. Alle bijbehorende gesprekken en inschrijvingen gaan dan verloren"
 - location_submenu
+
+%p
+  Hieronder zie je de inschrijvingen voor dit dialooggesprek. 
+  Deze gespreksleiders en deelnemers zijn nog niet ingedeeld bij een specifieke tafel. 
+  De preciese indeling kan ter plekke gemaakt worden.
+
 #conversations
   = render partial: 'conversations/index', locals: { conversations: @location.conversations }
 

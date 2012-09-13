@@ -4,4 +4,4 @@ Details van je aanmelding:
 = "Email    : #{ @applicant.email }"
 = "Telefoon : #{ @applicant.telephone }"
 - ProfileField.on_form.each do |profile_field|
-  = "#{profile_field.label} : #{ @applicant.person.get_profile_attribute(profile_field.field_name) }"
+  = "#{profile_field.label} : #{ @applicant.get_profile_attribute(profile_field.field_name) }"

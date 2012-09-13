@@ -15,7 +15,7 @@ describe Messenger do
   end
 
   describe "notify_new_organizer" do
-    let!(:organizer) { FactoryGirl.build :organizer }
+    let!(:organizer) { FactoryGirl.build :person }
     it "delivers an confirmation to the organizer" do
       postman.should_receive(:deliver).with(:organizer_confirmation, organizer, tenant.active_project)
       messenger.new_organizer(organizer)
@@ -48,8 +48,8 @@ describe Messenger do
       end
       it "delivers a nofification to the coordinators and organizers" do
         for_tenant new_tenant do
-          postman.should_receive(:deliver).with(:migration_completed_for_organizer, @organizers[0])
-          postman.should_receive(:deliver).with(:migration_completed_for_organizer, @organizers[1])
+          postman.should_receive(:deliver).with(:migration_completed_for_organizer, @organizers[0].person)
+          postman.should_receive(:deliver).with(:migration_completed_for_organizer, @organizers[1].person)
           postman.should_receive(:deliver).with(:migration_completed_for_coordinator, @coordinators[0])
           postman.should_receive(:deliver).with(:migration_completed_for_coordinator, @coordinators[1])
         end
