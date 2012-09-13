@@ -1,6 +1,6 @@
 - title "Aanmelden als organisator"
 
-= form_for @person, :url => registration_organizers_path  do |f|
+= form_for @person, :url => registration_organizers_path, method: 'post'  do |f|
   = errors_for @person
   .dialog-container
     .input-container

@@ -14,7 +14,7 @@
   Dialoog georganiseerd
   = time_period @conversation
 
-= form_for @person, :url => registration_participants_path  do |f|
+= form_for @person, :url => registration_participants_path, method: :post  do |f|
   = errors_for @person
   = hidden_field_tag :conversation_id, @conversation.id
   .dialog-container

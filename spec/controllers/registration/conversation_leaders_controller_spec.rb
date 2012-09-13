@@ -139,7 +139,7 @@ describe Registration::ConversationLeadersController do
     shared_examples_for "a_failing_conversation_leader_registration" do
       it "assigns a newly created but unsaved person as @person" do
         do_post
-        assigns(:person).should be_a_new(Person)
+        assigns(:person).should be_a(Person)
         assigns(:conversation).should == conversation
       end
 
@@ -154,6 +154,11 @@ describe Registration::ConversationLeadersController do
       it "re-renders the 'new' template" do
         do_post
         response.should render_template("new")
+      end
+
+      it "renders a form with the post method" do
+        do_post
+        response.body.should_not have_selector "form input[name='_method'][value='put']"
       end
 
       # it "preserves the training selection" do
@@ -181,6 +186,14 @@ describe Registration::ConversationLeadersController do
       end
     end
 
+    describe "with existing email without name" do
+      it_should_behave_like "a_failing_conversation_leader_registration" do
+        let(:person) { FactoryGirl.create :person } 
+        def do_post 
+          post :create, { :person => valid_attributes(email: person.email, name: nil), :conversation_id => conversation.to_param }
+        end
+      end
+    end
 
     it_should_behave_like "a_captcha_handler", :person do
       def do_post

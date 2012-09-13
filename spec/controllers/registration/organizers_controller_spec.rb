@@ -71,17 +71,10 @@ describe Registration::OrganizersController do
       end
     end
 
-    describe "with invalid params" do
-      before do
-        # Trigger the behavior that occurs when invalid params are submitted
-        Person.any_instance.stub(:save).and_return(false)
-      end
-      def do_post
-        post :create, {:person => {}}
-      end
+    shared_examples_for "a_failing_organizer_registration" do
       it "assigns a newly created but unsaved person as @person" do
         do_post
-        assigns(:person).should be_a_new(Person)
+        assigns(:person).should be_a(Person)
       end
 
       it "re-renders the 'new' template" do
@@ -92,6 +85,36 @@ describe Registration::OrganizersController do
         Messenger.should_not_receive(:new_organizer)
         do_post
       end
+      
+    end
+    describe "with invalid params" do
+      it_should_behave_like "a_failing_organizer_registration" do
+        before do
+          # Trigger the behavior that occurs when invalid params are submitted
+          Person.any_instance.stub(:save).and_return(false)
+        end
+        def do_post
+          post :create, {:person => {}}
+        end
+      end
+    end
+
+    describe "with existing email but with failing captcha " do
+      let(:person) { FactoryGirl.create :person } 
+      before do 
+        Captcha.stub(:verified?).with(controller) { false }
+        post :create, {:person => valid_attributes(email: person.email, name:nil)}
+      end
+
+      it "should render new" do
+        response.should render_template(:new) 
+      end
+
+      it "should have a post form" do
+        response.body.should_not have_selector "form input[name='_method'][value='put']"
+      end
+
+
     end
 
     describe "when organizer exists" do
