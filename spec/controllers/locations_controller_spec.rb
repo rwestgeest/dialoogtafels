@@ -26,6 +26,28 @@ describe LocationsController do
     end
   end
 
+  describe "GET participants" do
+    before { Location.stub(:availables_for_participants).and_return( [location] ) }
+
+    it "assigns all published locations locations" do
+      get :participants, {}
+      assigns(:locations).should eq([location])
+    end
+
+    it "renders a new link to register without location" do
+      get :participants 
+      response.body.should have_selector("a[href='#{new_registration_participant_url}']")
+    end
+
+    context "when no locations availables" do
+      before { Location.stub(:availables_for_participants).and_return( [] ) }
+      it "it renders no locations" do
+        get :participants
+        assigns(:locations).should eq([])
+      end
+    end
+  end
+
   describe "GET show" do
     it "assigns the requested location as @location" do
       FactoryGirl.create :conversation, :location => location

@@ -2,7 +2,10 @@ Tafelmanager2::Application.routes.draw do
 
   get "contributors/index"
 
-  resources :locations, :only => [:index, :show] 
+  resources :locations, :only => [:index, :show] do
+    collection { get 'participants' } 
+    collection { get 'conversation_leaders' } 
+  end
 
   namespace :account do
     resource :session, :only => [:new, :create, :destroy]

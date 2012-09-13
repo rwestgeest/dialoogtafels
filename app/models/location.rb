@@ -35,6 +35,7 @@ class Location < ApplicationModel
   delegate :max_participants_per_table, :to => :project
 
   scope :publisheds, where(:published => true)
+  scope :availables_for_participants, where(:published => true)
 
   def initialize(attributes = nil, options = {})
     super(attributes, options) 

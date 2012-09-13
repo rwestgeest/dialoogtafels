@@ -48,6 +48,14 @@ describe Location do
       it { should_not include concept }
     end
 
+    describe "availables_for_participants" do
+      let!(:published) { FactoryGirl.create :location, :published => true }
+      let!(:concept) { FactoryGirl.create :location, :published => false }
+      subject { Location.availables_for_participants }
+      it { should include published }
+      it { should_not include concept }
+    end
+
     describe 'involveds' do
       attr_reader :location, :conversation1, :conversation2
       before(:all) do
