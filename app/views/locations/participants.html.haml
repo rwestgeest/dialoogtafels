@@ -1,0 +1,10 @@
+- title "Schrijf je in als deelnemer bij een van de volgende locaties"
+
+= link_to "De locatie maakt me eigenlijk niet uit", new_registration_participant_url
+
+.banner-list
+  - if @locations.empty?
+    %h2 Er zijn geen locaties vrij voor deelnemers
+  - else
+    = render :partial => 'location', :collection => @locations
+    .clear
