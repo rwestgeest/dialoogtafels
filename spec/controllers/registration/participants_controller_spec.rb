@@ -55,6 +55,11 @@ describe Registration::ParticipantsController do
         do_get
         response.should render_template(:new_ambition)
       end
+
+      it "has a link to all the locations for a participant" do
+        do_get 
+        response.should have_link_to(participant_locations_path)
+      end
     end
   end
 

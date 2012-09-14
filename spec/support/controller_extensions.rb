@@ -1,4 +1,5 @@
 module ControllerExtensions
+
   def self.included(base) 
     base.extend(ClassMethods)
   end
@@ -8,6 +9,12 @@ module ControllerExtensions
       before(:each) do
         login_as account_or_role
       end
+    end
+  end
+
+  RSpec::Matchers.define(:have_link_to) do |url|
+    match do |response|
+      response.body.should have_selector("a[href='#{url}']")
     end
   end
 

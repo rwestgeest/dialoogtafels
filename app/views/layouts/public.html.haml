@@ -25,6 +25,10 @@
             =link_to "Home", tenant_site_url
           .submenu
             =link_to "Waar kan ik meedoen?", locations_url
+            .submenu
+              =link_to "als deelnemer", participant_locations_url
+            .submenu
+              =link_to "als gespreksleider", conversation_leader_locations_url
           .submenu
             =link_to "Aanmelden als tafelorganisator", new_registration_organizer_url
         %section#content_container

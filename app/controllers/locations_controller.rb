@@ -3,8 +3,12 @@ class LocationsController < PublicController
     @locations = Location.publisheds
   end
 
-  def participants
+  def participant
     @locations = Location.availables_for_participants
+  end
+
+  def conversation_leader
+    @locations = Location.publisheds_for_conversation_leaders
   end
 
   def show

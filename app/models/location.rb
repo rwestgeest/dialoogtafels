@@ -34,12 +34,17 @@ class Location < ApplicationModel
   delegate :start_time, :to => :project
   delegate :max_participants_per_table, :to => :project
 
-  scope :publisheds, where(:published => true)
+  scope :publisheds, where(:published => true).order('locations.name')
   scope :availables_for_participants, 
+        publisheds.
         includes(:conversations, :project).
-        where('locations.published' => true).
         where('conversations.id is not null').
         where('conversations.participant_count < projects.max_participants_per_table')
+  scope :publisheds_for_conversation_leaders, 
+        publisheds.
+        includes(:conversations, :project).
+        where('conversations.id is not null').
+        where('conversations.conversation_leader_count < conversations.number_of_tables')
 
   def initialize(attributes = nil, options = {})
     super(attributes, options) 

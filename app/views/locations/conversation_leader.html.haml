@@ -1,0 +1,13 @@
+- title "Beschikbare locaties voor gespreksleiders"
+
+%p
+  Als het je niet uitmaakt waar of wanneer je een gesprek leidt, klik dan 
+  = link_to "hier", new_registration_conversation_leader_url
+  om je aan te melden als gespreksleider.
+
+.banner-list
+  - if @locations.empty?
+    %h2 Er zijn geen locaties vrij voor gespreksleiders
+  - else
+    = render :partial => 'location', :collection => @locations
+    .clear

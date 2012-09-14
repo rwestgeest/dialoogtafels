@@ -56,6 +56,11 @@ describe Registration::ConversationLeadersController do
         do_get
         response.should render_template(:new_ambition)
       end
+
+      it "has a link to all the locations for a conversation leader" do
+        do_get 
+        response.should have_link_to(conversation_leader_locations_path)
+      end
     end
   end
 

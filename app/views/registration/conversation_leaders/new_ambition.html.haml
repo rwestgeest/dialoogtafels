@@ -2,9 +2,9 @@
 
 %p
   Als je direct bij een locatie wilt aanmelden 
-  = link_to 'kies dan hier een locatie', locations_path
+  = link_to 'kies dan hier een locatie', conversation_leader_locations_path
 
-= form_for @person, :url => registration_conversation_leaders_path  do |f|
+= form_for @person, :url => registration_conversation_leaders_path, method:'post' do |f|
   = errors_for @person
   .dialog-container
     .input-container

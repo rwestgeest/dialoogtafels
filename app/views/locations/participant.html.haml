@@ -1,0 +1,13 @@
+- title "Beschikbare locaties voor deelnemers"
+
+%p
+  Als het je niet uitmaakt waar of wanneer je deelneemt aan een gesprek, klik dan 
+  = link_to "hier", new_registration_participant_url
+  om je aan te melden als deelnemer.
+
+.banner-list
+  - if @locations.empty?
+    %h2 Er zijn geen locaties vrij voor deelnemers
+  - else
+    = render :partial => 'location', :collection => @locations
+    .clear

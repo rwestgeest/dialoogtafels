@@ -8,11 +8,11 @@ describe LocationsController do
     end
 
     it "routes to #index for participants" do
-      get("/locations/participants").should route_to("locations#participants")
+      get("/locations/participant").should route_to("locations#participant")
     end
 
     it "routes to #index for conversation_leaders" do
-      get("/locations/conversation_leaders").should route_to("locations#conversation_leaders")
+      get("/locations/conversation_leader").should route_to("locations#conversation_leader")
     end
 
     it "routes to #show" do

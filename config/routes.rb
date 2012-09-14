@@ -3,8 +3,8 @@ Tafelmanager2::Application.routes.draw do
   get "contributors/index"
 
   resources :locations, :only => [:index, :show] do
-    collection { get 'participants' } 
-    collection { get 'conversation_leaders' } 
+    collection { get 'participant' } 
+    collection { get 'conversation_leader' } 
   end
 
   namespace :account do

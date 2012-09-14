@@ -67,8 +67,27 @@ describe Location do
           it { should_not include published }
         end
       end
+    end
 
+    describe "publisheds_for_conversation_leaders" do
+      let!(:published) { FactoryGirl.create :location, :published => true }
+      let!(:concept) { FactoryGirl.create :location, :published => false }
+      subject { Location.publisheds_for_conversation_leaders }
 
+      it { should_not include concept }
+
+      describe "when no location contains conversations" do
+        it { should_not include published }
+      end
+
+      describe "when a location contains conversations" do
+        let!(:conversation) { FactoryGirl.create :conversation, location: published }
+        it { should include published }
+        describe "that are full" do
+          before { Conversation.update_counters conversation.id, :conversation_leader_count => conversation.number_of_tables }
+          it { should_not include published }
+        end
+      end
     end
 
     describe 'involveds' do

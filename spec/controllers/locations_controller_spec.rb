@@ -26,23 +26,45 @@ describe LocationsController do
     end
   end
 
-  describe "GET participants" do
+  describe "GET participant" do
     before { Location.stub(:availables_for_participants).and_return( [location] ) }
 
     it "assigns all published locations locations" do
-      get :participants, {}
+      get :participant, {}
       assigns(:locations).should eq([location])
     end
 
     it "renders a new link to register without location" do
-      get :participants 
+      get :participant 
       response.body.should have_selector("a[href='#{new_registration_participant_url}']")
     end
 
     context "when no locations availables" do
       before { Location.stub(:availables_for_participants).and_return( [] ) }
       it "it renders no locations" do
-        get :participants
+        get :participant
+        assigns(:locations).should eq([])
+      end
+    end
+  end
+
+  describe "GET conversation_leaders" do
+    before { Location.stub(:publisheds_for_conversation_leaders).and_return( [location] ) }
+
+    it "assigns all published locations locations" do
+      get :conversation_leader, {}
+      assigns(:locations).should eq([location])
+    end
+
+    it "renders a new link to register without location" do
+      get :conversation_leader 
+      response.body.should have_selector("a[href='#{new_registration_conversation_leader_url}']")
+    end
+
+    context "when no locations availables" do
+      before { Location.stub(:publisheds_for_conversation_leaders).and_return( [] ) }
+      it "it renders no locations" do
+        get :conversation_leader
         assigns(:locations).should eq([])
       end
     end
