@@ -144,6 +144,7 @@ describe ConversationsController do
 
   describe "DELETE destroy" do
     let!(:conversation) { create_conversation }
+
     it "destroys the requested conversation" do
       expect {
         xhr :delete, :destroy, with_location_scope(:id => conversation.to_param)

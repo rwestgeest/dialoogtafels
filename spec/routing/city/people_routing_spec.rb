@@ -11,8 +11,12 @@ describe City::PeopleController do
       get("/city/people/1/edit").should route_to("city/people#edit", :id => "1")
     end
 
-    it "routes to #index" do
+    it "routes to #update" do
       put("/city/people/1").should route_to("city/people#update", :id => "1")
+    end
+
+    it "routes to #destroy" do
+      delete("/city/people/1").should route_to("city/people#destroy", :id => "1")
     end
 
   end

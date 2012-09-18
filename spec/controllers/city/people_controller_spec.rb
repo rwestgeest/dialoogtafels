@@ -48,7 +48,7 @@ describe City::PeopleController do
     end
   end
 
-  describe "PUT 'update'" do
+  describe "XHR put 'update'" do
     before {create_person}
     context "with valid params" do
       def update 
@@ -74,6 +74,18 @@ describe City::PeopleController do
         response.should render_template 'edit'
         response.should render_template '_edit'
       end
+    end
+  end
+
+  describe "XHR delete destroy" do
+    let!(:person) { create_person }
+    it "destroye the requested person" do
+      expect { xhr :delete, :destroy, id: person.to_param }.to change(Person, :count).by(-1)
+    end
+    it "renders the index" do
+      xhr :delete, :destroy, id: person.to_param
+      assigns(:person_id).should == person.to_param
+      response.should render_template('destroy')
     end
   end
 

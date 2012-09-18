@@ -16,6 +16,10 @@ class City::PeopleController < ApplicationController
       @profile_fields = ProfileField.order("'profile_fields.order'")
       render :action => 'edit' 
     end
-
+  end
+  def destroy
+    @person_id = params[:id]
+    Person.destroy(@person_id)
+    render action: 'destroy'
   end
 end
