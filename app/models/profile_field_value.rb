@@ -5,7 +5,6 @@ class ProfileFieldValue < ActiveRecord::Base
   include ScopedModel
   scope_to_tenant
 
-  validates_presence_of :value
   validates_presence_of :person
   validates_presence_of :profile_field
 

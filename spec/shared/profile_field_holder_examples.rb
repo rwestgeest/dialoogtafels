@@ -12,6 +12,14 @@ shared_examples_for "a_profile_field_holder" do
       it "ignores value of empty" do
         expect { subject.update_attributes :profile_age => "" }.not_to change(ProfileFieldValue, :count)
       end
+      it "ignores value of nil after it has been set" do
+        subject.update_attributes :profile_age => "66"
+        expect { subject.update_attributes :profile_age => nil }.to change(ProfileFieldValue, :count).by(-1)
+      end
+      it "ignores value of empty after it has been set" do
+        subject.update_attributes :profile_age => "66"
+        expect { subject.update_attributes :profile_age => "" }.to change(ProfileFieldValue, :count).by(-1)
+      end
       context "when field is not available" do
         it "raises a rails compatible error" do
           expect { subject.update_attributes :profile_country => "Kuwait" }.to raise_exception ActiveRecord::UnknownAttributeError
