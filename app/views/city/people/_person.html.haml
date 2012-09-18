@@ -3,8 +3,8 @@
     class: :delete, 
     remote: true, 
     method: :delete,
-    title: "verwijder #[person.name]", 
+    title: "verwijder #{ person.name }", 
     confirm: "Weet je zeker dat je #{person.name} wilt verwijderen? Alle gegevens van deze persoon gaan verloren"
   = link_to image_tag('edit.gif'), edit_city_person_path(person.to_param), :class => 'edit', remote:true, title: "bewerk profiel"
-  = link_to person.name, city_registrations_path(:person_id => person.to_param), :remote => true
+  = link_to person.name, city_registrations_path(:person_id => person.to_param), :remote => true, :title => person.telephone
 
