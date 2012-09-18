@@ -12,5 +12,7 @@
           %li{:id => "training_#{training.id}"}
             = radio_button_tag("training_registrations[#{training_type.to_param}]", training.to_param, attendee.registered_for_training?(training.to_param))
             = time_period(training)
+            bij
+            = training.location
 
 

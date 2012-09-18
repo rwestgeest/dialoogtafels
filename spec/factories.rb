@@ -34,6 +34,17 @@ module Factories
 
     factory :project, :class => 'Project' do
       name "project"
+      organizer_confirmation_subject "subject"
+      organizer_confirmation_text "text"
+      participant_confirmation_subject "subject"
+      participant_confirmation_text "text"
+      conversation_leader_confirmation_subject "subject"
+      conversation_leader_confirmation_text "text"
+      grouping_strategy "none"
+      max_participants_per_table 7
+      start_date Date.tomorrow
+      start_time Time.now
+      conversation_length 180
     end
 
     factory :person do
