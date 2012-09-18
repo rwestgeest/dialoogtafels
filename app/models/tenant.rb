@@ -8,7 +8,6 @@ class Tenant < ActiveRecord::Base
   has_many :locations, dependent: :destroy
   has_many :organizers, dependent: :destroy
   has_many :conversations, dependent: :destroy
-  has_many :conversations, dependent: :destroy
   has_many :accounts, dependent: :destroy
   has_many :location_todos, dependent: :destroy
   has_many :finished_location_todos, dependent: :destroy

@@ -79,14 +79,32 @@ describe City::PeopleController do
 
   describe "XHR delete destroy" do
     let!(:person) { create_person }
-    it "destroye the requested person" do
-      expect { xhr :delete, :destroy, id: person.to_param }.to change(Person, :count).by(-1)
-    end
-    it "renders the index" do
+
+    def do_delete
       xhr :delete, :destroy, id: person.to_param
+    end
+    it "destroye the requested person" do
+      expect { do_delete }.to change(Person, :count).by(-1)
+    end
+    it "renders the destroy" do
+      do_delete
       assigns(:person_id).should == person.to_param
       response.should render_template('destroy')
     end
+    context "when person organizes locations" do
+      before do
+        organizer = FactoryGirl.create :organizer, person: person
+        FactoryGirl.create :location, organizer: organizer
+      end
+      it "does not remove the person" do
+        expect { do_delete }.not_to change(Person, :count)
+      end
+      it "renders refuse_to_destroy" do
+        do_delete
+        assigns(:message).should == I18n.t('city.people.destroy.organizes_locations', person_name: person.name)
+        response.should render_template(:destroy)
+      end
+    end  
   end
 
 end

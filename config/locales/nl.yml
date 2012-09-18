@@ -332,6 +332,9 @@ nl:
     publications:
       show:
         edit: "wijzig publicatie" 
+    people:
+      destroy:
+        organizes_locations: "Je kunt %{person_name} niet verwijderen. Hij of zij organiseert een locatie."
     trainings:
       index:
         new: "plan een nieuwe training"

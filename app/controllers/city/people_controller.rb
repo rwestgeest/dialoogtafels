@@ -19,7 +19,13 @@ class City::PeopleController < ApplicationController
   end
   def destroy
     @person_id = params[:id]
-    Person.destroy(@person_id)
-    render action: 'destroy'
+    person = Person.find(@person_id)
+    if person.organized_locations.empty?
+      person.destroy
+      render action: 'destroy'
+    else
+      @message = I18n.t('city.people.destroy.organizes_locations', person_name: person.name)
+      render action: 'refused_to_destroy'
+    end
   end
 end

@@ -27,6 +27,50 @@ describe Person do
       subject {  FactoryGirl.create :person }
     end
 
+    describe "destroyed" do
+      let!(:person) { FactoryGirl.create :person }
+      it "destroys the person" do
+        expect { person.destroy}.to change(Person, :count).by(-1)
+      end
+      context "with a training registration" do
+        before { person.register_for(FactoryGirl.create(:training).id) }
+        it "removes the registration" do
+          expect { person.destroy }.to change(TrainingRegistration, :count).by(-1)
+        end
+      end
+      context "with a profile field" do
+        before do 
+          FactoryGirl.create :profile_string_field, :field_name => 'age' 
+          person.update_attributes(:profile_age => '44')
+        end
+        it "removes the field value" do
+          expect { person.destroy }.to change(ProfileFieldValue, :count).by(-1)
+        end
+        it "keeps the field" do
+          expect { person.destroy }.not_to change(ProfileField, :count)
+        end
+      end
+      context "with a registration" do
+        before { FactoryGirl.create :conversation_leader, :person => person }
+        it "removes the registration" do
+          expect { person.destroy }.to change(Contributor, :count).by(-1)
+        end
+      end
+
+      context "with a organizer" do
+        let!(:organizer) { FactoryGirl.create :organizer, :person => person } 
+        it "removes the registration" do
+          expect { person.destroy }.to change(Contributor, :count).by(-1)
+        end
+        context "and an organized location" do
+          before { FactoryGirl.create :location, :organizer => organizer } 
+          it "removes the location" do
+            expect { person.destroy }.to change(Location, :count).by(-1)
+          end
+        end
+      end
+    end
+
     describe "conversation_contributions for project" do
       let(:person) { FactoryGirl.create(:person) }
       let(:project) { Tenant.current.active_project }
@@ -212,12 +256,6 @@ describe Person do
           end
         end
 
-        context "when the person is destroyed" do
-          before { person.register_for(training_id) }
-          it "removes the registration" do
-            expect { person.destroy }.to change(TrainingRegistration, :count).by(-1)
-          end
-        end
       end
 
       describe "removing one" do

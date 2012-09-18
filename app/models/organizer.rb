@@ -1,7 +1,7 @@
 class Organizer < Contributor
   include ScopedModel
   scope_to_tenant
-  has_many :locations
+  has_many :locations, dependent: :destroy
 
   class UniqueOrganizerValidator < ActiveModel::EachValidator
     def validate_each(record, attribute, value) 
