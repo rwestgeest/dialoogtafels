@@ -7,7 +7,7 @@ class Conversation < ActiveRecord::Base
   include ScopedModel
   scope_to_tenant
   
-  belongs_to :location
+  belongs_to :location, inverse_of: :conversations
   has_many :participants, dependent: :destroy
   has_many :conversation_leaders, dependent: :destroy
 

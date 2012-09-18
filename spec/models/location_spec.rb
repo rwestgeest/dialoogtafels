@@ -175,6 +175,7 @@ describe Location do
       end
     end
 
+
     def fillup(conversation, *what_to_fill)
       return unless what_to_fill.include?(:conversation_leaders) || what_to_fill.include?(:participants)
       counters = {}

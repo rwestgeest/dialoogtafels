@@ -5,9 +5,9 @@
   = link_to "hier", new_registration_conversation_leader_url
   om je aan te melden als gespreksleider.
 
-.banner-list
-  - if @locations.empty?
+%div
+  - if @location_grouper.empty?
     %h2 Er zijn geen locaties vrij voor gespreksleiders
   - else
-    = render :partial => 'location', :collection => @locations
+    = render partial:  'group', collection: @location_grouper.groups
     .clear

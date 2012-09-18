@@ -5,9 +5,13 @@ class Project < ActiveRecord::Base
 
   attr_accessible :name, :max_participants_per_table, :conversation_length, 
                   :start_date, :start_time, :organizer_confirmation_text, 
-                  :participant_confirmation_text, :conversation_leader_confirmation_text
+                  :participant_confirmation_text, :conversation_leader_confirmation_text, 
+                  :grouping_strategy
 
   validates :name, :presence => true
+  validates :organizer_confirmation_subject, :presence => true
+  validates :participant_confirmation_subject, :presence => true
+  validates :conversation_leader_confirmation_subject, :presence => true
   validates :max_participants_per_table, 
     :presence => true,
     :numericality => true
@@ -15,6 +19,9 @@ class Project < ActiveRecord::Base
   validates :conversation_length, 
     :presence => true,
     :numericality => true
+
+  validates :grouping_strategy,
+    :inclusion => { :in => LocationGrouping::ValidStrategies }
 
   has_many :location_todos, :inverse_of => :project
   has_many :locations

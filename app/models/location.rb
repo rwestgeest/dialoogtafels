@@ -1,3 +1,4 @@
+
 class Location < ApplicationModel
   include ScopedModel
   scope_to_tenant
@@ -11,7 +12,7 @@ class Location < ApplicationModel
 
   belongs_to :project
   belongs_to :organizer
-  has_many :conversations, dependent: :destroy, order: "conversations.start_time"
+  has_many :conversations, dependent: :destroy, order: "conversations.start_time", inverse_of: :location
   has_many :conversation_leaders, through: :conversations
   has_many :participants, through: :conversations
   has_many :location_comments, foreign_key: :reference_id

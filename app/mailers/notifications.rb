@@ -42,13 +42,13 @@ class Notifications < ActionMailer::Base
   def participant_confirmation(participant, mailing_settings)
     @message = mailing_settings.participant_confirmation_text
     @applicant = participant
-    mail from: participant.tenant.from_email, to:participant.email
+    mail from: participant.tenant.from_email, to:participant.email, subject: mailing_settings.participant_confirmation_subject
   end
 
   def conversation_leader_confirmation(conversation_leader, mailing_settings)
     @message = mailing_settings.conversation_leader_confirmation_text
     @applicant = conversation_leader
-    mail from: conversation_leader.tenant.from_email, to:conversation_leader.email
+    mail from: conversation_leader.tenant.from_email, to:conversation_leader.email, subject: mailing_settings.conversation_leader_confirmation_subject
   end
 
   def coordinator_confirmation(coordinator)
@@ -61,7 +61,7 @@ class Notifications < ActionMailer::Base
     @message = mailing_settings.organizer_confirmation_text
     @tenant = organizer.tenant
     @applicant = organizer
-    mail from: organizer.tenant.from_email, to:organizer.email
+    mail from: organizer.tenant.from_email, to:organizer.email, subject: mailing_settings.organizer_confirmation_subject
   end
 
   def new_participant(addressee, person, conversation)

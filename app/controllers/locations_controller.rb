@@ -1,14 +1,14 @@
 class LocationsController < PublicController
   def index
-    @locations = Location.publisheds
+    @location_grouper = LocationGrouping.group_by(active_project.grouping_strategy, Location.publisheds)
   end
 
   def participant
-    @locations = Location.availables_for_participants
+    @location_grouper = LocationGrouping.group_by(active_project.grouping_strategy, Location.availables_for_participants)
   end
 
   def conversation_leader
-    @locations = Location.publisheds_for_conversation_leaders
+    @location_grouper = LocationGrouping.group_by(active_project.grouping_strategy, Location.publisheds_for_conversation_leaders)
   end
 
   def show

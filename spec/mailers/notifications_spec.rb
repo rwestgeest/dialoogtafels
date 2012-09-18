@@ -138,9 +138,10 @@ describe Notifications do
   describe "participant_confirmation" do
     let(:participant) { FactoryGirl.create :person }
     let(:mail) { Notifications.participant_confirmation participant, active_project }
+    before { active_project.participant_confirmation_subject = "welcome participant" }
 
     it "renders the headers" do
-      mail.subject.should eq(I18n.t("notifications.participant_confirmation.subject"))
+      mail.subject.should eq(active_project.participant_confirmation_subject)
       mail.to.should eq([participant.email])
       mail.from.should eq([participant.tenant.from_email])
     end
@@ -162,9 +163,10 @@ describe Notifications do
   describe "conversation_leader_confirmation" do
     let(:conversation_leader) { FactoryGirl.create :person }
     let(:mail) { Notifications.conversation_leader_confirmation conversation_leader, active_project }
+    before { active_project.participant_confirmation_subject = "welcome conversation_leader" }
 
     it "renders the headers" do
-      mail.subject.should eq(I18n.t("notifications.conversation_leader_confirmation.subject"))
+      mail.subject.should eq(active_project.conversation_leader_confirmation_subject)
       mail.to.should eq([conversation_leader.email])
       mail.from.should eq([conversation_leader.tenant.from_email])
     end
@@ -186,9 +188,10 @@ describe Notifications do
   describe "organizer_confirmation" do
     let(:organizer) { FactoryGirl.create :person }
     let(:mail) { Notifications.organizer_confirmation organizer, active_project }
+    before { active_project.participant_confirmation_subject = "welcome organizer" }
 
     it "renders the headers" do
-      mail.subject.should eq(I18n.t("notifications.organizer_confirmation.subject"))
+      mail.subject.should eq(active_project.organizer_confirmation_subject)
       mail.to.should eq([organizer.email])
       mail.from.should eq([organizer.tenant.from_email])
     end

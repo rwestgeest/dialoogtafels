@@ -1,9 +1,8 @@
 - title "Dialooglocaties"
-
-.banner-list
-  - if @locations.empty?
+%div
+  - if @location_grouper.empty?
     %h2 Er zijn nog geen locaties aangemeld
     = link_to "Doe mee en meld jouw locatie als eerste aan", new_registration_organizer_url
   - else
-    = render :partial => 'location', :collection => @locations
+    = render partial:  'group', collection: @location_grouper.groups
     .clear

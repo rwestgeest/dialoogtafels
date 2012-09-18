@@ -11,13 +11,13 @@ describe LocationsController do
     it "assigns all published locations locations" do
       create_location
       get :index, {}
-      assigns(:locations).should eq([location])
+      assigns(:location_grouper).should eq(LocationGrouping.none([location]))
     end
 
     context "when no locations availables" do
       it "it renders no locations" do
         get :index
-        assigns(:locations).should eq([])
+        assigns(:location_grouper).should eq(LocationGrouping.none([]))
       end
       it "renders a new organisiers link" do
         get :index 
@@ -31,7 +31,7 @@ describe LocationsController do
 
     it "assigns all published locations locations" do
       get :participant, {}
-      assigns(:locations).should eq([location])
+      assigns(:location_grouper).should eq(LocationGrouping.none([location]))
     end
 
     it "renders a new link to register without location" do
@@ -43,7 +43,7 @@ describe LocationsController do
       before { Location.stub(:availables_for_participants).and_return( [] ) }
       it "it renders no locations" do
         get :participant
-        assigns(:locations).should eq([])
+        assigns(:location_grouper).should eq(LocationGrouping.none([]))
       end
     end
   end
@@ -53,7 +53,7 @@ describe LocationsController do
 
     it "assigns all published locations locations" do
       get :conversation_leader, {}
-      assigns(:locations).should eq([location])
+      assigns(:location_grouper).should eq(LocationGrouping.none([location]))
     end
 
     it "renders a new link to register without location" do
@@ -65,7 +65,7 @@ describe LocationsController do
       before { Location.stub(:publisheds_for_conversation_leaders).and_return( [] ) }
       it "it renders no locations" do
         get :conversation_leader
-        assigns(:locations).should eq([])
+        assigns(:location_grouper).should eq(LocationGrouping.none([]))
       end
     end
   end

@@ -55,6 +55,7 @@ class ApplicationController < ActionController::Base
   end
 
   def current_tenant
+    raise ActionController::RoutingError.new('Not Found') unless Tenant.current
     Tenant.current
   end
 

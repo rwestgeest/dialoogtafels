@@ -8,6 +8,10 @@ describe Project do
     it { should validate_presence_of :max_participants_per_table }
     it { should validate_numericality_of :max_participants_per_table }
     it { should validate_presence_of :tenant }
+    it { should validate_presence_of :organizer_confirmation_subject }
+    it { should validate_presence_of :participant_confirmation_subject }
+    it { should validate_presence_of :conversation_leader_confirmation_subject }
+    it { should ensure_inclusion_of(:grouping_strategy).in_array(LocationGrouping::ValidStrategies) }
   end
 
   it_should_behave_like 'a_scoped_object', :project

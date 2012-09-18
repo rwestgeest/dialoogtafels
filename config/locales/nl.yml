@@ -62,6 +62,12 @@ nl:
             conversation_length:
               blank: "je hebt geen lengte van een gesprek ingegeven"
               not_a_number: "de lengte indicatie van een gesprek moet een getal in minuten zijn" 
+            organizer_confirmation_subject:
+              blank: "je hebt geen onderwerp voor de bevestiging van de organisator ingegeven"
+            participant_confirmation_subject:
+              blank: "je hebt geen onderwerp voor de bevestiging van de deelnemer ingegeven"
+            conversation_leader_confirmation_subject:
+              blank: "je hebt geen onderwerp voor de bevestiging van de gespreksleider ingegeven"
         location:
           attributes:
             name:
@@ -185,9 +191,12 @@ nl:
         start_date: "Startdatum en -tijd"
         max_participants_per_table: "Deelnemers per tafel"
         conversation_length: "Duur van een gesprek"
-        organizer_confirmation_text: "Organisator"
-        conversation_leader_confirmation_text: "Gespreksleider"
-        participant_confirmation_text: "Deelnemer"
+        organizer_confirmation_subject: "Onderwerp"
+        conversation_leader_confirmation_subject: "Onderwerp"
+        participant_confirmation_subject: "Onderwerp"
+        organizer_confirmation_text: "Tekst"
+        conversation_leader_confirmation_text: "Tekst"
+        participant_confirmation_text: "Tekst"
       person:
         name: "Naam"
         email: "Email"
@@ -378,6 +387,14 @@ nl:
     free_participants: "Niet ingedeelde deelnemers"
     free_conversation_leaders: "Niet ingedeelde gespreksleiders"
     organizers: "Tafelorganisatoren"
+  location_grouping:
+    morning_group: "'s morgens"
+    afternoon_group: "'s middags"
+    evening_group: "'s avonds"
+    strategies:
+      none: "Niet gegroepeerd"
+      by_day: "Per dag"
+      by_day_part: "Per dagdeel"
   not_authorized: "Je bent niet geautoriseerd voor deze actie"
   registered_at: "Ingeschreven op %{time}"
   as: 'als'

@@ -43,7 +43,7 @@ group :test do
   gem "ZenTest", "~> 4.8.0"
   gem "factory_girl_rails"
 
-  gem "shoulda-matchers", "~> 1.1.0"
+  gem "shoulda-matchers", "~> 1.2.0"
   gem "ammeter", "0.2.5"
 end
 

@@ -6,19 +6,30 @@ describe 'application_controller' do
     def index
       render :text => ''
     end
+    def index_for_tenant
+      current_tenant
+      render :text => ''
+    end
   end
 
   describe MyController do
 
-    describe 'current tenant' do
-      it "is nil by default" do
-        get :index
-        Tenant.current.should == nil
+    describe 'requesting a url' do
+      context "when host is not found as a tenant" do
+        it "current tenant is nil by default" do
+          get :index
+          Tenant.current.should == nil
+        end
+        it "responds with a not found if tenant is needed" do
+          expect { get :index_for_tenant }.to raise_error(ActionController::RoutingError)
+        end
       end
-      it "is found if host is found as host" do
-        current = FactoryGirl.create :tenant, :host => 'test.host'
-        get :index
-        Tenant.current.should == current
+      context "when host is found as a tenant" do
+        it "is found if host is found as host" do
+          current = FactoryGirl.create :tenant, :host => 'test.host'
+          get :index
+          Tenant.current.should == current
+        end
       end
     end
 
