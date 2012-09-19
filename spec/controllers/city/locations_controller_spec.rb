@@ -15,8 +15,9 @@ describe City::LocationsController do
   end
 
   def create_location(attributes = {})
-    FactoryGirl.create :location, attributes
+    @location = FactoryGirl.create :location, attributes
   end
+  attr_reader :location
 
   def index_url(*args)
     city_locations_url(*args)
@@ -72,6 +73,21 @@ describe City::LocationsController do
       get :new, :organizer_id => organizer.to_param
       assigns(:location).organizer.should == organizer
       response.body.should have_selector("input[name='location[organizer_id]'][value='#{ organizer.to_param }']")
+    end
+  end
+
+  describe "GET organizer" do
+    before do  
+      create_location
+      get :organizer, :id => location.to_param 
+    end
+    it "renders the endit organizer action" do
+      response.should render_template :organizer
+      response.body.should have_selector("form[action='#{city_location_path}'][method='post']")
+    end
+    it "redners the organiser selection" do
+      assigns(:organizers).should include(organizer)
+      response.body.should have_selector("select[name='location[organizer_id]']")
     end
   end
 

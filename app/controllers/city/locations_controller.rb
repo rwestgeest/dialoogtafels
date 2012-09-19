@@ -27,6 +27,11 @@ class City::LocationsController < ApplicationController
     render_edit
   end
 
+  def organizer
+    @location = Location.find(params[:id])
+    @organizers = Organizer.all
+  end
+
   def create
     @location = Location.new(params[:location])
 

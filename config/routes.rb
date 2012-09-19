@@ -45,6 +45,7 @@ Tafelmanager2::Application.routes.draw do
       resources :comments, :on => :member, :only => [:index, :show, :create]
       resources :todos, :on => :member, :only => [:index, :update]
       resources :contributors, :on => :member, :only => [:index]
+      get :organizer, :on => :member
     end
     resources :training_registrations, :only => [:show, :update]
     resources :registrations, :only => [:index, :create, :destroy]

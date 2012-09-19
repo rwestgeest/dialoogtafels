@@ -1,0 +1,11 @@
+- title "Wijzig locatie"
+- location_submenu
+= form_for [:city, @location] do |f|
+  .dialog_container
+    .input-container
+      .label= f.label 'organizer_id'
+      .input= f.collection_select 'organizer_id', @organizers, "id", "name"
+    .clear
+  .actions
+    = f.submit "Bijwerken"
+

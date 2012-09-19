@@ -19,6 +19,10 @@ describe City::LocationsController do
       get("/city/locations/1/edit").should route_to("city/locations#edit", :id => "1")
     end
 
+    it "routes to #organizer" do
+      get("/city/locations/1/organizer").should route_to("city/locations#organizer", :id => "1")
+    end
+
     it "routes to #create" do
       post("/city/locations").should route_to("city/locations#create")
     end

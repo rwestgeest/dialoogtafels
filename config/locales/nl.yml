@@ -220,6 +220,7 @@ nl:
         address: "Adres"
         postal_code: "Postcode"
         city: "Plaats"
+        organizer_id: "Kies tafelorganisator"
       location_comment:
         subject: "Onderwerp"
         body: "Boodschap"
@@ -321,6 +322,7 @@ nl:
         comments: "Berichten"
       show: 
         destroy_location: "locatie verwijderen"
+        edit_organizer: "(wijzig)"
     comments:
       new_comment_form:
         all_coordinators: "Coordinatoren"

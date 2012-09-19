@@ -33,10 +33,12 @@ describe ActionGuard, :type => :authorisation do
     it { should authorize(coordinator).to_perform("city/locations#index")  }
     it { should authorize(coordinator).to_perform("city/locations#new")  }
     it { should authorize(coordinator).to_perform("city/locations#create")  }
+    it { should authorize(coordinator).to_perform("city/locations#organizer")  }
 
     it { should_not authorize(organizer).to_perform("city/locations#index")  }
     it { should_not authorize(organizer).to_perform("city/locations#new")  }
     it { should_not authorize(organizer).to_perform("city/locations#create")  }
+    it { should_not authorize(organizer).to_perform("city/locations#organizer")  }
 
     it { should authorize(organizer).to_perform("city/locations#edit")  }
     it { should authorize(organizer).to_perform("city/locations#update")  }

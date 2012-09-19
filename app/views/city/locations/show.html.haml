@@ -6,6 +6,10 @@
                                                            confirm: "Weet je zeker dat je deze locatie wilt verwijderen?. Alle bijbehorende gesprekken en inschrijvingen gaan dan verloren"
 - location_submenu
 
+%h3 
+  Geoorganiseerd door 
+  = @location.organizer.name
+  = guarded_link_to t( ".edit_organizer" ), controller: 'city/locations', action: 'organizer', id: @location.to_param
 %p
   Hieronder zie je de inschrijvingen voor dit dialooggesprek. 
   Deze gespreksleiders en deelnemers zijn nog niet ingedeeld bij een specifieke tafel. 

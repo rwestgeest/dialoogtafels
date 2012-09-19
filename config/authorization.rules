@@ -9,6 +9,7 @@ allow 'city/comments',                      :at_least => :organizer
 allow 'city/locations#index',               :at_least => :coordinator
 allow 'city/locations#new',                 :at_least => :coordinator
 allow 'city/locations#create',              :at_least => :coordinator
+allow 'city/locations#organizer',           :at_least => :coordinator
 allow 'city/locations/projects',            :at_least => :coordinator
 allow 'city/locations',                     :at_least => :organizer
 allow 'city/locations',                     :at_least => :organizer
