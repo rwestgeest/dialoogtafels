@@ -399,7 +399,8 @@ nl:
       none: "Niet gegroepeerd"
       by_day: "Per dag"
       by_day_part: "Per dagdeel"
-  not_authorized: "Je bent niet geautoriseerd voor deze actie"
+  not_authorized: "Oeps! Hier heb je geen rechten voor. Log in en probeer het nog eens."
+  send_along: "Geef je naam en je wachtwoord, en we sturen je door."
   registered_at: "Ingeschreven op %{time}"
   as: 'als'
   back: 'terug'

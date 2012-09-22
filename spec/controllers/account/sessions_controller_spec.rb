@@ -35,6 +35,13 @@ describe Account::SessionsController do
       end
     end
 
+    context "when for (url) is passed" do 
+      it "sets for as hidden input" do
+        get "new", :for => "some_url"
+        response.body.should have_selector("form input#for[type='hidden'][value='some_url']")
+      end
+    end
+
     context "with maintainer type" do
       before { get "new", :maintainer => "maintainer" }
       it "renders the form" do
@@ -129,6 +136,33 @@ describe Account::SessionsController do
 
         it "renders the hidden maintainer field" do
           response.body.should have_selector('form input#maintainer')
+        end
+      end
+    end
+    context "for a url" do
+      let(:for_url) { '/city/locations/10/comments' }
+      def login_for_url(account_credentials, password_override= nil)
+        post 'create', 
+          :for => for_url,
+          :account => {
+            :email => account_credentials.email, 
+            :password => password_override && password_override || account_credentials.password
+        }
+      end
+      before { login_for_url account }
+      it "logs in" do
+        current_account.should == account
+      end 
+      it "should redirect to the url provided" do
+        response.should redirect_to for_url
+      end
+      context "with wrong password" do
+        before { login_for_url account, 'boguspass' }
+
+        it_should_behave_like "a_failed_login"
+
+        it "renders the hidden for field" do
+          response.body.should have_selector("form input#for[type='hidden'][value='#{for_url}']")
         end
       end
     end

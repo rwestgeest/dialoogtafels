@@ -4,6 +4,8 @@
   = errors_for @account
   - if @maintainer_login
     = hidden_field_tag :maintainer, 'maintainer'
+  - if @for
+    = hidden_field_tag :for, @for
   .dialog-container
     .input-container
       .label= f.label :email

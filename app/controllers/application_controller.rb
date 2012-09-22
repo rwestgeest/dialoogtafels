@@ -11,9 +11,14 @@ class ApplicationController < ActionController::Base
 
   def authorize_action
     unless authorized?(current_account, request)
-      flash[:alert] = I18n.t('not_authorized')
-      sign_out
-      redirect_to '/'
+      if current_account.nil?
+        flash[:notice] = I18n.t('send_along')
+        redirect_to login_path(for: request.fullpath)
+      else
+        flash[:alert] = I18n.t('not_authorized')
+        sign_out
+        redirect_to login_path
+      end
     end
   end
 

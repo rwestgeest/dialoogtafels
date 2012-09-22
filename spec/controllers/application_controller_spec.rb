@@ -32,6 +32,9 @@ describe 'application_controller' do
         end
       end
     end
+  end
+
+  describe City::LocationsController do
 
     context "with tenant scope" do
       prepare_scope :tenant
@@ -42,15 +45,28 @@ describe 'application_controller' do
           ActionGuard.stub(:authorized?).and_return false
           get :index
         end
-        it "redirects to root" do
+        it "redirects to login with a message" do
           response.should be_redirect
-          response.should redirect_to '/'
+          response.should redirect_to login_path
+          flash[:alert].should == I18n.t('not_authorized')
         end
         it "signs out" do
           controller.should_not be_signed_in
         end
       end
-
+      describe "not logged in yet for action" do
+        before do
+          ActionGuard.stub(:authorized?).and_return false
+          get :index
+        end
+        it "redirects to login with the url passed to 'for'" do
+          response.should be_redirect
+          response.should redirect_to login_path(for: city_locations_path)
+        end
+        it "should notice that it sends along" do
+          flash[:notice].should == I18n.t('send_along')
+        end
+      end
     end
   end
 end
