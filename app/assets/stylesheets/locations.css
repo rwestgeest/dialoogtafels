@@ -227,6 +227,6 @@ ul.location-todo-list li { margin:0; }
 .list-location .location-data a.image:hover {text-decoration:none; background-color: transparent }
 
 .list-location .location-data span { color: #acacac;}
-.list-location .location-modified-state { width:150px; text-align:right; color: #acacac; }
+.list-location .location-modified-state { width:210px; text-align:right; color: #acacac; }
 .list-location .location-status  { width:150px; }
 .list-location .location-status .progress { color: #acacac; text-align:right; height:1.4em; padding:0 2px; }

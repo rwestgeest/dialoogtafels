@@ -177,12 +177,12 @@ module ApplicationHelper
 
   def created_at(object)
     return '' unless object.created_at
-    "Aangemaakt: " + l(object.created_at, :format => :short)
+    "Aangemaakt: " + l(object.created_at, :format => :human)
   end
 
   def updated_at(object)
     return '' unless object.updated_at
-    "Bijgewerkt: " + l(object.updated_at, :format => :short)
+    "Bijgewerkt: " + l(object.updated_at, :format => :human)
   end
  
   def flash_tag(name, message)

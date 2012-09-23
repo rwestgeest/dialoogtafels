@@ -176,7 +176,7 @@ describe Location do
     end
 
 
-    describe "number_of_tables", focus:true do
+    describe "number_of_tables" do
       let(:location) { FactoryGirl.create :location } 
       subject { location } 
       its(:number_of_tables) { should == 0 }
