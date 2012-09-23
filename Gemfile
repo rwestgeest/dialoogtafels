@@ -9,6 +9,7 @@ gem "action-guard"
 gem "haml-rails"
 gem "rb-readline"
 gem 'jquery-rails'
+gem 'jquery-ui-rails'
 gem 'bcrypt-ruby'
 gem "bluecloth", "~> 2.2.0"
 gem "ancestry", "~> 1.3.0"

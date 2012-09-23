@@ -36,4 +36,8 @@ class Organizer < Contributor
     organizer
   end
 
+  def owns_location?(location_id)
+    locations.exists?(location_id)
+  end
+
 end

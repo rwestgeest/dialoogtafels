@@ -176,6 +176,21 @@ describe Location do
     end
 
 
+    describe "number_of_tables", focus:true do
+      let(:location) { FactoryGirl.create :location } 
+      subject { location } 
+      its(:number_of_tables) { should == 0 }
+      context "with conversations" do
+        let!(:conversation) { FactoryGirl.create :conversation, location: location, number_of_tables: 3 }
+        its(:number_of_tables) { should == conversation.number_of_tables } 
+        it "sums all number of tableses" do
+          conversation2 =  FactoryGirl.create :conversation, location: location, number_of_tables: 4
+          location.number_of_tables.should == conversation.number_of_tables + conversation2.number_of_tables
+        end
+      end
+    end
+
+
     def fillup(conversation, *what_to_fill)
       return unless what_to_fill.include?(:conversation_leaders) || what_to_fill.include?(:participants)
       counters = {}

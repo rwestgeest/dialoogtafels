@@ -26,6 +26,20 @@ describe LocationsController do
     end
   end
 
+  describe "Get map" do
+    before do 
+      create_location
+      get :map, {}
+    end
+
+    it "assigns all published locations locations" do
+      assigns(:locations).should eq([location])
+    end
+    it "renders a map" do
+      response.should render_template(:map)
+    end
+  end
+
   describe "GET participant" do
     before { Location.stub(:availables_for_participants).and_return( [location] ) }
 
@@ -69,6 +83,7 @@ describe LocationsController do
       end
     end
   end
+
 
   describe "GET show" do
     it "assigns the requested location as @location" do

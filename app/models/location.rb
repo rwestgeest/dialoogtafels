@@ -46,10 +46,15 @@ class Location < ApplicationModel
         includes(:conversations, :project).
         where('conversations.id is not null').
         where('conversations.conversation_leader_count < conversations.number_of_tables')
+  
 
   def initialize(attributes = nil, options = {})
     super(attributes, options) 
     self.city ||= Tenant.current && Tenant.current.name 
+  end
+
+  def number_of_tables
+    @number_of_tables ||= conversations.inject(0) { |sum, conversation| sum + conversation.number_of_tables }
   end
 
   def full? 

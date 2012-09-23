@@ -14,15 +14,15 @@ describe City::PublicationsController do
     {:location_id => location.to_param }.merge(request_parameters)
   end
 
-  let(:location) { FactoryGirl.create :location } 
+  let(:location) { FactoryGirl.create :location, :organizer => current_organizer } 
   alias_method :create_location, :location
 
   context "without location" do
-    it {get(:new); should respond_with(404) }
-    it {get(:show); should respond_with(404) }
-    it {get(:edit); should respond_with(404) }
-    it {post(:create); should respond_with(404) }
-    it {put(:update); should respond_with(404) }
+    it {get(:new); should respond_with(302) }
+    it {get(:show); should respond_with(302) }
+    it {get(:edit); should respond_with(302) }
+    it {post(:create); should respond_with(302) }
+    it {put(:update); should respond_with(302) }
   end
   context "with location" do
     describe "GET show" do

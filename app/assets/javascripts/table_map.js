@@ -25,7 +25,7 @@ function TablesMap(city, sites) {
     var marker = new google.maps.Marker({
       position: location,
       map: map,
-      icon: '/images/table-icon.png',
+      icon: '/assets/table-icon.png',
       title: site.location.name
     });
 
@@ -145,8 +145,8 @@ function editableMap(elementIdPrefix) {
 }
 
 function staticMap(city, sites) {
-  $(document).ready(function() {
-    new TablesMap(city, sites)
+  $(function() {
+    new TablesMap(city, sites);
   });
 }
 

@@ -5,6 +5,7 @@ Tafelmanager2::Application.routes.draw do
   resources :locations, :only => [:index, :show] do
     collection { get 'participant' } 
     collection { get 'conversation_leader' } 
+    collection { get 'map' }
   end
 
   namespace :account do

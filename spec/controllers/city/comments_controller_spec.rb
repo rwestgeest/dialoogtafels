@@ -19,9 +19,9 @@ describe City::CommentsController do
   end
 
   context "without supplying a location" do
-    it { xhr(:get, :index); should respond_with(404) }
-    it { xhr(:get, :show); should respond_with(404) }
-    it { xhr(:post, :create, :location_comment => valid_attributes); should respond_with(404) }
+    it { xhr(:get, :index); should respond_with(302) }
+    it { xhr(:get, :show); should respond_with(302) }
+    it { xhr(:post, :create, :location_comment => valid_attributes); should respond_with(302) }
   end
 
   describe "GET 'index'" do

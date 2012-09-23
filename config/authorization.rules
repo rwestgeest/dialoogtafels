@@ -5,13 +5,23 @@ role :conversation_leader, 3
 role :participant, 4
 role :contributor, 5
 allow 'admin',                              :at_least => :maintainer
-allow 'city/comments',                      :at_least => :organizer
+allow 'city/comments',                      :at_least => :organizer do |account, params|
+  account.owns_location?(params[:location_id])
+end
 allow 'city/locations#index',               :at_least => :coordinator
 allow 'city/locations#new',                 :at_least => :coordinator
 allow 'city/locations#create',              :at_least => :coordinator
 allow 'city/locations#organizer',           :at_least => :coordinator
 allow 'city/locations/projects',            :at_least => :coordinator
-allow 'city/locations',                     :at_least => :organizer
+allow 'city/locations#edit',                :at_least => :organizer do |account, params|
+  account.owns_location?(params[:id])
+end
+allow 'city/locations#update',                :at_least => :organizer do |account, params|
+  account.owns_location?(params[:id])
+end
+allow 'city/locations#show',                :at_least => :organizer do |account, params|
+  account.owns_location?(params[:id])
+end
 allow 'city/locations',                     :at_least => :organizer
 allow 'city/people',                        :at_least => :coordinator
 allow 'city/projects',                      :at_least => :coordinator
@@ -22,7 +32,10 @@ allow 'city/training_types',                :at_least => :coordinator
 allow 'city/training_registrations',        :at_least => :coordinator
 allow 'city/training_invitations',          :at_least => :coordinator
 allow 'conversations',                      :at_least => :organizer
-allow 'city/publications',                  :at_least => :organizer
+allow 'city/publications',                  :at_least => :organizer do |account, params|
+  account.owns_location?(params[:location_id])
+end
+
 allow 'organizer',                          :only_by =>  :organizer
 allow 'contributor/registration',           :at_least => :participant,        :at_most => :conversation_leader
 allow 'contributor/profile',                :at_least => :participant,        :at_most => :coordinator

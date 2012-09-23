@@ -40,12 +40,26 @@ describe ActionGuard, :type => :authorisation do
     it { should_not authorize(organizer).to_perform("city/locations#create")  }
     it { should_not authorize(organizer).to_perform("city/locations#organizer")  }
 
-    it { should authorize(organizer).to_perform("city/locations#edit")  }
-    it { should authorize(organizer).to_perform("city/locations#update")  }
 
     it { should_not authorize(conversation_leader).to_perform("city/locations#index")  }
     it { should_not authorize(conversation_leader).to_perform("city/locations#edit")  }
     it { should_not authorize(conversation_leader).to_perform("city/locations#update")  }
+  end
+
+  describe "city/locations" do
+    it { should authorize(coordinator).to_perform("city/locations#show")  }
+    context "when table does not belong to organizer" do
+      let(:location) { FactoryGirl.create :location }
+      it { should_not authorize(organizer).to_perform("city/locations#show", :id => location.id.to_s) } 
+      it { should_not authorize(organizer).to_perform("city/locations#edit", :id => location.id.to_s)  }
+      it { should_not authorize(organizer).to_perform("city/locations#update", :id => location.id.to_s) }
+    end
+    context "when table belongs to organizer" do
+      let(:location) { FactoryGirl.create :location, organizer: organizer.highest_contribution }
+      it { should authorize(organizer).to_perform("city/locations#show", :id => location.id.to_s) } 
+      it { should authorize(organizer).to_perform("city/locations#edit", :id => location.id.to_s)  }
+      it { should authorize(organizer).to_perform("city/locations#update", :id => location.id.to_s) }
+    end
   end
 
   describe "settings" do
@@ -94,11 +108,20 @@ describe ActionGuard, :type => :authorisation do
   end
 
   describe "city/comments" do
-    %w{maintainer coordinator organizer}.each do |role|  
+    %w{maintainer coordinator}.each do |role|  
       it { should authorize(account_for(role)).to_perform("city/comments") } 
     end
     %w{conversation_leader participant}.each do |role|  
       it { should_not authorize(account_for(role)).to_perform("city/comments") } 
+    end
+
+    context "when location does not belong to organizer" do
+      let(:location) { FactoryGirl.create :location }
+      it { should_not authorize(organizer).to_perform("city/comments", :location_id => location.id.to_s) } 
+    end
+    context "when location belongs to organizer" do
+      let(:location) { FactoryGirl.create :location, organizer: organizer.highest_contribution }
+      it { should authorize(organizer).to_perform("city/comments", :location_id => location.id.to_s) } 
     end
   end
 
@@ -138,10 +161,17 @@ describe ActionGuard, :type => :authorisation do
 
   describe "city/publications" do
     it { should authorize(maintainer).to_perform("city/publications") }
-    it { should authorize(organizer).to_perform("city/publications") }
     it { should authorize(coordinator).to_perform("city/publications") }
     it { should_not authorize(conversation_leader).to_perform("city/publications") }
     it { should_not authorize(participant).to_perform("city/publications") }
+    context "when location does not belong to organizer" do
+      let(:location) { FactoryGirl.create :location }
+      it { should_not authorize(organizer).to_perform("city/publications", :location_id => location.id.to_s) } 
+    end
+    context "when location belongs to organizer" do
+      let(:location) { FactoryGirl.create :location, organizer: organizer.highest_contribution }
+      it { should authorize(organizer).to_perform("city/publications", :location_id => location.id.to_s) } 
+    end
   end
 
   describe "contributor/registration" do

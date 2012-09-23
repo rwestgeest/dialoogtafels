@@ -1,0 +1,4 @@
+= javascript_include_tag "http://maps.google.com/maps/api/js?sensor=false"
+= javascript_tag "staticMap('#{current_tenant.url_code}', #{location_structs(@locations)});"
+%div(id='map_canvas' style='width:100%; height:400px;')
+

@@ -7,6 +7,10 @@ describe LocationsController do
       get("/locations").should route_to("locations#index")
     end
 
+    it "routes to #map" do
+      get("/locations/map").should route_to("locations#map")
+    end
+
     it "routes to #index for participants" do
       get("/locations/participant").should route_to("locations#participant")
     end

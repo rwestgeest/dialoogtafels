@@ -70,6 +70,10 @@ class Account < ActiveRecord::Base
     return super
   end
 
+  def owns_location?(location_id)
+    %w{ maintainer coordinator }.include?(role) || highest_contribution.owns_location?(location_id)
+  end
+
   def landing_page
     return '/account/password/edit' if !confirmed? || reset?
     return '/city/locations' if role == Account::Coordinator

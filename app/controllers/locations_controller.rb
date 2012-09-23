@@ -3,6 +3,10 @@ class LocationsController < PublicController
     @location_grouper = LocationGrouping.group_by(active_project.grouping_strategy, Location.publisheds)
   end
 
+  def map
+    @locations = Location.publisheds(include: :conversations)
+  end
+
   def participant
     @location_grouper = LocationGrouping.group_by(active_project.grouping_strategy, Location.availables_for_participants)
   end
