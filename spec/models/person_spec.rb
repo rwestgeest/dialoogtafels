@@ -218,6 +218,10 @@ describe Person do
           person.should be_registered_for_training(training_id)
         end
 
+        it "increases the trainings participant count" do
+          expect { person.register_for(training_id) }.to change { training.reload; training.participant_count}.by(1)
+        end
+
         it "creates a registration instance " do
           expect { 
             person.register_for(training_id)

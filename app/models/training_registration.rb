@@ -2,7 +2,7 @@ class TrainingRegistration < ActiveRecord::Base
   include ScopedModel
   scope_to_tenant
   
-  belongs_to :training
+  belongs_to :training, :counter_cache => :participant_count
   belongs_to :attendee, :class_name => 'Person'
 
   validates_presence_of :training
