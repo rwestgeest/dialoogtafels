@@ -44,6 +44,42 @@ describe ApplicationHelper do
       end
     end
   end
+
+  describe "training_registration_tags", focus:true do
+    prepare_scope :tenant
+    let(:attendee)       { Person.new }
+    let(:training_type)  { FactoryGirl.create :training_type }
+    let(:training_types) {[training_type]} 
+    subject {  training_registration_tags training_types, attendee, 'dont_register' }
+
+    context "without trainings planned" do
+      it { should_not have_row_for_training_type(training_type) }
+    end
+
+    context "with trainings planned" do
+      let!(:first_training) { FactoryGirl.create :training, training_type: training_type }
+      it { should have_row_for_training_type(training_type) }
+      it { should have_a_choice_for(first_training) }
+
+      context "when a training is full" do
+        let!(:full_training) { FactoryGirl.create :training, training_type: training_type, max_participants: 0 }
+        it { should_not have_a_choice_for(full_training) }
+      end
+
+      context "when all are full" do
+        before { first_training.update_attribute :max_participants, 0 } 
+        it { should_not have_row_for_training_type(training_type) }
+      end
+    end
+
+    def have_a_choice_for(training)
+      have_selector("input[type='radio'][id='training_registrations_#{training.training_type_id}_#{training.to_param}']")
+    end
+    def have_row_for_training_type(training_type)
+      have_selector("#list-training-#{training_type.to_param}") 
+    end
+  end
+
   include Menu::RequestParams
   describe 'aspect_link' do
     def link_to(*args) 

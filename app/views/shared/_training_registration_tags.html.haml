@@ -1,18 +1,19 @@
-%table{ id: "list-training-#{training_type.id}", class: 'list-training' }
-  %tr
-    %td.training-data
-      %h3= training_type.name
-      = markup(training_type.description)
-      %ul.nobullets
-        %li
-          = radio_button_tag("training_registrations[#{training_type.to_param}]", 0, true)
-          = dont_register_message 
-          = training_type.name.downcase
-        - training_type.trainings.availables.each do |training|
-          %li{:id => "training_#{training.id}"}
-            = radio_button_tag("training_registrations[#{training_type.to_param}]", training.to_param, attendee.registered_for_training?(training.to_param))
-            = time_period(training)
-            bij
-            = training.location
+-unless training_type.available_trainings.empty?
+  %table{ id: "list-training-#{training_type.id}", class: 'list-training' }
+    %tr
+      %td.training-data
+        %h3= training_type.name
+        = markup(training_type.description)
+        %ul.nobullets
+          %li
+            = radio_button_tag("training_registrations[#{training_type.to_param}]", 0, true)
+            = dont_register_message 
+            = training_type.name.downcase
+          - training_type.trainings.availables.each do |training|
+            %li{:id => "training_#{training.id}"}
+              = radio_button_tag("training_registrations[#{training_type.to_param}]", training.to_param, attendee.registered_for_training?(training.to_param))
+              = time_period(training)
+              bij
+              = training.location
 
 

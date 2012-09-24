@@ -10,6 +10,10 @@ class TrainingType < ActiveRecord::Base
   validates_presence_of :name
   validates_presence_of :project
 
+  def available_trainings
+    trainings.availables
+  end
+
   private
   def associate_to_active_project
     self.project = tenant.active_project if tenant.present?
