@@ -10,8 +10,8 @@ class TrainingType < ActiveRecord::Base
   validates_presence_of :name
   validates_presence_of :project
 
-  def available_trainings
-    trainings.availables
+  def available_trainings(person)
+    trainings.availables(person)
   end
 
   private

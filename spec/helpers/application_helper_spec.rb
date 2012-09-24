@@ -47,7 +47,7 @@ describe ApplicationHelper do
 
   describe "training_registration_tags", focus:true do
     prepare_scope :tenant
-    let(:attendee)       { Person.new }
+    let(:attendee)       { FactoryGirl.create :person }
     let(:training_type)  { FactoryGirl.create :training_type }
     let(:training_types) {[training_type]} 
     subject {  training_registration_tags training_types, attendee, 'dont_register' }
@@ -64,6 +64,11 @@ describe ApplicationHelper do
       context "when a training is full" do
         let!(:full_training) { FactoryGirl.create :training, training_type: training_type, max_participants: 0 }
         it { should_not have_a_choice_for(full_training) }
+
+        context "but the attendee has registered for it" do
+          before { attendee.register_for(full_training) } 
+          it { should have_a_choice_for(full_training) }
+        end
       end
 
       context "when all are full" do
