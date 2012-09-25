@@ -45,7 +45,7 @@ describe ApplicationHelper do
     end
   end
 
-  describe "training_registration_tags", focus:true do
+  describe "training_registration_tags" do
     prepare_scope :tenant
     let(:attendee)       { FactoryGirl.create :person }
     let(:training_type)  { FactoryGirl.create :training_type }

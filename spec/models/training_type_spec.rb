@@ -14,12 +14,17 @@ describe TrainingType  do
       end
     end
 
-    describe "available_trainings", focus:true do
+
+    describe "available_trainings" do
       let(:person) { FactoryGirl.create :person } 
       let(:training_type) { FactoryGirl.create :training_type } 
 
       it "is empty by default" do
         training_type.available_trainings(person).should be_empty
+      end
+
+      it "may be called with a new person" do
+        training_type.available_trainings(Person.new).should be_empty
       end
 
       context "when a training is present" do

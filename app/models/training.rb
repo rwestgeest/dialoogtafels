@@ -19,7 +19,13 @@ class Training < ActiveRecord::Base
   include ScopedModel
   scope_to_tenant
 
-  scope :availables, lambda { |person| includes(:training_registrations).where("participant_count < max_participants or training_registrations.attendee_id == #{person.id}") }
+  scope :availables, lambda { |person| 
+    if person.new_record?
+      where("participant_count < max_participants") 
+    else
+      includes(:training_registrations).where("participant_count < max_participants or training_registrations.attendee_id == #{person.id}") 
+    end
+  }
 
   delegate :project, to: :training_type
   delegate :name, to: :training_type
