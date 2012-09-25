@@ -7,7 +7,7 @@ class Project < ActiveRecord::Base
                   :start_date, :start_time, :organizer_confirmation_text, 
                   :participant_confirmation_text, :conversation_leader_confirmation_text, 
                   :organizer_confirmation_subject, :participant_confirmation_subject, :conversation_leader_confirmation_subject,
-                  :grouping_strategy
+                  :grouping_strategy, :obligatory_training_registration
 
   validates :name, :presence => true
   validates :organizer_confirmation_subject, :presence => true

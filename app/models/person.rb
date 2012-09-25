@@ -60,7 +60,7 @@ class Person < ActiveRecord::Base
   has_many :organized_locations, through: :organizers, source: :locations
   has_many :participants
   has_many :conversation_leaders
-  has_many :training_registrations, :foreign_key => :attendee_id, :include => :training, :dependent => :destroy, :autosave => true
+  has_many :training_registrations, :foreign_key => :attendee_id, inverse_of: :attendee, :include => :training, :dependent => :destroy, :autosave => true
   has_many :trainings, :through => :training_registrations
   has_many :profile_field_values, include: :profile_field, inverse_of: :person, autosave: true, dependent: :destroy
   has_many :conversations_participating_in_as_leader, through: :conversation_leaders, source: :conversation
@@ -70,6 +70,7 @@ class Person < ActiveRecord::Base
   validates :email, :presence => true, :format => EMAIL_REGEXP
   validates :name, :presence => true
   validates :telephone, :presence => true
+  validates :training_registrations, presence: { if: :validate_training_registrations? }
 
   attr_protected :tenant_id
 
@@ -129,6 +130,10 @@ class Person < ActiveRecord::Base
     training_ids.each {|training_id| register_for(training_id) }
   end
 
+  def build_training_registrations(training_ids)
+    training_ids.each {|training_id| training_registrations.build(training_id: training_id) if Training.exists?(training_id) }
+  end
+
   def register_for training
     begin 
       return register_for Training.find(training) unless training.is_a? Training
@@ -167,6 +172,14 @@ class Person < ActiveRecord::Base
     self.account = TenantAccount.contributor(self) unless account
     self.account.email = email
   end
+
+  def validate_training_registrations
+    @validate_training_registrations = true
+  end
+  def validate_training_registrations?
+    @validate_training_registrations
+  end
+
 
   private 
   def email_present?

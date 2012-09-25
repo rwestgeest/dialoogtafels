@@ -5,9 +5,14 @@ describe Registration::ConversationLeadersController do
   prepare_scope :tenant
 
   let!(:conversation) { FactoryGirl.create :conversation }
+  let!(:training) { FactoryGirl.create :training }
 
   def valid_attributes(overrides = {})
     @valid_attributes ||= FactoryGirl.attributes_for(:person).merge(overrides).stringify_keys
+  end
+
+  def valid_trainings_parameter
+    { training.training_type_id.to_s => training.to_param }
   end
 
   shared_examples_for "a_conversation_leader_registration_form" do
@@ -83,10 +88,15 @@ describe Registration::ConversationLeadersController do
       end
 
       describe "when training registrations provided" do
-        let!(:training) { FactoryGirl.create :training }
         it "creates a training registration" do
           expect { 
             do_post( training_registrations: { training.training_type_id => training.to_param })  
+          }.to change(TrainingRegistration, :count).by(1)
+        end
+
+        it "skips the null ones" do
+          expect { 
+            do_post( training_registrations: { training.training_type_id => training.to_param, "123123123" => "0" })  
           }.to change(TrainingRegistration, :count).by(1)
         end
       end
@@ -178,6 +188,15 @@ describe Registration::ConversationLeadersController do
         def do_post(additional_parameters = {})
           # Trigger the behavior that occurs when invalid params are submitted
           Person.any_instance.stub(:save).and_return(false)
+          post :create, {:person => valid_attributes, :conversation_id => conversation.to_param}
+        end
+      end
+    end
+
+    describe "without training_registrations when obligatory" do
+      it_should_behave_like "a_failing_conversation_leader_registration" do
+        def do_post(additional_parameters = {}) 
+          Project.any_instance.stub(:obligatory_training_registration).and_return true 
           post :create, {:person => valid_attributes, :conversation_id => conversation.to_param}
         end
       end

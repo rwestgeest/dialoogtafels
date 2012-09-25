@@ -18,6 +18,8 @@ class Registration::ConversationLeadersController < PublicController
       return
     end
 
+    @person.validate_training_registrations if active_project.obligatory_training_registration
+    @person.build_training_registrations(training_registrations)
     if @person.save
       ConversationLeaderAmbition.create person: @person
       if conversation
@@ -27,7 +29,6 @@ class Registration::ConversationLeadersController < PublicController
         Messenger.new_conversation_leader_ambition(@person)
       end
 
-      @person.replace_training_registrations(training_registrations)
       sign_in @person.account
       redirect_to confirm_registration_conversation_leaders_path, notice: I18n.t('registration.conversation_leaders.welcome')
     else

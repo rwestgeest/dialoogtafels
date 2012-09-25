@@ -45,6 +45,7 @@ module Factories
       start_date Date.tomorrow
       start_time Time.now
       conversation_length 180
+      obligatory_training_registration false
     end
 
     factory :person do

@@ -25,6 +25,14 @@
     .clear
 
   .dialog-container
+    %h3 Training registratie
+    .input-container
+      .label 
+      .input
+        = f.check_box :obligatory_training_registration
+        = f.label :obligatory_training_registration
+
+  .dialog-container
     %h3 Groepering van locaties in de etalage
     .input-container
       .label= f.label :grouping_strategy

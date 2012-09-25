@@ -118,6 +118,8 @@ nl:
               blank: "je hebt geen naam ingegeven"
             telephone:
               blank: "je hebt geen telefoon opgegeven"
+            training_registrations:
+              blank: "je hebt geen gespreksleiderstraining opgegeven" 
         participant:
           attributes:
             email:
@@ -196,6 +198,7 @@ nl:
         organizer_confirmation_text: "Tekst"
         conversation_leader_confirmation_text: "Tekst"
         participant_confirmation_text: "Tekst"
+        obligatory_training_registration: "Verplicht voor gespreksleiders"
       person:
         name: "Naam"
         email: "Email"

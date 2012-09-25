@@ -11,6 +11,25 @@ describe Person do
     it {should validate_presence_of :telephone }
     it {should validate_presence_of :name }
     it {should validate_presence_of :email }
+
+    it { should_not validate_presence_of :training_registrations  }
+    context "when needs to validate training_presence" do
+      let(:person) { FactoryGirl.build :person  }
+      before { person.validate_training_registrations }
+
+      it "should validate training_registrations"  do
+        person.should validate_presence_of :training_registrations
+      end
+
+      it "cannot save a person without training registrations" do
+        person.save.should be_false
+      end
+
+      it "can save a person with training registrations" do
+        person.build_training_registrations([FactoryGirl.create(:training).to_param])
+        person.save.should be_true
+      end
+    end
   end
 
   context "with current tenant" do 
