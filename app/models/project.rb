@@ -1,3 +1,4 @@
+
 class Project < ActiveRecord::Base
   include Schedulable
   include ScopedModel
@@ -7,7 +8,8 @@ class Project < ActiveRecord::Base
                   :start_date, :start_time, :organizer_confirmation_text, 
                   :participant_confirmation_text, :conversation_leader_confirmation_text, 
                   :organizer_confirmation_subject, :participant_confirmation_subject, :conversation_leader_confirmation_subject,
-                  :grouping_strategy, :obligatory_training_registration
+                  :grouping_strategy, :obligatory_training_registration,
+                  :cc_type, :cc_address_list
 
   validates :name, :presence => true
   validates :organizer_confirmation_subject, :presence => true
@@ -23,6 +25,11 @@ class Project < ActiveRecord::Base
 
   validates :grouping_strategy,
     :inclusion => { :in => LocationGrouping::ValidStrategies }
+
+  composed_of :mailer, class_name: 'ProjectMailer', mapping: [ 
+          %w{cc_type cc_type}, 
+          %w{cc_address_list address_list}
+  ]
 
   has_many :location_todos, :inverse_of => :project
   has_many :locations
@@ -42,6 +49,10 @@ class Project < ActiveRecord::Base
 
   def location_count
     locations.count
+  end
+
+  def mailer_on(wrapped_mailer)
+    mailer.on(wrapped_mailer)
   end
 
 end

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120925123046) do
+ActiveRecord::Schema.define(:version => 20120926152654) do
 
   create_table "accounts", :force => true do |t|
     t.string   "email",                :limit => 150,                      :null => false
@@ -163,20 +163,22 @@ ActiveRecord::Schema.define(:version => 20120925123046) do
   create_table "projects", :force => true do |t|
     t.string   "name"
     t.integer  "tenant_id"
-    t.datetime "created_at",                                                                                                                                                :null => false
-    t.datetime "updated_at",                                                                                                                                                :null => false
+    t.datetime "created_at",                                                                                                                                                                                                :null => false
+    t.datetime "updated_at",                                                                                                                                                                                                :null => false
     t.integer  "conversation_length",                      :default => 180
     t.datetime "start_time"
     t.integer  "max_participants_per_table",               :default => 8
     t.boolean  "trainings_on_form",                        :default => true
-    t.text     "organizer_confirmation_text",              :default => "'''''''Welkom,\n\nDankje voor je aanmelding als tafelorganistor aan de dag van de dialoog.'''''''"
-    t.text     "participant_confirmation_text",            :default => "'''''''Welkom,\n\nDankje voor je aanmelding als deelnemer aan de dag van de dialoog.'''''''"
-    t.text     "conversation_leader_confirmation_text",    :default => "'''''''Welkom,\n\nDankje voor je aanmelding als gespreksleider aan de dag van de dialoog.'''''''"
-    t.string   "grouping_strategy",                        :default => "none",                                                                                              :null => false
-    t.string   "organizer_confirmation_subject",           :default => "Welkom bij dialoogtafels - er is een account voor je aangemaakt",                                   :null => false
-    t.string   "participant_confirmation_subject",         :default => "Welkom bij dialoogtafels",                                                                          :null => false
-    t.string   "conversation_leader_confirmation_subject", :default => "Welkom bij dialoogtafels",                                                                          :null => false
+    t.text     "organizer_confirmation_text",              :default => "'''''''''''''''''''''''''''''''Welkom,\n\nDankje voor je aanmelding als tafelorganistor aan de dag van de dialoog.'''''''''''''''''''''''''''''''"
+    t.text     "participant_confirmation_text",            :default => "'''''''''''''''''''''''''''''''Welkom,\n\nDankje voor je aanmelding als deelnemer aan de dag van de dialoog.'''''''''''''''''''''''''''''''"
+    t.text     "conversation_leader_confirmation_text",    :default => "'''''''''''''''''''''''''''''''Welkom,\n\nDankje voor je aanmelding als gespreksleider aan de dag van de dialoog.'''''''''''''''''''''''''''''''"
+    t.string   "grouping_strategy",                        :default => "none",                                                                                                                                              :null => false
+    t.string   "organizer_confirmation_subject",           :default => "Welkom bij dialoogtafels - er is een account voor je aangemaakt",                                                                                   :null => false
+    t.string   "participant_confirmation_subject",         :default => "Welkom bij dialoogtafels",                                                                                                                          :null => false
+    t.string   "conversation_leader_confirmation_subject", :default => "Welkom bij dialoogtafels",                                                                                                                          :null => false
     t.boolean  "obligatory_training_registration",         :default => false
+    t.string   "cc_address_list"
+    t.string   "cc_type",                                  :default => "none",                                                                                                                                              :null => false
   end
 
   create_table "tenants", :force => true do |t|
