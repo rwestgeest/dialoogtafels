@@ -48,9 +48,16 @@ describe Person do
 
     describe "destroyed" do
       let!(:person) { FactoryGirl.create :person }
+
       it "destroys the person" do
         expect { person.destroy}.to change(Person, :count).by(-1)
       end
+
+      it "destroys the acccount" do 
+        expect { person.destroy }.to change(Account, :count).by(-1) 
+      end
+
+
       context "with a training registration" do
         before { person.register_for(FactoryGirl.create(:training).id) }
         it "removes the registration" do
@@ -72,14 +79,14 @@ describe Person do
       context "with a registration" do
         before { FactoryGirl.create :conversation_leader, :person => person }
         it "removes the registration" do
-          expect { person.destroy }.to change(Contributor, :count).by(-1)
+          expect { person.destroy }.to change(ConversationLeader, :count).by(-1)
         end
       end
 
       context "with a organizer" do
         let!(:organizer) { FactoryGirl.create :organizer, :person => person } 
-        it "removes the registration" do
-          expect { person.destroy }.to change(Contributor, :count).by(-1)
+        it "removes the organizer" do
+          expect { person.destroy }.to change(Organizer, :count).by(-1)
         end
         context "and an organized location" do
           before { FactoryGirl.create :location, :organizer => organizer } 

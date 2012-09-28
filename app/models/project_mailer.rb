@@ -7,6 +7,9 @@ class ProjectMailer
   NoCcList = 'none'
   CcList = 'cc'
   BccList = 'bcc'
+
+  ValidTypes = [NoCcList, CcList, BccList]
+
   attr_reader :cc_type, :addresses, :mailer
 
   def initialize(cc_type, addresses, mailer = NullMailer.new)

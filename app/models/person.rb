@@ -54,7 +54,7 @@ class Person < ActiveRecord::Base
   include ProfileFields
 
   scope_to_tenant
-  has_one :account, inverse_of: :person
+  has_one :account, inverse_of: :person, :dependent => :destroy
   has_many :contributors, dependent: :destroy
   has_many :organizers
   has_many :organized_locations, through: :organizers, source: :locations

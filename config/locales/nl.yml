@@ -385,6 +385,12 @@ nl:
     side_bar:
       project: "Projectinstellingen"
       profile_fields: "profielvelden"
+    project:
+      mailer:
+        types:
+          none: 'geen cc of bcc'
+          cc:  'adressen op cc lijst'
+          bcc:  'adressen op bcc lijst'
   location_comment:
     reaction_to: "Reactie op '%{subject}'"
   people_filter_label:
