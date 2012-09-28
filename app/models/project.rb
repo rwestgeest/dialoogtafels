@@ -32,7 +32,7 @@ class Project < ActiveRecord::Base
   ]
 
   has_many :location_todos, :inverse_of => :project
-  has_many :locations
+  has_many :locations, :order => 'locations.name'
 
   def initialize(*attrs) 
     super(*attrs)

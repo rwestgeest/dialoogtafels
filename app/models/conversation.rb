@@ -22,11 +22,16 @@ class Conversation < ActiveRecord::Base
   scope :fulls, includes(:location => :project)
                 .where("(conversations.conversation_leader_count >= conversations.number_of_tables) and (conversations.participant_count >= (number_of_tables * projects.max_participants_per_table))")
 
+
   def initialize(*args)
     super(*args)
     write_attribute(:start_time, location && location.start_time) unless start_time
     write_attribute(:end_time, start_time && start_time + default_length.minutes) unless end_time
   end 
+
+  def self.total_number_of_tables
+    sum(:number_of_tables)
+  end
 
   delegate :organizer, to: :location
 

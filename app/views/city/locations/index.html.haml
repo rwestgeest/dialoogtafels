@@ -5,6 +5,14 @@
 - if (@locations.empty?)
   = link_to "Maak je eerste dialoog locatie aan", new_city_location_path
 - else
+  .right
+    Op
+    = Location.count
+    locaties worden 
+    = Conversation.count
+    gesprekken over 
+    = Conversation.total_number_of_tables 
+    tafels georganiseerd. 
   = render :partial => 'location', :collection => @locations
 .clear
 

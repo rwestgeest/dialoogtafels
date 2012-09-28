@@ -82,6 +82,15 @@ describe Conversation do
         end
       end
     end
+    describe "total_number_of_tables" do
+      before {  FactoryGirl.create :conversation, number_of_tables: 3 }
+      it "is the number of tables of one conversation" do
+        Conversation.total_number_of_tables.should == 3
+      end
+      it "sums all number of tables for more conversations" do
+        FactoryGirl.create :conversation, number_of_tables: 4
+        Conversation.total_number_of_tables.should == 7
+      end
+    end
   end
-
 end
