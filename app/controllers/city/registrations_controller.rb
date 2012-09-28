@@ -4,8 +4,8 @@ class City::RegistrationsController < ApplicationController
     begin 
       @people = Person.order('name')
       # @people = Person.organizers_for(active_project).order(:name)
-      @person = Person.find(params[:person_id])
-      @active_contributions = @person.conversation_contributions_for(active_project)
+      @selected_person = Person.find(params[:person_id])
+      @active_contributions = @selected_person.conversation_contributions_for(active_project)
       render_index
     rescue ActiveRecord::RecordNotFound
       respond_to do |format|
@@ -21,13 +21,13 @@ class City::RegistrationsController < ApplicationController
 
   def create
     begin
-      @person = Person.find(params[:person_id])
+      @selected_person = Person.find(params[:person_id])
       contributor = contributor_class.new :conversation_id => params[:conversation_id] 
-      contributor.person = @person
+      contributor.person = @selected_person
       contributor.project = active_project
       contributor.save!
       @location = contributor.conversation.location
-      @active_contributions = @person.conversation_contributions_for(active_project)
+      @active_contributions = @selected_person.conversation_contributions_for(active_project)
       render :action => 'create'
     rescue ActiveRecord::RecordNotFound => e
       logger.warn e
@@ -44,9 +44,9 @@ class City::RegistrationsController < ApplicationController
   def destroy
     begin
     contributor = Contributor.find(params[:id])
-    @person = contributor.person
+    @selected_person = contributor.person
     @location = contributor.conversation.location
-    @active_contributions = @person.conversation_contributions_for(active_project)
+    @active_contributions = @selected_person.conversation_contributions_for(active_project)
     contributor.destroy
     render :action => 'create'
     rescue ActiveRecord::RecordNotFound
@@ -60,7 +60,7 @@ class City::RegistrationsController < ApplicationController
     params[:contribution].camelize.constantize
   end
   def render_index
-    @active_contributions = @person.conversation_contributions_for(active_project)
+    @active_contributions = @selected_person.conversation_contributions_for(active_project)
     @available_locations = Location.all
     render :action => 'index'
   end

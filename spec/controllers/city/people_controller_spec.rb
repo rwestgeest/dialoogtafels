@@ -17,14 +17,22 @@ describe City::PeopleController do
   describe "XHR GET 'index'" do
 
     before { create_person }
+    def index(additional_params = {})
+      xhr :get, 'index', {person_template: 'city/registrations/person'}.merge(additional_params)
+    end
     it "assigns the people" do
-      xhr :get, 'index'
+      index
       assigns(:people).should include person
+    end
+
+    it "renders the passed person template" do
+      index 
+      response.should render_template 'city/registrations/_person'
     end
 
     context "when called with filter" do
       it "returns the filtered people" do
-        xhr :get, 'index', :people_filter => 'all'
+        index :people_filter => 'all'
         assigns(:people).should include person
       end
     end
@@ -34,7 +42,7 @@ describe City::PeopleController do
     before do 
       create_profile_field
       create_person
-      xhr :get, 'edit', :id => person.to_param
+      xhr :get, 'edit', id: person.to_param, person_template: 'city/registrations/person'
     end
     it "assigns the person" do
       assigns(:person).should == person
@@ -52,12 +60,12 @@ describe City::PeopleController do
     before {create_person}
     context "with valid params" do
       def update 
-        xhr :put, 'update', :id => person.to_param, :person => valid_parameters
+        xhr :put, 'update', id: person.to_param, person: valid_parameters, person_template: 'city/registrations/person'
       end
-      it "redirects to the accounts landing page" do
+      it "renders the person list again" do
         update
         response.should render_template "update"
-        response.should render_template "shared/_person"
+        response.should render_template "city/registrations/_person"
       end
       it "updates the profile" do
         update

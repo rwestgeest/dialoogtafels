@@ -1,1 +1,1 @@
-$('#people_list').html( '<%= escape_javascript(render(partial: 'index')) %>' );
+$('#people_list').html( '<%= escape_javascript(render(partial: 'index', locals: { person_template: @person_template })) %>' );

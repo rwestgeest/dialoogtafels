@@ -1,7 +1,7 @@
 %div#dialog-form
-- title "Deelnamen voor #{@person.name}"
+- title "Deelnamen voor #{@selected_person.name}"
 - page_side_bar 'side_bar'
 %table.columns-layout{id: 'conversations'}
 #conversations
-  = render :partial => 'index', locals: {available_locations: @available_locations, person: @person}
+  = render :partial => 'index', locals: {available_locations: @available_locations, person: @selected_person}
 .clear

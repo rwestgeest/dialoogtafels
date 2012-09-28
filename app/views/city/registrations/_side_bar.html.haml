@@ -2,9 +2,10 @@
 
 %p
   = form_tag city_people_path, :method => :get, :remote => true, :id => 'filter_form' do 
+    = hidden_field_tag :person_template, 'city/registrations/person'
     = label_tag 'Filter lijst'
     = select_tag :people_filter, options_for_select(people_filters_for_select)
 
 %div#people_list
-  = render partial: 'city/people/index' 
+  = render partial: 'city/people/index', locals: { person_template: 'city/registrations/person' }
 

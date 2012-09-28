@@ -1,5 +1,6 @@
 = form_for [:city, person], :remote => true do |f|
   = errors_for person
+  = hidden_field_tag :person_template, @person_template
   .dialog-container
     .input-container
       .label= f.label :name

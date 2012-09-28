@@ -25,6 +25,10 @@ describe City::RegistrationsController do
         response.should be_success
         response.body.should include(I18n.t("city.registrations.index.select_attendee"))
       end
+      it "renders the people selection form" do
+        response.body.should have_selector("form[action='#{city_people_path}']")
+        response.body.should have_selector("form input[type='hidden'][name='person_template'][value='city/registrations/person']")
+      end
     end
 
     context "with person as attendee parameter" do
@@ -33,8 +37,8 @@ describe City::RegistrationsController do
         get :index , :person_id => person.to_param
       end
 
-      it "assigns the person and locations" do
-        assigns(:person).should == person
+      it "assigns the selected_person and locations" do
+        assigns(:selected_person).should == person
         assigns(:active_contributions).should == [conversation_leader]
         assigns(:available_locations).should == [location]
       end
@@ -42,6 +46,10 @@ describe City::RegistrationsController do
       it "renders conversations" do
         response.should be_success
         response.body.should have_selector("#available_conversation_#{conversation.id}")
+      end
+
+      it "renders the person" do
+        response.body.should have_selector("li#person_#{person.to_param}")
       end
     end
   end
@@ -62,8 +70,8 @@ describe City::RegistrationsController do
         xhr :get, :index , :person_id => person.to_param
       end
 
-      it "assigns the person and locations" do
-        assigns(:person).should == person
+      it "assigns the selected_person and locations" do
+        assigns(:selected_person).should == person
         assigns(:active_contributions).should == [conversation_leader]
         assigns(:available_locations).should == [location]
       end
@@ -112,7 +120,7 @@ describe City::RegistrationsController do
 
       it "assigns the person" do
         do_post
-        assigns(:person).should == person
+        assigns(:selected_person).should == person
       end
 
       it "deregistered conversation is removed from the available list for that location" do
@@ -137,7 +145,7 @@ describe City::RegistrationsController do
       end
 
       it "assigns the conversation leader" do
-        assigns(:person).should == person
+        assigns(:selected_person).should == person
       end
 
       it "re-renders the 'index' template" do
@@ -163,7 +171,7 @@ describe City::RegistrationsController do
 
       it "assigns the person" do
         do_post
-        assigns(:person).should == person
+        assigns(:selected_person).should == person
       end
 
       it "renders the delete partial" do
@@ -181,7 +189,7 @@ describe City::RegistrationsController do
       end
 
       it "assigns the conversation leader" do
-        assigns(:person).should == nil
+        assigns(:selected_person).should == nil
       end
 
       it "renders not found" do

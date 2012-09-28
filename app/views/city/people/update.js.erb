@@ -1,3 +1,3 @@
 $("#dialog-form").dialog('destroy');
-$('#person_<%= @person.to_param %>').html('<%= escape_javascript(render(partial:"shared/person", locals: {person: @person})) %>');
+$('#person_<%= @person.to_param %>').replaceWith('<%= escape_javascript(render(partial:@person_template, locals: {person: @person})) %>');
 

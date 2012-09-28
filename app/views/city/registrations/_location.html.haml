@@ -3,10 +3,10 @@
     = location.name
     %span.schedule= "door #{person_entry location.organizer}"
   .conversation-container
-    - location.available_conversations_for(@person).each do |conversation|
+    - location.available_conversations_for(@selected_person).each do |conversation|
       %h4{id: "available_conversation_#{conversation.id}"}
         = time_period(conversation)
         %span.register-link{:'data-toggle' => "#register_links_for_conversation_#{conversation.id}"}
           = "> inschrijven"
       %p.register-links{id: "register_links_for_conversation_#{conversation.id}"}
-        = city_registrations_registration_links conversation, @person
+        = city_registrations_registration_links conversation, @selected_person

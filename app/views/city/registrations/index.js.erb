@@ -1,5 +1,5 @@
-$('#conversations').html('<%= escape_javascript(render(:partial => 'index', locals: {available_locations: @available_locations, person: @person})) %>');
-$('#page-title').html('Deelnamen voor <%= @person.name %>');
+$('#conversations').html('<%= escape_javascript(render(:partial => 'index', locals: {available_locations: @available_locations, person: @selected_person})) %>');
+$('#page-title').html('Deelnamen voor <%= @selected_person.name %>');
 $('#people_list li').removeClass('selected');
-$('#people_list li#person_<%= @person.to_param %>').addClass('selected');
+$('#people_list li#person_<%= @selected_person.to_param %>').addClass('selected');
 enable_registration_togglers();

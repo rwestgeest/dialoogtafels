@@ -2,14 +2,17 @@ class City::PeopleController < ApplicationController
 
   def index
     @people = Person.filter(params['people_filter']).call(active_project).order(:name)
+    @person_template = params[:person_template]
   end
 
   def edit
     @person = Person.find(params[:id])
+    @person_template = params[:person_template]
     @profile_fields = ProfileField.order("'profile_fields.order'")
   end
   def update
     @person = Person.find(params[:id])
+    @person_template = params[:person_template]
     if @person.update_attributes(params[:person]) 
       render :action => 'update' 
     else
