@@ -87,5 +87,14 @@ class Tenant < ActiveRecord::Base
     end
   end
 
+ 
+  def has_mailing?
+    site.has_mailing?
+  end
+
+  def register_for_mailing(person, email)
+    site.register_for_mailing(person, email)
+  end
+
 end
 

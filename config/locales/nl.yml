@@ -30,7 +30,7 @@ nl:
     formats:
       default: "%H:%M"
       short: "%H:%M"
-      long: "%d %B %Y %H:%M"
+      long: "%d-%m-%Y %H:%M"
       time: "%H:%M"
       human: "%d-%m-%Y om %H:%M"
       date: "%d-%m-%Y"

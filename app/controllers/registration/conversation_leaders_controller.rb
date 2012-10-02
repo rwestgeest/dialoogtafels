@@ -29,6 +29,8 @@ class Registration::ConversationLeadersController < PublicController
         Messenger.new_conversation_leader_ambition(@person)
       end
 
+      @person.register_for_mailing
+
       sign_in @person.account
       redirect_to confirm_registration_conversation_leaders_path, notice: I18n.t('registration.conversation_leaders.welcome')
     else

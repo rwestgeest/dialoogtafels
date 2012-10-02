@@ -180,6 +180,13 @@ class Person < ActiveRecord::Base
     @validate_training_registrations
   end
 
+  def register_for_mailing
+    tenant.register_for_mailing(name, email) if @register_for_mailing
+  end
+
+  def register_for_mailing=(value)
+    @register_for_mailing = value
+  end
 
   private 
   def email_present?

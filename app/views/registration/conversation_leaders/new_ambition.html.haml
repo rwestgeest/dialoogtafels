@@ -19,6 +19,11 @@
       .label= f.label :telephone
       .input= f.text_field :telephone
 
+    - if current_tenant.has_mailing?
+      .input-container
+        .label= f.label :register_for_mailing
+        .inpul= f.check_box :register_for_mailing
+
   - unless @profile_fields.empty?
     .dialog-container
       - @profile_fields.each do |profile_field|
