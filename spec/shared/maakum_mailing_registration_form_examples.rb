@@ -10,6 +10,7 @@
       response.body.should_not have_selector("input[type='checkbox'][name='person[register_for_mailing]']")
     end
   end
+
   shared_examples_for "a_mailing_registrar" do
     describe "when mailing parameter provided" do
       it "registers for mailing" do

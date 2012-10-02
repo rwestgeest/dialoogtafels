@@ -7,6 +7,7 @@ class Registration::OrganizersController < PublicController
 
   def create
     @person = Person.find_by_email(params[:person][:email]) || Person.new(params[:person])
+    @person.attributes =  params[:person]
     if Organizer.by_email(@person.email).exists?
       redirect_to new_account_session_path(:email => @person.email), :notice => "Een tafelorganisator met dit email adres bestaat al. Probeer in te loggen"
       return 
