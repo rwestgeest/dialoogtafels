@@ -203,6 +203,7 @@ nl:
         name: "Naam"
         email: "Email"
         telephone: "Telefoon"
+        register_for_mailing: "Registreer mij op de mailing lijst"
       organizer:
         email: "Email"
         name: "Naam"

@@ -23,6 +23,7 @@ describe Registration::ParticipantsController do
     end
 
     it_should_behave_like "a_registration_form_with_profile_fields"
+    it_should_behave_like "a_maakum_mailing_registration_form" 
   end
 
   describe "GET new" do
@@ -65,6 +66,8 @@ describe Registration::ParticipantsController do
 
   describe "POST create" do
     shared_examples_for "a_participant_registrar" do
+      it_should_behave_like "a_mailing_registrar"
+
       it "creates a new participant_ambition" do
         expect { do_post }.to change(ParticipantAmbition, :count).by(1)
       end

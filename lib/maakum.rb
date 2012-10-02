@@ -20,6 +20,12 @@ class Maakum
       return false
     end
   end
+  def ==(other)
+    other.is_a?(Maakum) && site_url == other.site_url 
+  end
+  def inspect
+    "Maakum(#{ site_url })"
+  end
   private
   def mailing_url
     URI.parse([site_url, MailingPath].join('/'))

@@ -23,10 +23,12 @@ describe Registration::OrganizersController do
     end
 
     it_should_behave_like "a_registration_form_with_profile_fields"
+    it_should_behave_like "a_maakum_mailing_registration_form" 
   end
 
   describe "POST create" do
     shared_examples_for "an_organizer_registrar" do
+      it_should_behave_like "a_mailing_registrar"
 
       it "creates a new Organizer" do
         expect { do_post }.to change(Organizer, :count).by(1)
@@ -39,11 +41,13 @@ describe Registration::OrganizersController do
         current_account.should == Account.last
         response.should redirect_to '/first_landing'
       end
-      it "assigns a newly created organizer as @organizer" do
+
+      it "assigns a newly created person as @person" do
         do_post
-        assigns(:organizer).should be_a(Organizer)
-        assigns(:organizer).should be_persisted
+        assigns(:person).should be_a(Person)
+        assigns(:person).should be_persisted
       end
+
       it "sends a new_organizer event" do
         Messenger.should_receive(:new_organizer).with an_instance_of(Person)
         do_post

@@ -87,7 +87,8 @@ class Tenant < ActiveRecord::Base
     end
   end
 
- 
+  composed_of :site, class_name: 'Maakum', mapping: %w{site_url}
+
   def has_mailing?
     site.has_mailing?
   end

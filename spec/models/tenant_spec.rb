@@ -69,4 +69,10 @@ describe Tenant do
       it_should_behave_like 'a_tenant_creator'
     end
   end
+
+  describe 'site' do
+    it "should be a Maakum instance with a url site_url" do
+      Tenant.new(:site_url => 'the_url').site.should == Maakum.new('the_url')
+    end
+  end
 end

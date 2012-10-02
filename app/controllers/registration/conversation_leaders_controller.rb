@@ -8,9 +8,6 @@ class Registration::ConversationLeadersController < PublicController
   def create
     @person = Person.find_by_email(params[:person][:email]) || Person.new(params[:person])
     @person.attributes = params[:person]
-    # training_registrations.each do |training_id|
-    #   @person.training_registrations << TrainingRegistration.new(:training_id => training_id)
-    # end
 
     unless Captcha.verified?(self)
       flash.alert = I18n.t('registration.captcha_error')

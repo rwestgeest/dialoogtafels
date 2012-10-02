@@ -1,0 +1,27 @@
+.dialog-container
+  .input-container
+    .label= form.label :email
+    .input= form.text_field :email
+
+  .input-container
+    .label= form.label :name
+    .input= form.text_field :name
+
+  .input-container
+    .label= form.label :telephone
+    .input= form.text_field :telephone
+
+  - if current_tenant.has_mailing?
+    .input-container
+      .label
+      .inpul
+        = form.check_box :register_for_mailing
+        = form.label :register_for_mailing
+
+- unless @profile_fields.empty?
+  .dialog-container
+    - @profile_fields.each do |profile_field|
+      .input-container
+        .label= form.label profile_field.field_name_with_prefix, profile_field.label
+        .input= profile_field.render_field_on(form)
+    .clear

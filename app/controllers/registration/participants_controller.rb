@@ -23,6 +23,7 @@ class Registration::ParticipantsController < PublicController
       else
         Messenger.new_participant_ambition(@person)
       end
+      @person.register_for_mailing
       sign_in @person.account
       redirect_to confirm_registration_participants_path, notice: I18n.t('registration.participants.welcome')
     else

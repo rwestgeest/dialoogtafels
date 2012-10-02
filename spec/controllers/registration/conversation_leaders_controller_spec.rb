@@ -15,19 +15,6 @@ describe Registration::ConversationLeadersController do
     { training.training_type_id.to_s => training.to_param }
   end
 
-  shared_examples_for "a_maakum_mailing_registration_form" do 
-    it "renders a mailing checkbox if the mailing system exists" do
-      Tenant.any_instance.stub(:has_mailing? => true)
-      do_get
-      response.body.should have_selector("input[type='checkbox'][name='person[register_for_mailing]']")
-    end
-    it "renders no mailing checkbox if the mailing system does not exist" do
-      Tenant.any_instance.stub(:has_mailing? => false)
-      do_get
-      response.body.should_not have_selector("input[type='checkbox'][name='person[register_for_mailing]']")
-    end
-  end
-
   shared_examples_for "a_conversation_leader_registration_form" do
 
     it "assigns a new person as @person" do
@@ -83,8 +70,11 @@ describe Registration::ConversationLeadersController do
     end
   end
 
+
   describe "POST create" do
     shared_examples_for "a_conversation_leader_registrar" do
+      it_should_behave_like "a_mailing_registrar"
+
       it "creates a new conversation_leader_ambition" do
         expect { do_post }.to change(ConversationLeaderAmbition, :count).by(1)
       end
@@ -101,14 +91,6 @@ describe Registration::ConversationLeadersController do
         do_post
       end
 
-      describe "when mailing parameter provided" do
-        it "registers for mailing" do
-          person_name = valid_attributes['name']
-          person_email = valid_attributes['email']
-          Tenant.any_instance.should_receive(:register_for_mailing).with(person_name, person_email)
-          post :create, :person => valid_attributes.merge(:register_for_mailing => true)
-        end
-      end
       describe "when training registrations provided" do
         it "creates a training registration" do
           expect { 
