@@ -61,7 +61,7 @@ class City::RegistrationsController < ApplicationController
   end
   def render_index
     @active_contributions = @selected_person.conversation_contributions_for(active_project)
-    @available_locations = Location.all
+    @available_locations = active_project.locations
     render :action => 'index'
   end
 end
