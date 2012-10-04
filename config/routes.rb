@@ -51,6 +51,7 @@ Tafelmanager2::Application.routes.draw do
     resources :training_registrations, :only => [:show, :update]
     resources :registrations, :only => [:index, :create, :destroy]
     resources :people, :only => [:index, :edit, :update, :destroy]
+    resources :mailing_messages, :only => [:index, :show, :create]
   end
   namespace :settings do
     resources :profile_fields, :except => :show do

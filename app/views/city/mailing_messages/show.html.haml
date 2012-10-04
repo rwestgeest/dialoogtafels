@@ -1,0 +1,6 @@
+- title "Mailing: #{@mailing_message.parent_subject}"
+- context_action ".back", city_mailing_messages_path
+
+#message
+  = render :partial => 'mailing_message', locals: { mailing_message: @mailing_message }
+

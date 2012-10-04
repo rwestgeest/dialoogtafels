@@ -228,6 +228,9 @@ nl:
       location_comment:
         subject: "Onderwerp"
         body: "Boodschap"
+      mailing_message:
+        subject: "Onderwerp"
+        body: "Boodschap"
       conversation:
         start_date: "Aanvang"
         end_date: "Einde"
@@ -261,6 +264,8 @@ nl:
         update: "Locatie bijwereken"
       location_comment:
         create: "Bericht toevoegen"
+      mailing_message:
+        create: "Mailing verzenden"
       conversation:
         create: "Maak dialooggesprek aan"
         update: "Bijwerken"
@@ -341,6 +346,14 @@ nl:
     people:
       destroy:
         organizes_locations: "Je kunt %{person_name} niet verwijderen. Hij of zij organiseert een locatie."
+    mailing_messages:
+      new_mailing_message_form:
+        all_coordinators: "Coordinatoren"
+        all_organizers: "Organisatoren"
+        all_conversation_leaders: "Gespreksleiders"
+        all_participants: "Deelnemers"
+      index: 
+        new_comment: "nieuw bericht"
     trainings:
       index:
         new: "plan een nieuwe training"

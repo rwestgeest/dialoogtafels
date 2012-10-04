@@ -1,0 +1,9 @@
+- title "Mailing boodschappen"
+- context_action '.new_comment', city_mailing_messages_path(anchor: "new_message")
+
+#mailing-messages
+  = render partial: 'mailing_message', collection: @mailing_messages.roots, as: :mailing_message
+
+%h3 Nieuwe mailing:
+#new-mailing-message
+  = new_mailing_message_form nil 

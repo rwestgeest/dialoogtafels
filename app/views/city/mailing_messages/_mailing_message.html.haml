@@ -1,0 +1,9 @@
+.message
+  %h3 
+    = message_subject(mailing_message)
+    = message_info(mailing_message)
+  .message-body
+    = markup mailing_message.body
+    .message-actions
+    .message-actions-line
+    .clear

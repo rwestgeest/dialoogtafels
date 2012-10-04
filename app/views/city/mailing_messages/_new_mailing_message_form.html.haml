@@ -1,0 +1,37 @@
+%a{ id: 'new_mailing_message'}
+
+= form_for @mailing_message = MailingMessage.new(:parent => parent_message), :url => city_mailing_messages_path, :remote => true  do |f|
+  = parent_reference(parent_message, f)
+  .message-container
+    - unless parent_message
+      .message-subject-container
+        .label= f.label :subject
+        .input= f.text_field :subject
+      .clear
+    .message-body-container
+      .input= f.text_area :body
+    .clear
+    %h3 Notificaties
+    %p
+      Selecteer hieronder aan wie je de mailing wilt versturen.
+
+    .message-notifications-container
+
+      %ul.person-list
+        %li
+          = check_box_tag "to_coordinators", 'coordinators', false, :name => "to[]"
+          = label_tag t(".all_coordinators")
+        %li
+          = check_box_tag "all_organizers", 'organizers', false, :name => "to[]"
+          = label_tag t(".all_organizers")
+        %li
+          = check_box_tag "all_conversation_leaders", 'conversation_leaders', false, :name => "to[]"
+          = label_tag t(".all_conversation_leaders")
+        %li
+          = check_box_tag "all_participants", 'participants',false, :name => "to[]"
+          = label_tag t(".all_participants")
+      .clear
+
+    .actions
+      = f.submit :disable_with => "... versturen"
+

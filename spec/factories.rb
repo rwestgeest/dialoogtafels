@@ -163,6 +163,12 @@ module Factories
       association :reference, :factory => :training
     end
 
+    factory :mailing_message do
+      body "some comment"
+      association :author, factory: :person
+      association :reference, :factory => :project
+    end
+
     factory :location_todo do |t| 
       t.name "todo 1"
     end
