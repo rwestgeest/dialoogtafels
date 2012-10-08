@@ -181,12 +181,12 @@ class Person < ActiveRecord::Base
   end
 
   def register_for_mailing
-    tenant.register_for_mailing(name, email) if @register_for_mailing
+    tenant.register_for_mailing(name, email) if request_mailing_registration
   end
 
-  def register_for_mailing=(value)
-    @register_for_mailing = value
-  end
+
+  attr_accessor :request_mailing_registration
+
 
   private 
   def email_present?

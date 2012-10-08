@@ -14,9 +14,9 @@
   - if current_tenant.has_mailing?
     .input-container
       .label
-      .inpul
-        = form.check_box :register_for_mailing
-        = form.label :register_for_mailing
+      .input
+        = form.check_box :request_mailing_registration
+        = form.label :request_mailing_registration
 
 - unless @profile_fields.empty?
   .dialog-container

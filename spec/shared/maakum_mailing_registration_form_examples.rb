@@ -2,12 +2,12 @@
     it "renders a mailing checkbox if the mailing system exists" do
       Tenant.any_instance.stub(:has_mailing? => true)
       do_get
-      response.body.should have_selector("input[type='checkbox'][name='person[register_for_mailing]']")
+      response.body.should have_selector("input[type='checkbox'][name='person[request_mailing_registration]']")
     end
     it "renders no mailing checkbox if the mailing system does not exist" do
       Tenant.any_instance.stub(:has_mailing? => false)
       do_get
-      response.body.should_not have_selector("input[type='checkbox'][name='person[register_for_mailing]']")
+      response.body.should_not have_selector("input[type='checkbox'][name='person[request_mailing_registration]']")
     end
   end
 
@@ -17,7 +17,7 @@
         person_name = valid_attributes['name']
         person_email = valid_attributes['email']
         Tenant.any_instance.should_receive(:register_for_mailing).with(person_name, person_email)
-        post :create, :person => valid_attributes.merge(:register_for_mailing => true)
+        post :create, :person => valid_attributes.merge(:request_mailing_registration => true)
       end
     end
   end
