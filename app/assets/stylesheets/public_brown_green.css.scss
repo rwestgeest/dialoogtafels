@@ -1,0 +1,16 @@
+$theme_color: #725D24;
+
+h1, h2 {
+	color: $theme_color;
+}
+a {
+  color: $theme_color;
+}
+
+.submenu a:hover {
+	color: $theme_color;
+}
+section#footer .dialoog_txt {
+	color: $theme_color;
+}
+
