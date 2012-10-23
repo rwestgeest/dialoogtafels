@@ -55,6 +55,7 @@ class Account < ActiveRecord::Base
   end
 
   def highest_contribution
+    return nil unless tenant
     @highest_contribution ||= highest_contribution_to(tenant.active_project)
   end
 

@@ -4,8 +4,7 @@ class Account::PasswordsController < ApplicationController
   end
   def update
     @account = current_account
-    if @account.update_attributes(params[:account]) 
-      @account.confirm!
+    if @account.confirm_with_password(params[:account]) 
       redirect_to @account.landing_page
     else
       render :action => :edit

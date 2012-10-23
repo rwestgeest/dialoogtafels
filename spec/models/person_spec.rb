@@ -1,6 +1,7 @@
 require 'spec_helper'
 
 describe Person do
+
   it_should_behave_like 'a_scoped_object', :person
 
   describe "validations" do
@@ -40,6 +41,37 @@ describe Person do
         expect{ FactoryGirl.create :person }.to change(Account, :count).by(1)
         Account.last.person.should === Person.last
       end
+    end
+
+    describe "updating a person" do 
+      let!(:person) { FactoryGirl.create :person }
+
+      it "should report succes" do
+        update_attributes(:name => "other name", :email => "other@mail.com", :telephone => "123123").should == true
+      end
+
+      it "updates the attributes" do
+        update_attributes :name => "other name", :email => "other@mail.com", :telephone => "123123"
+        person.telephone.should == '123123'
+        person.name.should == "other name"
+      end
+
+      it "updates email from account as well" do
+        update_attributes :name => "other name", :email => "other@mail.com", :telephone => "123123"
+        person.email.should == 'other@mail.com'
+      end
+
+      def update_attributes attributes
+        result = person.update_attributes :name => "other name", :email => "other@mail.com", :telephone => "123123"
+        person.reload
+        person.account.reload
+        if result == false
+          p person.errors
+
+        end
+        return result
+      end
+
     end
 
     it_should_behave_like "a_profile_field_holder" do

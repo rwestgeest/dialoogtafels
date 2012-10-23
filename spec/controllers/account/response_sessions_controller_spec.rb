@@ -4,7 +4,7 @@ describe Account::ResponseSessionsController do
   render_views
   prepare_scope :tenant
 
-  let(:account) { FactoryGirl.create :confirmed_account  }
+  let(:account) { FactoryGirl.create :coordinator_account  }
 
   describe "GET 'show'" do
     context 'with valid token' do

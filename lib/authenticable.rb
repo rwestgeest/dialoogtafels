@@ -9,7 +9,7 @@ end
 
 module Authenticable
   def self.included(base)
-    base.validates_presence_of :password, :if =>  lambda { !new_record? && !confirmed? }
+    base.validates_presence_of :password, :if =>  lambda { !new_record? && confirmed? }
     base.extend ClassMethods
 
     base.before_save :encrypt_password
@@ -41,13 +41,25 @@ module Authenticable
   end
 
   def confirm_with_password(attributes)
-    update_attributes(attributes) && confirm!
+    begin
+      self.attributes = attributes
+      self.confirmed_at = Time.now
+      self.reset_at = nil
+      save!
+      return true
+    rescue 
+      reload
+      return false
+    end
   end
 
   def confirm!
-    self.confirmed_at = Time.now if has_saved_password? 
-    self.reset_at = nil
-    save
+    if has_saved_password? 
+      self.confirmed_at = Time.now 
+      self.reset_at = nil
+      save
+    end
+    confirmed?
   end
 
   def reset!

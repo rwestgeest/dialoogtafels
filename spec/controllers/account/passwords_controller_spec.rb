@@ -3,7 +3,7 @@ require 'spec_helper'
 describe Account::PasswordsController do
   render_views
   prepare_scope :tenant
-  login_as :organizer
+  before { login_as FactoryGirl.create(:organizer).account }
 
   def valid_parameters
     {:password => 'secret', :password_confirmation => 'secret' }
@@ -22,9 +22,15 @@ describe Account::PasswordsController do
 
   describe "PUT 'update'" do
     context "with valid params" do
+
       def update 
         put 'update', :account => valid_parameters
       end
+
+      it "should not be confirmed before" do
+        current_account.should_not be_confirmed
+      end
+
       it "redirects to the accounts langding page" do
         update
         response.should redirect_to(current_account.landing_page)

@@ -59,8 +59,7 @@ describe Account do
       let(:old_password) { account.password }
 
       before do 
-        @account = FactoryGirl.create(:coordinator_account, :password => "secret", :password_confirmation => "secret")
-        @account.confirm!
+        @account = FactoryGirl.create(:confirmed_account, :password => "secret", :password_confirmation => "secret")
         @account = Account.find(@account.id)
       end
 
@@ -69,13 +68,13 @@ describe Account do
         account.password.should == 'secret'
       end
 
-      it "ignores passwords if not passed " do
-        new_mail = FactoryGirl.generate(:email)
+      it "fails if passwords not passed " do
+        account.update_attributes({}).should be_false
         account.password.should == old_password
       end
 
       it "ingores passwords if nil" do
-        account.update_attributes({:password => nil}).should be_true
+        account.update_attributes({:password => nil}).should be_false
         account.password.should == old_password
       end
     end
@@ -147,35 +146,32 @@ describe Account do
         end
       end
 
-      describe "with_password" do
+      describe "with valid password" do 
 
-        describe "with valid password" do 
-
-          it "returns true and confirms" do
-            confirmation_result = confirm_with_password!
-            confirmation_result.should be_true
-            account.should be_confirmed
-          end
-
-          it "makes it not reset" do
-            confirm_with_password!
-            account.reset!
-            confirm_with_password!
-            account.should_not be_reset
-          end
-
-          it "sets password" do
-            confirmation_result = confirm_with_password!
-            account.encrypted_password.should_not be_empty
-          end
-
+        it "returns true and confirms" do
+          confirmation_result = confirm_with_password!
+          confirmation_result.should be_true
+          account.should be_confirmed
         end
 
-        describe "with invalid password" do 
-          it "returns false and does not confirm" do
-            account.confirm_with_password(:password => '').should be_false
-            account.should_not be_confirmed
-          end
+        it "makes it not reset" do
+          confirm_with_password!
+          account.reset!
+          confirm_with_password!
+          account.should_not be_reset
+        end
+
+        it "sets password" do
+          confirmation_result = confirm_with_password!
+          account.encrypted_password.should_not be_empty
+        end
+
+      end
+
+      describe "with invalid password" do 
+        it "returns false and does not confirm" do
+          account.confirm_with_password(:password => '').should be_false
+          account.should_not be_confirmed
         end
       end
     end
