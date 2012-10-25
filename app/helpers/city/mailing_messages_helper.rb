@@ -12,4 +12,8 @@ module City::MailingMessagesHelper
   def new_mailing_message_form(parent_message)
     render :partial => 'new_mailing_message_form', locals: { parent_message: parent_message }
   end
+
+  def addressee_group_names(message)
+    message.groups.empty? && t('nobody') || message.groups.join(', ')
+  end
 end

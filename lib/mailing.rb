@@ -20,22 +20,6 @@ class RecepientList
     @recepients = []
   end
 
-  def add_coordinators(people)
-    people.each { |person| add_recepient CoordinatorRecepient, person }
-  end
-
-  def add_organizers(people)
-    people.each { |person| add_recepient OrganizerRecepient, person }
-  end
-
-  def add_conversation_leaders(people)
-    people.each { |person| add_recepient ConversationLeaderRecepient, person }
-  end
-
-  def add_participants(people)
-    people.each { |person| add_recepient ParticipantRecepient, person }
-  end
-
   def add_recepient(recepient_class, person)
     @recepients << recepient_class.new(person)
   end
@@ -47,7 +31,7 @@ end
 
 class Recepient < Struct.new(:person)
   def send_message(message, postman)
-    postman.deliver(:mailing_message, message, self)
+    postman.deliver(:mailing_message, message, person)
   end
 end
 

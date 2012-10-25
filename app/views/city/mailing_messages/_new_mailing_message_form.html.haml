@@ -1,7 +1,9 @@
 %a{ id: 'new_mailing_message'}
 
-= form_for @mailing_message = MailingMessage.new(:parent => parent_message), :url => city_mailing_messages_path, :remote => true  do |f|
+= form_for @mailing_message, :url => city_mailing_messages_path, :remote => true  do |f|
+  = errors_for @mailing_message
   = parent_reference(parent_message, f)
+
   .message-container
     - unless parent_message
       .message-subject-container
@@ -19,16 +21,16 @@
 
       %ul.person-list
         %li
-          = check_box_tag "to_coordinators", 'coordinators', false, :name => "to[]"
+          = check_box_tag "to_coordinators", 'coordinators', false, :name => "mailing_message[groups][]"
           = label_tag t(".all_coordinators")
         %li
-          = check_box_tag "all_organizers", 'organizers', false, :name => "to[]"
+          = check_box_tag "all_organizers", 'organizers', false, :name => "mailing_message[groups][]"
           = label_tag t(".all_organizers")
         %li
-          = check_box_tag "all_conversation_leaders", 'conversation_leaders', false, :name => "to[]"
+          = check_box_tag "all_conversation_leaders", 'conversation_leaders', false, :name => "mailing_message[groups][]"
           = label_tag t(".all_conversation_leaders")
         %li
-          = check_box_tag "all_participants", 'participants',false, :name => "to[]"
+          = check_box_tag "all_participants", 'participants',false, :name => "mailing_message[groups][]"
           = label_tag t(".all_participants")
       .clear
 

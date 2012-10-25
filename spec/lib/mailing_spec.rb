@@ -106,7 +106,7 @@ describe Recepient do
   shared_examples_for("a_recepient") do
     describe "send_message" do
       it "sends the message to the postman" do
-        postman.should_receive(:deliver).with(:mailing_message, message, recepient)
+        postman.should_receive(:deliver).with(:mailing_message, message, recepient.person)
         recepient.send_message(message, postman)
       end
     end

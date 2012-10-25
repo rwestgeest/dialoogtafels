@@ -165,6 +165,7 @@ module Factories
 
     factory :mailing_message do
       body "some comment"
+      addressee_groups 'coordinators'
       association :author, factory: :person
       association :reference, :factory => :project
     end

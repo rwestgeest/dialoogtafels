@@ -77,4 +77,9 @@ class Notifications < ActionMailer::Base
     @conversation = conversation
     mail from: person.tenant.from_email, to: addressee.email
   end
+
+  def mailing_message(message, addressee)
+    @message = message 
+    mail from: addressee.tenant.from_email, to: addressee.email, subject: @message.subject
+  end
 end

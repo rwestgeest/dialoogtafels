@@ -312,6 +312,25 @@ describe Notifications do
     end
   end
 
+  describe "mailing_message" do
+    let(:mailing_message) { MailingMessage.new subject: "my comment", body: "#Header\nbody" }
+    let(:person) { FactoryGirl.create :person, email: "addressee@example.com"  }
+    let(:mail) { Notifications.mailing_message mailing_message, person }
+
+    it "renders the headers" do
+      mail.subject.should eq(mailing_message.subject)
+      mail.from.should eq([ person.tenant.from_email ])
+      mail.to.should eq([ person.email ])
+    end
+
+    it "puts the body marked up in the bdy" do
+      mail.body.encoded.should have_selector("h1")
+      mail.body.encoded.should include("Header")
+      mail.body.encoded.should include("body")
+    end
+
+  end
+
   RSpec::Matchers.define :include_marked_up do |expected|
     match do |actual|
       actual.gsub("\r\n", '').include?(marked_up(expected).gsub("\n", ''))

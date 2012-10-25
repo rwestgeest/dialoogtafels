@@ -2,6 +2,9 @@
   %h3 
     = message_subject(mailing_message)
     = message_info(mailing_message)
+  .message-addressees
+    %span= t('to')
+    = addressee_group_names(mailing_message)
   .message-body
     = markup mailing_message.body
     .message-actions
