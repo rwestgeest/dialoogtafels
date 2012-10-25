@@ -32,6 +32,8 @@ describe Project do
 
   end
 
+
+
   describe "mailer" do
     it "is an aggregation of cc_type and cc_address_list" do
       an_email_copy_list('bcc', 'rob@email.com').should == ProjectMailer.new('bcc', 'rob@email.com')

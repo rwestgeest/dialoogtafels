@@ -29,7 +29,7 @@ describe City::MailingMessagesController do
 
   describe "POST create" do
     def do_post
-      xhr :post, :create, {:mailing_message => valid_attributes}
+      xhr :post, :create, {:mailing_message => valid_attributes, :to => ['coordinators']}
     end
     describe "with valid params" do
       it "creates a new MailingMessage" do
