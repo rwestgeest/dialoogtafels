@@ -26,7 +26,7 @@ class City::MailingMessagesController < ApplicationController
 
   def test
     begin
-      @mailing_message = Mailing.new(mailing_scheduler, test_recepient_list, mailing_validator).create_mailing(MailingMessage.new(params[:mailing_message]))
+      @mailing_message = Mailing.new(direct_mailing_scheduler, test_recepient_list, mailing_validator).create_mailing(MailingMessage.new(params[:mailing_message]))
       flash[:notice] = "Test mail verzonden" 
       render action: "new"
     rescue RepositorySaveException => e
@@ -53,6 +53,10 @@ class City::MailingMessagesController < ApplicationController
 
   def mailing_scheduler
     @mailing_scheduler ||= MailingScheduler.new(Tenant.current, Postman, Delayed::Job)
+  end
+
+  def direct_mailing_scheduler
+    @mailing_scheduler ||= MailingScheduler.direct(Postman)
   end
 
   def test_recepient_list
