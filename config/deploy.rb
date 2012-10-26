@@ -58,6 +58,8 @@ namespace :vlad do
     run in_current_path + "which passenger"
 
     run in_current_path + "RAILS_ENV=#{rails_env} passenger start -a 127.0.0.1 -p #{passenger_port} -d"
+
+    run in_current_path + "RAILS_ENV=#{rails_env} script/delayed_job restart"
   end
 
 end
