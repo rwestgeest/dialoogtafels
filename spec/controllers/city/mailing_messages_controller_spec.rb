@@ -48,6 +48,7 @@ describe City::MailingMessagesController do
         response.should render_template '_mailing_message'
       end
     end
+
     describe "with for test" do
       def do_post
         xhr :post, :create, {:mailing_message => valid_attributes, :test_recipient => 'rob@gmail.com', :commit => 'test'}
@@ -60,6 +61,11 @@ describe City::MailingMessagesController do
         do_post 
         assigns(:mailing_message).should be_a(MailingMessage)
         assigns(:mailing_message).should_not be_persisted
+      end
+
+      it "assigns a coordinator as test_recepient_list" do
+        do_post
+        assigns(:test_recipient_list).should include(TenantAccount.first) 
       end
 
       it "redirects to the created mailing_message" do

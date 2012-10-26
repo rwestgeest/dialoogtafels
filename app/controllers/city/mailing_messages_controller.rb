@@ -54,11 +54,11 @@ class City::MailingMessagesController < ApplicationController
   end
 
   def test_recepient_list
-    @recepient_list ||= RecipientsBuilder.new(PeopleRepository.new(active_project)).from_groups(['coordinators'])
+    @test_recipient_list ||= RecipientsBuilder.new(PeopleRepository.new(active_project)).from_groups(['coordinators'])
   end
 
   def recepient_list
-    @recepient_list ||= RecipientsBuilder.new(PeopleRepository.new(active_project)).from_groups(params[:mailing_message][:groups])
+    @recipient_list ||= RecipientsBuilder.new(PeopleRepository.new(active_project)).from_groups(params[:mailing_message][:groups])
   end
 
 end

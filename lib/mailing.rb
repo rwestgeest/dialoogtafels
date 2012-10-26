@@ -43,6 +43,9 @@ class RecipientList
       recipient.send_message(message, postman) 
     }
   end
+  def include?(person)
+    @recipients.map {|r| r.person}.include?(person)
+  end
   def ==(other)
     return false unless other.is_a?(RecipientList)
     recipients == other.recipients
