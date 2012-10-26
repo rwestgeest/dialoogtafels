@@ -4,19 +4,17 @@ require 'mailing'
 
 class City::MailingMessagesController < ApplicationController
   def index
-    @mailing_messages = active_project.mailing_messages
+    @mailing_messages = mailing_repository.mailing_messages
     @mailing_message = MailingMessage.new
   end
 
   def show
-    @mailing_message = active_project.mailing_messages.find(params[:id])
+    @mailing_message = mailing_repository.mailing_messages.find(params[:id])
   end
 
   def create
     begin 
-      @mailing_message = MailingMessage.new(params[:mailing_message])
-      mailing = Mailing.new(Postman, MailingRepository.new(self, active_project, current_person))
-      mailing.create_mailing(@mailing_message, create_recepient_list(params[:mailing_message][:groups]))
+      @mailing_message = Mailing.new(recepient_list, Postman, mailing_repository).create_mailing(MailingMessage.new(params[:mailing_message]))
       render action: "create"
     rescue RepositorySaveException => e
       @mailing_message = e.object_that_failed_to_save
@@ -31,8 +29,12 @@ class City::MailingMessagesController < ApplicationController
     redirect_to city_mailing_messages_url 
   end
 
-  private 
-  def create_recepient_list(groups)
-    RecepientsBuilder.new(PeopleRepository.new(active_project)).from_groups(params[:mailing_message][:groups])
+  def mailing_repository
+    @mailing_repository ||= MailingRepository.new(active_project, current_person)
   end
+
+  def recepient_list
+    @recepient_list ||= RecipientsBuilder.new(PeopleRepository.new(active_project)).from_groups(params[:mailing_message][:groups])
+  end
+
 end

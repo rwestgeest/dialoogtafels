@@ -6,9 +6,9 @@ class RepositorySaveException < Exception
   end
 end
 
-class MailingRepository < Struct.new(:mailing_controller, :project, :author)
+class MailingRepository < Struct.new(:project, :author)
   class NullMailingRepository
-    def create_mailing(mailing_message, recepient_list)
+    def create_mailing(mailing_message)
     end
   end
 
@@ -16,14 +16,19 @@ class MailingRepository < Struct.new(:mailing_controller, :project, :author)
     NullMailingRepository.new
   end
 
-  def create_mailing(mailing_message, recepient_list)
+  def create_mailing(mailing_message)
     begin 
       mailing_message.reference = project
       mailing_message.author = author
 
       mailing_message.save!
+      return mailing_message
     rescue ActiveRecord::RecordInvalid
       raise RepositorySaveException.new(mailing_message)
     end
+  end
+
+  def mailing_messages
+    project.mailing_messages
   end
 end

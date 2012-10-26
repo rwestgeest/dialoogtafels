@@ -4,7 +4,7 @@ class MailingMessage < Message
   class AddresseeGroupsValidator < ActiveModel::EachValidator
     def validate_each(record, attribute, value)
       record.errors.add attribute, (options[:message] || "invalid_groups") unless 
-        value.select { |group| not RecepientsBuilder::ValidGroups.has_key?(group.to_sym) }.empty?
+        value.select { |group| not RecipientsBuilder::ValidGroups.has_key?(group.to_sym) }.empty?
     end
   end
   attr_accessible :subject, :body, :author, :reference_id, :parent_id, :parent, :groups, :addressee_groups
@@ -23,4 +23,5 @@ class MailingMessage < Message
     return unless value
     self.addressee_groups = value.join(", ")
   end
+
 end

@@ -1,66 +1,68 @@
 class Mailing
-  def initialize(postman, mailing_repository = MailingRepository.null)
+  def initialize(recipient_list, postman, mailing_repository = MailingRepository.null)
+    @recipient_list = recipient_list
     @mailing_repository = mailing_repository
     @postman = postman
   end
 
-  def create_mailing(message, recepient_list)
-    mailing_repository.create_mailing(message, recepient_list)
-    recepient_list.send_message(message, @postman)
+  def create_mailing(message)
+    mailing_repository.create_mailing(message)
+    recipient_list.send_message(message, postman)
+    return message
   end
 
   private
-  attr_reader :mailing_repository
+  attr_reader :mailing_repository, :postman, :recipient_list
 end
 
 
-class RecepientList
-  attr_reader :recepients
+class RecipientList
+  attr_reader :recipients
   def initialize
-    @recepients = []
+    @recipients = []
   end
 
-  def add_recepient(recepient_class, person)
-    @recepients << recepient_class.new(person)
+  def add_recipient(recipient_class, person)
+    @recipients << recipient_class.new(person)
   end
 
   def send_message(message, postman)
-    @recepients.each { |recepient| recepient.send_message(message, postman) }
+    @recipients.each { |recipient| recipient.send_message(message, postman) }
   end
 end
 
-class Recepient < Struct.new(:person)
+class Recipient < Struct.new(:person)
   def send_message(message, postman)
     postman.deliver(:mailing_message, message, person)
   end
 end
 
-class CoordinatorRecepient < Recepient
+class CoordinatorRecipient < Recipient
 
 end
 
-class OrganizerRecepient < Recepient
+class OrganizerRecipient < Recipient
 
 end
 
-class ConversationLeaderRecepient < Recepient
+class ConversationLeaderRecipient < Recipient
 
 end
 
-class ParticipantRecepient < Recepient
+class ParticipantRecipient < Recipient
 
 end
 
-class RecepientsBuilder
+class RecipientsBuilder
   ValidGroups = { 
-    coordinators: CoordinatorRecepient, 
-    organizers: OrganizerRecepient, 
-    conversation_leaders: ConversationLeaderRecepient, 
-    participants: ParticipantRecepient }
+    coordinators: CoordinatorRecipient, 
+    organizers: OrganizerRecipient, 
+    conversation_leaders: ConversationLeaderRecipient, 
+    participants: ParticipantRecipient }
 
   def initialize(project = nil)
     @project = project
-    @list = RecepientList.new
+    @list = RecipientList.new
   end
 
   def from_groups(groups)
@@ -73,12 +75,7 @@ class RecepientsBuilder
 
   def add_group(group)
     return unless valid_group?(group)
-    @project.send(group).each { |person| @list.add_recepient( class_for(group), person ) }
-  end
-
-  def from_people(people)
-    people.each { |person| @list.add_recepient Recepient, person }
-    @list
+    @project.send(group).each { |person| @list.add_recipient( class_for(group), person ) }
   end
 
   def class_for(group)
