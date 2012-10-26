@@ -14,6 +14,16 @@
       .input= f.text_area :body
     .clear
     %h3 Aanhangsel
+    %p
+      Wanneer je de optie hieronder aanvinkt, krijgen:
+    %ul
+      %li 
+        de organisatoren een lijst met alle door hem georganiseerde gesprekken inclusief deelnemers en gespreksleiders;
+      %li
+        de gespreksleiders en deelnemers een mailtje per registratie met daarin locatie, tijdstip en organisator contactgegevens
+      %li
+        de gespreksleiders krijgen alleen dan de deelnemers aan tafel te zien wanneer er maar 1 tafel op hun dialooggesprekken gesprek op die locatie en tijdstip georganiseerd is. 
+        Bij meerdere tafels op dat tijdstip worden de deelnemers voor de gespreksleiders verborgen. Dit i.v.m. privacy.
     .message-subject-container
       .input
         = f.check_box :attach_registration_info

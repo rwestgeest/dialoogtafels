@@ -239,6 +239,7 @@ nl:
       mailing_message:
         subject: "Onderwerp"
         body: "Boodschap"
+        attach_registration_info: "Registratie informatie aanhangen"
       conversation:
         start_date: "Aanvang"
         end_date: "Einde"

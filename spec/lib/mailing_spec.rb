@@ -1,7 +1,6 @@
 require 'spec_helper'
 require 'mailing'
 
-describe "focus ", focus: true do
 describe Mailing do
   let(:recipient_list) { RecipientList.new }
   let(:message) { MailingMessage.new }
@@ -323,4 +322,3 @@ describe "RegistrationDetailsMessage" do
   end
 end
 
-end
