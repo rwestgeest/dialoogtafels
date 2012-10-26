@@ -16,6 +16,7 @@ class City::MailingMessagesController < ApplicationController
     return test if params[:commit] == 'test'
     begin 
       @mailing_message = Mailing.new(mailing_scheduler, recepient_list, mailing_repository).create_mailing(MailingMessage.new(params[:mailing_message]))
+      flash[:notice] = "Mail verzonden" 
       render action: "create"
     rescue RepositorySaveException => e
       @mailing_message = e.object_that_failed_to_save
@@ -26,6 +27,7 @@ class City::MailingMessagesController < ApplicationController
   def test
     begin
       @mailing_message = Mailing.new(mailing_scheduler, test_recepient_list, mailing_validator).create_mailing(MailingMessage.new(params[:mailing_message]))
+      flash[:notice] = "Test mail verzonden" 
       render action: "new"
     rescue RepositorySaveException => e
       @mailing_message = e.object_that_failed_to_save

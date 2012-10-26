@@ -1,1 +1,2 @@
 $('#new-mailing-message').html('<%= escape_javascript(new_mailing_message_form(@mailing_message)) %>');
+$('#flash_messages').html('<%= escape_javascript(flash_tags) %>');
