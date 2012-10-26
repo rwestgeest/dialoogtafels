@@ -262,7 +262,8 @@ describe "RegistrationDetailsMessage" do
 
     let!(:conversation) { FactoryGirl.create(:conversation) }
     let!(:conversation_leader) { FactoryGirl.create(:conversation_leader, conversation: conversation) }
-    let(:organisator) { conversation.location.organizer } 
+    let(:location) { conversation.location }
+    let(:organisator) { location.organizer } 
 
     subject { ConversationLeaderRegistrationDetailsMessage.new message, conversation_leader } 
 
@@ -273,6 +274,11 @@ describe "RegistrationDetailsMessage" do
       before { conversation.update_attribute :number_of_tables, 2 } 
       its(:body) { should include time_period(conversation) }
       its(:body) { should include "#{conversation.number_of_tables} tafel(s)" } 
+      its(:body) { should include "Locatie:" }
+      its(:body) { should include location.name }
+      its(:body) { should include location.address }
+      its(:body) { should include location.postal_code }
+      its(:body) { should include location.city }
       its(:body) { should include "Organisator:" }
       its(:body) { should include organisator.name } 
       its(:body) { should include organisator.email } 
@@ -303,7 +309,8 @@ describe "RegistrationDetailsMessage" do
 
     let!(:conversation) { FactoryGirl.create(:conversation) }
     let!(:participant) { FactoryGirl.create(:participant, conversation: conversation) }
-    let(:organisator) { conversation.location.organizer } 
+    let(:location) { conversation.location }
+    let(:organisator) { location.organizer } 
 
     subject { ParticipantRegistrationDetailsMessage.new message, participant } 
 
@@ -313,6 +320,11 @@ describe "RegistrationDetailsMessage" do
       include TimePeriodHelper
       its(:body) { should include time_period(conversation) }
       its(:body) { should include "#{conversation.number_of_tables} tafel(s)" } 
+      its(:body) { should include "Locatie:" }
+      its(:body) { should include location.name }
+      its(:body) { should include location.address }
+      its(:body) { should include location.postal_code }
+      its(:body) { should include location.city }
       its(:body) { should include "Organisator:" }
       its(:body) { should include organisator.name } 
       its(:body) { should include organisator.email } 

@@ -184,6 +184,7 @@ class ConversationLeaderRegistrationDetailsMessage < RegistrationDetailsMessage
   end
   def conversation_details(conversation)
     conversation_details = [ "#### #{conversation.number_of_tables} tafel(s) #{time_period(conversation)}",
+                             "##### Locatie: #{location_details(conversation.location)}", 
                              "##### Organisator:", person_details(conversation.organizer) ]
     if conversation.number_of_tables == 1
       conversation_details +=
@@ -195,6 +196,9 @@ class ConversationLeaderRegistrationDetailsMessage < RegistrationDetailsMessage
     end
     join_lines(conversation_details)
   end
+  def location_details(location)
+    "#{location.name}, #{location.address}, #{location.postal_code}, #{location.city}"
+  end
 end
 
 class ParticipantRegistrationDetailsMessage < RegistrationDetailsMessage
@@ -203,8 +207,12 @@ class ParticipantRegistrationDetailsMessage < RegistrationDetailsMessage
   end
   def conversation_details(conversation)
     conversation_details = [ "#### #{conversation.number_of_tables} tafel(s) #{time_period(conversation)}" ,
+                             "##### Locatie: #{location_details(conversation.location)}", 
                              "##### Organisator:", person_details(conversation.organizer) ] 
     join_lines(conversation_details)
+  end
+  def location_details(location)
+    "#{location.name}, #{location.address}, #{location.postal_code}, #{location.city}"
   end
 end
 
