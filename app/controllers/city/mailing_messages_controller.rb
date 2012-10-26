@@ -14,7 +14,7 @@ class City::MailingMessagesController < ApplicationController
 
   def create
     begin 
-      @mailing_message = Mailing.new(recepient_list, Postman, mailing_repository).create_mailing(MailingMessage.new(params[:mailing_message]))
+      @mailing_message = Mailing.new(MailingScheduler.new(Tenant.current, Postman, Delayed::Job), recepient_list, mailing_repository).create_mailing(MailingMessage.new(params[:mailing_message]))
       render action: "create"
     rescue RepositorySaveException => e
       @mailing_message = e.object_that_failed_to_save

@@ -2,33 +2,71 @@ require 'spec_helper'
 require 'mailing'
 
 describe Mailing do
-  let!(:recipient_list) { mock('recipient_list') }
-  let!(:message) { MailingMessage.new }
-  let!(:postman) { Postman }
-  let!(:repository) {  mock(MailingRepository) }
+  let(:recipient_list) { RecipientList.new }
+  let(:message) { MailingMessage.new }
+  let(:repository) {  mock(MailingRepository) }
+  let(:scheduler)  { mock(MailingScheduler) }
 
 
   it "sends a mail message to the recipient list" do
-    recipient_list.should_receive(:send_message).with(message, postman)
-    a_mailing(recipient_list, postman).create_mailing(message) 
+    scheduler.should_receive(:schedule_message).with(message, recipient_list)
+    a_mailing(scheduler, recipient_list).create_mailing(message) 
   end
 
   it "it saves the mailing to the repository" do
-    recipient_list.stub :send_message
+    scheduler.stub :schedule_message
     repository.should_receive(:create_mailing).with(message)
-    a_mailing(recipient_list, postman, repository).create_mailing(message)
+    a_mailing(scheduler, recipient_list, repository).create_mailing(message)
   end
 
   it "it sends nothing when repository save fails" do
     repository.stub(:create_mailing).and_raise RepositorySaveException.new(message)
-    recipient_list.should_not_receive :send_message
-    expect { a_mailing(recipient_list, postman, repository).create_mailing(message) }.to raise_exception RepositorySaveException
+    scheduler.should_not_receive :schedule_message
+    expect { a_mailing(scheduler, recipient_list, repository).create_mailing(message) }.to raise_exception RepositorySaveException
   end
 
   def a_mailing(*args)
     @mailining ||= Mailing.new(*args)
   end
 end
+
+describe MailingScheduler do
+  prepare_scope :tenant
+  let(:recipient_list) {RecipientList.new}
+  let(:message) { FactoryGirl.create :mailing_message }
+  let(:tenant)  { Tenant.current }
+  let(:postman) { Postman }
+  let(:scheduler) { MailingScheduler.new(tenant, postman, Delayed::Job) }
+
+  it "enqueues_jobs_to_jobscheduler" do
+    expect { scheduler.schedule_message(message, recipient_list) }.to change(Delayed::Job, :count).by(1)
+  end
+  it "enqueued job is a mailing job" do
+    scheduler.schedule_message(message, recipient_list) 
+    begin
+      Delayed::Job.last.payload_object.should == MailingJob.new(tenant, postman, message, recipient_list)
+    rescue Exception => e
+      p e.message
+      raise e
+    end
+  end
+end
+
+describe MailingJob do
+  describe "perform" do
+    it "sets the current tenant and sends the mailing message" do
+      tenant = Tenant.new
+      postman = Postman
+      message = MailingMessage.new
+      recipient_list = RecipientList.new
+      job = MailingJob.new(tenant, postman, message, recipient_list)
+      Tenant.should_receive(:current=).with(tenant)
+      recipient_list.should_receive(:send_message).with(message, postman)
+      job.perform
+    end
+  end
+end
+
 
 describe RecipientsBuilder do
   let(:project) { stub(Project) }

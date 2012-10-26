@@ -1,20 +1,32 @@
 class Mailing
-  def initialize(recipient_list, postman, mailing_repository = MailingRepository.null)
+  def initialize(scheduler, recipient_list, mailing_repository = MailingRepository.null)
+    @scheduler = scheduler
     @recipient_list = recipient_list
     @mailing_repository = mailing_repository
-    @postman = postman
   end
 
   def create_mailing(message)
     mailing_repository.create_mailing(message)
-    recipient_list.send_message(message, postman)
+    scheduler.schedule_message(message, recipient_list)
     return message
   end
 
   private
-  attr_reader :mailing_repository, :postman, :recipient_list
+  attr_reader :mailing_repository, :scheduler, :recipient_list
 end
 
+class MailingJob < Struct.new(:tenant, :postman, :message, :recepient_list)
+  def perform
+    Tenant.current = tenant
+    recepient_list.send_message(message, postman)
+  end
+end
+
+class MailingScheduler < Struct.new(:tenant, :postman, :jobscheduler)
+  def schedule_message(message, recepient_list)
+    jobscheduler.enqueue(MailingJob.new(tenant, postman, message, recepient_list))
+  end
+end
 
 class RecipientList
   attr_reader :recipients
@@ -27,7 +39,13 @@ class RecipientList
   end
 
   def send_message(message, postman)
-    @recipients.each { |recipient| recipient.send_message(message, postman) }
+    @recipients.each { |recipient| 
+      recipient.send_message(message, postman) 
+    }
+  end
+  def ==(other)
+    return false unless other.is_a?(RecipientList)
+    recipients == other.recipients
   end
 end
 
