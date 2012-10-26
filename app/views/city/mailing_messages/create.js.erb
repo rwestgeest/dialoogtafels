@@ -1,3 +1,3 @@
-$('#mailing-messages').append('<%= escape_javascript(render_mailing_message(@mailing_message)) %>');
-$('#new-mailing-message').replaceWith('<%= escape_javascript(new_mailing_message_form(@mailing_message.parent)) %>');
+$('#mailing-messages').prepend('<%= escape_javascript(render_mailing_message(@mailing_message)) %>');
+$('#new-mailing-message').html('<%= escape_javascript(new_mailing_message_form(MailingMessage.new)) %>');
 

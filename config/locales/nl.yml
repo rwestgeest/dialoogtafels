@@ -180,6 +180,14 @@ nl:
               blank: "deze waarde is niet geassocieerd met een persoon"
             profile_field: 
               blank: "deze waarde is niet geassocieerd met een veld"
+        mailing_message:
+          attributes:
+            subject:
+              blank: "je hebt geen onderwerp ingegeven" 
+            body:
+              blank: "je hebt het bericht leeggelaten" 
+            groups:
+              blank: "je hebt geen groepen ingegeven"
   helpers:
     label:
       account:
@@ -430,3 +438,7 @@ nl:
   to: 'aan: '
   nobody: 'niemand'
   minutes: 'minuten'
+  coordinators: "Coordinatoren"
+  organizers: "Organisatoren"
+  conversation_leaders: "Gespreksleiders"
+  participants: "Deelnemers"

@@ -13,13 +13,25 @@ class City::MailingMessagesController < ApplicationController
   end
 
   def create
+    return test if params[:commit] == 'test'
     begin 
-      @mailing_message = Mailing.new(MailingScheduler.new(Tenant.current, Postman, Delayed::Job), recepient_list, mailing_repository).create_mailing(MailingMessage.new(params[:mailing_message]))
+      @mailing_message = Mailing.new(mailing_scheduler, recepient_list, mailing_repository).create_mailing(MailingMessage.new(params[:mailing_message]))
       render action: "create"
     rescue RepositorySaveException => e
       @mailing_message = e.object_that_failed_to_save
       render action: "new"
     end
+  end
+
+  def test
+    begin
+      @mailing_message = Mailing.new(mailing_scheduler, test_recepient_list, mailing_validator).create_mailing(MailingMessage.new(params[:mailing_message]))
+      render action: "new"
+    rescue RepositorySaveException => e
+      @mailing_message = e.object_that_failed_to_save
+      render action: "new"
+    end
+
   end
 
   def destroy
@@ -31,6 +43,18 @@ class City::MailingMessagesController < ApplicationController
 
   def mailing_repository
     @mailing_repository ||= MailingRepository.new(active_project, current_person)
+  end
+
+  def mailing_validator
+    @mailing_repository ||= MailingRepository.validator(active_project, current_person)
+  end
+
+  def mailing_scheduler
+    @mailing_scheduler ||= MailingScheduler.new(Tenant.current, Postman, Delayed::Job)
+  end
+
+  def test_recepient_list
+    @recepient_list ||= RecipientsBuilder.new(PeopleRepository.new(active_project)).from_groups(['coordinators'])
   end
 
   def recepient_list

@@ -12,8 +12,13 @@ class MailingRepository < Struct.new(:project, :author)
     end
   end
 
+
   def self.null
     NullMailingRepository.new
+  end
+
+  def self.validator(project, author)
+    ValidatingNullMailingRepository.new(project, author)
   end
 
   def create_mailing(mailing_message)
@@ -29,6 +34,15 @@ class MailingRepository < Struct.new(:project, :author)
   end
 
   def mailing_messages
-    project.mailing_messages
+    project.mailing_messages.order("created_at DESC")
+  end
+end
+
+class ValidatingNullMailingRepository < MailingRepository
+  def create_mailing(mailing_message)
+    mailing_message.reference = project
+    mailing_message.author = author
+    raise RepositorySaveException.new(mailing_message) unless mailing_message.valid?
+    return mailing_message
   end
 end

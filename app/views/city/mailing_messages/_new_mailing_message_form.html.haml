@@ -1,11 +1,11 @@
 %a{ id: 'new_mailing_message'}
 
-= form_for @mailing_message, :url => city_mailing_messages_path, :remote => true  do |f|
-  = errors_for @mailing_message
-  = parent_reference(parent_message, f)
+= form_for mailing_message, :url => city_mailing_messages_path, :remote => true  do |f|
+  = errors_for mailing_message
+  = parent_reference(mailing_message.parent, f)
 
   .message-container
-    - unless parent_message
+    - unless mailing_message.parent
       .message-subject-container
         .label= f.label :subject
         .input= f.text_field :subject
@@ -13,7 +13,7 @@
     .message-body-container
       .input= f.text_area :body
     .clear
-    %h3 Notificaties
+    %h3 Verzenden aan
     %p
       Selecteer hieronder aan wie je de mailing wilt versturen.
 
@@ -35,5 +35,8 @@
       .clear
 
     .actions
+      %span
+        (test mail wordt alleen naar de coordinatoren verstuurd)
+      = f.submit 'test', :disable_with => "... test versturen"
       = f.submit :disable_with => "... versturen"
 

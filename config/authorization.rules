@@ -27,6 +27,7 @@ allow 'city/people',                        :at_least => :coordinator
 allow 'city/projects',                      :at_least => :coordinator
 allow 'city/registrations',                 :at_least => :coordinator
 allow 'city/todos',                         :at_least => :coordinator
+allow 'city/mailing_messages',              :at_least => :coordinator
 allow 'city/trainings',                     :at_least => :coordinator
 allow 'city/training_types',                :at_least => :coordinator
 allow 'city/training_registrations',        :at_least => :coordinator

@@ -29,7 +29,7 @@ describe City::MailingMessagesController do
 
   describe "POST create" do
     def do_post
-      xhr :post, :create, {:mailing_message => valid_attributes, :to => ['coordinators']}
+      xhr :post, :create, {:mailing_message => valid_attributes, }
     end
     describe "with valid params" do
       it "creates a new MailingMessage" do
@@ -46,6 +46,26 @@ describe City::MailingMessagesController do
         do_post
         response.should render_template 'create'
         response.should render_template '_mailing_message'
+      end
+    end
+    describe "with for test" do
+      def do_post
+        xhr :post, :create, {:mailing_message => valid_attributes, :test_recipient => 'rob@gmail.com', :commit => 'test'}
+      end
+      it "creates a no MailingMessage" do
+        expect { do_post }.not_to change(MailingMessage, :count)
+      end
+
+      it "assigns a newly created mailing_message as @mailing_message" do
+        do_post 
+        assigns(:mailing_message).should be_a(MailingMessage)
+        assigns(:mailing_message).should_not be_persisted
+      end
+
+      it "redirects to the created mailing_message" do
+        do_post
+        response.should render_template 'new'
+        response.should render_template '_new_mailing_message_form'
       end
     end
 

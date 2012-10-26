@@ -11,6 +11,7 @@ class MailingMessage < Message
   belongs_to :reference, :class_name => 'Project'
   validates_presence_of :reference
   validates :groups, :presence => true, :addressee_groups => true
+  validates :subject, :presence => true
 
 
   include ScopedModel
