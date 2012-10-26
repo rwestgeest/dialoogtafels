@@ -1,5 +1,8 @@
 require 'menu'
+require 'time_period_helper'
+
 module ApplicationHelper
+  include TimePeriodHelper
   def title(title)
     content_for(:title) { title }
   end
@@ -79,11 +82,6 @@ module ApplicationHelper
     raw BlueCloth.new(text).to_html
   end
 
-  def time_period(object)
-    string  = "op #{ I18n.l(object.start_date) } van #{ I18n.l(object.start_time) } tot "
-    string << "#{ I18n.l(object.end_date) } om " if object.start_date != object.end_date
-    string + "#{ I18n.l(object.end_time) }"
-  end
 
   def tenant_site_url
     Tenant.current.site_url

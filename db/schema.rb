@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121026062625) do
+ActiveRecord::Schema.define(:version => 20121026130115) do
 
   create_table "accounts", :force => true do |t|
     t.string   "email",                :limit => 150,                      :null => false
@@ -130,11 +130,12 @@ ActiveRecord::Schema.define(:version => 20121026062625) do
     t.integer  "author_id"
     t.integer  "reference_id"
     t.integer  "tenant_id"
-    t.datetime "created_at",                       :null => false
-    t.datetime "updated_at",                       :null => false
+    t.datetime "created_at",                                  :null => false
+    t.datetime "updated_at",                                  :null => false
     t.string   "subject"
     t.string   "type"
-    t.string   "addressee_groups", :default => ""
+    t.string   "addressee_groups",         :default => ""
+    t.boolean  "attach_registration_info", :default => false
   end
 
   add_index "messages", ["ancestry"], :name => "index_location_comments_on_ancestry"

@@ -1,6 +1,7 @@
 require 'spec_helper'
 require 'mailing'
 
+describe "focus " do
 describe Mailing do
   let(:recipient_list) { RecipientList.new }
   let(:message) { MailingMessage.new }
@@ -153,20 +154,119 @@ describe Recipient do
   describe CoordinatorRecipient do
     let(:recipient) { CoordinatorRecipient.new(Person.new(:email => 'e@mail.com')) }
     it_should_behave_like("a_recipient")
+
+    context "when message should include subscription info" do
+      before { message.attach_registration_info = true}
+      it "wraps message in CoordinatorRegistrationDetailsMessage" do
+        postman.should_receive(:deliver).with(:mailing_message, CoordinatorRegistrationDetailsMessage.new(message, recipient.person), recipient.person)
+        recipient.send_message(message, postman)
+      end
+    end
   end
 
   describe OrganizerRecipient do
     let(:recipient) { OrganizerRecipient.new(Person.new(:email => 'e@mail.com')) }
     it_should_behave_like("a_recipient")
+
+    context "when message should include subscription info" do
+      before { message.attach_registration_info = true}
+      it "wraps message in CoordinatorRegistrationDetailsMessage" do
+        postman.should_receive(:deliver).with(:mailing_message, OrganizerRegistrationDetailsMessage.new(message, recipient.person), recipient.person)
+        recipient.send_message(message, postman)
+      end
+    end
   end
 
   describe ConversationLeaderRecipient do
     let(:recipient) { ConversationLeaderRecipient.new(Person.new(:email => 'e@mail.com')) }
     it_should_behave_like("a_recipient")
+
+    context "when message should include subscription info" do
+      before { message.attach_registration_info = true}
+      it "wraps message in CoordinatorRegistrationDetailsMessage" do
+        postman.should_receive(:deliver).with(:mailing_message, ConversationLeaderRegistrationDetailsMessage.new(message, recipient.person), recipient.person)
+        recipient.send_message(message, postman)
+      end
+    end
   end
 
   describe ParticipantRecipient do
     let(:recipient) { ParticipantRecipient.new(Person.new(:email => 'e@mail.com')) }
     it_should_behave_like("a_recipient")
+
+    context "when message should include subscription info" do
+      before { message.attach_registration_info = true}
+      it "wraps message in CoordinatorRegistrationDetailsMessage" do
+        postman.should_receive(:deliver).with(:mailing_message, ParticipantRegistrationDetailsMessage.new(message, recipient.person), recipient.person)
+        recipient.send_message(message, postman)
+      end
+    end
   end
+end
+
+describe "RegistrationDetailsMessage" do
+  let(:message) { MailingMessage.new :body => 'original body', :subject => 'subject' } 
+
+  shared_examples_for RegistrationDetailsMessage do
+    its(:body)    { should include(message.body) }
+    its(:body) { should include('-----------') }
+    its(:body) { should include "## Registratie details" }
+    its(:subject) { should ==  message.subject   }
+  end
+
+  describe CoordinatorRegistrationDetailsMessage do
+    subject { CoordinatorRegistrationDetailsMessage.new message } 
+    it_should_behave_like RegistrationDetailsMessage
+    its(:body) { should include "Registratie details worden hier ingevuld voor de deelnemers, gespreksleiders en organisatoren" }
+  end
+
+  describe OrganizerRegistrationDetailsMessage do
+    prepare_scope :tenant
+    let(:organizer) { FactoryGirl.create :organizer } 
+    subject { OrganizerRegistrationDetailsMessage.new message, organizer } 
+    
+    it_should_behave_like RegistrationDetailsMessage
+
+    describe "when he has a location" do
+      let!(:location) { FactoryGirl.create(:location, organizer: organizer) } 
+      
+      its(:body) { should include location.name }
+      its(:body) { should include location.address }
+      its(:body) { should include location.postal_code }
+      its(:body) { should include location.city }
+
+      describe "when the location has a conversation" do
+        include TimePeriodHelper
+        let!(:conversation) { FactoryGirl.create(:conversation, location: location) }
+        its(:body) { should include time_period(conversation) } 
+        its(:body) { should include "#{conversation.number_of_tables} tafel(s)" } 
+        its(:body) { should include "Gespreksleider(s):" }
+        its(:body) { should include "Deelnemer(s):" }
+        describe "when it the conversation has conversation leaders" do
+          let!(:conversation_leader) { FactoryGirl.create(:conversation_leader, conversation: conversation) }
+          its(:body) { should include conversation_leader.name } 
+          its(:body) { should include conversation_leader.email } 
+          its(:body) { should include conversation_leader.telephone } 
+        end
+        describe "when it the conversation has participants leaders" do
+          let!(:participant) { FactoryGirl.create(:participant, conversation: conversation) }
+          its(:body) { should include participant.name } 
+          its(:body) { should include participant.email } 
+          its(:body) { should include participant.telephone} 
+        end
+      end
+    end
+  end
+
+  describe ConversationLeaderRegistrationDetailsMessage do
+    subject { ConversationLeaderRegistrationDetailsMessage.new message } 
+    it_should_behave_like RegistrationDetailsMessage
+  end
+
+  describe CoordinatorRegistrationDetailsMessage do
+    subject { CoordinatorRegistrationDetailsMessage.new message } 
+    it_should_behave_like RegistrationDetailsMessage
+  end
+end
+
 end
