@@ -1,7 +1,7 @@
 require 'spec_helper'
 require 'mailing'
 
-describe "focus " do
+describe "focus ", focus: true do
 describe Mailing do
   let(:recipient_list) { RecipientList.new }
   let(:message) { MailingMessage.new }
@@ -259,13 +259,67 @@ describe "RegistrationDetailsMessage" do
   end
 
   describe ConversationLeaderRegistrationDetailsMessage do
-    subject { ConversationLeaderRegistrationDetailsMessage.new message } 
+    prepare_scope :tenant
+
+    let!(:conversation) { FactoryGirl.create(:conversation) }
+    let!(:conversation_leader) { FactoryGirl.create(:conversation_leader, conversation: conversation) }
+    let(:organisator) { conversation.location.organizer } 
+
+    subject { ConversationLeaderRegistrationDetailsMessage.new message, conversation_leader } 
+
     it_should_behave_like RegistrationDetailsMessage
+
+    describe "registered to a conversation" do 
+      include TimePeriodHelper
+      before { conversation.update_attribute :number_of_tables, 2 } 
+      its(:body) { should include time_period(conversation) }
+      its(:body) { should include "#{conversation.number_of_tables} tafel(s)" } 
+      its(:body) { should include "Organisator:" }
+      its(:body) { should include organisator.name } 
+      its(:body) { should include organisator.email } 
+      its(:body) { should include organisator.telephone } 
+      its(:body) { should_not include "Gespreksleider(s)" }
+
+      describe "when number of tables is one" do
+        before { conversation.update_attribute :number_of_tables, 1 } 
+        its(:body) { should include "Gespreksleider(s):" }
+        its(:body) { should include conversation_leader.name } 
+        its(:body) { should include conversation_leader.email } 
+        its(:body) { should include conversation_leader.telephone } 
+
+        its(:body) { should include "Deelnemer(s):" }
+        describe "when it the conversation has participants leaders" do
+          let!(:participant) { FactoryGirl.create(:participant, conversation: conversation) }
+          its(:body) { should include participant.name } 
+          its(:body) { should include participant.email } 
+          its(:body) { should include participant.telephone} 
+        end
+
+      end
+    end
   end
 
-  describe CoordinatorRegistrationDetailsMessage do
-    subject { CoordinatorRegistrationDetailsMessage.new message } 
+  describe ParticipantRegistrationDetailsMessage do
+    prepare_scope :tenant
+
+    let!(:conversation) { FactoryGirl.create(:conversation) }
+    let!(:participant) { FactoryGirl.create(:participant, conversation: conversation) }
+    let(:organisator) { conversation.location.organizer } 
+
+    subject { ParticipantRegistrationDetailsMessage.new message, participant } 
+
     it_should_behave_like RegistrationDetailsMessage
+
+    describe "registered to a conversation" do 
+      include TimePeriodHelper
+      its(:body) { should include time_period(conversation) }
+      its(:body) { should include "#{conversation.number_of_tables} tafel(s)" } 
+      its(:body) { should include "Organisator:" }
+      its(:body) { should include organisator.name } 
+      its(:body) { should include organisator.email } 
+      its(:body) { should include organisator.telephone } 
+    end
+
   end
 end
 
