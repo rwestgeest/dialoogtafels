@@ -19,13 +19,6 @@
           account.save.should be_true
         end
       end
-      context "confirmed" do
-        before { account.update_attribute :confirmed_at, Time.now }
-        it "rejects password on save" do
-          account.save.should be_false
-          account.errors_on(:password).should_not be_empty
-        end
-      end
     end
   end
 

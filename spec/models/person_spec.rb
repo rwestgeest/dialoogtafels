@@ -57,17 +57,26 @@ describe Person do
       end
 
       it "updates email from account as well" do
-        update_attributes :name => "other name", :email => "other@mail.com", :telephone => "123123"
+        update_attributes( :name => "other name", :email => "other@mail.com", :telephone => "123123")
         person.email.should == 'other@mail.com'
       end
 
+      context "when account is confirmed" do
+        before do
+          person.account.confirm_with_password :password => 'secret', :password_confirmation => 'secret'
+          person.account.reload
+          person.reload
+        end
+        it "should report success" do 
+          update_attributes(:name => "other name", :email => "other@mail.com", :telephone => "123123").should be_true
+        end
+      end
       def update_attributes attributes
         result = person.update_attributes :name => "other name", :email => "other@mail.com", :telephone => "123123"
         person.reload
         person.account.reload
         if result == false
           p person.errors
-
         end
         return result
       end

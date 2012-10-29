@@ -9,7 +9,6 @@ end
 
 module Authenticable
   def self.included(base)
-    base.validates_presence_of :password, :if =>  lambda { !new_record? && confirmed? }
     base.extend ClassMethods
 
     base.before_save :encrypt_password
@@ -40,9 +39,33 @@ module Authenticable
     encrypted_password == BCrypt::Engine.hash_secret(password, password_salt)
   end
 
+  def change_password(attributes)
+    self.attributes = attributes
+    if !password || password.empty? 
+      errors.add(:password, :blank)
+      return false
+    end
+
+    if password != password_confirmation
+      errors.add(:password, :confirmation)
+      return false
+    end
+    update_attributes(attributes)
+  end
+
   def confirm_with_password(attributes)
     begin
       self.attributes = attributes
+      if !password || password.empty? 
+        errors.add(:password, :blank)
+        return false
+      end
+
+      if password != password_confirmation
+        errors.add(:password, :confirmation)
+        return false
+      end
+
       self.confirmed_at = Time.now
       self.reset_at = nil
       save!

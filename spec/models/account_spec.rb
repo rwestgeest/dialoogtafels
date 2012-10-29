@@ -64,17 +64,17 @@ describe Account do
       end
 
       it "updates password if password is passed and matches password_confirmation" do
-        account.update_attributes(:password => 'secret', :password_confirmation => 'secret').should be_true
+        account.change_password(:password => 'secret', :password_confirmation => 'secret').should be_true
         account.password.should == 'secret'
       end
 
       it "fails if passwords not passed " do
-        account.update_attributes({}).should be_false
+        account.change_password({}).should be_false
         account.password.should == old_password
       end
 
       it "ingores passwords if nil" do
-        account.update_attributes({:password => nil}).should be_false
+        account.change_password({:password => nil}).should be_false
         account.password.should == old_password
       end
     end
@@ -169,8 +169,12 @@ describe Account do
       end
 
       describe "with invalid password" do 
-        it "returns false and does not confirm" do
-          account.confirm_with_password(:password => '').should be_false
+        it "returns false and does not confirm when empty" do
+          account.confirm_with_password(:password => '', :password_confirmation => '').should be_false
+          account.should_not be_confirmed
+        end
+        it "returns false and does not confirm when does not match" do
+          account.confirm_with_password(:password => '123123', :password_confirmation => '345345').should be_false
           account.should_not be_confirmed
         end
       end
