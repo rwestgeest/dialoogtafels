@@ -81,7 +81,6 @@ class RecipientsBuilder
     send(group).each { |person| @list.add_recipient( class_for(group), person ) }
   end
 
-
   def class_for(group)
     ValidGroups[group.to_sym]
   end

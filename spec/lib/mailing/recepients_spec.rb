@@ -2,16 +2,18 @@ require 'spec_helper'
 require 'mailing'
 
 describe RecipientsBuilder do
-  let(:project) { stub(Project) }
+  let(:people_repository) { stub(PeopleRepository) }
   let(:people_to_mail) { [person1, person2] }
   let(:person1) { Account.new(email: "one@mail.com") }
   let(:person2) { Account.new(email: "two@mail.com") }
+  let(:recipients_builder) { RecipientsBuilder.new(people_repository) }
+
 
   describe "from_groups" do
-
+    let(:subject) { recipient_list }
     context "when groups contains coordinators" do
-      before { project.stub(:coordinators).and_return people_to_mail }
-      let(:subject) {  RecipientsBuilder.new(project).from_groups(['coordinators']) }
+      before { people_repository.stub(:coordinators).and_return people_to_mail }
+      let(:recipient_list) { recipients_builder.from_groups(['coordinators']) }
 
       its(:recipients) { should == [CoordinatorRecipient.new(person1), CoordinatorRecipient.new(person2)] }
     end
@@ -20,41 +22,40 @@ describe RecipientsBuilder do
       let(:organizer_with_location) { Organizer.new }
       let(:organizer_without_location) { Organizer.new } 
       before do
-         project.stub(:organizers).and_return [organizer_with_location, organizer_without_location]
+         people_repository.stub(:organizers).and_return [organizer_with_location, organizer_without_location]
          organizer_with_location.locations << Location.new
       end
-      let(:subject) {  RecipientsBuilder.new(project).from_groups(['organizers']) }
+      let(:recipient_list) { recipients_builder.from_groups(['organizers']) }
 
       its(:recipients) { should include     OrganizerRecipient.new(organizer_with_location) }
       its(:recipients) { should_not include OrganizerRecipient.new(organizer_without_location) }
     end
 
     context "when groups contains conversation_leaders" do
-      before { project.stub(:conversation_leaders).and_return people_to_mail }
-      let(:subject) {  RecipientsBuilder.new(project).from_groups(['conversation_leaders']) }
+      before { people_repository.stub(:conversation_leaders).and_return people_to_mail }
+      let(:recipient_list) { recipients_builder.from_groups(['conversation_leaders']) }
 
       its(:recipients) { should == [ConversationLeaderRecipient.new(person1), ConversationLeaderRecipient.new(person2)] }
     end
 
     context "when groups contains participants" do
-      before { project.stub(:participants).and_return people_to_mail }
-      let(:subject) {  RecipientsBuilder.new(project).from_groups(['participants']) }
+      before { people_repository.stub(:participants).and_return people_to_mail }
+      let(:recipient_list) { recipients_builder.from_groups(['participants']) }
 
       its(:recipients) { should == [ParticipantRecipient.new(person1), ParticipantRecipient.new(person2)] }
     end
 
     context "when groups contains something silly" do
-      let(:subject) {  RecipientsBuilder.new(project).from_groups(['bogusgroup']) }
+      let(:subject) {  RecipientsBuilder.new(people_repository).from_groups(['bogusgroup']) }
 
       its(:recipients) { should be_empty }
     end
 
     context "when groups is nil" do
-      let(:subject) {  RecipientsBuilder.new(project).from_groups(nil) }
+      let(:subject) {  RecipientsBuilder.new(people_repository).from_groups(nil) }
 
       its(:recipients) { should be_empty }
     end
-
   end
 end
 
