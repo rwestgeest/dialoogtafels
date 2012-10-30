@@ -43,6 +43,8 @@ class City::MailingMessagesController < ApplicationController
     redirect_to city_mailing_messages_url 
   end
 
+  private
+
   def mailing_repository
     @mailing_repository ||= MailingRepository.new(active_project, current_person)
   end

@@ -20,6 +20,7 @@ class MailingMessage < Message
   def groups
     addressee_groups.split(",").map {|group| group.strip} 
   end
+
   def groups=(value)
     return unless value
     self.addressee_groups = value.join(", ")
