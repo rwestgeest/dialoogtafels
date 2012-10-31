@@ -1,5 +1,8 @@
 .city_banner{:id => "location_#{location.to_param}", 'data-location-url' => location_path(location.to_param) }
   .city_banner_photo{:style=>"background: url(#{location.photo.url(:thumb)}) no-repeat;"}
+    - if location.marked_full
+      .city_banner_status
+        %span vol
     .city_banner_text
       %h3= location.name
       %p= full_address(location)

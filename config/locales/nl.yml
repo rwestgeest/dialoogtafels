@@ -228,6 +228,7 @@ nl:
         name: "Locatienaam"
         photo: "Wijzig foto"
         published: "Gepubliceerd"
+        marked_full: "Markeer als 'vol'"
         description: "Wervende beschrijving voor de locatie"
         address: "Adres"
         postal_code: "Postcode"

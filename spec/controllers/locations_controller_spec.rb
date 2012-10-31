@@ -91,6 +91,14 @@ describe LocationsController do
       get :show, {:id => location.id}
       assigns(:location).should eq(location)
     end
+    context "with conversations" do
+      let!(:conversation) { FactoryGirl.create :conversation, location: location }
+      it "shows no register link when marked as full" do
+        location.update_attribute :marked_full, true
+        get :show, { :id => location.id }
+        response.body.should_not have_selector("a[href='#{new_registration_participant_path(:conversation_id => conversation.to_param)}']")
+      end
+    end
     it "says not found if location is not published" do
       location.update_attribute :published, false
       get :show, {:id => location.id}
