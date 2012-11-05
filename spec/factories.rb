@@ -21,6 +21,7 @@ module Factories
       city "Location city"
       description "coole plek"
       association :organizer
+      marked_full false
     end
 
     factory :conversation do

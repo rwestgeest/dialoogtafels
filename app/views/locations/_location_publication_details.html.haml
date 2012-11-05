@@ -1,21 +1,25 @@
 .city_banner{:style=>"float:right;"}
   .city_banner_photo{:style=>"background: url(#{@location.photo.url(:thumb)}) no-repeat;"}
+    - if @location.marked_full
+      .city_banner_status
+        %span vol
     .city_banner_text
       %h3= @location.name
       %p= full_address(@location)
 
 = markup(@location.description)
 .clear
-%h3 Schrijf je in op een van de volgende dialooggesprekken
-- @location.conversations.each do |conversation| 
-  .conversation{:id => "conversation_#{conversation.to_param}"}
-    %h3
-      = time_period(conversation).capitalize
-    .conversation-container
-      .right
-        = participant_registration conversation, '> schrijf je in als deelnemer', new_registration_participant_path(:conversation_id => conversation)
-        %br
-        = leader_registration conversation, '> schrijf je in als gespreksleider', new_registration_conversation_leader_path(:conversation_id => conversation)
-      .clear
-
-
+- unless @location.marked_full
+  %h3 Schrijf je in op een van de volgende dialooggesprekken
+  - @location.conversations.each do |conversation| 
+    .conversation{:id => "conversation_#{conversation.to_param}"}
+      %h3
+        = time_period(conversation).capitalize
+      .conversation-container
+        .right
+          = participant_registration conversation, '> schrijf je in als deelnemer', new_registration_participant_path(:conversation_id => conversation)
+          %br
+          = leader_registration conversation, '> schrijf je in als gespreksleider', new_registration_conversation_leader_path(:conversation_id => conversation)
+        .clear
+- else
+  %h3 Deze locatie is vol

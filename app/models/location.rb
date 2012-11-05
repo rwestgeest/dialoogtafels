@@ -20,7 +20,7 @@ class Location < ApplicationModel
   has_many :todos, through: :project, source: :location_todos
 
 
-  attr_accessible :name, :address, :postal_code, :city, :organizer_id, :lattitude, :longitude, :published, :photo, :description, :project
+  attr_accessible :name, :address, :postal_code, :city, :organizer_id, :lattitude, :longitude, :published, :photo, :description, :project, :marked_full
 
   validates_presence_of :name
   validates_presence_of :address

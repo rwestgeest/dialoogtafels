@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121026130115) do
+ActiveRecord::Schema.define(:version => 20121031121214) do
 
   create_table "accounts", :force => true do |t|
     t.string   "email",                :limit => 150,                      :null => false
@@ -112,6 +112,7 @@ ActiveRecord::Schema.define(:version => 20121026130115) do
     t.datetime "photo_updated_at"
     t.boolean  "published",                         :default => false
     t.text     "description"
+    t.boolean  "marked_full",                       :default => false
   end
 
   create_table "message_addressees", :force => true do |t|

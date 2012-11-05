@@ -16,6 +16,14 @@
   width:194px; 
   color: darkblue; 
 }
+.city_banner_status {
+  float: right;
+  padding: 0.5em;
+  background: white;
+  color: red;
+  font-weight: bolder;
+  border: 1px solid;
+}
 .banner-list .city_banner {
   margin:10px;
   float:left;
