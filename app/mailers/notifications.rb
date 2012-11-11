@@ -17,6 +17,12 @@ class Notifications < ActionMailer::Base
     mail to: tenant.representative_email
   end
 
+  def notify_new_registration(to, contributor, project)
+    @contributor = contributor
+    @applicant = @contributor.person
+    mail to: to, from: project.tenant.from_email
+  end
+
   def migration_completed_for_organizer(organizer)
     @organizer = @applicant = organizer
     @tenant = organizer.tenant

@@ -317,6 +317,8 @@ nl:
       subject: "Er is een nieuwe deelnemer aangemeld voor je tafel"
     new_conversation_leader:
       subject: "Er is een nieuwe gespreksleider aangemeld voor je tafel"
+    notify_new_registration:
+      subject: "Nieuwe aanmelding"
   account:
     sessions:
       new: 
@@ -444,3 +446,6 @@ nl:
   organizers: "Organisatoren"
   conversation_leaders: "Gespreksleiders"
   participants: "Deelnemers"
+  organizer: "organisator"
+  conversation_leader: "gespreksleider"
+  participant: "deelnemer"

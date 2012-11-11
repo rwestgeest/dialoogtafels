@@ -11,6 +11,7 @@ module Factories
       sequence( :site_url ) { |n| "site_url_#{n}" }
       sequence( :info_email ) { |n| "mail@city_#{n}.com" }
       sequence( :from_email ) { |n| "mail@city_#{n}.com" }
+      sequence( :notification_emails ) { |n| "notification1@city_#{n}.com, notification2@city_#{n}.com" }
       invoice_address "invoice address"
     end
 

@@ -331,6 +331,32 @@ describe Notifications do
 
   end
 
+  describe "notify_new_registration" do
+    let(:recepient) { 'email@mail.com' }
+    let(:contributor) { FactoryGirl.build :organizer } 
+    let(:project) { current_tenant.active_project } 
+    let(:mail) { Notifications.notify_new_registration recepient, contributor, project }
+    subject { mail }
+
+    its(:subject)  { should eq(I18n.t("notifications.notify_new_registration.subject.")) }
+    its(:from)     { should eq([ project.tenant.from_email ]) }
+    its(:to)       { should eq([ recepient ]) }
+
+    context "to is a a mail list" do
+      let(:recepient) { 'recepient@mail.com, recepient2@mail.com'  }
+      its(:to)        { should eq( recepient.split(',').map { |r| r.strip }  ) }
+    end
+
+    describe "body" do
+      subject { mail.body.encoded } 
+      it { should include("Er is een #{I18n.t('organizer')} aangemeld") }
+
+      it_should_behave_like "an_application_confirmation_mail_body" do
+        let(:applicant) { contributor.person } 
+      end
+    end
+  end
+
   RSpec::Matchers.define :include_marked_up do |expected|
     match do |actual|
       actual.gsub("\r\n", '').include?(marked_up(expected).gsub("\n", ''))

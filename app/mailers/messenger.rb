@@ -6,6 +6,7 @@ class Messenger
 
   def new_organizer(organizer)
     postman.deliver(:organizer_confirmation, organizer, tenant.active_project)
+    postman.deliver(:notify_new_registration, tenant.notification_emails, organizer, tenant.active_project)
   end
 
   def new_tenant(created_tenant)

@@ -16,12 +16,22 @@ describe Messenger do
 
   describe "notify_new_organizer" do
     let!(:organizer) { FactoryGirl.build :person }
+    let(:notification_emails) { tenant.notification_emails } 
+    before { postman.stub(:deliver) } 
     it "delivers an confirmation to the organizer" do
       postman.should_receive(:deliver).with(:organizer_confirmation, organizer, tenant.active_project)
       messenger.new_organizer(organizer)
     end
-    it "delivers a notification to the coordinators" do
-      pending "implement whe nwe have coordinators mailing list setting" 
+    it "delivers notification to the coordinators" do
+      postman.should_receive(:deliver).with(:notify_new_registration, tenant.notification_emails, organizer, tenant.active_project)
+      messenger.new_organizer(organizer)
+    end
+    context "without email notification list" do
+      before { tenant.notification_emails = '' }
+      it "does not send a notification" do
+        postman.should_not_receive(:deliver).with(:notify_new_registration)
+        messenger.new_organizer(organizer)
+      end
     end
   end
 
