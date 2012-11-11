@@ -201,7 +201,6 @@ GEM
       vlad (>= 2.1.0)
     xpath (0.1.4)
       nokogiri (~> 1.3)
-    yaml_db (0.2.3)
 
 PLATFORMS
   ruby
@@ -235,4 +234,3 @@ DEPENDENCIES
   uglifier (>= 1.0.3)
   vlad
   vlad-git
-  yaml_db

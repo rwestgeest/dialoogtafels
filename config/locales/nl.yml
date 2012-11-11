@@ -448,4 +448,6 @@ nl:
   participants: "Deelnemers"
   organizer: "organisator"
   conversation_leader: "gespreksleider"
+  conversation_leader_ambition: "gespreksleider zonder gesprek"
   participant: "deelnemer"
+  participant_ambition: "deelnemer zonder gesprek"

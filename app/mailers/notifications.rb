@@ -17,9 +17,9 @@ class Notifications < ActionMailer::Base
     mail to: tenant.representative_email
   end
 
-  def notify_new_registration(to, contributor, project)
-    @contributor = contributor
-    @applicant = @contributor.person
+  def notify_new_registration(to, person, project, role)
+    @role = role
+    @applicant = person
     mail to: to, from: project.tenant.from_email
   end
 

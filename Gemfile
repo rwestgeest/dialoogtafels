@@ -16,7 +16,6 @@ gem "ancestry", "~> 1.3.0"
 gem "recaptcha", :require => "recaptcha/rails"
 gem "daemons"
 gem "delayed_job_active_record"
-gem "yaml_db"
 
 # Gems used only for assets and not required
 # in production environments by default.

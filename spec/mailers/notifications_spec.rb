@@ -333,9 +333,9 @@ describe Notifications do
 
   describe "notify_new_registration" do
     let(:recepient) { 'email@mail.com' }
-    let(:contributor) { FactoryGirl.build :organizer } 
+    let(:person) { FactoryGirl.build :person } 
     let(:project) { current_tenant.active_project } 
-    let(:mail) { Notifications.notify_new_registration recepient, contributor, project }
+    let(:mail) { Notifications.notify_new_registration recepient, person, project, :organizer }
     subject { mail }
 
     its(:subject)  { should eq(I18n.t("notifications.notify_new_registration.subject.")) }
@@ -352,7 +352,7 @@ describe Notifications do
       it { should include("Er is een #{I18n.t('organizer')} aangemeld") }
 
       it_should_behave_like "an_application_confirmation_mail_body" do
-        let(:applicant) { contributor.person } 
+        let(:applicant) { person } 
       end
     end
   end

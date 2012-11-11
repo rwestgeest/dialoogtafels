@@ -6,7 +6,7 @@ class Messenger
 
   def new_organizer(organizer)
     postman.deliver(:organizer_confirmation, organizer, tenant.active_project)
-    postman.deliver(:notify_new_registration, tenant.notification_emails, organizer, tenant.active_project)
+    postman.deliver(:notify_new_registration, tenant.notification_emails, organizer, tenant.active_project, :organizer) unless tenant.notification_emails.empty?
   end
 
   def new_tenant(created_tenant)
@@ -19,19 +19,23 @@ class Messenger
   def new_participant(person, conversation) 
     postman.deliver(:new_participant, conversation.location.organizer, person, conversation)
     postman.deliver(:participant_confirmation, person, tenant.active_project)
+    postman.deliver(:notify_new_registration, tenant.notification_emails, person, tenant.active_project, :participant) unless tenant.notification_emails.empty?
   end
 
   def new_participant_ambition(person) 
     postman.deliver(:participant_confirmation, person, tenant.active_project)
+    postman.deliver(:notify_new_registration, tenant.notification_emails, person, tenant.active_project, :participant_ambition) unless tenant.notification_emails.empty?
   end
 
   def new_conversation_leader(person, conversation) 
     postman.deliver(:new_conversation_leader, conversation.location.organizer, person, conversation)
     postman.deliver(:conversation_leader_confirmation, person, tenant.active_project)
+    postman.deliver(:notify_new_registration, tenant.notification_emails, person, tenant.active_project, :conversation_leader) unless tenant.notification_emails.empty?
   end
 
   def new_conversation_leader_ambition(person) 
     postman.deliver(:conversation_leader_confirmation, person, tenant.active_project)
+    postman.deliver(:notify_new_registration, tenant.notification_emails, person, tenant.active_project, :conversation_leader_ambition) unless tenant.notification_emails.empty?
   end
 
   def migration_completed(created_tenant)
