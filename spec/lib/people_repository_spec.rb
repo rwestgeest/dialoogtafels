@@ -25,6 +25,11 @@ describe PeopleRepository do
     its(:conversation_leaders) { should == [ conversation_leader ] }
 
     its(:participants) { should == [ participant ] }
+
+    describe "profile_fieids" do
+      let!(:profile_field) { FactoryGirl.create :profile_field }
+      its(:profile_field_names) { should == [ profile_field.field_name ] }
+    end
   end
 
   context "with date range" do

@@ -15,11 +15,12 @@ module Csv
       column_set = ColumnSet.new(
         Column.new('naam')                  {|person| person.name },
         Column.new('telefoon')              {|person| person.telephone }, 
-        Column.new('email')                 {|person| person.email }, 
+        Column.new('email')                 {|person| person.email } 
       )
       people_repository.profile_field_names.each do |field_name| 
         column_set << Column.new(field_name) { |person| person.send("profile_#{field_name}") }
       end
+      column_set
     end
     
     def export(output, people)

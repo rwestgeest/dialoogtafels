@@ -1,4 +1,8 @@
-class PeopleRepository < Struct.new(:people_repository)
+class PeopleRepository 
+  def initialize(contributions_repository, profile_field_repository = ProfileField)
+    @contributions_repository = contributions_repository
+    @profile_field_repository = profile_field_repository
+  end
   def for_date_range(start_date, end_date)
     DateRangedPeopleRepository.new(self, start_date, end_date)
   end
@@ -8,16 +12,23 @@ class PeopleRepository < Struct.new(:people_repository)
   end 
 
   def organizers
-    people_repository.organizers
+    contributions_repository.organizers
   end
 
   def conversation_leaders
-    people_repository.conversation_leaders
+    contributions_repository.conversation_leaders
   end
 
   def participants
-    people_repository.participants
+    contributions_repository.participants
   end
+
+  def profile_field_names
+    profile_field_repository.all.collect { |field| field.field_name }
+  end
+
+  private
+  attr_reader :contributions_repository, :profile_field_repository
 end
 
 class DateRangedPeopleRepository < PeopleRepository 

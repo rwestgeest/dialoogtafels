@@ -1,5 +1,5 @@
 require 'spec_helper'
-
+require 'csv/person_export'
 describe City::PeopleController do
   render_views
   prepare_scope :tenant
@@ -113,6 +113,24 @@ describe City::PeopleController do
         response.should render_template(:destroy)
       end
     end  
+  end
+
+
+  describe "GET xls" do
+    let!(:person) { create_person }
+
+    it "renders exported data" do
+      expected_content = Csv::PersonExport.create(PeopleRepository.new(Person)).run(Person.all)
+      get 'xls'
+      response.body.should == expected_content
+    end
+
+    it "renders an xls file" do
+      get 'xls'
+      response.headers['Content-Type'].should include('text/xls')
+      response.headers['Content-Disposition'].should == 'attachment; filename="betrokkenen.xls"'
+    end
+
   end
 
 end

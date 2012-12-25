@@ -1,3 +1,5 @@
+require 'people_repository'
+require 'csv/person_export'
 class City::PeopleController < ApplicationController
 
   def index
@@ -30,5 +32,8 @@ class City::PeopleController < ApplicationController
       @message = I18n.t('city.people.destroy.organizes_locations', person_name: person.name)
       render action: 'refused_to_destroy'
     end
+  end
+  def xls
+    send_data Csv::PersonExport.create(PeopleRepository.new(Person)).run(Person.all), filename: 'betrokkenen.xls', type: 'text/xls'
   end
 end

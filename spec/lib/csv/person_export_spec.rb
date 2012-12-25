@@ -2,13 +2,17 @@ require 'spec_helper'
 require 'csv/person_export'
 
 module Csv
-  describe Csv, focus: true do
+  describe Csv do
     let(:people_repository) { mock(PeopleRepository) } 
     let(:first_person) { Person.new :name => "Piet", :telephone => "123123123", :email => "e@mail.com" }
     let(:second_person) { Person.new :name => "Henk", :telephone => "234234234", :email => "other@mail.com" }
     let(:people_to_export) { [ first_person ] }
     let(:exported_data) { export.run(people_to_export) }
     let(:export) { Csv::PersonExport.create people_repository } 
+
+    before do
+      people_repository.stub(:profile_field_names) { [] }
+    end
 
     describe PersonExport do
       subject { exported_data } 
@@ -19,6 +23,11 @@ module Csv
           subject { first_data_row_of exported_data } 
           it { should == '"Piet";"123123123";"e@mail.com"' }
         end
+      end
+
+      describe "with profile fields" do
+        before{  define_profile_field('bedrijf') }
+        it { should include '"jansen"' }
       end
 
       describe "with more persons" do 
@@ -36,12 +45,14 @@ module Csv
         it { should == '"naam";"telefoon";"email"' }
 
         describe "with profile fields" do
-          before do
-            people_repository.stub(:profile_field_names) { [ "bedrijf" ] }
-          end
-
+          before{  define_profile_field('bedrijf') }
           it { should include '"bedrijf"' }
         end
+      end
+
+      def define_profile_field(field_name)
+        first_person.stub(:"profile_#{field_name}" => "jansen")
+        people_repository.stub(:profile_field_names) { [ field_name ] }
       end
     end
 
