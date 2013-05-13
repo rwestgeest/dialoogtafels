@@ -27,4 +27,9 @@ Start vervolgens de server middels:
     rails start
 ```
 
+### Development
 
+De software is ontwikkeld op linux (ubuntu) en draait in productie ook
+op linux (debian stable).
+
+Bij ontwikkeling is gebruik gemaakt van rvm als ruby version manager. 
